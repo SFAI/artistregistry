@@ -11,3 +11,10 @@ git clone https://github.com/calblueprint/SFAI.git
 cd SFAI
 bundle install
 ```
+
+**If you're using Whales:**
+
+```
+whales new sfai calblueprint/sfai
+whales server
+```
