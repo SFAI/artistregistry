@@ -1,0 +1,3 @@
+class APIRoutes{
+
+} export { APIRoutes };
