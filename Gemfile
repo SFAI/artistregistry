@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'react-rails'
+gem 'slim'
 
 gem 'devise'
 
