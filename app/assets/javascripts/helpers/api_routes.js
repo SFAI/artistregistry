@@ -1,3 +1,3 @@
-class APIRoutes{
+// class APIRoutes{
 
-} export { APIRoutes };
+// } export default APIRoutes;
