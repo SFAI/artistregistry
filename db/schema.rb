@@ -65,6 +65,17 @@ ActiveRecord::Schema.define(version: 2018_10_15_001040) do
     t.index ["reset_password_token"], name: "index_buyers_on_reset_password_token", unique: true
   end
 
+  create_table "commissions", force: :cascade do |t|
+    t.integer "price"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "artist_id"
+    t.bigint "buyer_id"
+    t.index ["artist_id"], name: "index_commissions_on_artist_id"
+    t.index ["buyer_id"], name: "index_commissions_on_buyer_id"
+  end
+
   create_table "requests", force: :cascade do |t|
     t.text "message"
   end
@@ -79,5 +90,7 @@ ActiveRecord::Schema.define(version: 2018_10_15_001040) do
     t.index ["artist_id"], name: "index_works_on_artist_id"
   end
 
+  add_foreign_key "commissions", "artists"
+  add_foreign_key "commissions", "buyers"
   add_foreign_key "works", "artists"
 end
