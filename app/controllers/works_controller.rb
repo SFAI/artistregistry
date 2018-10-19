@@ -1,5 +1,4 @@
 class WorksController < ApplicationController
-  def show
-    @work = Work.find(params[:id])
+  def index
   end
 end

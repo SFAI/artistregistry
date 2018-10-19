@@ -1,6 +1,6 @@
 class Api::WorksController < ApplicationController
   respond_to :json
-  def show
+	def show
     @work = Work.find(params[:id])
     render json: @work
   end
@@ -34,4 +34,10 @@ class Api::WorksController < ApplicationController
       render_json_message(:forbidden, errors: work.errors.full_messages)
     end
   end
+	
+	def index
+		works = Work.all
+		render json: works
+	end
+	
 end

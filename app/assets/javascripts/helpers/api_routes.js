@@ -1,32 +1,21 @@
 class ApiRoutes {
-
   get works() {
     return {
-      show        : (id) => `/api/locations/${id}`,
-      update      : (id) => `/api/locations/${id}`,
-      create      : `/api/locations`,
-      delete      : (id) => `/api/works/destroy/${id}`
-    }
+      show: id => `/api/works/${id}`,
+      update: id => `/api/works/${id}`,
+      create: `/api/works`,
+      delete: id => `/api/works/${id}`,
+      index: `/api/works/index`
+    };
   }
 
   get artists() {
     return {
-      show        : (id) => `/api/artists/${id}`,
-      update      : (id) => `/api/artists/${id}`,
-      delete      : (id) => `/api/artists/destroy/${id}`,
-      works       : (id) => `/api/artists/works/${id}`,
-      allArtists  : `api/artists`,
-      requests    : (id) => `/api/artists/requests/${id}`
-    }
+      show: id => `/api/artists/${id}`,
+      update: id => `/api/artists/${id}`,
+      delete: id => `/api/artists/${id}`,
+      works: id => `/api/artists/works/${id}`
+    };
   }
-
-  get requests() {
-    return {
-      show        : (id) => `/api/requests/${id}`,
-      update      : (id) => `/api/requests/${id}`,
-      create      : (id) => `/api/requests/${id}`
-    }
-  }
-
 }
 const APIRoutes = new ApiRoutes();
