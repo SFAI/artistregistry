@@ -1,7 +1,7 @@
-import PropTypes from "prop-types"
-import React from "react"
+import PropTypes from "prop-types";
+import React from "react";
 
-class test extends React.Component {
+class Test extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -9,10 +9,9 @@ class test extends React.Component {
   render() {
     return (
       <div>
-        hi bye
+        hi byasdfjasasdfasdfpodfjaspodfuaspdofijaspodfije
       </div>
-    )
+    );
   }
 }
-
-export default test
+export default Test;
