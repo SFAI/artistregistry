@@ -24,41 +24,19 @@ class CommissionsController < ApplicationController
   # POST /commissions
   # POST /commissions.json
   def create
-    @commission = Commission.new(commission_params)
-
-    respond_to do |format|
-      if @commission.save
-        format.html { redirect_to @commission, notice: 'Commission was successfully created.' }
-        format.json { render :show, status: :created, location: @commission }
-      else
-        format.html { render :new }
-        format.json { render json: @commission.errors, status: :unprocessable_entity }
-      end
-    end
+    commission = Commission.new(comment: params[:comment], buyer_id: current_user)
+  	commission.save!
   end
 
   # PATCH/PUT /commissions/1
   # PATCH/PUT /commissions/1.json
   def update
-    respond_to do |format|
-      if @commission.update(commission_params)
-        format.html { redirect_to @commission, notice: 'Commission was successfully updated.' }
-        format.json { render :show, status: :ok, location: @commission }
-      else
-        format.html { render :edit }
-        format.json { render json: @commission.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /commissions/1
   # DELETE /commissions/1.json
   def destroy
     @commission.destroy
-    respond_to do |format|
-      format.html { redirect_to commissions_url, notice: 'Commission was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private
