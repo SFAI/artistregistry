@@ -5,7 +5,7 @@
       request.open(type, route);
       request.setRequestHeader('Accept', content);
       request.setRequestHeader('Content-Type', content);
-      request.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+      request.setRequestHeader('X-CSRF-Token', document.getElementsByName("csrf-token")[0].content);
       return request;
     }
 
