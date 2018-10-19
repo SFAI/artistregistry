@@ -27,7 +27,7 @@ Gates.save!
 Lisa = Work.create(
   title: 'Mona Lisa',
   media: 'Oil on canvas',
-  work_type: 'Painting',
+  work_type: 0,
   status: 0,
   price: 43.45
   )
