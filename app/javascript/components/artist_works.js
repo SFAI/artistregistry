@@ -12,12 +12,11 @@ class ArtistWorks extends React.Component {
 
   componentDidMount = () => {
     const artist_id = this.props.artist.id;
-    Requester.get('/api/artists/works/'+artist_id, (response) => {
-      this.setState({works: response});
-
+    const works_route = APIRoutes.artists.works(0);
+    Requester.get(works_route, (response) => {
+      this.setState( {works: response} );
       console.log(response);
-    }, (response) => {console.log(response)});
-    console.log();
+    }, (response) => {console.err(response)});
   }
 
 

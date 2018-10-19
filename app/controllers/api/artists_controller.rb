@@ -5,25 +5,10 @@ class Api::ArtistsController < ApplicationController
     render json: @artist
   end
 
-  def create
-    artist = Artist.create(params)
-    begin
-      saved = artist.save!
-    rescue ActiveRecord::RecordInvalid => invalid
-      render_json_message(:forbidden, errors: invalid.record.errors.full_messages)
-      return
-    end
-    if saved
-      render_json_message(:ok, message: 'Work successfully created!')
-    else
-      render_json_message(:forbidden, errors: artist.errors.full_messages)
-    end
-  end
-
   def update
     artist = Artist.find(params[:id])
     new_work = work.update(params)
-    render_json_message(:ok, message: 'Request successfully updated!')
+    render_json_message(:ok, message: 'Artist successfully updated!')
   end
 
   def destroy
