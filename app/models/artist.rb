@@ -4,5 +4,8 @@ class Artist < ApplicationRecord
   validates: email, :presence => true, :email => true
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :buyers, through: :commisions
+  has_many :works
+  has_many :requests
+  has_many :buyers, through: :requests
+  has_many :buyers, through: :commissions
 end
