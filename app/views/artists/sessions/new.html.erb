@@ -18,8 +18,13 @@
     </div>
   <% end -%>
 
+
   <div class="actions">
     <%= f.submit "Log in" %>
+  </div>
+  <div class="actions">
+    <%=form_tag(artist_user_generate_new_password_email_path(@part))do %>
+    <%=submit_tag 'Send Reset Password Email', class: 'button', :confirm => 'Are you sure you want to email reset password instructions?' %> 
   </div>
 <% end %>
 

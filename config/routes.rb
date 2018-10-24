@@ -6,6 +6,17 @@ Rails.application.routes.draw do
   root 'pages#home'
   get 'artists/:id' => 'artists#show'
 
+  resources :artists, only: [:show] do
+    member do
+      post :generate_new_password_email
+    end
+  end
+
+  resources :buyers, only: [:show] do
+    member do
+      post :generate_new_password_email
+    end
+  end
 
   namespace :api, defaults: { format: :json } do
     resources :works, :only => [:show, :create, :update, :destroy]
