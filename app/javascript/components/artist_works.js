@@ -36,8 +36,6 @@ class ArtistWorks extends React.Component {
 
 
   render() {
-
-
     return (
       <div>
         These will be the artist works

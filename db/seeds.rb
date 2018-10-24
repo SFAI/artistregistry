@@ -24,7 +24,18 @@ Gates = Buyer.create(
   )
 #Gates has id 1
 Gates.save!
-Lisa = Work.create(
+
+Jobs = Buyer.create(
+  id:2,
+  name: 'Steve Jobs',
+  email: 'steve@apple.com',
+  password: 'appleee',
+  phone_number: '111-111-1111'
+  )
+#Gates has id 1
+Jobs.save!
+
+Lisa = Picasso.works.create(
   title: 'Mona Lisa',
   media: 'Oil on canvas',
   work_type: 0,
@@ -33,4 +44,20 @@ Lisa = Work.create(
   )
 Lisa.artist_id = Picasso.id
 Lisa.save!
+
 #Lisa's id is 1
+lisa_request = Request.create(
+  
+  message: 'I would like to request the Mona Lisa'
+  )
+lisa_request.buyer = Gates
+lisa_request.work = Lisa
+lisa_request.save!
+
+lisa_request_jobs = Request.create(
+  
+  message: 'I would like to request the Mona Lisa - steve jobs'
+  )
+lisa_request_jobs.buyer = Jobs
+lisa_request_jobs.work = Lisa
+lisa_request_jobs.save!
