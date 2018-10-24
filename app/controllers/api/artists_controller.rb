@@ -31,7 +31,6 @@ class Api::ArtistsController < ApplicationController
   end
 
   def index
-    puts "alksdjaskdjh"
     artists = Artist.all
     render json: artists
   end
