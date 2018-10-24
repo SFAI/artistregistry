@@ -14,7 +14,6 @@ class AllArtists extends React.Component {
   componentDidMount() {
     const route = APIRoutes.artists.allArtists;
     Requester.get(route, (response) => {
-      console.log(response);
       this.setState({
         artists: response,
         componentDidMount: true
@@ -50,7 +49,7 @@ class AllArtists extends React.Component {
     } else {
       return (
         <div>
-          <h1>fml</h1>
+          <h1>Loading</h1>
         </div>
       );
     }
