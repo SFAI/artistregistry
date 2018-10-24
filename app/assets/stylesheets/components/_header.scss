@@ -1,0 +1,50 @@
+.header {
+	background: white;
+	box-shadow: 0 1px 8px $gray;
+	padding: 6px 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 10;
+
+	a {
+		color: inherit;
+		display: inline-block;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.container {
+    align-items: center;
+		display: flex;
+	}
+
+	.header-logo {
+		display: inline-block;
+		margin-right: 8px;
+		width: 100px;
+		margin-left: 48px;
+	}
+
+	.header-links {
+		display: flex;
+	}
+
+	.header-link-item a {
+		border-radius: 3px;
+		display: flex;
+		align-items: center;
+		margin: 0 2px;
+		padding: 8px 10px;
+		position: relative;
+		transition: 50ms;
+
+		&:hover {
+			background: $snow;
+			text-decoration: none;
+		}
+  }
+}

@@ -1,0 +1,33 @@
+.all-artists-page {
+  padding-top: 64px;
+  padding-left: 100px;
+  padding-right: 100px;
+  flex: 1;
+
+  .artists-table {
+    width: 100%;
+
+    .all-artists-container {
+      display: flex;
+      flex-flow: column;
+
+      .artist-row {
+        background-color: $snow;
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 4px;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.artist-profile-page {
+  flex: 1;
+  padding-top: 64px;
+  padding-left: 100px;
+  padding-right: 100px;
+}

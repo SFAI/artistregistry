@@ -1,0 +1,17 @@
+nav.header
+  .container
+    a href="/"
+      div.img-container = image_tag "sfai_logo.png", class: "header-logo"
+    ul.header-links
+      li.header-link-item
+        = link_to "Artists", artists_path
+      li.header-link-item
+        = link_to "Artist Login", new_artist_session_path
+      li.header-link-item
+        = link_to "Patron Login", new_buyer_session_path
+    - if current_artist
+        h1 Artist: #{current_artist.name}
+        = link_to "Log out", destroy_artist_session_path, method: :delete
+    - if current_buyer
+        h1 Patron: #{current_buyer.name}
+        = link_to "Log out", destroy_buyer_session_path, method: :delete
