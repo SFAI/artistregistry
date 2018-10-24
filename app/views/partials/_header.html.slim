@@ -5,13 +5,21 @@ nav.header
     ul.header-links
       li.header-link-item
         = link_to "Artists", artists_path
-      li.header-link-item
-        = link_to "Artist Login", new_artist_session_path
-      li.header-link-item
-        = link_to "Patron Login", new_buyer_session_path
-    - if current_artist
-        h1 Artist: #{current_artist.name}
-        = link_to "Log out", destroy_artist_session_path, method: :delete
-    - if current_buyer
-        h1 Patron: #{current_buyer.name}
-        = link_to "Log out", destroy_buyer_session_path, method: :delete
+      - if not current_artist and not current_buyer
+          li.header-link-item
+            = link_to "Artist Login", new_artist_session_path
+          li.header-link-item
+            = link_to "Patron Login", new_buyer_session_path
+      - else
+        - if current_artist
+            li.header-link-item
+              = link_to artistid_path(current_artist.id)
+                  | #{current_artist.name}
+            li.header-link-item
+              = link_to "Log Out", destroy_artist_session_path, method: :delete
+        - if current_buyer
+            li.header-link-item
+              = link_to buyerid_path(current_buyer.id)
+                  | #{current_buyer.name}
+            li.header-link-item
+              = link_to "Log out", destroy_buyer_session_path, method: :delete
