@@ -24,7 +24,7 @@ class ArtistInbox extends React.Component {
    
     return (
       <div>
-        These will be the artist works
+        These will be the artist requests
         {this.state.inbox.map((request) =>
           <div key={request.request.id}>
             <h3>{request.request.message}</h3>
