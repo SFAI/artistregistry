@@ -5,5 +5,6 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
+    @buyer = current_buyer
   end
 end
