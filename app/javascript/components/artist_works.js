@@ -20,10 +20,8 @@ class ArtistWorks extends React.Component {
 
 
   render() {
-
-   
     return (
-      <div>
+      <div className="artist-profile-page">
         These will be the artist works
         {this.state.works.map((work) =>
           <div key={work.id}>
@@ -32,7 +30,6 @@ class ArtistWorks extends React.Component {
             <p>{work.media}</p>
           </div>
         )}
-
       </div>
     );
   }

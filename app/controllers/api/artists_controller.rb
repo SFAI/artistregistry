@@ -5,6 +5,11 @@ class Api::ArtistsController < ApplicationController
     render json: @artist
   end
 
+  def index
+    artists = Artist.all
+    render json: artists
+  end
+
   def update
     artist = Artist.find(params[:id])
     new_work = work.update(params)
