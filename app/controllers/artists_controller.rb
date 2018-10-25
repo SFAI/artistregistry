@@ -7,4 +7,7 @@ class ArtistsController < ApplicationController
     @artist = Artist.find(params[:id])
     @buyer = current_buyer
   end
+
+  def all_artists
+  end
 end
