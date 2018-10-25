@@ -35,8 +35,6 @@ class Api::ArtistsController < ApplicationController
     requests = artist.requests
     requests_full = []
     requests.each do |request|
-      puts request.buyer
-      puts request.work
       this_request = {}
       this_request["request"] = request
       this_request["buyer"] = request.buyer
