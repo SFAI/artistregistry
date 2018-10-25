@@ -1,12 +1,22 @@
 import React, { PureComponent } from "react";
 
-class Filter extends PureComponent {
+class Filters extends PureComponent {
   constructor(props) {
     super(props);
   }
 
   filters = [
-    { name: "Media", items: ["One", "Two", "Three"] },
+    {
+      name: "Media",
+      items: [
+        "painting",
+        "photography",
+        "sculpture",
+        "prints",
+        "film",
+        "design"
+      ]
+    },
     { name: "Genre", items: ["One", "Two", "Three"] },
     { name: "Availability", items: ["One", "Two", "Three"] },
     { name: "Price", items: ["One", "Two", "Three"] },
@@ -15,7 +25,7 @@ class Filter extends PureComponent {
 
   render() {
     return (
-      <div className="flex flex-column mr2 ba w-20">
+      <div className="flex flex-column mr2 ba pa2 w-20">
         {this.filters.map(({ name, items }) => (
           <div>
             <h4> {name} </h4>
@@ -34,3 +44,4 @@ class Filter extends PureComponent {
     );
   }
 }
+export default Filters;
