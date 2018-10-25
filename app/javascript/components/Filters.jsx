@@ -3,11 +3,14 @@ import React, { PureComponent } from "react";
 class Filters extends PureComponent {
   constructor(props) {
     super(props);
+    state = {
+      checked: []
+    };
   }
 
   filters = [
     {
-      name: "Media",
+      type: "Media",
       items: [
         "painting",
         "photography",
@@ -17,23 +20,36 @@ class Filters extends PureComponent {
         "design"
       ]
     },
-    { name: "Genre", items: ["One", "Two", "Three"] },
-    { name: "Availability", items: ["One", "Two", "Three"] },
-    { name: "Price", items: ["One", "Two", "Three"] },
-    { name: "Size", items: ["One", "Two", "Three"] }
+    { type: "Genre", items: ["One", "Two", "Three"] },
+    { type: "Availability", items: ["One", "Two", "Three"] },
+    { type: "Price", items: ["One", "Two", "Three"] },
+    { type: "Size", items: ["One", "Two", "Three"] }
   ];
+
+  toggleCheckbox = item => {
+    console.log(item.target.name);
+    this.setState({
+      checked: [item]
+    });
+  };
 
   render() {
     return (
       <div className="flex flex-column mr2 ba pa2 w-20">
-        {this.filters.map(({ name, items }) => (
+        {this.filters.map(({ type, items }) => (
           <div>
-            <h4> {name} </h4>
+            <h4> {type} </h4>
             <div>
               {items.map(item => (
                 <div className="mb2">
                   <label>
-                    <input type="checkbox" /> {item}
+                    <input
+                      key={item}
+                      name={item}
+                      type="checkbox"
+                      onClick={this.toggleCheckbox}
+                    />
+                    {item}
                   </label>
                 </div>
               ))}

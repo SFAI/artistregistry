@@ -22,7 +22,7 @@ class Works extends React.Component {
       }
     );
   };
-
+  // todo: artist_id => Artist.name
   render() {
     return (
       <div className="flex bg-grey ma4">
@@ -34,7 +34,6 @@ class Works extends React.Component {
                 <h3>{work.title}</h3>
                 <p>{work.work_type}</p>
                 <p>{work.media}</p>
-                <p>{work.artist_id}</p>
               </div>
             );
           })}
