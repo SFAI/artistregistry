@@ -2,9 +2,9 @@ class ApiRoutes {
 
   get works() {
     return {
-      show: (id) => `/api/locations/${id}`,
-      update   : (id) => `/api/locations/${id}`,
-      create   : `/api/locations`,
+      show: (id) => `/api/works/${id}`,
+      update   : (id) => `/api/works/${id}`,
+      create   : `/api/works`,
       delete   : (id) => `/api/works/${id}`
     }
   }

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'pages#home'
   get 'artists/:id' => 'artists#show'
+  get '/works/:id', to: 'works#show'
 
 
   namespace :api, defaults: { format: :json } do
