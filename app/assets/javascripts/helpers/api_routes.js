@@ -1,12 +1,12 @@
 class ApiRoutes {
   get works() {
     return {
-      show: id => `/api/works/${id}`,
-      update: id => `/api/works/${id}`,
-      create: `/api/works`,
-      delete: id => `/api/works/${id}`,
-      index: `/api/works/index`
-    };
+      show        : (id) => `/api/works/${id}`,
+      update      : (id) => `/api/works/${id}`,
+      create      : `/api/works`,
+      delete      : (id) => `/api/works/destroy/${id}`,
+      index       : `/api/works/index`,
+    }
   }
 
   get artists() {
