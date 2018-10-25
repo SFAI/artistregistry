@@ -3,14 +3,15 @@ import React, { PureComponent } from "react";
 class Filters extends PureComponent {
   constructor(props) {
     super(props);
-    state = {
-      checked: []
+    this.state = {
+      searchParams: {}
     };
   }
 
   filters = [
     {
       type: "Media",
+      filter_name: "work_type",
       items: [
         "painting",
         "photography",
@@ -19,24 +20,31 @@ class Filters extends PureComponent {
         "film",
         "design"
       ]
-    },
-    { type: "Genre", items: ["One", "Two", "Three"] },
-    { type: "Availability", items: ["One", "Two", "Three"] },
-    { type: "Price", items: ["One", "Two", "Three"] },
-    { type: "Size", items: ["One", "Two", "Three"] }
+    }
   ];
 
-  toggleCheckbox = item => {
-    console.log(item.target.name);
+  toggleCheckbox = (filter_name, item) => {
+    const prevSearchParams = this.state.searchParams[filter_name];
+
+    let newFilterParams;
+    if (prevSearchParams && prevSearchParams.includes(item)) {
+      newFilterParams = prevSearchParams.filter(value => value !== item);
+    } else {
+      newFilterParams = prevSearchParams ? [...prevSearchParams, item] : [item];
+    }
+
     this.setState({
-      checked: [item]
+      searchParams: {
+        ...this.state.searchParams,
+        [filter_name]: newFilterParams
+      }
     });
   };
 
   render() {
     return (
       <div className="flex flex-column mr2 ba pa2 w-20">
-        {this.filters.map(({ type, items }) => (
+        {this.filters.map(({ type, filter_name, items }) => (
           <div>
             <h4> {type} </h4>
             <div>
@@ -45,9 +53,8 @@ class Filters extends PureComponent {
                   <label>
                     <input
                       key={item}
-                      name={item}
+                      onClick={() => this.toggleCheckbox(filter_name, item)}
                       type="checkbox"
-                      onClick={this.toggleCheckbox}
                     />
                     {item}
                   </label>
