@@ -23,7 +23,7 @@ class Api::WorksController < ApplicationController
   def update
     work = Work.find(params[:id])
     new_work = work.update(params)
-    render_json_message(:ok, message: 'Request successfully updated!')
+    render_json_message(:ok, message: 'Work successfully updated!')
   end
 
   def destroy
