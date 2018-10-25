@@ -37,7 +37,16 @@ class Api::WorksController < ApplicationController
 	
 	def index
 		works = Work.all
-		render json: works
-	end
+    render json: works,
+      each_serializer: WorkSerializer
+  end
+  
+  def filtered_works
+    parsed_query = CGI.parse(params[:search_params])
+    filtered_works = Work.where(parsed_query)
+
+    render json: filtered_works,
+      each_serializer: WorkSerializer
+  end
 	
 end

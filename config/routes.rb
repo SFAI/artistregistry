@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :works, :only => [:create, :update, :destroy]
     resources :artists, :only => [:show, :create, :update, :destroy]
     get 'artists/works/:id' => 'artists#works'
+    get 'works/filtered_works/:search_params' => 'works#filtered_works'
     get 'works/index' => 'works#index'
     get 'works/:id/show' => 'works#show'
 

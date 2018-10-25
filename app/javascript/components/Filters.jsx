@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 
 class Filters extends PureComponent {
   constructor(props) {
@@ -7,6 +8,10 @@ class Filters extends PureComponent {
       searchParams: {}
     };
   }
+
+  static propTypes = {
+    onFiltersChange: PropTypes.func
+  };
 
   filters = [
     {
@@ -20,8 +25,23 @@ class Filters extends PureComponent {
         "film",
         "design"
       ]
+    },
+    {
+      type: "Availability",
+      filter_name: "status",
+      items: ["available", "sold", "rented"]
     }
   ];
+
+  setNewFilters = params => {
+    const stringified = Object.keys(params)
+      .map(
+        filter_name =>
+          `${filter_name}=` + params[filter_name].join(`&${filter_name}=`)
+      )
+      .join("&");
+    this.props.onFiltersChange(stringified); // lifting params up to Works as querystring
+  };
 
   toggleCheckbox = (filter_name, item) => {
     const prevSearchParams = this.state.searchParams[filter_name];
@@ -33,26 +53,29 @@ class Filters extends PureComponent {
       newFilterParams = prevSearchParams ? [...prevSearchParams, item] : [item];
     }
 
+    const newSearchParams = {
+      ...this.state.searchParams,
+      [filter_name]: newFilterParams
+    };
+
+    this.setNewFilters(newSearchParams);
+
     this.setState({
-      searchParams: {
-        ...this.state.searchParams,
-        [filter_name]: newFilterParams
-      }
+      searchParams: newSearchParams
     });
   };
 
   render() {
     return (
       <div className="flex flex-column mr2 ba pa2 w-20">
-        {this.filters.map(({ type, filter_name, items }) => (
-          <div>
+        {this.filters.map(({ type, filter_name, items }, index) => (
+          <div key={index}>
             <h4> {type} </h4>
             <div>
               {items.map(item => (
-                <div className="mb2">
+                <div className="mb2" key={item}>
                   <label>
                     <input
-                      key={item}
                       onClick={() => this.toggleCheckbox(filter_name, item)}
                       type="checkbox"
                     />
