@@ -26,6 +26,16 @@ Kahlo = Artist.create(
   )
 Kahlo.save!
 
+Matisse = Artist.create(
+  id: 3,
+  name: 'Matisse',
+  email: 'henri@Matisse.com',
+  password: 'password',
+  program: 'art',
+  open_to_commissions: true
+  )
+Matisse.save!
+
 Gates = Buyer.create(
   id:0,
   name: 'Bill Gates',
@@ -55,6 +65,36 @@ Lisa = Picasso.works.create(
   )
 Lisa.artist_id = Picasso.id
 Lisa.save!
+
+TwoFridas = Work.create(
+  title: 'The Two Fridas',
+  media: 'Oil on canvas',
+  work_type: 0,
+  status: 0,
+  price: 123.45,
+  artist_id: Kahlo.id,
+  )
+TwoFridas.save!
+
+Oceania = Work.create(
+  title: 'Memory of Oceania',
+  media: 'Cutout',
+  work_type: 5,
+  status: 0,
+  price: 234.56,
+  artist_id: Matisse.id,
+  )
+Oceania.save!
+
+TwoDancers = Work.create(
+  title: 'Two Dancers',
+  media: 'Cutout',
+  work_type: 5,
+  status: 0,
+  price: 4578.90,
+  artist_id: Matisse.id,
+  )
+TwoDancers.save!
 
 #Lisa's id is 1
 lisa_request = Request.create(
