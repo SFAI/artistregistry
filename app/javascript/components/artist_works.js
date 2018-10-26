@@ -48,8 +48,13 @@ class ArtistWorks extends React.Component {
         )}
 
         <form onSubmit = {this.handleSubmit} name="commissionsForm">
-          <textarea type="TEXT" name="comment" id="comment" value={this.state.comment}
-                    onChange = {this.handleChange} />
+          <textarea
+            type="TEXT"
+            name="comment"
+            id="comment"
+            value={this.state.comment}
+            onChange = {this.handleChange}
+          />
           <input type="submit" value="Submit" />
         </form>
 
