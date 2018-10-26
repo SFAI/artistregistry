@@ -63,14 +63,16 @@ lisa_request = Request.create(
   )
 lisa_request.buyer = Gates
 lisa_request.work = Lisa
+lisa_request.artist = Lisa.artist
 lisa_request.save!
 
 lisa_request_jobs = Request.create(
 
-  message: 'I would like to request the Mona Lisa - steve jobs'
+  message: 'I would like to request the Mona Lisa as well'
   )
 lisa_request_jobs.buyer = Jobs
 lisa_request_jobs.work = Lisa
+lisa_request_jobs.artist = Lisa.artist
 lisa_request_jobs.save!
 
 Gates_commission_Picasso = Commission.create(

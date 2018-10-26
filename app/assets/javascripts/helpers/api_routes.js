@@ -15,7 +15,16 @@ class ApiRoutes {
       update      : (id) => `/api/artists/${id}`,
       delete      : (id) => `/api/artists/destroy/${id}`,
       works       : (id) => `/api/artists/works/${id}`,
-      allArtists  : `api/artists`
+      allArtists  : `api/artists`,
+      requests    : (id) => `/api/artists/requests/${id}`
+    }
+  }
+
+  get requests() {
+    return {
+      show        : (id) => `/api/requests/${id}`,
+      update      : (id) => `/api/requests/${id}`,
+      create      : (id) => `/api/requests/${id}`
     }
   }
 
