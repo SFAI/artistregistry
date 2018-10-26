@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-
+/**
+* @prop buyer: buyer currently logged in
+* @prop artist: artist associated with works
+*/
 class ArtistWorks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       works: [],
-      comment: "",
+      comment: ""
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,8 +32,13 @@ class ArtistWorks extends React.Component {
     const artist_id = this.props.artist.id;
     const commissions_route = APIRoutes.commissions.create;
     const buyer_id = this.props.buyer.id;
+    const payload = {
+      "buyer_id": buyer_id,
+      "artist_id": artist_id,
+      "comment": this.state.comment
+    }
 
-    Requester.post(commissions_route, { "buyer_id": buyer_id, "artist_id": artist_id, "comment": this.state.comment })
+    Requester.post(commissions_route, payload)
 
   }
 

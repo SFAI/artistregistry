@@ -1,12 +1,11 @@
 class Api::CommissionsController < ApplicationController
   respond_to :json
   def show
-
   end
 
   def create
     commission = Commission.new(commission_params)
-  	commission.save!
+    commission.save!
   end
 
   def update
@@ -17,7 +16,6 @@ class Api::CommissionsController < ApplicationController
   end
 
   private
-
     def commission_params
       params.permit(
         :buyer_id,
