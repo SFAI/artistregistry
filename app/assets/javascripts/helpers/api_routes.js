@@ -21,7 +21,7 @@ class ApiRoutes {
 
   get commissions() {
     return {
-      create  : `/commissions/create/`
+      create  : `/api/commissions`
     }
   }
 
