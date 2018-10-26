@@ -12,5 +12,9 @@
  *
  *= require_self
  */
- @import "bootstrap-sprockets";
- @import "bootstrap";
+ @import "partials/reset";
+ @import "partials/colors";
+ @import "partials/fonts";
+
+ @import "pages/*";
+ @import "components/*";
