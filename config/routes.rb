@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resources :works, :only => [:show, :create, :update, :destroy]
-    resources :artists, :only => [:show, :create, :update, :destroy]
+    resources :artists, :only => [:index, :show, :create, :update, :destroy]
     resources :requests, :only => [:show, :create, :update]
     get 'artists/works/:id' => 'artists#works'
     get 'artists/requests/:id' => 'artists#requests'
