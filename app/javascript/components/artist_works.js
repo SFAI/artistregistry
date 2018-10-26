@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Modal from "react-modal";
 // import { standardError } from '../../../lib/alerts';
-import CreateWorkModal from '../../CreateWorkModal'
+import CreateWorkModal from './CreateWorkModal.js'
 
 const customStyles = {
   content : {
@@ -38,12 +37,11 @@ class ArtistWorks extends React.Component {
     }, (response) => {console.err(response)});
   }
 
-  // openModal() {
-  //   return (
-  //     <CreateWorkModal
-  //       onSaveWork={this._handleCreateWork} />
-  //     );
-  // }
+  openModal() {
+    return (
+      <CreateWorkModal/>
+      );
+  }
 
   toggleAddResource() {
     if (this.state.isOpen == true) {
