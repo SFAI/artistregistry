@@ -1,6 +1,6 @@
 class Request < ApplicationRecord
-  belongs_to :artist
+  belongs_to :work
   belongs_to :buyer
-  has_one :work
+  belongs_to :artist
 
 end

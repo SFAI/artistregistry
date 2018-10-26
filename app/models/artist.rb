@@ -5,6 +5,5 @@ class Artist < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :works
   has_many :requests
-  has_many :buyers, through: :requests
   has_many :buyers, through: :commissions
 end
