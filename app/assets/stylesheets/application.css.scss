@@ -12,9 +12,12 @@
  *
  *= require_self
  */
+
  @import "partials/reset";
  @import "partials/colors";
  @import "partials/fonts";
+
+ @import "tachyons-sass/tachyons.scss";
 
  @import "pages/*";
  @import "components/*";
