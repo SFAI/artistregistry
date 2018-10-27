@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_24_081838) do
+ActiveRecord::Schema.define(version: 2018_10_24_205146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,12 @@ ActiveRecord::Schema.define(version: 2018_10_24_081838) do
 
   create_table "requests", force: :cascade do |t|
     t.text "message"
+    t.bigint "buyer_id"
+    t.bigint "work_id"
+    t.bigint "artist_id"
+    t.index ["artist_id"], name: "index_requests_on_artist_id"
+    t.index ["buyer_id"], name: "index_requests_on_buyer_id"
+    t.index ["work_id"], name: "index_requests_on_work_id"
   end
 
   create_table "works", force: :cascade do |t|
@@ -100,5 +106,8 @@ ActiveRecord::Schema.define(version: 2018_10_24_081838) do
 
   add_foreign_key "commissions", "artists"
   add_foreign_key "commissions", "buyers"
+  add_foreign_key "requests", "artists"
+  add_foreign_key "requests", "buyers"
+  add_foreign_key "requests", "works"
   add_foreign_key "works", "artists"
 end
