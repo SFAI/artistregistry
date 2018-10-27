@@ -19,9 +19,14 @@ class ArtistWorks extends React.Component {
   componentDidMount = () => {
     const artist_id = this.props.artist.id;
     const works_route = APIRoutes.artists.works(0);
-    Requester.get(works_route, (response) => {
-      this.setState({ works: response });
-    }, (response) => {console.err(response)});
+    Requester.get(works_route).then(
+      response => {
+        this.setState({ works: response });
+      },
+      response => {
+        console.err(response);
+      }
+    );
   }
 
   handleChange(event) {
@@ -39,21 +44,19 @@ class ArtistWorks extends React.Component {
     }
 
     Requester.post(commissions_route, payload)
-
   }
-
 
   render() {
     return (
       <div className="artist-profile-page">
         These will be the artist works
-        {this.state.works.map((work) =>
+        {this.state.works.map(work => (
           <div key={work.id}>
             <h3>{work.title}</h3>
             <p>{work.work_type}</p>
             <p>{work.media}</p>
           </div>
-        )}
+        ))}
 
         <form onSubmit = {this.handleSubmit} name="commissionsForm">
           <textarea
