@@ -7,21 +7,24 @@ class Works extends React.Component {
     super(props);
     this.state = {
       works: [],
-      searchParams: ""
+      searchParams: "",
+      filters: {}
     };
   }
 
   componentDidMount = () => {
     const works_route = APIRoutes.works.index;
-    Requester.get(
-      works_route,
-      response => {
-        this.setState({ works: response });
-      },
-      response => {
-        console.err(response);
-      }
-    );
+    const categories_route = APIRoutes.works.categories;
+    Promise.all([
+      Requester.get(works_route),
+      Requester.get(categories_route)
+    ]).then(response => {
+      const [works_response, filters_response] = response;
+      this.setState({
+        works: works_response,
+        filters: filters_response
+      });
+    });
   };
 
   handleFilters = newSearchParams => {

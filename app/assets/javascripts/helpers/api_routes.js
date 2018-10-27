@@ -7,6 +7,7 @@ class ApiRoutes {
       delete      : (id) => `/api/works/destroy/${id}`,
       index       : `/api/works/index`,
       filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
+      categories: `/works/categories`
     }
   }
 

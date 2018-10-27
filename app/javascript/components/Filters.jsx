@@ -5,12 +5,29 @@ class Filters extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      searchParams: {}
+      searchParams: {},
+      filters: null
     };
   }
 
   static propTypes = {
     onFiltersChange: PropTypes.func
+  };
+
+  componentDidMount = () => {
+    // const categories_route = APIRoutes.works.categories;
+    // Requester.get(
+    //   categories_route,
+    //   response => {
+    //     debugger;
+    //     this.setState({
+    //       filters: response
+    //     });
+    //   },
+    //   response => {
+    //     console.err(response);
+    //   }
+    // );
   };
 
   filters = [
@@ -66,6 +83,13 @@ class Filters extends PureComponent {
   };
 
   render() {
+    // const filters = this.state.filters.map(filter => {
+    //   return {
+    //     type: "Lorem",
+    //     filter_name: filter,
+    //     items: this.state.filters[filter]
+    //   };
+    // });
     return (
       <div className="flex flex-column mr2 ba pa2 w-20">
         {this.filters.map(({ type, filter_name, items }, index) => (
