@@ -13,8 +13,8 @@ Rails.application.routes.draw do
     resources :works, :only => [:show, :create, :update, :destroy]
     resources :artists, :only => [:index, :show, :create, :update, :destroy]
     resources :requests, :only => [:show, :create, :update]
+    resources :commissions, :only => [:show, :create, :update, :destroy]
     get 'artists/works/:id' => 'artists#works'
-    post 'commissions/' => 'commissions#create'
     get 'artists/requests/:id' => 'artists#requests'
   end
 end
