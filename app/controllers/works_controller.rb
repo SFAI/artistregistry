@@ -6,8 +6,8 @@ class WorksController < ApplicationController
     # return enums for filtering
     # Work.statuses
     categories = {
-      "work_type": Work.work_types,
-      "status": Work.statuses
+      "availability": Work.availabilities,
+      "medium": Work.media
     }
     render json: categories
   end
