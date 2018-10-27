@@ -30,6 +30,9 @@ class ArtistWorks extends React.Component {
             <p>{work.media}</p>
           </div>
         )}
+        <div className="fl w-100 pa2">
+          <h1>aaklsdj</h1>
+        </div>
       </div>
     );
   }
