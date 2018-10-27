@@ -28,5 +28,11 @@ class ApiRoutes {
     }
   }
 
+  get commissions() {
+    return {
+      create      : `/api/commissions`
+    }
+  }
+
 }
 const APIRoutes = new ApiRoutes();
