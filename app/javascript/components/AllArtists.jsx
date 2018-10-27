@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import ArtistRow from './ArtistRow.jsx';
+import ArtistRow from "./ArtistRow.jsx";
 
 class AllArtists extends React.Component {
   constructor(props) {
@@ -8,30 +8,27 @@ class AllArtists extends React.Component {
     this.state = {
       artists: null,
       componentDidMount: false
-    }
+    };
   }
 
   componentDidMount() {
     const route = APIRoutes.artists.allArtists;
-    Requester.get(route, (response) => {
-      this.setState({
-        artists: response,
-        componentDidMount: true
-      })
-    }, (error) => {
-      console.error(error);
-    });
+    Requester.get(route).then(
+      response => {
+        this.setState({
+          artists: response,
+          componentDidMount: true
+        });
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 
   renderArtistRows() {
     return this.state.artists.map((artist, i) => {
-      return (
-        <ArtistRow
-          name={artist.name}
-          key={i}
-          id={artist.id}
-        />
-      );
+      return <ArtistRow name={artist.name} key={i} id={artist.id} />;
     });
   }
 
