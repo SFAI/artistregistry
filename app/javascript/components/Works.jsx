@@ -53,14 +53,14 @@ class Works extends React.Component {
     return (
       <div className="ma4">
         <div className="flex bg-grey">
-          <Filters onFiltersChange={this.handleFilters} />
+          <Filters filters={this.state.filters} onFiltersChange={this.handleFilters} />
           <div>
             {this.state.works.map(work => {
               return (
                 <div className="ba mb2 pa2" key={work.id}>
                   <h3>{work.title}</h3>
-                  <p>{work.work_type}</p>
-                  <p>{work.media}</p>
+                  <p>{work.material}</p>
+                  <p>{work.medium}</p>
                   <p>{work.artist_name}</p>
                 </div>
               );

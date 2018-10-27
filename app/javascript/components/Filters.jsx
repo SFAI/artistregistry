@@ -6,49 +6,13 @@ class Filters extends PureComponent {
     super(props);
     this.state = {
       searchParams: {},
-      filters: null
     };
   }
 
   static propTypes = {
-    onFiltersChange: PropTypes.func
+    onFiltersChange: PropTypes.func,
+    filters: PropTypes.object,
   };
-
-  componentDidMount = () => {
-    // const categories_route = APIRoutes.works.categories;
-    // Requester.get(
-    //   categories_route,
-    //   response => {
-    //     debugger;
-    //     this.setState({
-    //       filters: response
-    //     });
-    //   },
-    //   response => {
-    //     console.err(response);
-    //   }
-    // );
-  };
-
-  filters = [
-    {
-      type: "Media",
-      filter_name: "work_type",
-      items: [
-        "painting",
-        "photography",
-        "sculpture",
-        "prints",
-        "film",
-        "design"
-      ]
-    },
-    {
-      type: "Availability",
-      filter_name: "status",
-      items: ["available", "sold", "rented"]
-    }
-  ];
 
   setNewFilters = params => {
     const stringified = Object.keys(params)
@@ -83,35 +47,42 @@ class Filters extends PureComponent {
   };
 
   render() {
-    // const filters = this.state.filters.map(filter => {
-    //   return {
-    //     type: "Lorem",
-    //     filter_name: filter,
-    //     items: this.state.filters[filter]
-    //   };
-    // });
-    return (
-      <div className="flex flex-column mr2 ba pa2 w-20">
-        {this.filters.map(({ type, filter_name, items }, index) => (
-          <div key={index}>
-            <h4> {type} </h4>
-            <div>
-              {items.map(item => (
-                <div className="mb2" key={item}>
-                  <label>
-                    <input
-                      onClick={() => this.toggleCheckbox(filter_name, item)}
-                      type="checkbox"
-                    />
-                    {item}
-                  </label>
+    const { filters } = this.props;
+    const filter_types = Object.keys(filters);
+    if (filter_types !== undefined && filter_types.length) {
+      return (
+        <div className="flex flex-column mr2 ba pa2 w-20">
+          {filter_types.map((type, index) => {
+            return (
+              <div key={index}>
+                <h4> {type} </h4>
+                <div>
+                  {Object.keys(filters[type]).map(item => (
+                    <div className="mb2" key={item}>
+                      <label>
+                        <input
+                          onClick={() => this.toggleCheckbox(type, item)}
+                          type="checkbox"
+                        />
+                        {item}
+                      </label>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
+              </div>
+            )
+          })}
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className="flex flex-column mr2 ba pa2 w-20">
+          <p> Loading </p>
+        </div>
+      )
+    }
   }
 }
+
 export default Filters;
