@@ -2,6 +2,7 @@
   "name": "SFAI",
   "private": true,
   "dependencies": {
+    "@blueprintjs/core": "^3.7.0",
     "@rails/webpacker": "3.5",
     "babel-preset-react": "^6.24.1",
     "prop-types": "^15.6.2",

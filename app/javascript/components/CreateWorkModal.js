@@ -1,28 +1,28 @@
 import React from 'react';
-import { Button, Text, ScrollView } from 'react-native';
-import { Form, InputField } from 'react-native-form-generator';
 import { Button, Dialog, Intent } from "@blueprintjs/core"
-import { getCSRFToken } from '../../shared/helpers/form_helpers'
+import { getCSRFToken } from '../shared/helpers/form_helpers.js'
 
 
 // import { APIRoutes } from '../../config/routes';
 // import PropTypes from 'prop-types';
 /**
- * @prop onCreateWork - callback function when work create form is submitted
+ * @prop onCreatbeWork - callback function when work create form is submitted
  */
 class CreateWorkModal extends React.Component {
   constructor(props) {
     super(props);
 
-    this._getInitialFormValues = this._getInitialFormValues.bind(this);
-    this._handleFormChange = this._handleFormChange.bind(this);
-    this._handleSaveWork = this._handleSaveWork.bind(this);
-
-
     this.state = {
       formValues: this._getInitialFormValues(),
-      isOpen: false
+      isOpen: false,
     }
+
+    this._getInitialFormValues = this._getInitialFormValues.bind(this);
+    this.toggleAddWork = this.toggleAddWork.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    // this._handleFormChange = this._handleFormChange.bind(this);
+    // this._handleSaveWork = this._handleSaveWork.bind(this);
   }
 
   // _handleFormChange(values){
@@ -49,6 +49,7 @@ class CreateWorkModal extends React.Component {
   // }
 
   toggleAddWork() {
+    console.log(this.state)
     if (this.state.isOpen == true) {
       this.setState({ isOpen: false })
     } else {
@@ -65,9 +66,9 @@ class CreateWorkModal extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    fetch(APIRoutes.artists.works(0), {
+    fetch(APIRoutes.works.create, {
       method: 'POST',
-      body: formValues,
+      body: this.state.formValues,
       credentials: 'same-origin',
       headers: {
         "X_CSRF-Token": getCSRFToken()
@@ -83,14 +84,14 @@ class CreateWorkModal extends React.Component {
   render() {
     return (
       <div>
-        <Button className='add-work-button pt-icon-add pt-large' onClick={this.toggleAddResource}>Add Resources</Button>
+        <Button className='add-work-button pt-icon-add pt-large' onClick={this.toggleAddWork}>Create New Work</Button>
         <Dialog
           iconName="pt-icon-add"
           isOpen={this.state.isOpen}
           onClose={this.toggleAddWork}
           title="Add"
         >
-          <form action=APIRoutes.artists.works(0) method='POST' onSubmit={this.handleSubmit}>
+          <form action={APIRoutes.works.create} method='POST' onSubmit={this.handleSubmit}>
             <div className="pt-dialog-body">
               <p className="pt-ui-text">Title:
                 <input

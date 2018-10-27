@@ -37,20 +37,6 @@ class ArtistWorks extends React.Component {
     }, (response) => {console.err(response)});
   }
 
-  openModal() {
-    return (
-      <CreateWorkModal/>
-      );
-  }
-
-  toggleAddResource() {
-    if (this.state.isOpen == true) {
-      this.setState({ isOpen: false })
-    } else {
-      this.setState({ isOpen: true })
-    }
-  }
-
   //
   // afterOpenModal() {
   //   // references are now sync'd and can be accessed.
@@ -86,7 +72,7 @@ class ArtistWorks extends React.Component {
             <p>{work.media}</p>
           </div>
         )}
-        <button type="button" class="btn btn-success" >Upload New Work</button>
+        <CreateWorkModal/>
       </div>
     );
   }
