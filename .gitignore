@@ -34,4 +34,3 @@ yarn-debug.log*
 .yarn-integrity
 
 package-lock.json
-yarn.lock
