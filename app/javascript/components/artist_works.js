@@ -66,6 +66,10 @@ class ArtistWorks extends React.Component {
           <input type="submit" value="Submit" />
         </form>
 
+        <div className="fl w-100 pa2">
+          <h1>aaklsdj</h1>
+        </div>
+
       </div>
     );
   }
