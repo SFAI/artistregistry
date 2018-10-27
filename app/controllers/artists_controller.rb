@@ -12,4 +12,7 @@ class ArtistsController < ApplicationController
    artist.send_reset_password_instructions flash[:notice] = 'Reset password instructions have been sent to #{user.email}.'
    redirect_to artist_user_path(artist)
   end
+
+  def all_artists
+  end
 end
