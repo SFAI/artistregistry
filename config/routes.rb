@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'buyers/:id' => 'buyers#show', as: :buyerid
 
   namespace :api, defaults: { format: :json } do
-    resources :works, :only => [:show, :create, :update, :destroy]
+    resources :works, :only => [:create, :update, :destroy]
     resources :artists, :only => [:index, :show, :create, :update, :destroy]
     resources :requests, :only => [:show, :create, :update]
     resources :commissions, :only => [:show, :create, :update, :destroy]

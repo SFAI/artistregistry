@@ -34,28 +34,33 @@ class Works extends React.Component {
   };
 
   testFilteredWorksRoute = () => {
-    if (this.state.searchParams === "") return;
-    const works_route = APIRoutes.works.filtered_works(this.state.searchParams);
+    // NOTE: Can't pass empty searchParams string to filtered_works
+    // Possible fix by editing routes.fb, but not sure how -B.Y.
+    const { searchParams } = this.state;
+    const works_route = searchParams.length
+      ? APIRoutes.works.filtered_works(searchParams)
+      : APIRoutes.works.index;
 
     Requester.get(
-      works_route,
-      response => {
-        this.setState({ works: response });
-      },
-      response => {
-        console.err(response);
-      }
-    );
+      works_route).then(
+        response => {
+          this.setState({ works: response });
+        },
+        response => {
+          console.err(response);
+        }
+      );
   };
 
-  // todo: artist_id => Artist.name
   render() {
+    const { filters, works } = this.state;
+
     return (
       <div className="ma4">
         <div className="flex bg-grey">
-          <Filters filters={this.state.filters} onFiltersChange={this.handleFilters} />
+          <Filters filters={filters} onFiltersChange={this.handleFilters} />
           <div>
-            {this.state.works.map(work => {
+            {works.map(work => {
               return (
                 <div className="ba mb2 pa2" key={work.id}>
                   <h3>{work.title}</h3>

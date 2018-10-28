@@ -43,8 +43,7 @@ class Api::WorksController < ApplicationController
   
   def filtered_works
     parsed_query = CGI.parse(params[:search_params])
-    filtered_works = Work.where(parsed_query)
-
+    filtered_works = params[:search_params] == "" ?  Work.all : Work.where(parsed_query)
     render json: filtered_works,
       each_serializer: WorkSerializer
   end

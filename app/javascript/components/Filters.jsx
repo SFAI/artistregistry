@@ -15,10 +15,19 @@ class Filters extends PureComponent {
   };
 
   setNewFilters = params => {
-    const stringified = Object.keys(params)
+    const filteredParams = Object.keys(params).filter(
+      filter_name => params[filter_name].length
+    ).reduce((nonEmptyParams, filter_name) => {
+      nonEmptyParams[filter_name] = params[filter_name];
+      return nonEmptyParams;
+    }, {})
+    const stringified = Object.keys(filteredParams)
       .map(
-        filter_name =>
-          `${filter_name}=` + params[filter_name].join(`&${filter_name}=`)
+        filter_name => {
+          if (filteredParams[filter_name].length) {
+            return `${filter_name}=` + filteredParams[filter_name].join(`&${filter_name}=`)
+          }
+        }
       )
       .join("&");
     this.props.onFiltersChange(stringified); // lifting params up to Works as querystring
@@ -36,7 +45,7 @@ class Filters extends PureComponent {
 
     const newSearchParams = {
       ...this.state.searchParams,
-      [filter_name]: newFilterParams
+      [filter_name]: newFilterParams // is this overwriting [filtername] ???
     };
 
     this.setNewFilters(newSearchParams);
