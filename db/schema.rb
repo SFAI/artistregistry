@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 2018_10_27_211726) do
   end
 
   create_table "commissions", force: :cascade do |t|
-    t.integer "price"
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
