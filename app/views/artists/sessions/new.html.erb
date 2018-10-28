@@ -10,21 +10,22 @@
     <%= f.password_field :password, autocomplete: "current-password" %>
   </div>
 
-  <% if devise_mapping.rememberable? -%>
+  <% if devise_mapping.rememberable? %>
     <div class="field">
       <%= f.check_box :remember_me %>
       <%= f.label :remember_me %>
     </div>
-  <% end -%>
-
+  <% end %>
 
   <div class="actions">
     <%= f.submit "Log in" %>
   </div>
-  <div class="actions">
-    <%=form_tag(artist_user_generate_new_password_email_path(@part))do %>
-    <%=submit_tag 'Send Reset Password Email', class: 'button', :confirm => 'Are you sure you want to email reset password instructions?' %> 
-  </div>
 <% end %>
+
+<div class="actions">
+  <%=form_tag('artists/generate_new_password_email', method: :post)do %>
+    <%=submit_tag 'Send Reset Password Email', class: 'button', :confirm => 'Are you sure you want to email reset password instructions?' %> 
+  <% end %>
+</div>
 
 <%= render "artists/shared/links" %>
