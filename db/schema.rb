@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_24_205146) do
+ActiveRecord::Schema.define(version: 2018_10_28_002527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 2018_10_24_205146) do
   end
 
   create_table "commissions", force: :cascade do |t|
-    t.integer "price"
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -86,6 +85,22 @@ ActiveRecord::Schema.define(version: 2018_10_24_205146) do
     t.index ["work_id"], name: "index_requests_on_work_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer "type"
+    t.date "start_date"
+    t.date "end_date"
+    t.date "purchase_date"
+    t.integer "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "buyer_id"
+    t.bigint "artist_id"
+    t.bigint "work_id"
+    t.index ["artist_id"], name: "index_transactions_on_artist_id"
+    t.index ["buyer_id"], name: "index_transactions_on_buyer_id"
+    t.index ["work_id"], name: "index_transactions_on_work_id"
+  end
+
   create_table "works", force: :cascade do |t|
     t.string "title"
     t.text "media"
@@ -101,5 +116,8 @@ ActiveRecord::Schema.define(version: 2018_10_24_205146) do
   add_foreign_key "requests", "artists"
   add_foreign_key "requests", "buyers"
   add_foreign_key "requests", "works"
+  add_foreign_key "transactions", "artists"
+  add_foreign_key "transactions", "buyers"
+  add_foreign_key "transactions", "works"
   add_foreign_key "works", "artists"
 end
