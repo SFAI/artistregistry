@@ -10,6 +10,8 @@
     "react": "^16.5.2",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.2",
+    "react-dropzone": "^7.0.1",
+    "react-numeric-input": "^2.2.3",
     "react_ujs": "^2.4.4",
     "tachyons-sass": "^4.9.3"
   },

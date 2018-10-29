@@ -4,7 +4,7 @@ class ApiRoutes {
     return {
       show        : (id) => `/api/works/${id}`,
       update      : (id) => `/api/works/${id}`,
-      create      : `/api/works/create`,
+      create      : `/api/works/`,
       delete      : (id) => `/api/works/destroy/${id}`
     }
   }

@@ -6,7 +6,10 @@ class Api::WorksController < ApplicationController
   end
 
   def create
-    work = Work.create(params)
+    work = Work.create(work_params)
+    work.images.attach(params[:work][:images])
+    puts "------IMAGES-------"
+    puts params[:work][:images]
     begin
       saved = work.save!
     rescue ActiveRecord::RecordInvalid => invalid
@@ -18,6 +21,10 @@ class Api::WorksController < ApplicationController
     else
       render_json_message(:forbidden, errors: work.errors.full_messages)
     end
+  end
+
+  def upload_image
+    work.images.attach(params[:images])
   end
 
   def update
@@ -34,4 +41,9 @@ class Api::WorksController < ApplicationController
       render_json_message(:forbidden, errors: work.errors.full_messages)
     end
   end
+
+  def work_params
+    params.require(:work).permit(:title, :media, :work_type, :status, :artist_id, images: [])
+  end
+
 end

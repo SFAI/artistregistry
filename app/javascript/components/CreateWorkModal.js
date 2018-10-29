@@ -1,6 +1,8 @@
+import PropTypes from "prop-types"
 import React from 'react';
 import { Button, Dialog, Intent } from "@blueprintjs/core"
 import { getCSRFToken } from '../shared/helpers/form_helpers.js'
+import Dropzone from "react-dropzone";
 
 
 // import { APIRoutes } from '../../config/routes';
@@ -13,14 +15,22 @@ class CreateWorkModal extends React.Component {
     super(props);
 
     this.state = {
-      formValues: this._getInitialFormValues(),
+      work: {
+        title: 'hello',
+        media: 'ahhhh',
+        work_type: 1,
+        status: 1,
+        images: [],
+        artist_id: 0
+      },
       isOpen: false,
     }
 
-    this._getInitialFormValues = this._getInitialFormValues.bind(this);
+    // this._getInitialFormValues = this._getInitialFormValues.bind(this);
     this.toggleAddWork = this.toggleAddWork.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onDrop = this.onDrop.bind(this);
     // this._handleFormChange = this._handleFormChange.bind(this);
     // this._handleSaveWork = this._handleSaveWork.bind(this);
   }
@@ -30,16 +40,16 @@ class CreateWorkModal extends React.Component {
   //   this.setState({ formValues : values });
   // }
 
-  _getInitialFormValues() {
-    let values = {
-      title: this.props.title,
-      media: this.props.media,
-      work_type: this.props.work_type,
-      status: this.props.status,
-      price: this.props.price,
-    }
-    return values
-  }
+  // _getInitialFormValues() {
+  //   let values = {
+  //     title: "",
+  //     media: "",
+  //     work_type: 0,
+  //     status: 0,
+  //     artist: 0,
+  //   }
+  //   return values
+  // }
 
   // _handleSaveWork() {
   //   if (this.state.formValues) {
@@ -49,7 +59,6 @@ class CreateWorkModal extends React.Component {
   // }
 
   toggleAddWork() {
-    console.log(this.state)
     if (this.state.isOpen == true) {
       this.setState({ isOpen: false })
     } else {
@@ -58,27 +67,84 @@ class CreateWorkModal extends React.Component {
   }
 
   handleChange(event) {
-    const formValues = this.state.formValues
-    formValues[event.target.name] = event.target.value
-    this.setState({ formValues: formValues })
+    console.log("HANDLE CHANGE!!!!!!")
+    const work = this.state.work;
+    work[event.target.name] = event.target.value
+    this.setState({ work: work })
   }
 
   handleSubmit(event) {
+
     event.preventDefault()
 
-    fetch(APIRoutes.works.create, {
-      method: 'POST',
-      body: this.state.formValues,
-      credentials: 'same-origin',
-      headers: {
-        "X_CSRF-Token": getCSRFToken()
-      }
-    }).then((resp) => {
-      if (resp.status != 200) {
-        alert("There was an error. Try again!")
-      }
-      window.location.reload()
-    })
+    let formData = new FormData()
+      formData.append('work[title]', this.state.work.title)
+      formData.append('work[media]', this.state.work.media)
+      formData.append('work[work_type]', this.state.work.work_type)
+      formData.append('work[status]', this.state.work.status)
+      formData.append('work[images]', this.state.work.images)
+
+    // fetch(APIRoutes.works.create, {
+    //   method: 'POST',
+    //   body: formData,
+    //   processData: false,
+    //   credentials: 'same-origin',
+    //   headers: {
+    //     "X_CSRF-Token": getCSRFToken()
+    //   }
+    // }).then((resp) => {
+    //   if (resp.status != 200) {
+    //     alert("There was an error. Try again!")
+    //   }
+    //   window.location.reload()
+    // })
+
+    // let formData = new FormData();
+    // formData.append('user[email]', this.state.email);
+    // formData.append('user[first_name]', this.state.first_name);
+    // formData.append('user[last_name]', this.state.last_name);
+
+    for (var x = 0; x < this.state.work.images.length; x++) {
+        formData.append("work[images][]", this.state.work.images[x],this.state.work.images[x].name);
+    }
+
+    // fetch(APIRoutes.works.create, {
+    //   method: 'POST',
+    //   body: formData,
+    //   credentials: 'same-origin',
+    //   headers: {
+    //     "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+    //   }
+    // }).then((resp) => {
+    //   if (resp.status != 200) {
+    //     alert("There was an error. Try again!")
+    //   }
+    //   window.location.reload()
+    // })
+
+
+    Requester.post(APIRoutes.works.create, formData, console.log("success"), console.log("fail"));
+
+  }
+
+  onDrop(images) {
+    // Get existing files from state
+    // (or just the empty array if there are no files in state)
+    var currentImages = this.state.work.images;
+
+
+    // Push file(s) from function parameters to `currentFiles` array
+    const [newImages] = images;
+    currentImages.push(newImages);
+
+    // Assign files dropped into component into state
+    var work = this.state.work;
+    work.images = currentImages
+    this.setState({
+     work: work
+    });
+    console.log("after upload")
+    console.log(this.state.work)
   }
 
   render() {
@@ -95,7 +161,7 @@ class CreateWorkModal extends React.Component {
             <div className="pt-dialog-body">
               <p className="pt-ui-text">Title:
                 <input
-                  value={this.state.formValues.title}
+                  value={this.state.work.title}
                   onChange={this.handleChange}
                   name="title"
                   type="text"
@@ -105,7 +171,7 @@ class CreateWorkModal extends React.Component {
               </p>
               <p className="pt-ui-text">Media:
                 <input
-                  value={this.state.formValues.media}
+                  value={this.state.work.media}
                   onChange={this.handleChange}
                   name="media"
                   type="text"
@@ -115,7 +181,7 @@ class CreateWorkModal extends React.Component {
               </p>
               <p className="pt-ui-text">Work Type:
                 <input
-                  value={this.state.formValues.work_type}
+                  value={this.state.work.work_type}
                   onChange={this.handleChange}
                   name="work_type"
                   type="text"
@@ -125,7 +191,7 @@ class CreateWorkModal extends React.Component {
               </p>
               <p className="pt-ui-text">Status:
                 <input
-                  value={this.state.formValues.status}
+                  value={this.state.work.status}
                   onChange={this.handleChange}
                   name="status"
                   type="text"
@@ -133,17 +199,13 @@ class CreateWorkModal extends React.Component {
                   required
                 />
               </p>
-              <p className="pt-ui-text">Price:
-                <input
-                  value={this.state.formValues.price}
-                  onChange={this.handleChange}
-                  name="price"
-                  type="text"
-                  className="pt-input"
-                  required
-                />
-              </p>
 
+              <div className="upload-image-component">Images:
+                <Dropzone
+                  onDrop={this.onDrop}
+                  multiple={true}
+                />
+              </div>
             </div>
             <div className="pt-dialog-footer">
               <div className="pt-dialog-footer-actions">

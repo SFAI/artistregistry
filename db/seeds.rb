@@ -74,4 +74,3 @@ lisa_request_jobs.buyer = Jobs
 lisa_request_jobs.work = Lisa
 lisa_request_jobs.artist = Lisa.artist
 lisa_request_jobs.save!
-
