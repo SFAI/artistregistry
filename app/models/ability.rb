@@ -13,7 +13,7 @@ class Ability
     elsif user.is_a?(Artist)
         can :manage, Work, id: user.id
         can :manage, Request, id: user.id
-        can :read Commission, id: user.id
+        can :read, Commission, id: user.id
         can :read, Buyer
         # add transaction and notification permissions
     end

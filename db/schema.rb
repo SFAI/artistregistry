@@ -47,6 +47,10 @@ ActiveRecord::Schema.define(version: 2018_10_26_035209) do
     t.string "program"
     t.string "name"
     t.boolean "open_to_commissions"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["confirmation_token"], name: "index_artists_on_confirmation_token", unique: true
     t.index ["email"], name: "index_artists_on_email", unique: true
     t.index ["reset_password_token"], name: "index_artists_on_reset_password_token", unique: true
   end
@@ -61,6 +65,10 @@ ActiveRecord::Schema.define(version: 2018_10_26_035209) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "phone_number"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["confirmation_token"], name: "index_buyers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_buyers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_buyers_on_reset_password_token", unique: true
   end
