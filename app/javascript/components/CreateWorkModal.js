@@ -82,11 +82,11 @@ class CreateWorkModal extends React.Component {
       formData.append('work[media]', this.state.work.media)
       formData.append('work[work_type]', "painting")
       formData.append('work[status]', "sold")
-      formData.append('work[images]', this.state.work.images)
-    /*
-    for (var x = 0; x < this.state.work.images.length; x++) {
-        formData.append("work[images][]", this.state.work.images[x],this.state.work.images[x].name);
-    }*/
+
+    this.state.work.images.forEach((img) => {
+      formData.append('attachments[]', img)
+    });
+
     /*
     this.state.work.images.forEach((img, i) => {
       formData.append("doc[]", {

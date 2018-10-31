@@ -6,19 +6,23 @@ class Api::WorksController < ApplicationController
   end
 
   def create
+    work_params = {}
+    work_params[:title] = params[:work][:title]
+    work_params[:media] = params[:work][:media]
+    work_params[:work_type] = params[:work][:work_type]
+    work_params[:status] = params[:work][:status]
+    work_params[:artist_id] = 0
+    work_params[:price] = 0
     puts work_params
     @work = Work.new(work_params)
-    puts @work
-    puts params[:images]
     if @work.save
-
-      if params[:images]
-        params[:images].each { |image|
-          @work.attachments.create(image: image)
-        }
+      @work.attachments = params[:attachments].map do |a|
+        attachment_params = {}
+        attachment_params[:image] = a
+        attachment_params[:work_id] = @work.id
+        @work.attachments.create(attachment_params)
       end
     end
-
     render json: @work
   end
 
@@ -47,7 +51,7 @@ class Api::WorksController < ApplicationController
                                     :work_type,
                                     :status,
                                     :artist_id,
-                                    :images => [:attachment]
+                                    attachments: []
                                    )
   end
 
