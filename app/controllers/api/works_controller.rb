@@ -6,21 +6,20 @@ class Api::WorksController < ApplicationController
   end
 
   def create
-    work = Work.create(work_params)
-    work.images.attach(params[:work][:images])
-    puts "------IMAGES-------"
-    puts params[:work][:images]
-    begin
-      saved = work.save!
-    rescue ActiveRecord::RecordInvalid => invalid
-      render_json_message(:forbidden, errors: invalid.record.errors.full_messages)
-      return
+    puts work_params
+    @work = Work.new(work_params)
+    puts @work
+    puts params[:images]
+    if @work.save
+
+      if params[:images]
+        params[:images].each { |image|
+          @work.attachments.create(image: image)
+        }
+      end
     end
-    if saved
-      render_json_message(:ok, message: 'Work successfully created!')
-    else
-      render_json_message(:forbidden, errors: work.errors.full_messages)
-    end
+
+    render json: @work
   end
 
   def upload_image
@@ -43,7 +42,13 @@ class Api::WorksController < ApplicationController
   end
 
   def work_params
-    params.require(:work).permit(:title, :media, :work_type, :status, :artist_id, images: [])
+    params.require(:work).permit(:title,
+                                  :media,
+                                    :work_type,
+                                    :status,
+                                    :artist_id,
+                                    :images => [:attachment]
+                                   )
   end
 
 end

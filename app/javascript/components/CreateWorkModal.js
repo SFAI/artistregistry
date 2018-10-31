@@ -80,50 +80,35 @@ class CreateWorkModal extends React.Component {
     let formData = new FormData()
       formData.append('work[title]', this.state.work.title)
       formData.append('work[media]', this.state.work.media)
-      formData.append('work[work_type]', this.state.work.work_type)
-      formData.append('work[status]', this.state.work.status)
+      formData.append('work[work_type]', "painting")
+      formData.append('work[status]', "sold")
       formData.append('work[images]', this.state.work.images)
-
-    // fetch(APIRoutes.works.create, {
-    //   method: 'POST',
-    //   body: formData,
-    //   processData: false,
-    //   credentials: 'same-origin',
-    //   headers: {
-    //     "X_CSRF-Token": getCSRFToken()
-    //   }
-    // }).then((resp) => {
-    //   if (resp.status != 200) {
-    //     alert("There was an error. Try again!")
-    //   }
-    //   window.location.reload()
-    // })
-
-    // let formData = new FormData();
-    // formData.append('user[email]', this.state.email);
-    // formData.append('user[first_name]', this.state.first_name);
-    // formData.append('user[last_name]', this.state.last_name);
-
+    /*
     for (var x = 0; x < this.state.work.images.length; x++) {
         formData.append("work[images][]", this.state.work.images[x],this.state.work.images[x].name);
-    }
+    }*/
+    /*
+    this.state.work.images.forEach((img, i) => {
+      formData.append("doc[]", {
+        uri: img.uri,
+        type: "image/jpeg",
+        name: img.filename || `filename${i}.jpg`,
+      });
+    });
+    */
 
-    // fetch(APIRoutes.works.create, {
-    //   method: 'POST',
-    //   body: formData,
-    //   credentials: 'same-origin',
-    //   headers: {
-    //     "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-    //   }
-    // }).then((resp) => {
-    //   if (resp.status != 200) {
-    //     alert("There was an error. Try again!")
-    //   }
-    //   window.location.reload()
-    // })
+    fetch(APIRoutes.works.create, {
+      method: 'POST',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
 
-
-    Requester.post(APIRoutes.works.create, formData, console.log("success"), console.log("fail"));
+    }).catch((data) => {
+      console.error(data)
+    });
 
   }
 
