@@ -33,7 +33,7 @@ class ArtistWorks extends React.Component {
     this.setState({ comment: event.target.value });
   }
 
-  handleSubmit(event) {
+  handleSubmit() {
     const artist_id = this.props.artist.id;
     const commissions_route = APIRoutes.commissions.create;
     const buyer_id = this.props.buyer.id;
@@ -43,7 +43,14 @@ class ArtistWorks extends React.Component {
       "comment": this.state.comment
     }
 
-    Requester.post(commissions_route, payload)
+    Requester.post(commissions_route, payload).then(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.error(error);
+      }
+    )
   }
 
   render() {
@@ -58,16 +65,16 @@ class ArtistWorks extends React.Component {
           </div>
         ))}
 
-        <form onSubmit = {this.handleSubmit} name="commissionsForm">
-          <textarea
-            type="TEXT"
-            name="comment"
-            id="comment"
-            value={this.state.comment}
-            onChange = {this.handleChange}
-          />
-          <input type="submit" value="Submit" />
-        </form>
+        <textarea
+          type="TEXT"
+          name="comment"
+          id="comment"
+          value={this.state.comment}
+          onChange = {this.handleChange}
+        />
+        <button onClick={this.handleSubmit}>
+          Create
+        </button>
 
         <div className="fl w-100 pa2">
           <h1>aaklsdj</h1>

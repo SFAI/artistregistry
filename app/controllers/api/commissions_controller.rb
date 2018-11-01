@@ -5,7 +5,10 @@ class Api::CommissionsController < ApplicationController
 
   def create
     commission = Commission.new(commission_params)
-    commission.save!
+    if commission.save!
+      flash[:success] = "Document successfully created!";
+      return render json: {"message": 'Document successfully created!'}
+    end
   end
 
   def update
