@@ -1,6 +1,10 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
+/**
+* @prop filters: sub/categories based on Work enums
+*/
+
 class Filters extends PureComponent {
   constructor(props) {
     super(props);
@@ -10,11 +14,11 @@ class Filters extends PureComponent {
   }
 
   static propTypes = {
-    onFiltersChange: PropTypes.func,
     filters: PropTypes.object,
   };
 
-  setNewFilters = params => {
+  getQuery = () => {
+    const params = this.state.searchParams;
     const filteredParams = Object.keys(params).filter(
       filter_name => params[filter_name].length
     ).reduce((nonEmptyParams, filter_name) => {
@@ -30,8 +34,8 @@ class Filters extends PureComponent {
         }
       )
       .join("&");
-    this.props.onFiltersChange(stringified); // lifting params up to Works as querystring
-  };
+    return stringified;
+  }
 
   toggleCheckbox = (filter_name, item) => {
     const prevSearchParams = this.state.searchParams[filter_name];
@@ -43,15 +47,11 @@ class Filters extends PureComponent {
       newFilterParams = prevSearchParams ? [...prevSearchParams, item] : [item];
     }
 
-    const newSearchParams = {
-      ...this.state.searchParams,
-      [filter_name]: newFilterParams // is this overwriting [filtername] ???
-    };
-
-    this.setNewFilters(newSearchParams);
-
     this.setState({
-      searchParams: newSearchParams
+      searchParams: {
+        ...this.state.searchParams,
+        [filter_name]: newFilterParams // is this overwriting [filtername] ???
+      }
     });
   };
 

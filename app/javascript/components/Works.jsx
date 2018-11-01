@@ -7,7 +7,6 @@ class Works extends React.Component {
     super(props);
     this.state = {
       works: [],
-      searchParams: "",
       filters: {}
     };
   }
@@ -27,16 +26,11 @@ class Works extends React.Component {
     });
   };
 
-  handleFilters = newSearchParams => {
-    this.setState({
-      searchParams: newSearchParams
-    });
-  };
-
-  testFilteredWorksRoute = () => {
+  getFilteredWorks = () => {
     // NOTE: Can't pass empty searchParams string to filtered_works
     // Possible fix by editing routes.fb, but not sure how -B.Y.
-    const { searchParams } = this.state;
+    const searchParams = this.filters.getQuery();
+
     const works_route = searchParams.length
       ? APIRoutes.works.filtered_works(searchParams)
       : APIRoutes.works.index;
@@ -58,7 +52,10 @@ class Works extends React.Component {
     return (
       <div className="ma4">
         <div className="flex bg-grey">
-          <Filters filters={filters} onFiltersChange={this.handleFilters} />
+          <Filters
+            ref={(node) => { this.filters = node }}
+            filters={filters}
+          />
           <div>
             {works.map(work => {
               return (
@@ -72,7 +69,7 @@ class Works extends React.Component {
             })}
           </div>
         </div>
-        <button onClick={this.testFilteredWorksRoute}> Test </button>
+        <button onClick={this.getFilteredWorks}> Apply </button>
       </div>
     );
   }
