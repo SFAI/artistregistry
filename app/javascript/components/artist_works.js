@@ -46,11 +46,14 @@ class ArtistWorks extends React.Component {
     Requester.post(commissions_route, payload).then(
       response => {
         console.log(response);
+        window.location.href = '/artists/' + this.props.artist.id;
       },
       error => {
         console.error(error);
       }
-    )
+    );
+
+    //window.location.href = '/artists/' + 1;
   }
 
   render() {
