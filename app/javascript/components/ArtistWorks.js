@@ -11,7 +11,7 @@ class ArtistWorks extends React.Component {
     this.state = {
       works: [],
       comment: "",
-      error: "",
+      errors: [],
       componentDidMount: false
     }
     this.handleChange = this.handleChange.bind(this);
@@ -38,14 +38,25 @@ class ArtistWorks extends React.Component {
     this.setState({ comment: event.target.value });
   }
 
-  handleSubmit() {
-    const artist_id = this.props.artist.id;
-    const buyer_id = this.props.buyer.id;
-    const commissions_route = APIRoutes.commissions.create;
-
+  checkErrors() {
+    let errors = [];
     if (!this.state.comment) {
-      this.setState({ error: "This field cannot be empty." });
-    } else {
+      errors.push("This field cannot be empty.");
+    }
+    if (!this.props.buyer) {
+      errors.push("You must be logged in to request a commission.");
+    }
+    this.setState({ errors: errors });
+  }
+
+  handleSubmit() {
+    this.checkErrors();
+    if (!this.state.errors) {
+
+      const artist_id = this.props.artist.id;
+      const buyer_id = this.props.buyer.id;
+      const commissions_route = APIRoutes.commissions.create;
+
       const payload = {
         "buyer_id": buyer_id,
         "artist_id": artist_id,
@@ -87,7 +98,13 @@ class ArtistWorks extends React.Component {
           value={this.state.comment}
           onChange = {this.handleChange}
         />
-        <span>{this.state.error}</span>
+        {
+          this.state.errors.map((error, i) => {
+            return (
+              <span key={i}>{error}</span>
+            );
+          })
+        }
         <button onClick={this.handleSubmit}>
           Create
         </button>
