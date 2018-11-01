@@ -4,6 +4,15 @@ class Api::TransactionsController < ApplicationController
   end
 
   def create
+    transaction = Transaction.new(transaction_params)
+    if transaction.save!
+      flash[:success] = "Transaction recorded successfully!";
+      return render json: {"message": 'Transaction recoreded successfully!'}
+    else
+      flash[:danger] = "Transaction failed to record."
+      return render json: {error: Transaction.errors.full_messages}
+    end
+
   end
 
   def update
@@ -18,8 +27,11 @@ class Api::TransactionsController < ApplicationController
         :buyer_id,
         :artist_id,
         :work_id,
-        
-        :comment
+        :type,
+        :start_date,
+        :end_date,
+        :purchase_date,
+        :price
       )
     end
 end

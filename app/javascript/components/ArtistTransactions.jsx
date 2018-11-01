@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import DatePicker from "react-datepicker";
 
 /**
 * @prop artist: artist creating transaction
