@@ -58,9 +58,9 @@ Jobs.save!
 
 Lisa = Picasso.works.create(
   title: 'Mona Lisa',
-  media: 'Oil on canvas',
-  work_type: 0,
-  status: 0,
+  material: 'Oil on canvas',
+  medium: 0,
+  availability: 0,
   price: 43.45
   )
 Lisa.artist_id = Picasso.id
@@ -68,9 +68,9 @@ Lisa.save!
 
 TwoFridas = Work.create(
   title: 'The Two Fridas',
-  media: 'Oil on canvas',
-  work_type: 0,
-  status: 0,
+  material: 'Oil on canvas',
+  medium: 0,
+  availability: 0,
   price: 123.45,
   artist_id: Kahlo.id,
   )
@@ -78,9 +78,9 @@ TwoFridas.save!
 
 Oceania = Work.create(
   title: 'Memory of Oceania',
-  media: 'Cutout',
-  work_type: 5,
-  status: 0,
+  material: 'Cutout',
+  medium: 5,
+  availability: 0,
   price: 234.56,
   artist_id: Matisse.id,
   )
@@ -88,9 +88,9 @@ Oceania.save!
 
 TwoDancers = Work.create(
   title: 'Two Dancers',
-  media: 'Cutout',
-  work_type: 5,
-  status: 0,
+  material: 'Cutout',
+  medium: 5,
+  availability: 0,
   price: 4578.90,
   artist_id: Matisse.id,
   )
@@ -116,7 +116,7 @@ lisa_request_jobs.artist = Lisa.artist
 lisa_request_jobs.save!
 
 Gates_commission_Picasso = Commission.create(
-  message: 'Picasso, please paint me a portrait'
+  comment: 'Picasso, please paint me a portrait'
 )
 Gates_commission_Picasso.buyer = Gates
 Gates_commission_Picasso.artist = Picasso
