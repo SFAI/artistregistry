@@ -50,8 +50,8 @@ class Works extends React.Component {
     const { filters, works } = this.state;
 
     return (
-      <div className="ma4">
-        <div className="flex bg-grey">
+      <div className="mh4">
+        <div className="pt4 flex bg-grey">
           <Filters
             ref={(node) => { this.filters = node }}
             filters={filters}
