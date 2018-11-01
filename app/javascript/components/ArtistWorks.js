@@ -2,15 +2,17 @@ import PropTypes from "prop-types";
 import React from "react";
 
 /**
-* @prop buyer: buyer currently logged in
-* @prop artist: artist associated with works
-*/
+  * @prop buyer: buyer currently logged in
+  * @prop artist: artist associated with works
+  */
 class ArtistWorks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       works: [],
-      comment: ""
+      comment: "",
+      error: "",
+      componentDidMount: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +23,10 @@ class ArtistWorks extends React.Component {
     const works_route = APIRoutes.artists.works(0);
     Requester.get(works_route).then(
       response => {
-        this.setState({ works: response });
+        this.setState({
+          works: response,
+          componentDidMount: true
+        });
       },
       response => {
         console.err(response);
@@ -35,28 +40,36 @@ class ArtistWorks extends React.Component {
 
   handleSubmit() {
     const artist_id = this.props.artist.id;
-    const commissions_route = APIRoutes.commissions.create;
     const buyer_id = this.props.buyer.id;
-    const payload = {
-      "buyer_id": buyer_id,
-      "artist_id": artist_id,
-      "comment": this.state.comment
-    }
+    const commissions_route = APIRoutes.commissions.create;
 
-    Requester.post(commissions_route, payload).then(
-      response => {
-        console.log(response);
-        window.location.href = '/artists/' + this.props.artist.id;
-      },
-      error => {
-        console.error(error);
+    if (!this.state.comment) {
+      this.setState({ error: "This field cannot be empty." });
+    } else {
+      const payload = {
+        "buyer_id": buyer_id,
+        "artist_id": artist_id,
+        "comment": this.state.comment
       }
-    );
-
-    //window.location.href = '/artists/' + 1;
+      Requester.post(commissions_route, payload).then(
+        response => {
+          window.location.href = '/artists/' + this.props.artist.id;
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    }
   }
 
   render() {
+    if (!this.state.componentDidMount) {
+      return (
+        <div>
+          <p>Loading</p>
+        </div>
+      );
+    }
     return (
       <div className="artist-profile-page">
         These will be the artist works
@@ -67,7 +80,6 @@ class ArtistWorks extends React.Component {
             <p>{work.media}</p>
           </div>
         ))}
-
         <textarea
           type="TEXT"
           name="comment"
@@ -75,14 +87,10 @@ class ArtistWorks extends React.Component {
           value={this.state.comment}
           onChange = {this.handleChange}
         />
+        <span>{this.state.error}</span>
         <button onClick={this.handleSubmit}>
           Create
         </button>
-
-        <div className="fl w-100 pa2">
-          <h1>aaklsdj</h1>
-        </div>
-
       </div>
     );
   }

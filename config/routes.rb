@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
-  get 'buyers/:id' => 'buyers#show', as: :buyerid
+  get '/buyers/:id' => 'buyers#show', as: :buyerid
 
   namespace :api, defaults: { format: :json } do
     resources :works, :only => [:show, :create, :update, :destroy]
