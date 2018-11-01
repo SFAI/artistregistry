@@ -1,11 +1,11 @@
 class ApiRoutes {
   get works() {
     return {
+      index: `/api/works`,
+      create: `/api/works`,
       show: (id) => `/api/works/${id}`,
       update: (id) => `/api/works/${id}`,
-      create: `/api/works`,
       delete: (id) => `/api/works/destroy/${id}`,
-      index: `/api/works/index`,
       filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
       categories: `/works/categories`
     }
@@ -13,10 +13,12 @@ class ApiRoutes {
 
   get artists() {
     return {
+      index: `/api/artists`,
       show: id => `/api/artists/${id}`,
       update: id => `/api/artists/${id}`,
       delete: id => `/api/artists/${id}`,
-      works: id => `/api/artists/works/${id}`
+      works: id => `/api/artists/works/${id}`,
+      requests: id => `/api/artists/requests/${id}`
     };
   }
 
