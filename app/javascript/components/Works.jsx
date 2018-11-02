@@ -41,7 +41,7 @@ class Works extends React.Component {
           this.setState({ works: response });
         },
         response => {
-          console.err(response);
+          console.error(response);
         }
       );
   };

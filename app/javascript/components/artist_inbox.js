@@ -17,7 +17,7 @@ class ArtistInbox extends React.Component {
         this.setState({ inbox: response });
       },
       response => {
-        console.err(response);
+        console.error(response);
       }
     );
   };
