@@ -20,7 +20,7 @@ class ArtistWorks extends React.Component {
 
   componentDidMount = () => {
     const artist_id = this.props.artist.id;
-    const works_route = APIRoutes.artists.works(0);
+    const works_route = APIRoutes.artists.works(artist_id);
     Requester.get(works_route).then(
       response => {
         this.setState({ works: response });
