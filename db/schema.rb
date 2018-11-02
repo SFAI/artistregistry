@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2018_10_31_215325) do
+=======
+ActiveRecord::Schema.define(version: 2018_10_27_211726) do
+>>>>>>> master
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,9 +102,9 @@ ActiveRecord::Schema.define(version: 2018_10_31_215325) do
 
   create_table "works", force: :cascade do |t|
     t.string "title"
-    t.text "media"
-    t.integer "work_type"
-    t.integer "status"
+    t.text "material"
+    t.integer "medium"
+    t.integer "availability"
     t.decimal "price"
     t.bigint "artist_id", null: false
     t.index ["artist_id"], name: "index_works_on_artist_id"

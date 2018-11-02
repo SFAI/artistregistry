@@ -1,6 +1,6 @@
 class Api::WorksController < ApplicationController
   respond_to :json
-  def show
+	def show
     @work = Work.find(params[:id])
     render json: @work
   end
@@ -44,6 +44,7 @@ class Api::WorksController < ApplicationController
       render_json_message(:forbidden, errors: work.errors.full_messages)
     end
   end
+<<<<<<< HEAD
 
   def work_params
     params.require(:work).permit(:title,
@@ -55,4 +56,20 @@ class Api::WorksController < ApplicationController
                                    )
   end
 
+=======
+	
+	def index
+		works = Work.all
+    render json: works,
+      each_serializer: WorkSerializer
+  end
+  
+  def filtered_works
+    parsed_query = CGI.parse(params[:search_params])
+    filtered_works = params[:search_params] == "" ?  Work.all : Work.where(parsed_query)
+    render json: filtered_works,
+      each_serializer: WorkSerializer
+  end
+	
+>>>>>>> master
 end

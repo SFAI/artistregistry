@@ -39,6 +39,7 @@ gem 'react-rails'
 gem 'slim'
 
 gem 'devise'
+gem 'active_model_serializers'
 
 gem "aws-sdk-s3", require: false
 
