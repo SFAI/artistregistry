@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 // import { standardError } from '../../../lib/alerts';
 import CreateWorkModal from './CreateWorkModal.js'
+import image from './IMG_1906.jpeg'
 
 const customStyles = {
   content : {
@@ -34,6 +35,7 @@ class ArtistWorks extends React.Component {
     const works_route = APIRoutes.artists.works(0);
     Requester.get(works_route, (response) => {
       this.setState({ works: response });
+      console.log(this.state.works)
     }, (response) => {console.err(response)});
   }
 
@@ -70,6 +72,9 @@ class ArtistWorks extends React.Component {
             <h3>{work.title}</h3>
             <p>{work.work_type}</p>
             <p>{work.media}</p>
+            {work.attachments.map((attachment) =>
+              <img src={image} width="50" height="50"/>
+            )}
           </div>
         )}
         <CreateWorkModal/>

@@ -128,8 +128,6 @@ class CreateWorkModal extends React.Component {
     this.setState({
      work: work
     });
-    console.log("after upload")
-    console.log(this.state.work)
   }
 
   render() {
