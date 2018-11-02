@@ -16,47 +16,20 @@ class CreateWorkModal extends React.Component {
 
     this.state = {
       work: {
-        title: 'hello',
-        media: 'ahhhh',
-        work_type: 1,
-        status: 1,
+        title: '',
+        material: '',
+        medium: 0,
+        availability: 0,
         images: [],
         artist_id: this.props.artist_id
       },
       isOpen: false,
     }
 
-    // this._getInitialFormValues = this._getInitialFormValues.bind(this);
     this.toggleAddWork = this.toggleAddWork.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onDrop = this.onDrop.bind(this);
-    // this._handleFormChange = this._handleFormChange.bind(this);
-    // this._handleSaveWork = this._handleSaveWork.bind(this);
-  }
-
-  // _handleFormChange(values){
-  //   //formData will be a json object that will contain refs of every field
-  //   this.setState({ formValues : values });
-  // }
-
-  // _getInitialFormValues() {
-  //   let values = {
-  //     title: "",
-  //     media: "",
-  //     work_type: 0,
-  //     status: 0,
-  //     artist: 0,
-  //   }
-  //   return values
-  // }
-
-  // _handleSaveWork() {
-  //   if (this.state.formValues) {
-  //     this.props.onSaveWork({work: this.state.formValues})
-  //   } else {
-  //   }
-  // }
 
   toggleAddWork() {
     if (this.state.isOpen == true) {
@@ -79,23 +52,14 @@ class CreateWorkModal extends React.Component {
 
     let formData = new FormData()
       formData.append('work[title]', this.state.work.title)
-      formData.append('work[media]', this.state.work.media)
-      formData.append('work[work_type]', "painting")
-      formData.append('work[status]', "sold")
+      formData.append('work[material]', this.state.work.material)
+      formData.append('work[medium]', this.state.work.medium)
+      formData.append('work[availability]', this.state.work.availability)
 
     this.state.work.images.forEach((img) => {
       formData.append('attachments[]', img)
     });
 
-    /*
-    this.state.work.images.forEach((img, i) => {
-      formData.append("doc[]", {
-        uri: img.uri,
-        type: "image/jpeg",
-        name: img.filename || `filename${i}.jpg`,
-      });
-    });
-    */
 
     fetch(APIRoutes.works.create, {
       method: 'POST',
@@ -113,12 +77,9 @@ class CreateWorkModal extends React.Component {
   }
 
   onDrop(images) {
-    // Get existing files from state
-    // (or just the empty array if there are no files in state)
     var currentImages = this.state.work.images;
 
 
-    // Push file(s) from function parameters to `currentFiles` array
     const [newImages] = images;
     currentImages.push(newImages);
 
@@ -152,9 +113,9 @@ class CreateWorkModal extends React.Component {
                   required
                 />
               </p>
-              <p className="pt-ui-text">Media:
+              <p className="pt-ui-text">Material:
                 <input
-                  value={this.state.work.media}
+                  value={this.state.work.material}
                   onChange={this.handleChange}
                   name="media"
                   type="text"
@@ -162,9 +123,9 @@ class CreateWorkModal extends React.Component {
                   required
                 />
               </p>
-              <p className="pt-ui-text">Work Type:
+              <p className="pt-ui-text">Medium:
                 <input
-                  value={this.state.work.work_type}
+                  value={this.state.work.medium}
                   onChange={this.handleChange}
                   name="work_type"
                   type="text"
@@ -172,9 +133,9 @@ class CreateWorkModal extends React.Component {
                   required
                 />
               </p>
-              <p className="pt-ui-text">Status:
+              <p className="pt-ui-text">Availability:
                 <input
-                  value={this.state.work.status}
+                  value={this.state.work.availability}
                   onChange={this.handleChange}
                   name="status"
                   type="text"
