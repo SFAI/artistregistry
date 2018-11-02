@@ -6,15 +6,11 @@ class Api::WorksController < ApplicationController
   end
 
   def create
-    work_params = {}
-    work_params[:title] = params[:work][:title]
-    work_params[:material] = params[:work][:media]
-    work_params[:medium] = params[:work][:work_type]
-    work_params[:availability] = params[:work][:status]
-    work_params[:artist_id] = params[:work][:artist_id]
-    @work = Work.new(work_params)
+    work_attr = work_params
+    attachment_attr = work_attr.delete("attachments_attributes")
+    @work = Work.new(work_attr)
     if @work.save
-      @work.attachments = params[:attachments].map do |a|
+      @work.attachments = attachment_attr.map do |a|
         attachment_params = {}
         attachment_params[:image] = a
         attachment_params[:work_id] = @work.id
@@ -55,13 +51,13 @@ class Api::WorksController < ApplicationController
 
   def work_params
     params.require(:work).permit(:title,
-                                  :material,
-                                    :medium,
-                                    :status,
-                                    :availability
-                                    :artist_id,
-                                    attachments: []
-                                   )
+                                 :material,
+                                 :medium,
+                                 :status,
+                                 :availability,
+                                 :artist_id,
+                                 :attachments_attributes => []
+                                )
   end
 
 end

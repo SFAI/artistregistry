@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-// import { standardError } from '../../../lib/alerts';
-import CreateWorkModal from './CreateWorkModal.js'
 
 
 /**
@@ -18,6 +16,7 @@ class ArtistWorks extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.createNewWork = this.createNewWork.bind(this);
   }
 
   componentDidMount = () => {
@@ -49,12 +48,18 @@ class ArtistWorks extends React.Component {
 
     Requester.post(commissions_route, payload)
   }
+
+  createNewWork() {
+    window.location = `/works/new`;
+  }
+
   render() {
-
-
     return (
       <div>
-        These will be the artist works
+        <button onClick={this.createNewWork}>
+          New Work
+        </button>
+        <h2>These will be the artist works</h2>
         {this.state.works.map(work => (
           <div key={work.id}>
             <h3>{work.title}</h3>
@@ -65,10 +70,6 @@ class ArtistWorks extends React.Component {
             )}
           </div>
         ))}
-        <CreateWorkModal
-          artist_id={this.props.artist.id}
-        />
-
         <form onSubmit={this.handleSubmit} name="commissionsForm">
           <textarea
             type="TEXT"
@@ -79,10 +80,6 @@ class ArtistWorks extends React.Component {
           />
           <input type="submit" value="Submit" />
         </form>
-
-        <div className="fl w-100 pa2">
-          <h1>aaklsdj</h1>
-        </div>
       </div>
     );
   }
