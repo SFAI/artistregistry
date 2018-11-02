@@ -11,7 +11,11 @@ class WorksController < ApplicationController
     }
     render json: categories
   end
+
   def show
     @work = Work.find(params[:id])
+  end
+
+  def new
   end
 end

@@ -1,5 +1,7 @@
 class Work < ApplicationRecord
   belongs_to :artist
+  has_many :attachments, :dependent => :destroy
+  accepts_nested_attributes_for :attachments
   has_many :requests
   has_many :buyers, through: :requests
   enum availability: { active: 0, sold: 1, rented: 2 }

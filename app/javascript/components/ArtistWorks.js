@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+
 /**
 * @prop buyer: buyer currently logged in
 * @prop artist: artist associated with works
@@ -14,6 +15,7 @@ class ArtistWorks extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.createNewWork = this.createNewWork.bind(this);
   }
 
   componentDidMount = () => {
@@ -46,18 +48,27 @@ class ArtistWorks extends React.Component {
     Requester.post(commissions_route, payload)
   }
 
+  createNewWork() {
+    window.location = `/works/new`;
+  }
+
   render() {
     return (
-      <div className="artist-profile-page">
-        These will be the artist works
+      <div>
+        <button onClick={this.createNewWork}>
+          New Work
+        </button>
+        <h2>These will be the artist works</h2>
         {this.state.works.map(work => (
           <div key={work.id}>
             <h3>{work.title}</h3>
             <p>{work.work_type}</p>
             <p>{work.media}</p>
+            {work.attachment_url.map((attachment) =>
+              <img src={attachment} width="200" height="200"/>
+            )}
           </div>
         ))}
-
         <form onSubmit={this.handleSubmit} name="commissionsForm">
           <textarea
             type="TEXT"
@@ -68,11 +79,6 @@ class ArtistWorks extends React.Component {
           />
           <input type="submit" value="Submit" />
         </form>
-
-        <div className="fl w-100 pa2">
-          <h1>aaklsdj</h1>
-        </div>
-
       </div>
     );
   }

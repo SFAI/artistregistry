@@ -1,6 +1,7 @@
 class ApiRoutes {
   get works() {
     return {
+
       index: `/api/works`,
       create: `/api/works`,
       show: (id) => `/api/works/${id}`,
