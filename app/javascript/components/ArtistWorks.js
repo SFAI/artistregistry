@@ -2,46 +2,22 @@ import PropTypes from "prop-types";
 import React from "react";
 // import { standardError } from '../../../lib/alerts';
 import CreateWorkModal from './CreateWorkModal.js'
-import image from './IMG_1906.jpeg'
 
-<<<<<<< HEAD
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
 
-=======
 /**
 * @prop buyer: buyer currently logged in
 * @prop artist: artist associated with works
 */
->>>>>>> master
 class ArtistWorks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       works: [],
-<<<<<<< HEAD
-      isOpen: false
-
-    }
-
-    // this.openModal = this.openModal.bind(this);
-    // this._handleCreateWork = this._handleCreateWork.bind(this);
-    // this.afterOpenModal = this.afterOpenModal.bind(this);
-    // this.closeModal = this.closeModal.bind(this);
-=======
+      isOpen: false,
       comment: ""
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
->>>>>>> master
   }
 
   componentDidMount = () => {
@@ -61,29 +37,6 @@ class ArtistWorks extends React.Component {
     this.setState({ comment: event.target.value });
   }
 
-<<<<<<< HEAD
-  //
-  // afterOpenModal() {
-  //   // references are now sync'd and can be accessed.
-  //   // this.subtitle.style.color = '#f00';
-  // }
-  //
-  // closeModal() {
-  //   this.setState({modalIsOpen: false});
-  // }
-
-
-  // _handleCreateWork(params) {
-  //     const works_route = APIRoutes.artists.works(0);
-  //     Requester.post(works_route, params, (response) => {
-  //       this.setState({ works: response });
-  //     }, (response) => {console.err(response)});
-  //   //   const successFunc = (responseData) => {
-  //   //     this.setState({work: responseData});
-  //   //   }
-  //   // postRequest(`/api/works`, successFunc, standardError, params=params);
-  // }
-=======
   handleSubmit(event) {
     const artist_id = this.props.artist.id;
     const commissions_route = APIRoutes.commissions.create;
@@ -96,8 +49,6 @@ class ArtistWorks extends React.Component {
 
     Requester.post(commissions_route, payload)
   }
->>>>>>> master
-
   render() {
 
 
@@ -113,11 +64,8 @@ class ArtistWorks extends React.Component {
               <img src={attachment} width="200" height="200"/>
             )}
           </div>
-<<<<<<< HEAD
-        )}
-        <CreateWorkModal/>
-=======
         ))}
+        <CreateWorkModal/>
 
         <form onSubmit={this.handleSubmit} name="commissionsForm">
           <textarea
@@ -133,8 +81,6 @@ class ArtistWorks extends React.Component {
         <div className="fl w-100 pa2">
           <h1>aaklsdj</h1>
         </div>
-
->>>>>>> master
       </div>
     );
   }

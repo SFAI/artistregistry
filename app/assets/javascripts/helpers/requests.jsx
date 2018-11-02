@@ -62,15 +62,8 @@
             });
           }
         }
-<<<<<<< HEAD
-      };
-      console.log("REQUESTER");
-      console.log(params);
-      request.send(JSON.stringify(params));
-=======
         request.send(JSON.stringify(params));
       });
->>>>>>> master
     }
 
     update(route, params) {

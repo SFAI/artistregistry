@@ -23,11 +23,6 @@ class ArtistInbox extends React.Component {
   };
 
   render() {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> master
     return (
       <div>
         These will be the artist requests

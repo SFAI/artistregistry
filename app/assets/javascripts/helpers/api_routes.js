@@ -1,12 +1,7 @@
 class ApiRoutes {
   get works() {
     return {
-<<<<<<< HEAD
-      show        : (id) => `/api/works/${id}`,
-      update      : (id) => `/api/works/${id}`,
-      create      : `/api/works/`,
-      delete      : (id) => `/api/works/destroy/${id}`
-=======
+
       index: `/api/works`,
       create: `/api/works`,
       show: (id) => `/api/works/${id}`,
@@ -14,7 +9,6 @@ class ApiRoutes {
       delete: (id) => `/api/works/destroy/${id}`,
       filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
       categories: `/works/categories`
->>>>>>> master
     }
   }
 
