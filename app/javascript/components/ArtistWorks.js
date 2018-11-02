@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React from "react";
 // import { standardError } from '../../../lib/alerts';
 import CreateWorkModal from './CreateWorkModal.js'
-import image from './IMG_1906.jpeg'
 
 
 /**

@@ -13,7 +13,6 @@ class Api::WorksController < ApplicationController
     work_params[:status] = params[:work][:status]
     work_params[:artist_id] = 0
     work_params[:price] = 0
-    puts work_params
     @work = Work.new(work_params)
     if @work.save
       @work.attachments = params[:attachments].map do |a|
@@ -40,6 +39,19 @@ class Api::WorksController < ApplicationController
       render_json_message(:forbidden, errors: work.errors.full_messages)
     end
   end
+
+  def index
+    works = Work.all
+    render json: works,
+      each_serializer: WorkSerializer
+  end
+
+  def filtered_works
+    parsed_query = CGI.parse(params[:search_params])
+    filtered_works = params[:search_params] == "" ?  Work.all : Work.where(parsed_query)
+    render json: filtered_works,
+      each_serializer: WorkSerializer
+
 
   def work_params
     params.require(:work).permit(:title,
