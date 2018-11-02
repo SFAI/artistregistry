@@ -1,1 +1,4 @@
-<h1>hello</h1>
+= render "partials/header"
+
+.container.dashboard-container
+  = react_component "detailed_work", {work: @work}

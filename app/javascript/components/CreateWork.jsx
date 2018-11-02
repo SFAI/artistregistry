@@ -75,6 +75,9 @@ class CreateWork extends React.Component {
     // TODO: Render thumbnails of images upon upload.
     // TODO: Retrieve enums using works#get_work_category_enums method, rendering a dropdown
     // rather than a text box below.
+    // Add error handling
+    // Also address the classNames. I think that they are part of the palantir CSS import,
+    // but we can't import this since it screws with our styles :(
     return (
       <div>
         <form action={APIRoutes.works.create} method='POST' onSubmit={this.handleSubmit}>

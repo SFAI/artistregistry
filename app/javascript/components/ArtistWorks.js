@@ -11,7 +11,6 @@ class ArtistWorks extends React.Component {
     super(props);
     this.state = {
       works: [],
-      isOpen: false,
       comment: ""
     }
     this.handleChange = this.handleChange.bind(this);
