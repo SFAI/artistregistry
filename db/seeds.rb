@@ -74,3 +74,13 @@ lisa_request_jobs.buyer = Jobs
 lisa_request_jobs.work = Lisa
 lisa_request_jobs.artist = Lisa.artist
 lisa_request_jobs.save!
+<<<<<<< HEAD
+=======
+
+Gates_commission_Picasso = Commission.create(
+  message: 'Picasso, please paint me a portrait'
+)
+Gates_commission_Picasso.buyer = Gates
+Gates_commission_Picasso.artist = Picasso
+Gates_commission_Picasso.save!
+>>>>>>> master
