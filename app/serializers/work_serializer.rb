@@ -1,11 +1,11 @@
 class WorkSerializer < ActiveModel::Serializer
-  attributes :id, :artist_id, :title, :media, :work_type, :status, :price
-  has_many :attachments, :path => ":rails_root/public/system/attachments/:id/:style/:filename"
+  attributes :id, :artist_id, :title, :media, :work_type, :status, :price, :attachment_url
+  has_many :attachments
   belongs_to :artist
 
-  def attachment
+  def attachment_url
     object.attachments.map do |attachment|
-      attachment.path
+      attachment.image.url
     end
   end
 end

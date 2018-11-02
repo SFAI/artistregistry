@@ -35,7 +35,6 @@ class ArtistWorks extends React.Component {
     const works_route = APIRoutes.artists.works(0);
     Requester.get(works_route, (response) => {
       this.setState({ works: response });
-      console.log(this.state.works)
     }, (response) => {console.err(response)});
   }
 
@@ -72,8 +71,8 @@ class ArtistWorks extends React.Component {
             <h3>{work.title}</h3>
             <p>{work.work_type}</p>
             <p>{work.media}</p>
-            {work.attachments.map((attachment) =>
-              <img src={image} width="50" height="50"/>
+            {work.attachment_url.map((attachment) =>
+              <img src={attachment} width="200" height="200"/>
             )}
           </div>
         )}
