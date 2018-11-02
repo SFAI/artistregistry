@@ -40,7 +40,7 @@ class ArtistWorks extends React.Component {
 
   checkErrors() {
     let errors = [];
-    if (!this.state.comment) {
+    if (this.state.comment === "") {
       errors.push("This field cannot be empty.");
     }
     if (!this.props.buyer) {
@@ -51,8 +51,8 @@ class ArtistWorks extends React.Component {
 
   handleSubmit() {
     this.checkErrors();
-    if (!this.state.errors) {
 
+    if (this.state.errors.length > 0) {
       const artist_id = this.props.artist.id;
       const buyer_id = this.props.buyer.id;
       const commissions_route = APIRoutes.commissions.create;
