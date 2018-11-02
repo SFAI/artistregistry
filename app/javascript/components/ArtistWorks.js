@@ -65,7 +65,9 @@ class ArtistWorks extends React.Component {
             )}
           </div>
         ))}
-        <CreateWorkModal/>
+        <CreateWorkModal
+          artist_id={this.props.artist.id}
+        />
 
         <form onSubmit={this.handleSubmit} name="commissionsForm">
           <textarea

@@ -21,7 +21,7 @@ class CreateWorkModal extends React.Component {
         work_type: 1,
         status: 1,
         images: [],
-        artist_id: 0
+        artist_id: this.props.artist_id
       },
       isOpen: false,
     }

@@ -8,11 +8,10 @@ class Api::WorksController < ApplicationController
   def create
     work_params = {}
     work_params[:title] = params[:work][:title]
-    work_params[:media] = params[:work][:media]
-    work_params[:work_type] = params[:work][:work_type]
-    work_params[:status] = params[:work][:status]
-    work_params[:artist_id] = 0
-    work_params[:price] = 0
+    work_params[:material] = params[:work][:media]
+    work_params[:medium] = params[:work][:work_type]
+    work_params[:availability] = params[:work][:status]
+    work_params[:artist_id] = params[:work][:artist_id]
     @work = Work.new(work_params)
     if @work.save
       @work.attachments = params[:attachments].map do |a|
@@ -56,9 +55,10 @@ class Api::WorksController < ApplicationController
 
   def work_params
     params.require(:work).permit(:title,
-                                  :media,
-                                    :work_type,
+                                  :material,
+                                    :medium,
                                     :status,
+                                    :availability
                                     :artist_id,
                                     attachments: []
                                    )
