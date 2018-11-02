@@ -24,7 +24,7 @@ class ArtistWorks extends React.Component {
         this.setState({ works: response });
       },
       response => {
-        console.err(response);
+        console.error(response);
       }
     );
   }
@@ -58,13 +58,13 @@ class ArtistWorks extends React.Component {
           </div>
         ))}
 
-        <form onSubmit = {this.handleSubmit} name="commissionsForm">
+        <form onSubmit={this.handleSubmit} name="commissionsForm">
           <textarea
             type="TEXT"
             name="comment"
             id="comment"
             value={this.state.comment}
-            onChange = {this.handleChange}
+            onChange={this.handleChange}
           />
           <input type="submit" value="Submit" />
         </form>
