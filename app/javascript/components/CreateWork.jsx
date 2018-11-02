@@ -73,6 +73,8 @@ class CreateWork extends React.Component {
 
   render() {
     // TODO: Render thumbnails of images upon upload.
+    // TODO: Retrieve enums using works#get_work_category_enums method, rendering a dropdown
+    // rather than a text box below.
     return (
       <div>
         <form action={APIRoutes.works.create} method='POST' onSubmit={this.handleSubmit}>
@@ -133,7 +135,7 @@ class CreateWork extends React.Component {
               />
               <Button
                 intent={Intent.PRIMARY}
-                onClick={this.toggleAddResource}
+                onClick={() => {window.location = `/artists/` + this.props.artist.id}}
                 text="Cancel"
               />
             </div>
