@@ -1,11 +1,21 @@
 .header {
-	background: white;
-	box-shadow: 0 1px 8px $gray;
-	padding: 6px 0;
+	$nav-height: 48px;
+	$sub-nav-height: 36px;
+	$border-stripe-height: 4px;
+
+	background: $charcoal;
 	position: fixed;
 	top: 0;
 	width: 100%;
 	z-index: 10;
+	display: flex;
+	height: $nav-height;
+
+	.flex-start {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
 
 	a {
 		color: inherit;
@@ -18,8 +28,10 @@
 	}
 
 	.container {
-    align-items: center;
+    align-items: flex-start;
 		display: flex;
+		justify-content: space-between;
+		width: 100%;
 	}
 
 	.header-logo {
@@ -31,20 +43,60 @@
 
 	.header-links {
 		display: flex;
+		flex-direction: row;
+		height: 100%;
 	}
 
-	.header-link-item a {
-		border-radius: 3px;
-		display: flex;
-		align-items: center;
-		margin: 0 2px;
-		padding: 8px 10px;
+	.header-link-item {
+		padding: 8px 16px;
 		position: relative;
 		transition: 50ms;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: $nav-height;
 
-		&:hover {
-			background: $snow;
+		a {
+			color: $white;
 			text-decoration: none;
+			text-transform: uppercase;
 		}
   }
+
+	.dropdown {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+
+	.dropdown:hover {
+		.header-link-item {
+			background-color: $mustard;
+		}
+
+		.dropdown-content {
+			border-top: $border-stripe-height solid $mustard;
+	    display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: flex-end;
+			background-color: $white;
+
+			.dropdown-link-item {
+				padding: 8px 12px;
+				height: $sub-nav-height;
+				background-color: $charcoal;
+
+				a {
+					@extend .f7;
+					text-transform: uppercase;
+					color: $white;
+				}
+			}
+		}
+	}
+
+	.dropdown-content {
+		display: none;
+	}
 }

@@ -5,3 +5,11 @@ $font : 'Roboto', sans-serif;
 html, body {
 	font-family: $font;
 }
+
+h1 {
+	@extend .f1;
+}
+
+h4 {
+	@extend .f6;
+}
