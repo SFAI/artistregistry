@@ -14,21 +14,43 @@ class ArtistTransactions extends React.Component {
       show: false,
       transactions: []
     }
-    this.handleStartDateChange = this.handleStartDateChange.bind(this);
   }
 
-    showModal = () => {
-      this.setState({ show: true });
-    };
+  componentDidMount = () => {
+    const artist_id = this.props.artist.id;
+    const transactions_route = APIRoutes.artists.transactions(0);
+    Requester.get(transactions_route).then(
+      response => {
+        this.setState({ transactions: response });
+      },
+      response => {
+        console.err(response);
+      }
+    );
+  }
 
-    hideModal = () => {
-      this.setState({ show: false });
-    };
+  showModal = () => {
+    this.setState({ show: true });
+  };
 
-    render() {
+  hideModal = () => {
+    this.setState({ show: false });
+  };
+
+  render() {
     return (
       <main>
-        <h1>Create Transaction Form Modal Thing</h1>
+        <h2>Artist Transactions</h2>
+        {this.state.transactions.map(transaction => (
+          <div key={transaction.transaction.id}>
+            <h3>{transaction.transaction.comment}</h3>
+            <p> Completed With: {transaction.buyer.name} </p>
+            <p> Price: {transaction.transaction.price} </p>
+            <p> Artwork: {transaction.work.title} </p>
+          </div>
+        ))}
+
+        <h3>Record a New Transaction</h3>
         <Modal show={this.state.show} handleClose={this.hideModal}>
           <CreateTransactionForm>
         </Modal>

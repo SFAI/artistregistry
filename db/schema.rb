@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_28_002527) do
+ActiveRecord::Schema.define(version: 2018_11_02_004203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 2018_10_28_002527) do
     t.bigint "buyer_id"
     t.bigint "artist_id"
     t.bigint "work_id"
+    t.text "comment"
     t.index ["artist_id"], name: "index_transactions_on_artist_id"
     t.index ["buyer_id"], name: "index_transactions_on_buyer_id"
     t.index ["work_id"], name: "index_transactions_on_work_id"

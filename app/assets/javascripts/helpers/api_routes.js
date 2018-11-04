@@ -16,7 +16,8 @@ class ApiRoutes {
       delete      : (id) => `/api/artists/destroy/${id}`,
       works       : (id) => `/api/artists/works/${id}`,
       allArtists  : `api/artists`,
-      requests    : (id) => `/api/artists/requests/${id}`
+      requests    : (id) => `/api/artists/requests/${id}`,
+      transactions: (id) => `/api/artists/transactions/${id}`
     }
   }
 
@@ -31,6 +32,12 @@ class ApiRoutes {
   get commissions() {
     return {
       create      : `/api/commissions`
+    }
+  }
+
+  get transactions() {
+    return {
+      create      : `/api/transactions`
     }
   }
 
