@@ -10,25 +10,11 @@ class ArtistWorks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      works: [],
       comment: ""
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createNewWork = this.createNewWork.bind(this);
-  }
-
-  componentDidMount = () => {
-    const artist_id = this.props.artist.id;
-    const works_route = APIRoutes.artists.works(artist_id);
-    Requester.get(works_route).then(
-      response => {
-        this.setState({ works: response });
-      },
-      response => {
-        console.error(response);
-      }
-    );
   }
 
   handleChange(event) {
@@ -59,7 +45,7 @@ class ArtistWorks extends React.Component {
           New Work
         </button>
         <h2>These will be the artist works</h2>
-        {this.state.works.map(work => (
+        {this.props.works.map(work => (
           <div key={work.id}>
             <h3>{work.title}</h3>
             <p>{work.work_type}</p>

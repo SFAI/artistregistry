@@ -7,11 +7,14 @@ Rails.application.routes.draw do
 
   resources :artists, only: [:show, :index] do
     collection do
-      get 'profile'
+      get 'create_work'
     end
     member do
       get 'requests'
+      resources :works, only: [:index, :new] do
+      end
     end
+
   end
 
   resources :buyers, only: [:show, :index] do 

@@ -15,7 +15,6 @@ class CreateWork extends React.Component {
         medium: 0,
         availability: 0,
         images: [],
-        artist_id: this.props.artist_id
       }
     }
 

@@ -5,13 +5,10 @@ import ArtistRow from "./ArtistRow.js";
 class AllArtists extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      artists: props.artists
-    }
   }
 
   renderArtistRows() {
-    return this.state.artists.map((artist, i) => {
+    return this.props.artists.map((artist, i) => {
       return <ArtistRow name={artist.name} key={i} id={artist.id} />;
     });
   }

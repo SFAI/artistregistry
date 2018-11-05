@@ -4,29 +4,13 @@ import React from "react";
 class ArtistInbox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      inbox: []
-    };
   }
-
-  componentDidMount = () => {
-    const artist_id = this.props.artist.id;
-    const requests_route = APIRoutes.artists.requests(artist_id);
-    Requester.get(requests_route).then(
-      response => {
-        this.setState({ inbox: response });
-      },
-      response => {
-        console.error(response);
-      }
-    );
-  };
 
   render() {
     return (
       <div>
         These will be the artist requests
-        {this.state.inbox.map(request => (
+        {this.props.requests.map(request => (
           <div key={request.request.id}>
             <h3>{request.request.message}</h3>
             <p> Requested by {request.buyer.name} </p>
