@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+	check_authorization
 	def current_ability
 		if buyer_signed_in?
 			@current_ability ||= ::Ability.new(current_buyer)
