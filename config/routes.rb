@@ -5,13 +5,16 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'works#index'
 
-  resources :artists, only: [:show] do
+  resources :artists, only: [:show, :index] do
     collection do
       get 'profile'
-    end    
+    end
+    member do
+      get 'requests'
+    end
   end
 
-  resources :buyers, only: [:show] do 
+  resources :buyers, only: [:show, :index] do 
   end
 
   resources :works, only: [:index, :new] do

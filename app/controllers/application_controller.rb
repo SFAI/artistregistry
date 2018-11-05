@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-	check_authorization
 	def current_ability
 		if buyer_signed_in?
 			@current_ability ||= ::Ability.new(current_buyer)
@@ -9,16 +8,15 @@ class ApplicationController < ActionController::Base
 	end
 
 	rescue_from CanCan::AccessDenied do |exception|
-		puts "WHY"
 		redirect_to '/buyers/sign_in'
 	end
 
 	def after_sign_in_path_for(user)
 	    case
 	    when user.is_a?(Artist)
-	        artists_path
+	        artist_path
 	    when user.is_a?(Buyer)
-	        buyers_path
+	        buyer_path
 	    else
 	        super
 	    end
