@@ -8,22 +8,24 @@
 Picasso = Artist.create(
   id: 0,
   name: 'Picasso',
-  email: 'picasso@picasso.com',
+  email: 'picasso@artists.sfai.edu',
   password: 'password',
   program: 'art',
   open_to_commissions: true
   )
 #Picasso has id 0
+Picasso.skip_confirmation!
 Picasso.save!
 
 Kahlo = Artist.create(
   id: 1,
   name: 'Frida Kahlo',
-  email: 'fkahlo@fkahlo.com',
+  email: 'fkahlo@artists.sfai.edu',
   password: 'password',
   program: 'art',
   open_to_commissions: true
   )
+Kahlo.skip_confirmation!
 Kahlo.save!
 
 Gates = Buyer.create(
@@ -74,4 +76,3 @@ lisa_request_jobs.buyer = Jobs
 lisa_request_jobs.work = Lisa
 lisa_request_jobs.artist = Lisa.artist
 lisa_request_jobs.save!
-

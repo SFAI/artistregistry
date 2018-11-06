@@ -1,3 +1,4 @@
+require_dependency '../validators/email_validator.rb'
 class Artist < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
