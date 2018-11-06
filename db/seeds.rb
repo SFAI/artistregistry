@@ -31,11 +31,12 @@ Kahlo.save!
 Matisse = Artist.create(
   id: 3,
   name: 'Matisse',
-  email: 'henri@Matisse.com',
+  email: 'henri@artists.sfai.edu',
   password: 'password',
   program: 'art',
   open_to_commissions: true
   )
+Matisse.skip_confirmation!
 Matisse.save!
 
 Gates = Buyer.create(
