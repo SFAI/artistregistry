@@ -36,16 +36,18 @@ Gates = Buyer.create(
   phone_number: '111-111-1111'
   )
 #Gates has id 1
+Gates.skip_confirmation!
 Gates.save!
 
 Jobs = Buyer.create(
-  id:2,
+  id:1,
   name: 'Steve Jobs',
   email: 'steve@apple.com',
   password: 'appleee',
   phone_number: '111-111-1111'
   )
 #Gates has id 1
+Jobs.skip_confirmation!
 Jobs.save!
 
 Lisa = Picasso.works.create(
