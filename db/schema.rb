@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_24_205146) do
+ActiveRecord::Schema.define(version: 2018_11_02_032041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,17 @@ ActiveRecord::Schema.define(version: 2018_10_24_205146) do
     t.index ["reset_password_token"], name: "index_artists_on_reset_password_token", unique: true
   end
 
+  create_table "attachments", force: :cascade do |t|
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "work_id"
+    t.index ["work_id"], name: "index_attachments_on_work_id"
+  end
+
   create_table "buyers", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -74,7 +85,6 @@ ActiveRecord::Schema.define(version: 2018_10_24_205146) do
   end
 
   create_table "commissions", force: :cascade do |t|
-    t.integer "price"
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -96,14 +106,15 @@ ActiveRecord::Schema.define(version: 2018_10_24_205146) do
 
   create_table "works", force: :cascade do |t|
     t.string "title"
-    t.text "media"
-    t.integer "work_type"
-    t.integer "status"
+    t.text "material"
+    t.integer "medium"
+    t.integer "availability"
     t.decimal "price"
     t.bigint "artist_id", null: false
     t.index ["artist_id"], name: "index_works_on_artist_id"
   end
 
+  add_foreign_key "attachments", "works"
   add_foreign_key "commissions", "artists"
   add_foreign_key "commissions", "buyers"
   add_foreign_key "requests", "artists"
