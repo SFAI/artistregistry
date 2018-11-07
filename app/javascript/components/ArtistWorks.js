@@ -13,9 +13,6 @@ class ArtistWorks extends React.Component {
       works: [],
       comment: ""
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.createNewWork = this.createNewWork.bind(this);
   }
 
   componentDidMount = () => {
@@ -31,11 +28,11 @@ class ArtistWorks extends React.Component {
     );
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({ comment: event.target.value });
   }
 
-  handleSubmit(event) {
+  handleSubmit = () => {
     const artist_id = this.props.artist.id;
     const commissions_route = APIRoutes.commissions.create;
     const buyer_id = this.props.buyer.id;
@@ -48,7 +45,7 @@ class ArtistWorks extends React.Component {
     Requester.post(commissions_route, payload)
   }
 
-  createNewWork() {
+  createNewWork = () => {
     window.location = `/works/new`;
   }
 
@@ -65,7 +62,7 @@ class ArtistWorks extends React.Component {
             <p>{work.work_type}</p>
             <p>{work.media}</p>
             {work.attachment_url.map((attachment) =>
-              <img src={attachment} width="200" height="200"/>
+              <img src={attachment} width="200" height="200" />
             )}
           </div>
         ))}
