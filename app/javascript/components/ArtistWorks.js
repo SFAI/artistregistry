@@ -80,20 +80,26 @@ class ArtistWorks extends React.Component {
           </div>
         </div>
 
-        <button onClick={this.createNewWork}>
-          New Work
-        </button>
-        <h2>These will be the artist works</h2>
-        {this.state.works.map(work => (
-          <div key={work.id}>
-            <p className="work-title">{work.title}</p>
-            <p className="work-medium">{work.medium}</p>
-            <p className="work-material">{work.material}</p>
-            {work.attachment_url.map((attachment) =>
-              <img src={attachment} width="200" height="200" />
-            )}
-          </div>
-        ))}
+        <div className="row-filters">
+          <button className="filter-button">All works</button>
+          <button className="filter-button">Available</button>
+          <button className="filter-button">Sold/Rented</button>
+        </div>
+        <div className="flex">
+          {this.state.works.map(work => (
+            <div key={work.id} className="artwork">
+              <div className="work-image" >
+                <img src={""} />
+              </div>
+              <p className="work-title">{work.title}</p>
+              <p className="work-medium">{work.medium}</p>
+              <p className="work-material">{work.material}</p>
+              {work.attachment_url.map((attachment) =>
+                <img src={attachment} width="200" height="200" />
+              )}
+            </div>
+          ))}
+        </div>
         <form onSubmit={this.handleSubmit} name="commissionsForm">
           <textarea
             type="TEXT"
@@ -104,6 +110,9 @@ class ArtistWorks extends React.Component {
           />
           <input type="submit" value="Submit" />
         </form>
+        <button onClick={this.createNewWork}>
+          New Work
+        </button>
       </div>
     );
   }

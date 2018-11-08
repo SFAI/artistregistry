@@ -50,3 +50,33 @@
         padding: 20px 24px;
     }
 }
+// how to inherit a part of a class?
+.row-filters {
+    margin-top: 72px;
+    margin-bottom: 16px;
+
+    .filter-button {
+        width: 120px;
+        height: 36px;
+        background-color: $white;
+        margin-right: 16px;
+        border: none;
+        color: $purple;
+        font-family: $font;
+        font-weight: 500;
+        font-size: 14px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+}
+
+.artwork {
+    background-color: $white;
+    min-width: 272px;
+    padding: 16px;
+    margin-right: 24px;
+    .work-image {
+        background-color: $gray;
+        height: 200px;
+    }
+}
