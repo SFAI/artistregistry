@@ -1,3 +1,52 @@
 // Place all the styles related to the artists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.row-bio {
+    height: 360px;
+    display: flex;
+    .col-info {
+        display: flex;
+        flex-direction: column;
+        min-width: 248px;
+        background-color: $white;
+        padding: 20px 24px;
+        .avatar {
+            align-self: center;
+            border-radius: 60px;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 24px;
+            background-color: $gray;
+        }
+        .contact-button-container {
+            align-self: center;
+            margin-top: auto; // aligns button to bottom of div
+        }
+        .contact-button {
+            min-width: 176px;
+            height: 48px;
+            border: none;
+            background-color: $purple;
+            font-family: $font;
+            font-weight: 500;
+            font-size: 18px;
+            text-align: center;
+            text-transform: uppercase;
+            color: $white;
+        }
+
+    }
+
+    .col-featured-artwork {
+        min-width: 444px;
+        flex: 1;
+        margin: 0px 24px;
+        background-color: $gray
+    }
+
+    .col-about {
+        min-width: 420px;
+        background-color: $white;
+        padding: 20px 24px;
+    }
+}
