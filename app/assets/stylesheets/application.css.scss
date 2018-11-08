@@ -21,7 +21,14 @@
 
  @import "pages/*";
  @import "components/*";
+ @import "artists";
+
+ body {
+    background-color: $background;
+ }
 
  .dashboard-container {
-     margin-top: 52px;
+     max-width: 90%;
+     margin: 0px auto;
+     padding-top: 52px;
  }
