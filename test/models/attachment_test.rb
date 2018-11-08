@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TransactionsControllerTest < ActionDispatch::IntegrationTest
+class AttachmentTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

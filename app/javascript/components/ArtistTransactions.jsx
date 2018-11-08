@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
+import Modal from "./Modal";
+import CreateTransaction from "./CreateTransaction";
 
 /**
 * @prop artist: artist creating transaction
@@ -18,13 +20,13 @@ class ArtistTransactions extends React.Component {
 
   componentDidMount = () => {
     const artist_id = this.props.artist.id;
-    const transactions_route = APIRoutes.artists.transactions(0);
+    const transactions_route = APIRoutes.artists.transactions(artist_id);
     Requester.get(transactions_route).then(
       response => {
         this.setState({ transactions: response });
       },
-      response => {
-        console.err(response);
+      error => {
+        console.err(error);
       }
     );
   }
@@ -39,26 +41,39 @@ class ArtistTransactions extends React.Component {
 
   render() {
     return (
-      <main>
-        <h2>Artist Transactions</h2>
+      <div className="transactions-page">
+        <h2 className="f4 lh-title fw6">Transactions</h2>
+        <br />
         {this.state.transactions.map(transaction => (
-          <div key={transaction.transaction.id}>
-            <h3>{transaction.transaction.comment}</h3>
-            <p> Completed With: {transaction.buyer.name} </p>
-            <p> Price: {transaction.transaction.price} </p>
-            <p> Artwork: {transaction.work.title} </p>
+          <div className="bb b--gray" key={transaction.transaction.id}>
+            <p>
+              <span className="f5 lh-copy fw5">Title</span>
+              <span className="f5 lh-copy fw3 i"> {transaction.work.title} </span>
+              <span className="f5 lh-copy fw5">${transaction.transaction.price}</span>
+            </p>
+            <p>
+              <span className="f5 lh-copy fw5">Patron</span>
+              <span className="f5 lh-copy fw3 i"> {transaction.buyer.name} </span>
+              <span className="f5 lh-copy fw3 i">{transaction.transaction.transaction_type}</span>
+            </p>
+            <p>
+              <span className="f5 lh-copy fw3">{transaction.transaction.comment}</span>
+            </p>
           </div>
         ))}
 
-        <h3>Record a New Transaction</h3>
         <Modal show={this.state.show} handleClose={this.hideModal}>
-          <CreateTransactionForm>
+          <CreateTransaction artist={this.props.artist}/>
         </Modal>
-        <button type="button" onClick={this.showModal}>
+        <br />
+        <button onClick={this.showModal}>
           Record Transaction
         </button>
-      </main>
+
+      </div>
     );
   }
 
 }
+
+export default ArtistTransactions;

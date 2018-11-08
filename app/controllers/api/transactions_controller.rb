@@ -27,11 +27,12 @@ class Api::TransactionsController < ApplicationController
         :buyer_id,
         :artist_id,
         :work_id,
-        :type,
+        :transaction_type,
         :start_date,
         :end_date,
         :purchase_date,
-        :price
+        :price,
+        :comment
       )
     end
 end

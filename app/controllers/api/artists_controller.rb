@@ -57,16 +57,17 @@ class Api::ArtistsController < ApplicationController
   def transactions
     artist = Artist.find(params[:id])
     transactions = artist.transactions
+    transactions_full = []
     transactions.each do |transaction|
       this_transaction = {}
       this_transaction["transaction"] = transaction
       this_transaction["buyer"] = transaction.buyer
       this_transaction["work"] = transaction.work
       this_transaction["comment"] = transaction.comment
-      requests_full.append(this_request)
+      transactions_full.append(this_transaction)
     end
     if transactions
-      render json: transactions
+      render json: transactions_full
     else
       render_json_message(:forbidden, errors: transactions.errors.full_messages)
     end

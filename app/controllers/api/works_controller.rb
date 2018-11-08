@@ -6,18 +6,18 @@ class Api::WorksController < ApplicationController
   end
 
   def create
-    work = Work.create(params)
-    begin
-      saved = work.save!
-    rescue ActiveRecord::RecordInvalid => invalid
-      render_json_message(:forbidden, errors: invalid.record.errors.full_messages)
-      return
+    work_attr = work_params
+    attachment_attr = work_attr.delete("attachments_attributes")
+    @work = Work.new(work_attr)
+    if @work.save
+      @work.attachments = attachment_attr.map do |a|
+        attachment_params = {}
+        attachment_params[:image] = a
+        attachment_params[:work_id] = @work.id
+        @work.attachments.create(attachment_params)
+      end
     end
-    if saved
-      render_json_message(:ok, message: 'Work successfully created!')
-    else
-      render_json_message(:forbidden, errors: work.errors.full_messages)
-    end
+    render json: @work
   end
 
   def update
@@ -34,4 +34,30 @@ class Api::WorksController < ApplicationController
       render_json_message(:forbidden, errors: work.errors.full_messages)
     end
   end
+
+  def index
+    works = Work.all
+    render json: works,
+      each_serializer: WorkSerializer
+  end
+
+  def filtered_works
+    parsed_query = CGI.parse(params[:search_params])
+    filtered_works = params[:search_params] == "" ?  Work.all : Work.where(parsed_query)
+    render json: filtered_works,
+      each_serializer: WorkSerializer
+  end
+
+
+  def work_params
+    params.require(:work).permit(:title,
+                                 :material,
+                                 :medium,
+                                 :status,
+                                 :availability,
+                                 :artist_id,
+                                 :attachments_attributes => []
+                                )
+  end
+
 end
