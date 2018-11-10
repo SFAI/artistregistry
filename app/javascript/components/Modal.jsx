@@ -15,9 +15,9 @@ class Modal extends React.Component {
     }
     return (
       <div>
-        <div className="ba bw1 pa3 modal">
+        <div className="ba pa3 modal">
           {this.props.children}
-          <button onClick={this.props.handleClose}>
+          <button className="cancel-button" onClick={this.props.handleClose}>
             Cancel
           </button>
         </div>

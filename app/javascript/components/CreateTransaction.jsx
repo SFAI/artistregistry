@@ -86,7 +86,7 @@ class CreateTransaction extends React.Component {
     if (this.state.transaction.transaction_type == "purchase") {
       return (
         <div>
-          <p className="f6 lh-copy">Purchase Date:</p>
+          <p className="f6 lh-copy">Purchase Date  </p>
           <input
             type="date"
             name="purchase_date"
@@ -103,7 +103,7 @@ class CreateTransaction extends React.Component {
     if (this.state.transaction.transaction_type == "rental") {
       return (
         <div>
-          <p className="f6 lh-copy">Start Date:</p>
+          <p className="f6 lh-copy">Start Date  </p>
           <input
             type="date"
             name="start_date"
@@ -112,7 +112,7 @@ class CreateTransaction extends React.Component {
             onChange={this.handleChange}
           />
 
-          <p className="f6 lh-copy">End Date:</p>
+          <p className="f6 lh-copy">End Date  </p>
           <input
             type="date"
             name="end_date"
@@ -132,10 +132,10 @@ render() {
     );
   }
   return (
-      <div>
-        <h2 class="f4 lh-title">Create a Transaction</h2>
+      <div className="create-transaction-form">
+        <h2 class="f4 lh-title submit">Submit Details</h2>
 
-        <p className="f6 lh-copy">Price:</p>
+        <p className="f6 lh-copy price">Price  </p>
         <input
           type="NUMBER"
           name="price"
@@ -144,8 +144,10 @@ render() {
           onChange = {this.handleChange}
         />
 
-        <div className="f6 lh-copy drop-down">Type:
-          <select name="transaction_type" value={this.state.transaction.transaction_type} onChange={this.handleChange}>
+        <div className="f6 lh-copy drop-down">Type
+          <select name="transaction_type"
+                  value={this.state.transaction.transaction_type}
+                  onChange={this.handleChange}>
               <option value="choose">choose a type</option>
               {  Object.keys(this.state.types).map((obj) => { return <option>{obj}</option> }) }
           </select>
@@ -154,7 +156,7 @@ render() {
         {this.renderRentalDates()}
         {this.renderPurchaseDate()}
 
-        <p className="f6 lh-copy">Additional Comments:</p>
+        <p className="f6 lh-copy">Additional Comments </p>
         <textarea
           type="TEXT"
           name="comment"
@@ -163,9 +165,11 @@ render() {
           onChange = {this.handleChange}
         />
 
-        <button disabled={!this.state.isEnabled} onClick={this.handleSubmit}>
-          Record
-        </button>
+        <p>
+          <button className="record-button" disabled={!this.state.isEnabled} onClick={this.handleSubmit}>
+            Record
+          </button>
+        </p>
       </div>
     );
   }

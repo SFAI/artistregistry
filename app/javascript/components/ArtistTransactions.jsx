@@ -4,9 +4,7 @@ import Modal from "./Modal";
 import CreateTransaction from "./CreateTransaction";
 
 /**
-* @prop artist: artist creating transaction
-* @prop buyer: buyer associated with transaction
-* @prop work: work associated with transaction
+* @prop artist: artist associated with transactions
 */
 
 class ArtistTransactions extends React.Component {
@@ -47,17 +45,17 @@ class ArtistTransactions extends React.Component {
         {this.state.transactions.map(transaction => (
           <div className="bb b--gray" key={transaction.transaction.id}>
             <p>
-              <span className="f5 lh-copy fw5">Title</span>
-              <span className="f5 lh-copy fw3 i"> {transaction.work.title} </span>
-              <span className="f5 lh-copy fw5">${transaction.transaction.price}</span>
+              <span className="b">Title</span>
+              <span className="i"> {transaction.work.title} </span>
+              <span>${transaction.transaction.price}</span>
             </p>
             <p>
-              <span className="f5 lh-copy fw5">Patron</span>
-              <span className="f5 lh-copy fw3 i"> {transaction.buyer.name} </span>
-              <span className="f5 lh-copy fw3 i">{transaction.transaction.transaction_type}</span>
+              <span className="b">Patron</span>
+              <span className="i"> {transaction.buyer.name} </span>
+              <span className="i">{transaction.transaction.transaction_type}</span>
             </p>
             <p>
-              <span className="f5 lh-copy fw3">{transaction.transaction.comment}</span>
+              <span>{transaction.transaction.comment}</span>
             </p>
           </div>
         ))}
@@ -66,8 +64,8 @@ class ArtistTransactions extends React.Component {
           <CreateTransaction artist={this.props.artist}/>
         </Modal>
         <br />
-        <button onClick={this.showModal}>
-          Record Transaction
+        <button className="record-button" onClick={this.showModal}>
+          Mark as Complete
         </button>
 
       </div>

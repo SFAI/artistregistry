@@ -2,9 +2,22 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  height: 360px;
+  width: 320px;
   right: auto;
   bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, -50%);
   background-color: white;
+  border-top: 48px solid #D69B31;
+
+.cancel-button {
+  background-color: white;
+  border: none;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  }
 }

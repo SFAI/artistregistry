@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-
 /**
 * @prop buyer: buyer currently logged in
 * @prop artist: artist associated with works
 */
+
 class ArtistWorks extends React.Component {
   constructor(props) {
     super(props);
