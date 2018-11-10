@@ -10,12 +10,8 @@ class Api::WorksController < ApplicationController
     attachment_attr = work_attr.delete("attachments_attributes")
     @work = Work.new(work_attr)
     if @work.save
-      @work.attachments = attachment_attr.map do |a|
-        attachment_params = {}
-        attachment_params[:image] = a
-        attachment_params[:work_id] = @work.id
-        @work.attachments.create(attachment_params)
-      end
+      @work.images.attach(attachment_attr)
+    
     end
     render json: @work
   end
@@ -48,6 +44,19 @@ class Api::WorksController < ApplicationController
       each_serializer: WorkSerializer
   end
 
+  def thumbnail
+    work = Work.find(params[:id])
+    images = work.images
+    if work.images
+      image_url = { :image_url => url_for(images[0]) }
+      render json: image_url
+    else
+      image_url = { :image_url => {} }
+      render json: image_url
+    end
+
+  end
+
 
   def work_params
     params.require(:work).permit(:title,
@@ -61,3 +70,22 @@ class Api::WorksController < ApplicationController
   end
 
 end
+
+  # def create
+  #   # work_attr = work_params
+  #   # attachment_attr = work_attr.delete("attachments_attributes")
+  #   @work = Work.new(work_params)
+  #   if @work.save
+  #     @work.images.attach(params[:work][:images])
+  #     puts "mone in theb ank"
+  #     puts params[:work][:images].length
+  #     # @work.attachments = attachment_attr.map do |a|
+  #     #   attachment_params = {}
+  #     #   attachment_params[:image] = a
+  #     #   attachment_params[:work_id] = @work.id
+  #     #   @work.attachments.create(attachment_params)
+  #     # end
+  #   end
+  #   render json: @work
+  # end
+

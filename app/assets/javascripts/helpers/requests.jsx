@@ -66,6 +66,26 @@
       });
     }
 
+    submit(route, formData) {
+      const request = new XMLHttpRequest();
+
+      request.open('POST', route);
+      request.setRequestHeader('Content-Type', 'multipart/form-data');
+      return new Promise(function (resolve, reject) {
+        request.onload = function () {
+          if (this.status == 200 && resolve) {
+            resolve(JSON.parse(request.response));
+          } else if (reject) {
+            reject({
+              status: this.status,
+              statusText: this.statusText,
+            });
+          }
+        }
+        request.send(formData);
+      });
+    }
+
     update(route, params) {
       const request = this.initialize('PUT', route);
       return new Promise(function (resolve, reject) {

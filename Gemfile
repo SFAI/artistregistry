@@ -43,8 +43,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'jquery-rails'
-
-gem "paperclip", "~> 6.0.0"
+gem 'mini_magick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
