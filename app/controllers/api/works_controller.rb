@@ -70,22 +70,3 @@ class Api::WorksController < ApplicationController
   end
 
 end
-
-  # def create
-  #   # work_attr = work_params
-  #   # attachment_attr = work_attr.delete("attachments_attributes")
-  #   @work = Work.new(work_params)
-  #   if @work.save
-  #     @work.images.attach(params[:work][:images])
-  #     puts "mone in theb ank"
-  #     puts params[:work][:images].length
-  #     # @work.attachments = attachment_attr.map do |a|
-  #     #   attachment_params = {}
-  #     #   attachment_params[:image] = a
-  #     #   attachment_params[:work_id] = @work.id
-  #     #   @work.attachments.create(attachment_params)
-  #     # end
-  #   end
-  #   render json: @work
-  # end
-
