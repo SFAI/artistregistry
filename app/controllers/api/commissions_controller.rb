@@ -4,6 +4,7 @@ class Api::CommissionsController < ApplicationController
   end
 
   def create
+    puts "alskdjalsk"
     commission = Commission.new(commission_params)
     if commission.save!
       flash[:success] = "Commission requested successfully!";
