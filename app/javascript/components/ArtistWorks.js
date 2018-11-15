@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { getCSRFToken } from '../shared/helpers/form_helpers.js'
 
 
 /**
@@ -11,11 +12,13 @@ class ArtistWorks extends React.Component {
     super(props);
     this.state = {
       works: [],
-      comment: ""
+      comment: "",
+      isNewWork: true
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createNewWork = this.createNewWork.bind(this);
+    this.deleteWork = this.deleteWork.bind(this);
   }
 
   componentDidMount = () => {
@@ -52,6 +55,20 @@ class ArtistWorks extends React.Component {
     window.location = `/works/new`;
   }
 
+  deleteWork(work_id) {
+    fetch(APIRoutes.works.delete(work_id), {
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   render() {
     return (
       <div>
@@ -67,6 +84,8 @@ class ArtistWorks extends React.Component {
             {work.attachment_url.map((attachment) =>
               <img src={attachment} width="200" height="200"/>
             )}
+            <button onClick={() => {window.location = `/works/${work.id}/edit`}}>Edit Work</button>
+            <button onClick={() => {this.deleteWork(work.id)}}>Delete Work</button>
           </div>
         ))}
         <form onSubmit={this.handleSubmit} name="commissionsForm">

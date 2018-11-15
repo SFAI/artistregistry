@@ -6,19 +6,19 @@ import Dropzone from "react-dropzone";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-class CreateWork extends React.Component {
+class UpdateWork extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       work: {
-        title: '',
-        material: '',
-        medium: "painting",
-        availability: "active",
+        id: this.props.work.id,
+        title: this.props.work.title,
+        material: this.props.work.material,
+        medium: this.props.work.medium,
+        availability: this.props.work.availability,
         images: [],
-        featured_image: null,
-        artist_id: this.props.artist_id
+        artist_id: this.props.work.artist_id,
       },
       categories: {
         "medium": 0,
@@ -31,11 +31,11 @@ class CreateWork extends React.Component {
     this.onDrop = this.onDrop.bind(this);
     this.mediumHandleChange = this.mediumHandleChange.bind(this);
     this.availabilityHandleChange = this.availabilityHandleChange.bind(this);
-    this.selectFeaturedImage = this.selectFeaturedImage.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props.artist);
+    console.log("---------PROPS WORK-----------");
+    console.log(this.props.work);
     const route = APIRoutes.works.categories;
     Requester.get(route).then(
       response => {
@@ -92,15 +92,15 @@ class CreateWork extends React.Component {
       formData.append('work[attachments_attributes][]', img);
     });
 
-    fetch(APIRoutes.works.create, {
-      method: 'POST',
+    fetch(APIRoutes.works.update(this.state.work.id), {
+      method: 'PUT',
       body: formData,
       credentials: 'same-origin',
       headers: {
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       }
     }).then((data) => {
-      window.location = `/artists/` + this.state.work.artist_id;
+      window.location = `/artists/` + this.props.work.artist_id;
     }).catch((data) => {
       console.error(data);
     });
@@ -110,19 +110,13 @@ class CreateWork extends React.Component {
     var currentImages = this.state.work.images;
     const [newImages] = images;
     currentImages.push(newImages);
-    console.log(images)
+    console.log("ON DROP IMAGES-----------");
+    console.log(currentImages);
 
     // Assign files dropped into component into state
     var work = this.state.work;
     work.images = currentImages;
     this.setState({ work: work });
-  }
-
-  selectFeaturedImage(img) {
-    var work = this.state.work;
-    work.featured_image = img;
-    this.setState({work: work});
-    console.log(work);
   }
 
   render() {
@@ -134,7 +128,7 @@ class CreateWork extends React.Component {
     // but we can't import this since it screws with our styles :(
     return (
       <div>
-        <form action={APIRoutes.works.create} method='POST' onSubmit={this.handleSubmit}>
+        <form action={APIRoutes.works.update(this.state.work.id)} method='PUT' onSubmit={this.handleSubmit}>
           <div className="pt-dialog-body">
             <p className="pt-ui-text">Title:
               <input
@@ -178,13 +172,9 @@ class CreateWork extends React.Component {
               />
               <div>
                 {this.state.work.images.map((img) => {
-                  return (
-                    <div>
-                      <div>{img.name}</div>
-                      <button onClick={() => {this.selectFeaturedImage(img)}}>Select as Featured Image</button>
-                    </div>
-                )}
-              )}</div>
+                  return <div>{img.name}</div>
+                })
+              }</div>
             </div>
           </div>
           <div className="pt-dialog-footer">
@@ -192,7 +182,7 @@ class CreateWork extends React.Component {
               <Button
                 intent={Intent.SECONDARY}
                 type="submit"
-                text="Submit"
+                text="Save Changes"
               />
               <Button
                 intent={Intent.PRIMARY}
@@ -207,4 +197,4 @@ class CreateWork extends React.Component {
   }
 }
 
-export default CreateWork;
+export default UpdateWork;

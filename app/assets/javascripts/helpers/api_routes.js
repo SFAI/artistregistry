@@ -6,7 +6,7 @@ class ApiRoutes {
       create: `/api/works`,
       show: (id) => `/api/works/${id}`,
       update: (id) => `/api/works/${id}`,
-      delete: (id) => `/api/works/destroy/${id}`,
+      delete: (id) => `/api/works/${id}`,
       filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
       categories: `/works/categories`
     }
