@@ -39,7 +39,8 @@ class CreateWork extends React.Component {
     formData.append('work[material]', this.state.work.material);
     formData.append('work[medium]', this.state.work.medium);
     formData.append('work[availability]', this.state.work.availability);
-    formData.append('work[artist_id]', this.props.artist.id);
+    //formData.append('work[artist_id]', this.props.artist.id);
+    formData.append('work[artist_id]', 0);
 
     this.state.work.images.forEach((img) => {
       console.log(img);
@@ -54,7 +55,7 @@ class CreateWork extends React.Component {
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       }
     }).then((data) => {
-      window.location = `/artists/` + this.props.artist.id;
+      //window.location = `/artists/` + this.props.artist.id;
     }).catch((data) => {
       console.error(data);
     });

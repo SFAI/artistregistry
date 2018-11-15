@@ -1,11 +1,13 @@
 class Api::WorksController < ApplicationController
   respond_to :json
+
   def show
     @work = Work.find(params[:id])
     render json: @work
   end
 
   def create
+    authorize! :create, Work
     work_attr = work_params
     attachment_attr = work_attr.delete("attachments_attributes")
     @work = Work.new(work_attr)
@@ -22,12 +24,14 @@ class Api::WorksController < ApplicationController
 
   def update
     work = Work.find(params[:id])
+    authorize! :update, work
     new_work = work.update(params)
     render_json_message(:ok, message: 'Work successfully updated!')
   end
 
   def destroy
     work = Work.find(params[:id])
+    authorize! :delete, work
     if work.destroy
       render_json_message(:ok, message: 'Work successfully deleted')
     else

@@ -17,5 +17,11 @@ class WorksController < ApplicationController
   end
 
   def new
+    authorize! :create, Work
+  end
+
+  def edit
+    @work = Work.find(params[:id])
+    authorize! :update, @work
   end
 end
