@@ -12,7 +12,7 @@ class AllArtists extends React.Component {
   }
 
   componentDidMount() {
-    const route = APIRoutes.artists.allArtists;
+    const route = APIRoutes.artists.index;
     Requester.get(route).then(
       response => {
         this.setState({
