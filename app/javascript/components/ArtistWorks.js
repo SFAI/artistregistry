@@ -12,7 +12,8 @@ class ArtistWorks extends React.Component {
     this.state = {
       works: [],
       artist: [],
-      comment: ""
+      comment: "",
+      activeFilter: 'All works'
     }
   }
 
@@ -53,6 +54,20 @@ class ArtistWorks extends React.Component {
     window.location = `/works/new`;
   }
 
+  renderFilterButtons = () => {
+    const { activeFilter } = this.state;
+    return (
+      <div className="mt5 mb3">
+        {['All works', 'Available', 'Sold/Rented'].map(filter => {
+          const className = activeFilter == filter
+            ? "filter-button bg-gray white f6 mr3"
+            : "filter-button bg-white gray f6 mr3";
+          return <button onClick={() => this.setState({ activeFilter: filter })} key={filter} className={className}>{filter}</button>
+        })}
+      </div>
+    )
+  }
+
   render() {
     const { name, program } = this.state.artist;
     return (
@@ -80,11 +95,7 @@ class ArtistWorks extends React.Component {
           </div>
         </div>
 
-        <div className="mt5 mb3">
-          <button className="filter-button f6 mr3">All works</button>
-          <button className="filter-button f6 mr3">Available</button>
-          <button className="filter-button f6">Sold/Rented</button>
-        </div>
+        {this.renderFilterButtons()}
         <div className="flex">
           {this.state.works.map(work => (
             <div key={work.id} className="artwork pa3 mr3 bg-white">
