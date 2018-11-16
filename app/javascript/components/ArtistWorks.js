@@ -88,11 +88,11 @@ class ArtistWorks extends React.Component {
         <div className="flex">
           {this.state.works.map(work => (
             <div key={work.id} className="artwork pa3 mr3 bg-white">
-              <div className="work-image bg-gray" >
+              <div className="work-image bg-gray mb2" >
                 <img src={""} />
               </div>
-              <p className="work-title">{work.title}</p>
-              <p className="work-medium">{work.medium}</p>
+              <p className="work-title mb1">{work.title}</p>
+              <p className="work-medium mb1">{work.medium}</p>
               <p className="work-material">{work.material}</p>
               {work.attachment_url.map((attachment) =>
                 <img src={attachment} width="200" height="200" />
@@ -100,19 +100,21 @@ class ArtistWorks extends React.Component {
             </div>
           ))}
         </div>
-        <form onSubmit={this.handleSubmit} name="commissionsForm">
-          <textarea
-            type="TEXT"
-            name="comment"
-            id="comment"
-            value={this.state.comment}
-            onChange={this.handleChange}
-          />
-          <input type="submit" value="Submit" />
-        </form>
-        <button onClick={this.createNewWork}>
-          New Work
-        </button>
+        <div className="mv3">
+          <form onSubmit={this.handleSubmit} name="commissionsForm">
+            <textarea
+              type="TEXT"
+              name="comment"
+              id="comment"
+              value={this.state.comment}
+              onChange={this.handleChange}
+            />
+            <input type="submit" value="Submit" />
+          </form>
+          <button onClick={this.createNewWork}>
+            New Work
+          </button>
+        </div>
       </div>
     );
   }
