@@ -3,7 +3,6 @@ class TransactionsController < ApplicationController
   end
 
   def new
-    
   end
 
   def get_transaction_type_enums

@@ -6,8 +6,8 @@ class Api::TransactionsController < ApplicationController
   def create
     transaction = Transaction.new(transaction_params)
     if transaction.save!
-      flash[:success] = "Transaction recorded successfully!";
-      return render json: {"message": 'Transaction recoreded successfully!'}
+      flash[:success] = "Transaction recorded successfully!"
+      return render json: {"message": 'Transaction recorded successfully!'}
     else
       flash[:danger] = "Transaction failed to record."
       return render json: {error: Transaction.errors.full_messages}

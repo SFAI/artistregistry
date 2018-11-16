@@ -12,7 +12,8 @@ class ArtistTransactions extends React.Component {
     super(props);
     this.state = {
       show: false,
-      transactions: []
+      transactions: [],
+      didMount: false
     }
   }
 
@@ -21,10 +22,13 @@ class ArtistTransactions extends React.Component {
     const transactions_route = APIRoutes.artists.transactions(artist_id);
     Requester.get(transactions_route).then(
       response => {
-        this.setState({ transactions: response });
+        this.setState({
+          transactions: response,
+          didMount: true
+         });
       },
       error => {
-        console.err(error);
+        console.error(error);
       }
     );
   }
@@ -38,24 +42,29 @@ class ArtistTransactions extends React.Component {
   };
 
   render() {
+    if (!this.state.didMount) {
+      return (
+        <div />
+      );
+    }
     return (
       <div className="transactions-page">
         <h2 className="f4 lh-title fw6">Transactions</h2>
         <br />
         {this.state.transactions.map(transaction => (
-          <div className="bb b--gray" key={transaction.transaction.id}>
+          <div className="bb b--gray" key={transaction.id}>
             <p>
               <span className="b">Title</span>
-              <span className="i"> {transaction.work.title} </span>
-              <span>${transaction.transaction.price}</span>
+              <span className="i"> {transaction.work_title} </span>
+              <span>${transaction.price}</span>
             </p>
             <p>
               <span className="b">Patron</span>
-              <span className="i"> {transaction.buyer.name} </span>
-              <span className="i">{transaction.transaction.transaction_type}</span>
+              <span className="i"> {transaction.buyer_name} </span>
+              <span className="i">{transaction.transaction_type}</span>
             </p>
             <p>
-              <span>{transaction.transaction.comment}</span>
+              <span>{transaction.comment}</span>
             </p>
           </div>
         ))}
