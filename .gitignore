@@ -33,4 +33,5 @@
 yarn-debug.log*
 .yarn-integrity
 
+/config/secrets.yml
 package-lock.json
