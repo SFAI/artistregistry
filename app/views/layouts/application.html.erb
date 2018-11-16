@@ -11,6 +11,7 @@
 
   <body>
     <%= render :template => "/partials/_header" %>
+    <%= render :partial => 'layouts/toast', :flash => flash %>
     <%= yield %>
   </body>
 </html>

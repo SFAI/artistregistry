@@ -11,11 +11,10 @@ class ArtistWorks extends React.Component {
     super(props);
     this.state = {
       works: [],
-      comment: ""
+      comment: "",
+      errors: [],
+      componentDidMount: false
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.createNewWork = this.createNewWork.bind(this);
   }
 
   componentDidMount = () => {
@@ -23,7 +22,10 @@ class ArtistWorks extends React.Component {
     const works_route = APIRoutes.artists.works(artist_id);
     Requester.get(works_route).then(
       response => {
-        this.setState({ works: response });
+        this.setState({
+          works: response,
+          componentDidMount: true
+        });
       },
       response => {
         console.error(response);
@@ -31,30 +33,60 @@ class ArtistWorks extends React.Component {
     );
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({ comment: event.target.value });
   }
-
-  handleSubmit(event) {
-    const artist_id = this.props.artist.id;
-    const commissions_route = APIRoutes.commissions.create;
-    const buyer_id = this.props.buyer.id;
-    const payload = {
-      "buyer_id": buyer_id,
-      "artist_id": artist_id,
-      "comment": this.state.comment
+  
+  checkErrors() {
+    let errors = [];
+    if (this.state.comment === "") {
+      errors.push("This field cannot be empty.");
     }
-
-    Requester.post(commissions_route, payload)
+    if (!this.props.buyer) {
+      errors.push("You must be logged in to request a commission.");
+    }
+    return errors;
   }
 
-  createNewWork() {
+  handleSubmit = (event) => {
+    let errors = this.checkErrors();
+    if (errors.length) {
+      this.setState({ errors: errors });
+    } else {
+      const artist_id = this.props.artist.id;
+      const buyer_id = this.props.buyer.id;
+      const commissions_route = APIRoutes.commissions.create;
+
+      const payload = {
+        "buyer_id": buyer_id,
+        "artist_id": artist_id,
+        "comment": this.state.comment
+      }
+      Requester.post(commissions_route, payload).then(
+        response => {
+          window.location.href = '/artists/' + this.props.artist.id
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    }
+  }
+
+  createNewWork = () => {
     window.location = `/works/new`;
   }
 
   render() {
+    if (!this.state.componentDidMount) {
+      return (
+        <div>
+          <p>Loading</p>
+        </div>
+      );
+    }
     return (
-      <div>
+      <div className="artist-profile-page">
         <button onClick={this.createNewWork}>
           New Work
         </button>
@@ -69,16 +101,23 @@ class ArtistWorks extends React.Component {
             )}
           </div>
         ))}
-        <form onSubmit={this.handleSubmit} name="commissionsForm">
-          <textarea
-            type="TEXT"
-            name="comment"
-            id="comment"
-            value={this.state.comment}
-            onChange={this.handleChange}
-          />
-          <input type="submit" value="Submit" />
-        </form>
+        <textarea
+          type="TEXT"
+          name="comment"
+          id="comment"
+          value={this.state.comment}
+          onChange = {this.handleChange}
+        />
+        {
+          this.state.errors.map((error, i) => {
+            return (
+              <span key={i}>{error}</span>
+            );
+          })
+        }
+        <button onClick={this.handleSubmit}>
+          Create
+        </button>
       </div>
     );
   }

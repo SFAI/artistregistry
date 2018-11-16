@@ -5,7 +5,13 @@ class Api::CommissionsController < ApplicationController
 
   def create
     commission = Commission.new(commission_params)
-    commission.save!
+    if commission.save!
+      flash[:success] = "Commission requested successfully!";
+      return render json: {"message": 'Commission requested successfully!'}
+    else
+      flash[:danger] = "Commission failed to send."
+      return render json: {error: commission.errors.full_messages}
+    end
   end
 
   def update
