@@ -3,6 +3,11 @@
     <h1>Welcome back</h1>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+        <% flash.each do |key, value| %>
+           <div class="flash <%= key %>"><%= value %></div>
+        <% end %>
+        <br />
       <div class="field">
         <%= f.label :email %><br /><br />
         <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>

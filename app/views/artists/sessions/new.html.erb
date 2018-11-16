@@ -6,7 +6,7 @@
         <% flash.each do |key, value| %>
            <div class="flash <%= key %>"><%= value %></div>
         <% end %>
-        <br /><br />
+        <br />
       <div class="field">
         <%= f.label :email %><br /><br />
         <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
