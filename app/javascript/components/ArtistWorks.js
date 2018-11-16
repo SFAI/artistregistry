@@ -58,37 +58,37 @@ class ArtistWorks extends React.Component {
     return (
       <div>
         <h1> {name} </h1>
-        <div className="row-bio">
-          <div className="col-info">
-            <div className="avatar">
+        <div className="row-bio flex">
+          <div className="pa3 flex flex-column w5 bg-white">
+            <div className="h4 w4 br-100 mb3 bg-gray self-center">
               <img src="" />
             </div>
             <div className="info">
               <h3> Education </h3>
               <p> {program} </p>
             </div>
-            <div className="contact-button-container">
-              <button className="contact-button">contact</button>
+            <div className="mt-auto self-center">
+              <button className="contact-button f5">contact</button>
             </div>
           </div>
-          <div className="col-featured-artwork">
+          <div className="bg-gray mh3 flex-auto">
             <img src={""} />
           </div>
-          <div className="col-about">
+          <div className="bg-white pa3 flex-auto">
             <h2>About the artist</h2>
             <p> Some words</p>
           </div>
         </div>
 
-        <div className="row-filters">
-          <button className="filter-button">All works</button>
-          <button className="filter-button">Available</button>
-          <button className="filter-button">Sold/Rented</button>
+        <div className="mt5 mb3">
+          <button className="filter-button f6 mr3">All works</button>
+          <button className="filter-button f6 mr3">Available</button>
+          <button className="filter-button f6">Sold/Rented</button>
         </div>
         <div className="flex">
           {this.state.works.map(work => (
-            <div key={work.id} className="artwork">
-              <div className="work-image" >
+            <div key={work.id} className="artwork pa3 mr3 bg-white">
+              <div className="work-image bg-gray" >
                 <img src={""} />
               </div>
               <p className="work-title">{work.title}</p>

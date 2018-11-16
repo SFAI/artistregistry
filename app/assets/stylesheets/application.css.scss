@@ -32,3 +32,15 @@
      margin: 0px auto;
      padding-top: 52px;
  }
+
+ .button {
+    border: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: $font;
+    font-weight: 500;
+ }
+
+ .mt-auto {
+    margin-top: auto; // aligns button to bottom of div
+}
