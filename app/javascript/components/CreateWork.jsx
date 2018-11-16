@@ -42,7 +42,6 @@ class CreateWork extends React.Component {
     formData.append('work[artist_id]', this.props.artist.id);
 
     this.state.work.images.forEach((img) => {
-      console.log(img);
       formData.append('work[attachments_attributes][]', img);
     });
 
@@ -55,7 +54,7 @@ class CreateWork extends React.Component {
       }
     }).then((data) => {
 
-
+      window.location = `/artists/` + this.props.artist.id;
 
     }).catch((data) => {
       console.error(data);
