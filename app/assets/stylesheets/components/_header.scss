@@ -63,6 +63,7 @@
 		height: $nav-height;
 		border-right: 1px solid $gray;
 		transition: background-color 0.2s ease;
+		background-color: rgba($white, 0);
 
 		&:last-child {
 			border-right: 0px;
@@ -78,6 +79,18 @@
 			text-decoration: none;
 		}
   }
+
+	#about:hover {
+		background-color: $pear;
+	}
+
+	#artists:hover {
+		background-color: $indigo;
+	}
+
+	#artwork:hover {
+		background-color: $magenta;
+	}
 
 	.dropdown {
 		width: $header-item-width;
