@@ -5,3 +5,34 @@ $snow                   : #ECECEC;
 $white                  : #FFFFFF;
 
 $mustard                : #D69B31;
+$magenta                : #CC2E78;
+
+.bg-charcoal {
+  background-color: $charcoal;
+}
+
+.bg-magenta {
+  background-color: $magenta;
+}
+
+.border-box {
+  box-sizing: border-box;
+}
+
+.outline-charcoal {
+  @extend .border-box;
+  border: 2px solid $charcoal;
+}
+
+.outline-magenta {
+  @extend .border-box;
+  border: 2px solid $magenta;
+}
+
+.color-white {
+  color: $white;
+}
+
+.color-magenta {
+  color: $magenta;
+}

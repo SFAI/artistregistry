@@ -5,3 +5,7 @@ $font : 'Roboto', sans-serif;
 html, body {
 	font-family: $font;
 }
+
+.capitalize {
+	text-transform: capitalize;
+}

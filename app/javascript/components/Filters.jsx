@@ -60,21 +60,20 @@ class Filters extends PureComponent {
     const filter_types = Object.keys(filters);
     if (filter_types !== undefined && filter_types.length) {
       return (
-        <div className="flex flex-column mr2 ba pa2 w-20">
+        <div className="w-100">
           {filter_types.map((type, index) => {
             return (
-              <div key={index}>
-                <h4> {type} </h4>
-                <div>
+              <div key={index} className="w-100 bg-white pa3 mb3">
+                <h3>{type}</h3>
+                <div className="checkbox-container">
                   {Object.keys(filters[type]).map(item => (
-                    <div className="mb2" key={item}>
-                      <label>
-                        <input
-                          onClick={() => this.toggleCheckbox(type, item)}
-                          type="checkbox"
-                        />
-                        {item}
-                      </label>
+                    <div className="mb2 checkbox-item" key={item}>
+                      <input
+                        onClick={() => this.toggleCheckbox(type, item)}
+                        type="checkbox"
+                        className="checkbox"
+                      />
+                      <p className="capitalize">{item}</p>
                     </div>
                   ))}
                 </div>

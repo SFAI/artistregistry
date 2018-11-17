@@ -1,0 +1,72 @@
+input[type=checkbox] {
+  cursor: pointer;
+  font-size: 17px;
+  visibility: hidden;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+input[type=checkbox]:after {
+  content: " ";
+  background-color: $snow;
+  display: inline-block;
+  color: $white;
+  width: 16px;
+  height: 20px;
+  visibility: visible;
+  padding-left: 4px;
+}
+
+input[type=checkbox]:checked:after {
+  content: "\2713";
+  padding: -5px;
+  background-color: $magenta;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container {
+  margin-top: 8px;
+}
+
+.button {
+  width: 100%;
+  text-transform: uppercase;
+  font-family: $font;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.button-primary {
+  @extend .button;
+  @extend .color-white;
+}
+
+.button-secondary {
+  @extend .button;
+  background-color: $white;
+
+  &:hover {
+    background-color: rgba($white, 0.6);
+  }
+}
+
+.button-tertiary {
+  @extend .button;
+  background-color: rgba($white, 0);
+  border: none;
+
+  &:hover {
+    background-color: rgba($white, 0.3);
+  }
+}
