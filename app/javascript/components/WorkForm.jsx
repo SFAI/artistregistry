@@ -31,11 +31,10 @@ class WorkForm extends React.Component {
     this.onDrop = this.onDrop.bind(this);
     this.mediumHandleChange = this.mediumHandleChange.bind(this);
     this.availabilityHandleChange = this.availabilityHandleChange.bind(this);
+    this.selectFeaturedImage = this.selectFeaturedImage.bind(this);
   }
 
   componentDidMount() {
-    console.log("---------PROPS WORK-----------");
-    console.log(this.props.work);
     const route = APIRoutes.works.categories;
     Requester.get(route).then(
       response => {
@@ -43,7 +42,6 @@ class WorkForm extends React.Component {
           categories: response,
           componentDidMount: true
         });
-        console.log(this.state.categories);
       },
       error => {
         console.error(error);
@@ -60,9 +58,7 @@ class WorkForm extends React.Component {
   mediumHandleChange(event) {
     const work = this.state.work;
     work["medium"] = event.target.value;
-    console.log(event.target.value);
     this.setState({ work: work });
-    console.log(this.state.work);
   }
 
   availabilityHandleChange(event) {
@@ -70,7 +66,6 @@ class WorkForm extends React.Component {
     work["availability"] = event.target.value;
     console.log(event.target.value);
     this.setState({ work: work });
-    console.log(this.state.work);
   }
 
   handleSubmit(event) {
@@ -112,6 +107,13 @@ class WorkForm extends React.Component {
     var work = this.state.work;
     work.images = currentImages;
     this.setState({ work: work });
+  }
+
+  selectFeaturedImage(img) {
+    var work = this.state.work;
+    work.featured_image = img;
+    this.setState({work: work});
+    console.log(work);
   }
 
   render() {
@@ -167,7 +169,12 @@ class WorkForm extends React.Component {
               />
               <div>
                 {this.state.work.images.map((img) => {
-                  return <div>{img.name}</div>
+                  return (
+                    <div>
+                      <div>{img.name}</div>
+                      <button type="button" onClick={() => {this.selectFeaturedImage(img)}}>Select as Featured Image</button>
+                    </div>
+                  )
                 })
               }</div>
             </div>

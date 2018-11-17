@@ -25,14 +25,10 @@ class Api::WorksController < ApplicationController
     attachment_attr = work_attr.delete("attachments_attributes")
     @work = Work.find(params[:id])
     new_work = @work.update(work_attr)
-    puts "AFTER WORK ATTACHMENTS---------------"
-    puts @work.attachments
     if new_work
       @work.attachments = attachment_attr.map do |a|
         attachment_params = {}
         attachment_params[:image] = a
-        puts "PRINTING @WORK-----------"
-        puts @work
         attachment_params[:work_id] = @work.id
         @work.attachments.create(attachment_params)
       end
