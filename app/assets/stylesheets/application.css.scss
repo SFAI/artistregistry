@@ -26,7 +26,7 @@
  body {
     background-color: $snow;
  }
-
+ 
  .dashboard-container {
      max-width: 90%;
      margin: 0px auto;
@@ -43,4 +43,12 @@
 
  .mt-auto {
     margin-top: auto; // aligns button to bottom of div
+}
+
+.fit-cover {
+    object-fit: cover; // https://www.w3schools.com/css/css3_object-fit.asp
+}
+
+.mw-400 {
+    min-width: 400px;
 }

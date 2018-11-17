@@ -74,8 +74,8 @@ class ArtistWorks extends React.Component {
       <div>
         <h1> {name} </h1>
         <div className="row-bio flex">
-          <div className="pa3 flex flex-column w5 bg-white">
-            <div className="h4 w4 br-100 mb3 bg-gray self-center">
+          <div className="w-20-l flex flex-column pa3 w5 bg-white">
+            <div className="h4 w4 br-100 mb4 bg-gray self-center">
               <img src="" />
             </div>
             <div className="info">
@@ -83,13 +83,13 @@ class ArtistWorks extends React.Component {
               <p> {program} </p>
             </div>
             <div className="mt-auto self-center">
-              <button className="contact-button f5">contact</button>
+              <button className="bg-gray white button pv3 ph4 f5">contact</button>
             </div>
           </div>
-          <div className="bg-gray mh3 flex-auto">
-            <img src={""} />
+          <div className="w-50-l mw-400 flex mh3">
+            <img className="fit-cover h-100" src={"https://images.unsplash.com/photo-1542347369-65f48a3018c8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9dded3ad2cbb6ec3ccfe4a9c5f5c0715&auto=format&fit=crop&w=900&q=60"} />
           </div>
-          <div className="bg-white pa3 flex-auto">
+          <div className="w-30-l mw-400 pa3 bg-white">
             <h2>About the artist</h2>
             <p> Some words</p>
           </div>

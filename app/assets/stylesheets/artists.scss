@@ -3,13 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .row-bio {
     height: 360px;
-    .contact-button {
-        @extend .button;
-        min-width: 176px;
-        height: 48px;
-        background-color: $purple;
-        color: $white;
-    }
 }
 
 .filter-button {
