@@ -27,6 +27,7 @@ class WorkForm extends React.Component {
       }
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onDrop = this.onDrop.bind(this);
     this.mediumHandleChange = this.mediumHandleChange.bind(this);
@@ -52,6 +53,12 @@ class WorkForm extends React.Component {
   handleChange(event) {
     const work = this.state.work;
     work[event.target.name] = event.target.value;
+    this.setState({ work: work });
+  }
+
+  handleFormChange(formAttr, value) {
+    const work = this.state.work;
+    work[formAttr] = value;
     this.setState({ work: work });
   }
 
@@ -148,14 +155,14 @@ class WorkForm extends React.Component {
               />
             </p>
             <div className="drop-down"> Medium:
-                <select onChange={this.mediumHandleChange} value={this.state.work.medium}>{
+                <select onChange={() => {this.handleFormChange("medium", event.target.value)}} value={this.state.work.medium}>{
                    Object.keys(this.state.categories.medium).map((obj) => {
                        return <option>{obj}</option>
                    })
                 }</select>
               </div>
               <div className="drop-down"> Availability:
-                <select onChange={this.availabilityHandleChange} value={this.state.work.availability}>{
+                <select onChange={() => {this.handleFormChange("availability", event.target.value)}} value={this.state.work.availability}>{
                    Object.keys(this.state.categories.availability).map((obj) => {
                        return <option>{obj}</option>
                    })
