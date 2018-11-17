@@ -32,21 +32,6 @@
      padding-top: 52px;
  }
 
- .button {
-    border: none;
-    text-align: center;
-    text-transform: uppercase;
-    font-family: $font;
-    font-weight: 500;
-    cursor: pointer;
-    outline: none;
- }
-
- .button:active {
-    filter: brightness(85%);
- }
-
-
  body {
     background-color: $snow;
  }

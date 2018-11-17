@@ -34,13 +34,14 @@ input[type=checkbox]:checked:after {
 }
 
 .button {
-  width: 100%;
   text-transform: uppercase;
   font-family: $font;
   padding-top: 12px;
   padding-bottom: 12px;
   -webkit-appearance: none;
   -moz-appearance: none;
+  font-weight: 500;
+  cursor: pointer;
 
   &:focus {
     outline: none;
