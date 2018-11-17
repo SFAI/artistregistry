@@ -21,7 +21,6 @@
 
  @import "pages/*";
  @import "components/*";
- @import "artists";
 
  body {
     background-color: $snow;
@@ -39,6 +38,12 @@
     text-transform: uppercase;
     font-family: $font;
     font-weight: 500;
+    cursor: pointer;
+    outline: none;
+ }
+
+ .button:active {
+    filter: brightness(85%);
  }
 
  .mt-auto {

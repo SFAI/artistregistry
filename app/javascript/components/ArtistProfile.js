@@ -6,7 +6,7 @@ import React from "react";
 * @prop buyer: buyer currently logged in
 * @prop artist: artist associated with works
 */
-class ArtistWorks extends React.Component {
+class ArtistProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -167,4 +167,4 @@ class ArtistWorks extends React.Component {
   }
 }
 
-export default ArtistWorks;
+export default ArtistProfile;
