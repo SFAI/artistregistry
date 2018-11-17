@@ -1,7 +1,8 @@
 .header {
-	$nav-height: 48px;
+	$nav-height: 64px;
 	$sub-nav-height: 36px;
-	$border-stripe-height: 4px;
+	$border-stripe-height: 8px;
+	$header-item-width: 120px;
 
 	background: $charcoal;
 	position: fixed;
@@ -10,6 +11,21 @@
 	z-index: 10;
 	display: flex;
 	height: $nav-height;
+
+	.img {
+		height: $nav-height;
+		margin-left: 48px;
+	}
+
+	.header-bar {
+		height: $border-stripe-height;
+	}
+
+	.subnav-header-bar {
+		@extend .header-bar;
+		transition: opacity 0.9s ease;
+		opacity: 0;
+	}
 
 	.flex-start {
 		display: flex;
@@ -34,70 +50,74 @@
 		width: 100%;
 	}
 
-	.header-logo {
-		display: inline-block;
-		margin-right: 8px;
-		width: 100px;
-		margin-left: 24px;
-	}
-
 	.header-links {
 		display: flex;
 		flex-direction: row;
 		height: 100%;
 	}
 
-	.header-link-item {
-		padding: 8px 16px;
-		position: relative;
-		transition: 50ms;
+	.header-item {
+		width: $header-item-width;
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		flex-direction: column;
 		height: $nav-height;
+		border-right: 1px solid $gray;
+		transition: background-color 0.2s ease;
+
+		&:last-child {
+			border-right: 0px;
+		}
+
+		.header-link-item {
+			padding: 4px 8px;
+			color: $white;
+		}
 
 		a {
-			color: $white;
+			height: 100%;
 			text-decoration: none;
-			text-transform: uppercase;
-			font-weight: 500;
 		}
   }
 
 	.dropdown {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-end;
-	}
+		width: $header-item-width;
 
-	.dropdown:hover {
-		.header-link-item {
-			background-color: $mustard;
-		}
+		&:hover {
+			.header-item + .dropdown-container {
+				display: flex;
+				flex-direction: column;
 
-		.dropdown-content {
-			border-top: $border-stripe-height solid $mustard;
-	    display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: flex-end;
-			background-color: $white;
-
-			.dropdown-link-item {
-				padding: 8px 12px;
-				height: $sub-nav-height;
-				background-color: $charcoal;
-
-				a {
-					@extend .f7;
-					text-transform: uppercase;
-					color: $white;
+				.subnav-header-bar {
+					opacity: 1;
 				}
+
+				.dropdown-content {
+					justify-content: center;
+					align-items: flex-end;
+					background-color: $white;
+
+					.dropdown-link-item {
+						padding: 8px 12px;
+						height: $sub-nav-height;
+						background-color: $charcoal;
+						width: 100%;
+
+						a {
+							@extend .f7;
+							text-transform: uppercase;
+							color: $white;
+						}
+					}
+				}
+			}
+
+			#login {
+				background-color: $ochre;
 			}
 		}
 	}
 
-	.dropdown-content {
+	.dropdown-container {
 		display: none;
 	}
 }
