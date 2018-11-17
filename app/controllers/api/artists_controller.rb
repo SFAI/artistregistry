@@ -2,7 +2,6 @@ class Api::ArtistsController < ApplicationController
   respond_to :json
   def show
     @artist = Artist.find(params[:id])
-    @buyer = current_buyer
     render json: @artist
   end
 

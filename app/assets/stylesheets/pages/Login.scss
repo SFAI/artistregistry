@@ -1,0 +1,32 @@
+.loginPage {
+  background-color: $snow;
+  @extend .vh-100;
+  @extend .pt6;
+
+  .container {
+    @extend .center;
+    @extend .mw6;
+    @extend .vh-75;
+    @extend .pa4;
+
+
+    .label {
+      font-family: $font;
+    }
+
+    .field {
+      width: 100%;
+      height: 48px;
+    }
+
+    .button {
+      width: 100%;
+      height: 48px;
+      background-color: $charcoal;
+      color: $white;
+      text-transform: uppercase;
+      font-family: $font;
+    }
+
+  }
+}

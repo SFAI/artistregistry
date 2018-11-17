@@ -13,7 +13,9 @@ class ArtistWorks extends React.Component {
       works: [],
       artist: [],
       comment: "",
-      activeFilter: 'All works'
+      activeFilter: 'All works',
+      errors: [],
+      componentDidMount: false
     }
   }
 
@@ -28,7 +30,8 @@ class ArtistWorks extends React.Component {
       const [works_response, artist_route] = response;
       this.setState({
         works: works_response,
-        artist: artist_route
+        artist: artist_route,
+        componentDidMount: true
       });
     });
   }
@@ -37,39 +40,59 @@ class ArtistWorks extends React.Component {
     this.setState({ comment: event.target.value });
   }
 
-  handleSubmit = () => {
-    const artist_id = this.props.artist.id;
-    const commissions_route = APIRoutes.commissions.create;
-    const buyer_id = this.props.buyer.id;
-    const payload = {
-      "buyer_id": buyer_id,
-      "artist_id": artist_id,
-      "comment": this.state.comment
+  checkErrors = () => {
+    let errors = [];
+    if (this.state.comment === "") {
+      errors.push("This field cannot be empty.");
     }
+    if (!this.props.buyer) {
+      errors.push("You must be logged in to request a commission.");
+    }
+    return errors;
+  }
 
-    Requester.post(commissions_route, payload)
+  handleSubmit = () => {
+    let errors = this.checkErrors();
+    if (errors.length) {
+      this.setState({ errors: errors });
+    } else {
+      const artist_id = this.props.artist.id;
+      const buyer_id = this.props.buyer.id;
+      const commissions_route = APIRoutes.commissions.create;
+
+      const payload = {
+        "buyer_id": buyer_id,
+        "artist_id": artist_id,
+        "comment": this.state.comment
+      }
+      Requester.post(commissions_route, payload).then(
+        response => {
+          window.location.href = '/artists/' + this.props.artist.id
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    }
   }
 
   createNewWork = () => {
     window.location = `/works/new`;
   }
 
-  renderFilterButtons = () => {
-    const { activeFilter } = this.state;
-    return (
-      <div className="mt5 mb3">
-        {['All works', 'Available', 'Sold/Rented'].map(filter => {
-          const className = activeFilter == filter
-            ? "filter-button bg-gray white f6 mr3"
-            : "filter-button bg-white gray f6 mr3";
-          return <button onClick={() => this.setState({ activeFilter: filter })} key={filter} className={className}>{filter}</button>
-        })}
-      </div>
-    )
-  }
 
   render() {
-    const { name, program } = this.state.artist;
+    const { componentDidMount, activeFilter, artist } = this.state;
+    const { name, program } = artist;
+
+    if (!componentDidMount) {
+      return (
+        <div>
+          <p>Loading</p>
+        </div>
+      );
+    }
+
     return (
       <div>
         <h1> {name} </h1>
@@ -94,8 +117,14 @@ class ArtistWorks extends React.Component {
             <p> Some words</p>
           </div>
         </div>
-
-        {this.renderFilterButtons()}
+        <div className="mt5 mb3">
+          {['All works', 'Available', 'Sold/Rented'].map(filter => {
+            const className = activeFilter == filter
+              ? "filter-button bg-gray white f6 mr3"
+              : "filter-button bg-white gray f6 mr3";
+            return <button onClick={() => this.setState({ activeFilter: filter })} key={filter} className={className}>{filter}</button>
+          })}
+        </div>
         <div className="flex">
           {this.state.works.map(work => (
             <div key={work.id} className="artwork pa3 mr3 bg-white">
@@ -120,6 +149,13 @@ class ArtistWorks extends React.Component {
               value={this.state.comment}
               onChange={this.handleChange}
             />
+            {
+              this.state.errors.map((error, i) => {
+                return (
+                  <span key={i}>{error}</span>
+                );
+              })
+            }
             <input type="submit" value="Submit" />
           </form>
           <button onClick={this.createNewWork}>

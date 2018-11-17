@@ -1,4 +1,2 @@
-= render "partials/header"
-
 .container.dashboard-container
-  = react_component "ArtistWorks", {artist: @artist, buyer: @buyer}
+  = react_component "ArtistWorks", {artist: @artist, buyer: current_buyer}
