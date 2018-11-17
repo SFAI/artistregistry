@@ -26,13 +26,6 @@ class WorkForm extends React.Component {
         "availability": 0
       }
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleFormChange = this.handleFormChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.onDrop = this.onDrop.bind(this);
-    this.mediumHandleChange = this.mediumHandleChange.bind(this);
-    this.availabilityHandleChange = this.availabilityHandleChange.bind(this);
-    this.selectFeaturedImage = this.selectFeaturedImage.bind(this);
   }
 
   componentDidMount() {
@@ -50,32 +43,19 @@ class WorkForm extends React.Component {
     );
   }
 
-  handleChange(event) {
+  handleChange(event) => {
     const work = this.state.work;
     work[event.target.name] = event.target.value;
     this.setState({ work: work });
   }
 
-  handleFormChange(formAttr, value) {
+  handleFormChange(formAttr, value) => {
     const work = this.state.work;
     work[formAttr] = value;
     this.setState({ work: work });
   }
 
-  mediumHandleChange(event) {
-    const work = this.state.work;
-    work["medium"] = event.target.value;
-    this.setState({ work: work });
-  }
-
-  availabilityHandleChange(event) {
-    const work = this.state.work;
-    work["availability"] = event.target.value;
-    console.log(event.target.value);
-    this.setState({ work: work });
-  }
-
-  handleSubmit(event) {
+  handleSubmit(event) => {
 
     event.preventDefault();
 
@@ -104,7 +84,7 @@ class WorkForm extends React.Component {
     });
   }
 
-  onDrop(images) {
+  onDrop(images) => {
     var currentImages = this.state.work.images;
     const [newImages] = images;
     currentImages.push(newImages);
@@ -116,7 +96,7 @@ class WorkForm extends React.Component {
     this.setState({ work: work });
   }
 
-  selectFeaturedImage(img) {
+  selectFeaturedImage(img) => {
     var work = this.state.work;
     work.featured_image = img;
     this.setState({work: work});
