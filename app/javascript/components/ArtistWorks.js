@@ -19,8 +19,9 @@ class ArtistWorks extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createNewWork = this.createNewWork.bind(this);
+    this.updateWork = this.updateWork.bind(this);
     this.deleteWork = this.deleteWork.bind(this);
-  }
+    }
 
   componentDidMount = () => {
     const artist_id = this.props.artist.id;
@@ -82,6 +83,10 @@ class ArtistWorks extends React.Component {
     window.location = `/works/new`;
   }
 
+  updateWork(work_id) {
+    window.location = `/works/${work_id}/edit`;
+  }
+
   deleteWork(work_id) {
     fetch(APIRoutes.works.delete(work_id), {
       method: 'DELETE',
@@ -118,7 +123,7 @@ class ArtistWorks extends React.Component {
             {work.attachment_url.map((attachment) =>
               <img src={attachment} width="200" height="200"/>
             )}
-            <button onClick={() => {window.location = `/works/${work.id}/edit`}}>Edit Work</button>
+            <button onClick={() => {this.updateWork(work.id)}}>Edit Work</button>
             <button onClick={() => {this.deleteWork(work.id)}}>Delete Work</button>
           </div>
         ))}
