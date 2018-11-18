@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Modal from "./Modal";
 import CreateTransaction from "./CreateTransaction";
+import ReactModal from "react-modal";
+import Currency from 'react-currency-formatter';
 
 /**
 * @prop artist: artist associated with transactions
@@ -56,7 +57,13 @@ class ArtistTransactions extends React.Component {
             <p>
               <span className="b">Title</span>
               <span className="i"> {transaction.work_title} </span>
-              <span>${transaction.price}</span>
+              <span>
+                <Currency
+                  quantity={transaction.price}
+                  symbol="$"
+                  locale="en"
+                />
+              </span>
             </p>
             <p>
               <span className="b">Patron</span>
@@ -69,9 +76,12 @@ class ArtistTransactions extends React.Component {
           </div>
         ))}
 
-        <Modal show={this.state.show} handleClose={this.hideModal}>
+        <ReactModal className="ba pa3 modal" isOpen={this.state.show} onRequestClose={this.hideModal}>
           <CreateTransaction artist={this.props.artist}/>
-        </Modal>
+          <button className="cancel-button" onClick={this.hideModal}>
+            Cancel
+          </button>
+        </ReactModal>
         <br />
         <button className="record-button" onClick={this.showModal}>
           Mark as Complete

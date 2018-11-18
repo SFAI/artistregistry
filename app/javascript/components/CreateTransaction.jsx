@@ -23,33 +23,30 @@ class CreateTransaction extends React.Component {
       },
       types: null,
       didMount: false,
-      type_valid: false,
-      purchase_valid: false,
-      start_valid: false,
-      end_valid: false,
-      price_valid: false,
       formErrors: {
-        transaction_type: 'Type of transaction must be specified.',
-        purchase_date: '',
-        start_date: '',
-        end_date: '',
-        price: 'Price must be recorded for a transaction.'
+        transaction_type: 'Please specify a type of transaction.',
+        purchase_date: 'Please choose a purchase date.',
+        start_date: 'Please choose a start date for the rental.',
+        end_date: 'Please choose an end date for the rental.',
+        price: 'Please enter a price for your transaction.'
+      },
+      fieldValid: {
+        type_valid: false,
+        purchase_valid: false,
+        start_valid: false,
+        end_valid: false,
+        price_valid: false,
       },
       formValid: false,
       renderErrors: false,
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateField = this.validateField.bind(this);
-    this.validateForm = this.validateForm.bind(this);
-    this.renderErrorMessages = this.renderErrorMessages.bind(this);
   }
 
   /**
   * TODO: error handling has to change - look at claire/toastr for example
   */
 
-  handleChange(event) {
+  handleChange = (event) => {
     const transaction = this.state.transaction;
     const name = event.target.name;
     const value = event.target.value;
@@ -58,68 +55,56 @@ class CreateTransaction extends React.Component {
                   () => { this.validateField(name, value) });
   }
 
-  validateField(fieldName, value) {
+  validateField = (fieldName, value) => {
     let errors = this.state.formErrors;
-    let type_valid = this.state.type_valid;
-    let purchase_valid = this.state.purchase_valid;
-    let start_valid = this.state.start_valid;
-    let end_valid = this.state.end_valid;
-    let price_valid = this.state.price_valid;
-
-    console.log("inside validateField")
+    let fields = this.state.fieldValid;
 
     switch(fieldName) {
       case 'transaction_type':
-        type_valid = value != null && value != 'choose';
-        console.log("type:" + type_valid)
-        errors.transaction_type = type_valid ? '' : 'Type of transaction must be specified.'
-        errors.purchase_date = this.state.transaction.transaction_type == 'purchase' ?
-                                'Purchase Date must be chosen for purchase.' : ''
-        errors.start_date = this.state.transaction.transaction_type == 'rental' ?
-                                'Start Date must be specified for rental.' : ''
-        errors.end_date = this.state.transaction.transaction_type == 'rental' ?
-                                'End Date must be specified for rental.' : ''
+        fields.type_valid = value != null && value != 'choose';
+        errors.transaction_type = fields.type_valid ? '' : 'Please specify a type of transaction.'
         break;
       case 'purchase_date':
-        purchase_valid = value != null && this.state.transaction.transaction_type == "purchase";
-        console.log("purchase date:" + purchase_valid)
-        errors.purchase_date = purchase_valid ? '' : 'Purchase Date must be chosen for purchase.'
+        fields.purchase_valid = value != null && this.state.transaction.transaction_type == "purchase";
+        errors.purchase_date = fields.purchase_valid ? '' : errors.purchase_date
         break;
       case 'start_date':
-        start_valid = value != null && this.state.transaction.transaction_type == "rental";
-        errors.start_date = start_valid ? '' : 'Start Date must be chosen for rental.'
+        fields.start_valid = value != null && this.state.transaction.transaction_type == "rental";
+        errors.start_date = fields.start_valid ? '' : errors.start_date
         break;
       case 'end_date':
-        end_valid = value != null && this.state.transaction.transaction_type == "rental";
-        errors.end_date = end_valid ? '' : 'End Date must be chosen for rental.'
+        fields.end_valid = value != null
+                    && this.state.transaction.transaction_type == "rental"
+                    && value >= this.state.transaction.start_date;
+        errors.end_date = fields.end_valid ? '' : 'End Date must occur after Start Date.'
         break;
       case 'price':
-        price_valid = value > 0 && !(value < 0);
-        console.log("price:" + price_valid)
-        errors.price = price_valid ? '' : 'Price must be recorded for a transaction.'
+        fields.price_valid = value > 0 && !(value < 0);
+        errors.price = fields.price_valid ? '' : 'Please enter a price greater than 0.'
         break;
       default:
         break;
     }
     this.setState({
         formErrors: errors,
-        type_valid: type_valid,
-        purchase_valid: purchase_valid,
-        start_valid: start_valid,
-        end_valid: end_valid,
-        price_valid: price_valid
+        fieldValid: fields
     }, this.validateForm);
   }
 
-  validateForm() {
+  validateForm = () => {
     this.setState({
       formValid:
-            (this.state.type_valid && this.state.purchase_valid && this.state.price_valid)
-        ||  (this.state.type_valid && this.state.start_valid && this.state.end_valid && this.state.price_valid)
+            (this.state.fieldValid.type_valid
+              && this.state.fieldValid.purchase_valid
+              && this.state.fieldValid.price_valid)
+        ||  (this.state.fieldValid.type_valid
+              && this.state.fieldValid.start_valid
+              && this.state.fieldValid.end_valid
+              && this.state.fieldValid.price_valid)
     });
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     const artist_id = this.props.artist.id;
     const transactions_route = APIRoutes.transactions.create;
     const valid = this.state.formValid;
@@ -164,7 +149,7 @@ class CreateTransaction extends React.Component {
     )
   }
 
-  renderPurchaseDate() {
+  renderPurchaseDate = () => {
     if (this.state.transaction.transaction_type == "purchase") {
       return (
         <div>
@@ -183,7 +168,7 @@ class CreateTransaction extends React.Component {
     }
   }
 
-  renderRentalDates() {
+  renderRentalDates = () => {
     if (this.state.transaction.transaction_type == "rental") {
       return (
         <div>
@@ -213,12 +198,11 @@ class CreateTransaction extends React.Component {
     }
   }
 
-  renderErrorMessages(fieldName) {
-    console.log(this.state.formErrors)
+  renderErrorMessages = (fieldName) => {
     if (this.state.renderErrors && this.state.formErrors[fieldName].length > 0) {
       return (
         <div>
-          <p>{this.state.formErrors[fieldName]}</p>
+          <p className="error">{this.state.formErrors[fieldName]}</p>
         </div>
       )
     } else {
