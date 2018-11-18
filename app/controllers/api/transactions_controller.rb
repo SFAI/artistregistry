@@ -12,7 +12,6 @@ class Api::TransactionsController < ApplicationController
       flash[:danger] = "Transaction failed to record."
       return render json: {error: Transaction.errors.full_messages}
     end
-
   end
 
   def update

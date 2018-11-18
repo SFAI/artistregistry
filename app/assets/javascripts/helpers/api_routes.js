@@ -14,6 +14,7 @@ class ApiRoutes {
 
   get artists() {
     return {
+      index       : `/api/artists`,
       show        : (id) => `/api/artists/${id}`,
       update      : (id) => `/api/artists/${id}`,
       delete      : (id) => `/api/artists/destroy/${id}`,
