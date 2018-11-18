@@ -1,16 +1,24 @@
-<h2>Resend unlock instructions</h2>
+<div class="loginPage">
+  <div class="container">
+    <h1>Resend unlock instructions</h1>
 
-<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+    <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+      <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      <div class="field">
+        <%= f.label :email %><br /><br />
+        <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <br /><br /><br />
+
+      <div class="actions">
+        <%= f.submit "Resend unlock instructions", class: "button" %>
+      </div>
+    <% end %>
+
+    <br /><br />
+
+    <%= render "artists/shared/links" %>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Resend unlock instructions" %>
-  </div>
-<% end %>
-
-<%= render "artists/shared/links" %>
+</div>

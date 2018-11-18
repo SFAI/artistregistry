@@ -5,6 +5,18 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'works#index'
 
+  resources :artists, only: [:show] do
+    member do
+      post :generate_new_password_email
+    end
+  end
+
+  resources :buyers, only: [:show] do
+    member do
+      post :generate_new_password_email
+    end
+  end
+
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
 
