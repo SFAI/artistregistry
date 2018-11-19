@@ -20,9 +20,11 @@ Rails.application.routes.draw do
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
 
-  get '/works/' => 'works#index'
+ 
   get '/works/categories' => 'works#get_work_category_enums'
   get '/works/new' => 'works#new'
+
+  get '/requests' => 'requests#home'
 
   get '/buyers/:id' => 'buyers#show', as: :buyerid
 
@@ -32,6 +34,9 @@ Rails.application.routes.draw do
     resources :requests, :only => [:show, :create, :update]
     resources :commissions, :only => [:show, :create, :update, :destroy]
     get 'artists/works/:id' => 'artists#works'
+    get 'artists/requests/:id' => 'artists#requests'
+    get 'buyers/requests/:id' => 'buyers#requests'
     get 'works/filtered_works/:search_params' => 'works#filtered_works'
+    get 'works/thumbnail/:id' => 'works#thumbnail'
   end
 end
