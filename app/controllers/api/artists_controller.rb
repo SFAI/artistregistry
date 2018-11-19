@@ -52,4 +52,11 @@ class Api::ArtistsController < ApplicationController
     end
   end
 
+  def transactions
+    artist = Artist.find(params[:id])
+    transactions = artist.transactions
+    render json: transactions,
+        each_serializer: TransactionSerializer
+  end
+
 end

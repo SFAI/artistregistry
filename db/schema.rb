@@ -96,6 +96,23 @@ ActiveRecord::Schema.define(version: 2018_11_10_024726) do
     t.index ["work_id"], name: "index_requests_on_work_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer "transaction_type"
+    t.date "start_date"
+    t.date "end_date"
+    t.date "purchase_date"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "buyer_id"
+    t.bigint "artist_id"
+    t.bigint "work_id"
+    t.text "comment"
+    t.index ["artist_id"], name: "index_transactions_on_artist_id"
+    t.index ["buyer_id"], name: "index_transactions_on_buyer_id"
+    t.index ["work_id"], name: "index_transactions_on_work_id"
+  end
+
   create_table "works", force: :cascade do |t|
     t.string "title"
     t.text "material"
@@ -111,5 +128,8 @@ ActiveRecord::Schema.define(version: 2018_11_10_024726) do
   add_foreign_key "requests", "artists"
   add_foreign_key "requests", "buyers"
   add_foreign_key "requests", "works"
+  add_foreign_key "transactions", "artists"
+  add_foreign_key "transactions", "buyers"
+  add_foreign_key "transactions", "works"
   add_foreign_key "works", "artists"
 end

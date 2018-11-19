@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
 
+  get '/transactions/artist/:id' => 'artists#transactions', as: :transactions
+  get '/transactions/new' => 'transactions#new'
+  get '/transactions/types' => 'transactions#get_transaction_type_enums'
+
   get '/works' => 'works#index'
   get '/works/categories' => 'works#get_work_category_enums'
   get '/works/new' => 'works#new'
@@ -28,15 +32,18 @@ Rails.application.routes.draw do
 
   get '/buyers/:id' => 'buyers#show', as: :buyerid
 
+
   namespace :api, defaults: { format: :json } do
     resources :works, :only => [:index, :show, :create, :update, :destroy]
     resources :artists, :only => [:index, :show, :create, :update, :destroy]
     resources :requests, :only => [:show, :create, :update]
     resources :commissions, :only => [:show, :create, :update, :destroy]
+    resources :transactions, :only => [:show, :create, :update, :destroy]
     get 'artists/works/:id' => 'artists#works'
     get 'artists/requests/:id' => 'artists#requests'
     get 'buyers/requests/:id' => 'buyers#requests'
     get 'works/filtered_works/:search_params' => 'works#filtered_works'
+    get 'transactions/artist/:id' => 'artists#transactions'
     get 'works/thumbnail/:id' => 'works#thumbnail'
   end
 end
