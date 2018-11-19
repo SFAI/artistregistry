@@ -52,12 +52,12 @@ input[type="checkbox"] {
 
 .button-primary {
   @extend .button;
-  @extend .color-white;
+  @extend .white;
 }
 
 .button-secondary {
   @extend .button;
-  background-color: $white;
+  @extend .bg-white;
 
   &:hover {
     background-color: rgba($white, 0.6);

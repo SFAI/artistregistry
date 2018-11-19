@@ -17,32 +17,46 @@ $blue                   : #00ADEF;
 $pear                   : #C5CE10;
 $flamingo               : #ED2A7B;
 
-.bg-charcoal {
-  background-color: $charcoal;
-}
+// https://jameschambers.co/writing/tachyons-custom-colours/
+$sfai-colors: (
+  'charcoal': $charcoal,
+  'gray': $gray,
+  'snow': $snow,
+  'text': $text,
+  'mustard': $mustard,
+  'magenta': $magenta,
+  'indigo': $indigo,
+  'violet': $violet,
+  'pumpkin': $pumpkin,
+  'ochre': $ochre,
+  'blue': $blue,
+  'pear': $pear,
+  'flamingo': $flamingo,
+);
 
-.bg-magenta {
-  background-color: $magenta;
-}
-
-.border-box {
-  box-sizing: border-box;
-}
-
-.outline-charcoal {
-  @extend .border-box;
-  border: 2px solid $charcoal;
-}
-
-.outline-magenta {
-  @extend .border-box;
-  border: 2px solid $magenta;
-}
-
-.color-white {
-  color: $white;
-}
-
-.color-magenta {
-  color: $magenta;
+@each $name, $hex in $sfai-colors {
+  .#{$name} {
+    color: $hex;
+    &:visited {
+      color: $hex;
+    }
+  }
+  .bg-#{$name} {
+    background-color: $hex;
+  }
+  .b--#{$name} {
+    box-sizing: border-box;
+    border: 1px solid $hex;
+  }
+  .hover-bg-#{$name} {
+    &:focus,
+    &:active,
+    &:hover {
+      background-color: $hex;
+    }
+  }
+  .hover-#{$name}:hover,
+  .hover-#{$name}:visited:hover {
+    color: $hex
+  }
 }
