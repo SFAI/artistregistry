@@ -152,7 +152,7 @@ class ArtistProfile extends React.Component {
               <p className="work-title mb1">{work.title}</p>
               <p className="work-medium mb1">{work.medium}</p>
               <p className="work-material">{work.material}</p>
-              {work.attachment_url.map((attachment) =>
+              {work.attached_images_urls.map((attachment) =>
                 <img src={attachment} width="200" height="200" />
               )}
               <div>
