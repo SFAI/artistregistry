@@ -10,3 +10,27 @@ $text                   : #131313;
 
 // SFAI COLORS
 $purple                 : #676BBE;
+$magenta                : #CC2E78;
+$indigo                 : #676BBE;
+$violet                 : #A03DC4;
+$pumpkin                : #EF5A28;
+$ochre                  : #EA9C1E;
+$blue                   : #00ADEF;
+$pear                   : #C5CE10;
+$flamingo               : #ED2A7B;
+
+.bg-magenta {
+  background-color: $magenta;
+}
+
+.bg-indigo {
+  background-color: $indigo;
+}
+
+.bg-pear {
+  background-color: $pear;
+}
+
+.bg-ochre {
+  background-color: $ochre;
+}
