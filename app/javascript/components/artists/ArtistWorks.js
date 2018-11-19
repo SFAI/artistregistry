@@ -50,7 +50,7 @@ class ArtistWorks extends React.Component {
             <h3>{work.title}</h3>
             <p>{work.work_type}</p>
             <p>{work.media}</p>
-            {work.attachment_url.map((attachment) =>
+            {work.attached_images_urls.map((attachment) =>
               <img src={attachment} width="200" height="200"/>
             )}
           </div>

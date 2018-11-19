@@ -8,7 +8,8 @@ class ApiRoutes {
       update: (id) => `/api/works/${id}`,
       delete: (id) => `/api/works/destroy/${id}`,
       filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
-      categories: `/works/categories`
+      categories: `/works/categories`,
+      thumbnail: (id) => `api/works/thumbnail/${id}`
     }
   }
 
@@ -20,6 +21,12 @@ class ApiRoutes {
       delete: id => `/api/artists/${id}`,
       works: id => `/api/artists/works/${id}`,
       requests: id => `/api/artists/requests/${id}`
+    };
+  }
+
+  get buyers() {
+    return {
+      requests: id => `/api/buyers/requests/${id}`
     };
   }
 

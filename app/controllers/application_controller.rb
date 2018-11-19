@@ -31,4 +31,7 @@ class ApplicationController < ActionController::Base
 	        root_path
 	   	end
 	end
+  def toast(type, text)
+    flash[:toastr] = { type => text }
+  end
 end

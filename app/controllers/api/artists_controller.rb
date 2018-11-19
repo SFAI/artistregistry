@@ -2,7 +2,6 @@ class Api::ArtistsController < ApplicationController
   respond_to :json
   def show
     @artist = Artist.find(params[:id])
-    @buyer = current_buyer
     render json: @artist
   end
 
@@ -44,7 +43,6 @@ class Api::ArtistsController < ApplicationController
       this_request = {}
       this_request["request"] = request
       this_request["buyer"] = request.buyer
-      this_request["work"] = request.work
       requests_full.append(this_request)
     end
     if requests
