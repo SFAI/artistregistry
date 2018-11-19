@@ -26,20 +26,7 @@ nav.header
               div.subnav-header-bar.bg-ochre
               ul.dropdown-content
                 li.dropdown-link-item
-                  = link_to "Artists", artists_path
-                li.dropdown-link-item
-                  = link_to "Artists", artists_path
-                li.dropdown-link-item
-                  = link_to "Transactions", transactions_path(current_artist.id)
-                li.dropdown-link-item
-                  = link_to "Log Out", destroy_artist_session_path, method: :delete
-        - if current_buyer
-            div.dropdown
-              li.header-link-item
-                = link_to buyerid_path(current_buyer.id)
-                    | #{current_buyer.name}
-              ul.dropdown-content
-                = link_to "Artists", new_artist_session_path
+                  = link_to "Artists", new_artist_session_path
                 li.dropdown-link-item
                   = link_to "Patrons", new_buyer_session_path
         - else
@@ -54,6 +41,8 @@ nav.header
                   ul.dropdown-content
                     li.dropdown-link-item
                       = link_to "Requests", requests_path
+                    li.dropdown-link-item
+                      = link_to "Transactions", transactions_path(current_artist.id)
                     li.dropdown-link-item
                       = link_to "Log Out", destroy_artist_session_path, method: :delete
           - if current_buyer
