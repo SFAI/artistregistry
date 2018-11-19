@@ -10,7 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_self
+ *= require toastr
  */
 
  @import "partials/reset";
@@ -22,9 +22,42 @@
  @import "pages/*";
  @import "components/*";
 
- .dashboard-container {
-     margin-top: 52px;
+ body {
+    background-color: $snow;
  }
+ 
+ .dashboard-container {
+     max-width: 90%;
+     margin: 0px auto;
+     padding-top: 52px;
+ }
+
+ .button {
+    border: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: $font;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+ }
+
+ .button:active {
+    filter: brightness(85%);
+ }
+
 body {
   background-color: #E0E0E0;
+  }
+
+ .mt-auto {
+    margin-top: auto; // aligns button to bottom of div
+}
+
+.fit-cover {
+    object-fit: cover; // https://www.w3schools.com/css/css3_object-fit.asp
+}
+
+.mw-400 {
+    min-width: 400px;
 }
