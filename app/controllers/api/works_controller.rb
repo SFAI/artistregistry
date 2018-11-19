@@ -10,12 +10,8 @@ class Api::WorksController < ApplicationController
     attachment_attr = work_attr.delete("attachments_attributes")
     @work = Work.new(work_attr)
     if @work.save
-      @work.attachments = attachment_attr.map do |a|
-        attachment_params = {}
-        attachment_params[:image] = a
-        attachment_params[:work_id] = @work.id
-        @work.attachments.create(attachment_params)
-      end
+      @work.images.attach(attachment_attr)
+    
     end
     render json: @work
   end
@@ -46,6 +42,19 @@ class Api::WorksController < ApplicationController
     filtered_works = params[:search_params] == "" ?  Work.all : Work.where(parsed_query)
     render json: filtered_works,
       each_serializer: WorkSerializer
+  end
+
+  def thumbnail
+    work = Work.find(params[:id])
+    images = work.images
+    if work.images
+      image_url = { :image_url => url_for(images[0]) }
+      render json: image_url
+    else
+      image_url = { :image_url => {} }
+      render json: image_url
+    end
+
   end
 
 
