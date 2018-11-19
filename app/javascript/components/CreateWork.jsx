@@ -42,7 +42,6 @@ class CreateWork extends React.Component {
     formData.append('work[artist_id]', this.props.artist.id);
 
     this.state.work.images.forEach((img) => {
-      console.log(img);
       formData.append('work[attachments_attributes][]', img);
     });
 
@@ -54,20 +53,17 @@ class CreateWork extends React.Component {
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       }
     }).then((data) => {
+
       window.location = `/artists/` + this.props.artist.id;
+
     }).catch((data) => {
       console.error(data);
     });
   }
 
   onDrop(images) {
-    var currentImages = this.state.work.images;
-    const [newImages] = images;
-    currentImages.push(newImages);
-
-    // Assign files dropped into component into state
     var work = this.state.work;
-    work.images = currentImages;
+    work.images = images
     this.setState({ work: work });
   }
 

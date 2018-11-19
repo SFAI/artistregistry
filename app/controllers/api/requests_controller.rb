@@ -23,8 +23,18 @@ class Api::RequestsController < ApplicationController
   def update
     #only for opening and closing requests
     @request = Request.find(params[:id])
-    new_request = @request.update(params)
-    render_json_message(:ok, message: 'Request successfully updated!')
+    new_request = @request.update(request_params)
+    render json: {status: 200, message: 'Request successfully updated!'}
+  end
+
+  def request_params
+    params.require(:request).permit(:open,
+                                    :message,
+                                    :buyer_id,
+                                    :artist_id,
+                                    :work_id
+                                )
+
   end
 
 end
