@@ -8,6 +8,9 @@ nav.header
           = link_to "Artists", artists_path
         li.header-link-item
           = link_to "About", "https://www.sfai.edu/"
+        - if current_artist or current_buyer
+          li.header-link-item
+            = link_to "Requests", requests_path
     div.flex-end
       - if not current_artist and not current_buyer
         ul.header-links
