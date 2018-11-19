@@ -11,13 +11,6 @@ class ArtistInbox extends React.Component {
 
   componentDidMount = () => {
     this.fetchInboxData();
-
-    Requester.get(APIRoutes.artists.works(this.props.artist.id))
-
-     console.log(APIRoutes.works.thumbnail(21));
-    Requester.get(APIRoutes.works.thumbnail(21)).then((data) =>{
-        console.log(data);
-      });
   };
 
   fetchInboxData = () => {
@@ -41,7 +34,6 @@ class ArtistInbox extends React.Component {
           Requester.get(APIRoutes.works.show(item.request.work_id)).then(
             data => {
               item.work = data;
-              console.log(item);
               this.setState({ inbox: this.state.inbox.concat(item) });
             }
             )
@@ -55,7 +47,6 @@ class ArtistInbox extends React.Component {
   }
 
   RequestListItem = (props) => {
-    console.log(props);
     const request = props.request;
     const id = request.request.id;
     const buyer = request.buyer;
@@ -104,7 +95,6 @@ class ArtistInbox extends React.Component {
   closeRequest = (id) => {
     const update_request_route = APIRoutes.requests.update(id);
     Requester.update(update_request_route, {open: false}).then((response) => {
-      console.log("successfully updated!");
       this.fetchInboxData();
     });
   }
