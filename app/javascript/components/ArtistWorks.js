@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { getCSRFToken } from '../shared/helpers/form_helpers.js'
 
 
 /**
@@ -38,7 +37,7 @@ class ArtistWorks extends React.Component {
     this.setState({ comment: event.target.value });
   }
 
-  checkErrors = () => {
+  checkErrors() {
     let errors = [];
     if (this.state.comment === "") {
       errors.push("This field cannot be empty.");
