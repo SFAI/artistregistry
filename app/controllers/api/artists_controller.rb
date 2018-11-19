@@ -43,7 +43,6 @@ class Api::ArtistsController < ApplicationController
       this_request = {}
       this_request["request"] = request
       this_request["buyer"] = request.buyer
-      this_request["work"] = request.work
       requests_full.append(this_request)
     end
     if requests

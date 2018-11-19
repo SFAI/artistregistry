@@ -1,7 +1,7 @@
 class Work < ApplicationRecord
   belongs_to :artist
-  has_many :attachments, :dependent => :destroy
-  accepts_nested_attributes_for :attachments
+  has_many_attached :images
+  
   has_many :requests
   has_many :transactions
   has_many :buyers, through: :requests
