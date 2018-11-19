@@ -28,7 +28,7 @@ class WorkForm extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const route = APIRoutes.works.categories;
     Requester.get(route).then(
       response => {
@@ -43,19 +43,19 @@ class WorkForm extends React.Component {
     );
   }
 
-  handleChange(event) => {
+  handleChange = (event) => {
     const work = this.state.work;
     work[event.target.name] = event.target.value;
     this.setState({ work: work });
   }
 
-  handleFormChange(formAttr, value) => {
+  handleFormChange = (formAttr, value) => {
     const work = this.state.work;
     work[formAttr] = value;
     this.setState({ work: work });
   }
 
-  handleSubmit(event) => {
+  handleSubmit = (event) => {
 
     event.preventDefault();
 
@@ -84,7 +84,7 @@ class WorkForm extends React.Component {
     });
   }
 
-  onDrop(images) => {
+  onDrop = (images) => {
     var currentImages = this.state.work.images;
     const [newImages] = images;
     currentImages.push(newImages);
@@ -96,11 +96,19 @@ class WorkForm extends React.Component {
     this.setState({ work: work });
   }
 
-  selectFeaturedImage(img) => {
+  selectFeaturedImage = (img) => {
     var work = this.state.work;
     work.featured_image = img;
     this.setState({work: work});
     console.log(work);
+  }
+
+  deleteImage = (img) => {
+    var work = this.state.work;
+    var images = work.images;
+    var index = images.indexOf(img);
+    delete images[index];
+    this.setState({work: work});
   }
 
   render() {
@@ -155,15 +163,18 @@ class WorkForm extends React.Component {
                 multiple={true}
               />
               <div>
+                <ul>
                 {this.state.work.images.map((img) => {
                   return (
                     <div>
                       <div>{img.name}</div>
                       <button type="button" onClick={() => {this.selectFeaturedImage(img)}}>Select as Featured Image</button>
+                      <button type="button" onClick={() => {this.deleteImage(img)}}>Delete Image</button>
                     </div>
                   )
                 })
-              }</div>
+              }
+              </ul>
             </div>
           </div>
           <div className="pt-dialog-footer">
@@ -180,6 +191,7 @@ class WorkForm extends React.Component {
               />
             </div>
           </div>
+        </div>
         </form>
       </div>
     )

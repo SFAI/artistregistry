@@ -16,12 +16,7 @@ class ArtistWorks extends React.Component {
       errors: [],
       componentDidMount: false
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.createNewWork = this.createNewWork.bind(this);
-    this.updateWork = this.updateWork.bind(this);
-    this.deleteWork = this.deleteWork.bind(this);
-    }
+  }
 
   componentDidMount = () => {
     const artist_id = this.props.artist.id;
@@ -43,7 +38,7 @@ class ArtistWorks extends React.Component {
     this.setState({ comment: event.target.value });
   }
 
-  checkErrors() {
+  checkErrors = () => {
     let errors = [];
     if (this.state.comment === "") {
       errors.push("This field cannot be empty.");
@@ -83,11 +78,11 @@ class ArtistWorks extends React.Component {
     window.location = `/works/new`;
   }
 
-  updateWork(work_id) {
+  updateWork = (work_id) => {
     window.location = `/works/${work_id}/edit`;
   }
 
-  deleteWork(work_id) {
+  deleteWork (work_id) => {
     fetch(APIRoutes.works.delete(work_id), {
       method: 'DELETE',
       credentials: 'same-origin',
