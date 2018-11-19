@@ -1,27 +1,29 @@
-input[type=checkbox] {
+input[type="checkbox"] {
   cursor: pointer;
   font-size: 17px;
   visibility: hidden;
   width: 20px;
   height: 20px;
   margin-right: 8px;
-}
 
-input[type=checkbox]:after {
-  content: " ";
-  background-color: $snow;
-  display: inline-block;
-  color: $white;
-  width: 16px;
-  height: 20px;
-  visibility: visible;
-  padding-left: 4px;
-}
+  &:after {
+    content: " ";
+    background-color: $snow;
+    display: inline-block;
+    color: $white;
+    width: 16px;
+    height: 20px;
+    visibility: visible;
+    padding-left: 4px;
+  }
 
-input[type=checkbox]:checked:after {
-  content: "\2713";
-  padding: -5px;
-  background-color: $magenta;
+  &:checked:after {
+    content: url("checkmark.svg");
+    width: 16px;
+    height: 20px;
+    padding: -5px;
+    background-color: $magenta;
+  }
 }
 
 .checkbox-item {
