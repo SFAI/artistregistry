@@ -56,7 +56,7 @@ class Works extends React.Component {
             ref={(node) => { this.filters = node }}
             filters={filters}
           />
-          <button onClick={this.getFilteredWorks} className="button-secondary b--magenta magenta w-100"> Apply </button>
+          <button onClick={this.getFilteredWorks} className="button-primary bg-magenta w-100"> Apply </button>
         </div>
         <div className="fl w-80">
           <h1>Artwork</h1>
