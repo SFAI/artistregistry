@@ -27,6 +27,8 @@ nav.header
                 li.dropdown-link-item
                   = link_to "Artists", artists_path
                 li.dropdown-link-item
+                  = link_to "Transactions", transactions_path(current_artist.id)
+                li.dropdown-link-item
                   = link_to "Log Out", destroy_artist_session_path, method: :delete
         - if current_buyer
             div.dropdown

@@ -19,9 +19,7 @@ class ApiRoutes {
       update      : (id) => `/api/artists/${id}`,
       delete      : (id) => `/api/artists/destroy/${id}`,
       works       : (id) => `/api/artists/works/${id}`,
-      allArtists  : `api/artists`,
       requests    : (id) => `/api/artists/requests/${id}`,
-      transactions: (id) => `/api/artists/transactions/${id}`
     }
   }
 
@@ -43,7 +41,8 @@ class ApiRoutes {
     return {
       create: `/api/transactions`,
       show: (id) => `/api/transactions/${id}`,
-      types: `/transactions/types`
+      types: `/transactions/types`,
+      artist: (id) => `/api/transactions/artist/${id}`
     }
   }
 

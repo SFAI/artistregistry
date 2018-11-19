@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
 
-  get '/transactions/' => 'transactions#show'
+  get '/transactions/artist/:id' => 'artists#transactions', as: :transactions
   get '/transactions/new' => 'transactions#new'
   get '/transactions/types' => 'transactions#get_transaction_type_enums'
 
@@ -39,6 +39,6 @@ Rails.application.routes.draw do
     resources :transactions, :only => [:show, :create, :update, :destroy]
     get 'artists/works/:id' => 'artists#works'
     get 'works/filtered_works/:search_params' => 'works#filtered_works'
-    get 'artists/transactions/:id' => 'artists#transactions'
+    get 'transactions/artist/:id' => 'artists#transactions'
   end
 end

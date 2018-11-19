@@ -14,4 +14,7 @@ class ArtistsController < ApplicationController
 
   def all_artists
   end
+
+  def transactions
+  end
 end

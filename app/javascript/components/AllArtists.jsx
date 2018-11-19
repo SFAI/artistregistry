@@ -33,7 +33,6 @@ class AllArtists extends React.Component {
   }
 
   render() {
-    console.log(this.state.componentDidMount)
     if (this.state.componentDidMount) {
       return (
         <div className="all-artists-page">

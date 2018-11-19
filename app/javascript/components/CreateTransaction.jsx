@@ -12,16 +12,16 @@ class CreateTransaction extends React.Component {
     super(props);
     this.state = {
       transaction: {
-        transaction_type: null,
-        start_date: null,
-        end_date: null,
-        purchase_date: null,
-        price: null,
-        buyer: null,
-        work: null,
-        comment: ""
+        transaction_type: '',
+        start_date: '',
+        end_date: '',
+        purchase_date: '',
+        price: '',
+        buyer: '',
+        work: '',
+        comment: ''
       },
-      types: null,
+      types: '',
       didMount: false,
       formErrors: {
         transaction_type: 'Please specify a type of transaction.',
@@ -125,7 +125,7 @@ class CreateTransaction extends React.Component {
     } else {
       Requester.post(transactions_route, payload).then(
         response => {
-          window.location.href = '/transactions';
+          window.location.href = '/transactions/artist/' + artist_id;
         },
         error => {
           console.error(error);
@@ -153,7 +153,7 @@ class CreateTransaction extends React.Component {
     if (this.state.transaction.transaction_type == "purchase") {
       return (
         <div>
-          <p className="f6 lh-copy">Purchase Date  </p>
+          <p className="f6 lh-copy">Purchase Date </p>
           <input
             type="date"
             name="purchase_date"
@@ -162,7 +162,7 @@ class CreateTransaction extends React.Component {
             onChange={this.handleChange}
           />
 
-          <p>{this.renderErrorMessages("purchase_date")}</p>
+          {this.renderErrorMessages("purchase_date")}
         </div>
       )
     }
@@ -172,6 +172,17 @@ class CreateTransaction extends React.Component {
     if (this.state.transaction.transaction_type == "rental") {
       return (
         <div>
+          <p className="f6 lh-copy">Purchase Date  </p>
+          <input
+            type="date"
+            name="purchase_date"
+            id="purchase_date"
+            value={this.state.transaction.purchase_date}
+            onChange={this.handleChange}
+          />
+
+          {this.renderErrorMessages("purchase_date")}
+
           <p className="f6 lh-copy">Start Date  </p>
           <input
             type="date"
@@ -181,7 +192,7 @@ class CreateTransaction extends React.Component {
             onChange={this.handleChange}
           />
 
-          <p>{this.renderErrorMessages("start_date")}</p>
+          {this.renderErrorMessages("start_date")}
 
           <p className="f6 lh-copy">End Date  </p>
           <input
@@ -192,7 +203,7 @@ class CreateTransaction extends React.Component {
             onChange={this.handleChange}
           />
 
-          <p>{this.renderErrorMessages("end_date")}</p>
+          {this.renderErrorMessages("end_date")}
         </div>
       )
     }
@@ -212,7 +223,23 @@ class CreateTransaction extends React.Component {
     }
   }
 
+  currencyDisplay = (inputPrice) => {
+    let value = new String(inputPrice);
+    // remove all characters that aren't a digit or dot
+    value = value.replace(/[^0-9.]/g,'');
+    // replace multiple dots with a single dot
+    value = value.replace(/\.+/g,'.');
+    // only allow 2 digits after a dot
+    value = value.replace(/(.*\.[0-9][0-9]?).*/g,'$1');
+    // replace multiple zeros with a single one
+    value = value.replace(/^0+(.*)$/,'0$1');
+    // remove leading zero
+    value = value.replace(/^0([^.].*)$/,'$1');
+    return value;
+  }
+
 render() {
+
   if (!this.state.didMount) {
     return (
       <div />
@@ -227,22 +254,22 @@ render() {
           type="TEXT"
           name="price"
           id="price"
-          value={this.state.transaction.price}
+          value={this.currencyDisplay(this.state.transaction.price)}
           onChange = {this.handleChange}
         />
 
-        <p>{this.renderErrorMessages("price")}</p>
+        {this.renderErrorMessages("price")}
 
         <div className="f6 lh-copy drop-down">Type
           <select name="transaction_type"
                   value={this.state.transaction.transaction_type}
                   onChange={this.handleChange}>
               <option value="choose">choose a type</option>
-              {  Object.keys(this.state.types).map((obj) => { return <option>{obj}</option> }) }
+              {  Object.keys(this.state.types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
           </select>
         </div>
 
-        <p>{this.renderErrorMessages("transaction_type")}</p>
+        {this.renderErrorMessages("transaction_type")}
 
         { this.renderRentalDates() }
         { this.renderPurchaseDate() }
