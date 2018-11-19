@@ -247,10 +247,9 @@ render() {
   }
   return (
       <div className="create-transaction-form">
-        <h2 className="f4 lh-title submit">Submit Details</h2>
 
         <p className="f6 lh-copy price">Price  </p>
-        <input
+        $<input
           type="TEXT"
           name="price"
           id="price"

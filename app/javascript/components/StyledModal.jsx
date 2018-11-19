@@ -26,6 +26,7 @@ class StyledModal extends React.Component {
           isOpen={this.state.show}
           onRequestClose={this.hideModal}
           ariaHideApp={false}>
+          <h2 className="f4 lh-title submit">{this.props.title}</h2>
           {this.props.children}
           <button className="cancel-button" onClick={this.hideModal}>
             Cancel
@@ -33,7 +34,7 @@ class StyledModal extends React.Component {
         </ReactModal>
         <br />
         <button className="record-button" onClick={this.showModal}>
-          Mark as Complete
+          {this.props.title}
         </button>
       </div>
     );

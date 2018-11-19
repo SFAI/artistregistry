@@ -50,7 +50,7 @@ class ArtistTransactions extends React.Component {
         <h2 className="f4 lh-title fw6">Transactions</h2>
         <br />
         {this.renderTransactionRows()}
-        <StyledModal>
+        <StyledModal title="Mark as Complete">
           <CreateTransaction artist={this.props.artist}/>
         </StyledModal>
       </div>
