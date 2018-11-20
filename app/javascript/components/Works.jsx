@@ -50,26 +50,27 @@ class Works extends React.Component {
     const { filters, works } = this.state;
 
     return (
-      <div className="mh4">
-        <div className="pt4 flex bg-grey">
+      <div className="mw9 center">
+        <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
             filters={filters}
           />
-          <div>
-            {works.map(work => {
-              return (
-                <div className="ba mb2 pa2" key={work.id}>
-                  <h3>{work.title}</h3>
-                  <p>{work.material}</p>
-                  <p>{work.medium}</p>
-                  <p>{work.artist_name}</p>
-                </div>
-              );
-            })}
-          </div>
+          <button onClick={this.getFilteredWorks} className="button-primary bg-magenta w-100"> Apply </button>
         </div>
-        <button onClick={this.getFilteredWorks}> Apply </button>
+        <div className="fl w-80">
+          <h1>Artwork</h1>
+          {works.map(work => {
+            return (
+              <div className="ba mb2 pa2" key={work.id}>
+                <h3>{work.title}</h3>
+                <p>{work.material}</p>
+                <p>{work.medium}</p>
+                <p>{work.artist_name}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
