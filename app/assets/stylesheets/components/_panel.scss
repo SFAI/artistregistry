@@ -1,12 +1,14 @@
 .panel {
-  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 
   .header-bar {
     width: 100%;
 
   }
 
-  .container {
-    width: 100%;
+  .panel-container {
+    flex-grow: 1;
   }
 }

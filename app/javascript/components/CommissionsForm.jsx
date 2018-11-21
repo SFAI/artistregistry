@@ -92,36 +92,34 @@ class CommissionsForm extends React.Component {
       );
     }
     return (
-      <div className="mw6">
-        <Panel
-          color="indigo"
-          title="Contact the Artist"
-        >
-          <h5>Inquiry Type</h5>
-          <FormError error={this.state.errors["commission_type"]}/>
-          <select name="commission_type"
-                  value={this.state.commission.types}
-                  onChange={this.handleChange}
-                  className="w-100 select mt2">
-              {  Object.keys(this.state.commissions_types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
-          </select>
-          <h5 className="mt2">Message</h5>
-          <FormError error={this.state.errors["comment"]}/>
-          <textarea
-            type="TEXT"
-            name="comment"
-            id="comment"
-            value={this.state.commission.comment}
-            onChange={this.handleChange}
-            rows={4}
-            className="w-100 mt2"
-          />
-          <FormError error={this.state.errors["login"]}/>
-          <button onClick={this.handleSubmit} className="button-primary bg-indigo w4 mt2">
-            Submit
-          </button>
-        </Panel>
-      </div>
+      <Panel
+        color="indigo"
+        title="Contact the Artist"
+      >
+        <h5>Inquiry Type</h5>
+        <FormError error={this.state.errors["commission_type"]}/>
+        <select name="commission_type"
+                value={this.state.commission.types}
+                onChange={this.handleChange}
+                className="w-100 select mt2">
+            {  Object.keys(this.state.commissions_types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
+        </select>
+        <h5 className="mt2">Message</h5>
+        <FormError error={this.state.errors["comment"]}/>
+        <textarea
+          type="TEXT"
+          name="comment"
+          id="comment"
+          value={this.state.commission.comment}
+          onChange={this.handleChange}
+          rows={4}
+          className="w-100 mt2"
+        />
+        <FormError error={this.state.errors["login"]}/>
+        <button onClick={this.handleSubmit} className="button-primary bg-indigo w4 mt2">
+          Submit
+        </button>
+      </Panel>
     );
   }
 }
