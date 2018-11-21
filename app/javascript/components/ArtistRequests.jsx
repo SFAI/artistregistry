@@ -9,7 +9,8 @@ class ArtistRequests extends React.Component {
     this.state = {
       inbox: [],
       display: [],
-      state: 0
+      state: 0,
+      componentDidMount: false,
     };
     this.toggleState = ["Requests", "Pending", "Complete", "Archive"];
   }
@@ -28,58 +29,67 @@ class ArtistRequests extends React.Component {
     let display = []
     switch(this.toggleState[parseInt(i)]) {
       case "Requests":
-        display = this.state.inbox;
+        this.state.inbox.map((request, i) => {
+          display.push(i);
+        });
         break;
       case "Pending":
-        this.state.inbox.slice().map((request, i) => {
+        this.state.inbox.map((request, i) => {
           if (request.request.open) {
-            display.concat(request);
+            display.push(i);
           }
         });
         break;
       case "Complete":
         this.state.inbox.slice().map((request, i) => {
-          if (!request.request.open) {
-            display.concat(request);
+          if (!request.request.open && request.receipt) {
+            display.push(i);
           }
         });
         break;
       case "Archive":
+        this.state.inbox.slice().map((request, i) => {
+          if (!request.request.open && !request.receipt) {
+            display.push(i);
+          }
+        });
         break;
     }
-    console.log(display);
     this.setState({ state: i, display: display });
   }
 
   componentDidMount = () => {
     this.fetchInboxData();
+    this.setState({ componentDidMount: true });
   };
 
   // TODO: add serializer
   fetchInboxData = () => {
-    let requests_route = '';
-    if (this.props.artist) {
-      const artist_id = this.props.artist.id;
-      requests_route = APIRoutes.artists.requests(artist_id);
-    }
-    if (this.props.buyer) {
-      const buyer_id = this.props.buyer.id;
-      requests_route = APIRoutes.buyers.requests(buyer_id);
-    }
-    Requester.get(requests_route).then(
-      response => {
-        let responseWithWorks = response;
-        response.map((item) => {
-          Requester.get(APIRoutes.works.show(item.request.work_id)).then((data) => {
-            item.work = data;
-            this.setState({ inbox: this.state.inbox.concat(item), display: this.state.display.concat(item) });
-          });
-        });
-      },
-      error => {
-        console.error(error);
+    this.setState({ inbox: [], display: [] }, () => {
+      let requests_route = '';
+      if (this.props.artist) {
+        const artist_id = this.props.artist.id;
+        requests_route = APIRoutes.artists.requests(artist_id);
       }
-    );
+      if (this.props.buyer) {
+        const buyer_id = this.props.buyer.id;
+        requests_route = APIRoutes.buyers.requests(buyer_id);
+      }
+      Requester.get(requests_route).then(
+        response => {
+          let responseWithWorks = response;
+          response.map((item, i) => {
+            Requester.get(APIRoutes.works.show(item.request.work_id)).then((data) => {
+              item.work = data;
+              this.setState({ inbox: this.state.inbox.concat(item), display: this.state.display.concat(i) });
+            });
+          });
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    });
   }
 
   RequestListItem = (props) => {
@@ -140,7 +150,11 @@ class ArtistRequests extends React.Component {
   }
 
   render() {
-    console.log(this.state.display);
+    if (!this.state.componentDidMount) {
+      return (
+        <div><h2>Loading</h2></div>
+      );
+    }
     return (
       <div className="mw9 center">
         <div className="w-20 fl pr3 mt6">
@@ -148,13 +162,13 @@ class ArtistRequests extends React.Component {
         </div>
         <div className="w-80 fl mt2">
           <h1>Requests</h1>
-          {this.state.display.map((request) => (
-            <div key={request.request.id} className="request pa3 bg-white mb3">
+          {this.state.display.map((i) => (
+            <div key={this.state.inbox[i].request.id} className="request pa3 bg-white mb3">
               <div className = "request-header">
                 <h5>Purchase</h5>
-                {request.request.open ? <h3>Pending</h3> : <h3>Closed</h3>}
+                {this.state.inbox[i].request.open ? <h3>Pending</h3> : <h3>Closed</h3>}
               </div>
-              <this.RequestListItem request = {request}/>
+              <this.RequestListItem request = {this.state.inbox[i]}/>
             </div>
           ))}
         </div>

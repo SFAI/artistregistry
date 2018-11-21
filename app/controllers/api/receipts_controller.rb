@@ -7,6 +7,7 @@ class Api::ReceiptsController < ApplicationController
     transaction = Receipt.new(receipt_params)
     if transaction.save!
       transaction.request.open = false
+      transaction.request.save!
       flash[:success] = "Transaction recorded successfully!"
       return render json: {"message": 'Transaction recorded successfully!'}
     else
