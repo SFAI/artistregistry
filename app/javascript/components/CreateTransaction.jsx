@@ -42,10 +42,6 @@ class CreateTransaction extends React.Component {
     }
   }
 
-  /**
-  * TODO: error handling has to change - look at claire/toastr for example
-  */
-
   handleChange = (event) => {
     const transaction = this.state.transaction;
     const name = event.target.name;
@@ -105,18 +101,15 @@ class CreateTransaction extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const artist_id = this.props.artist.id;
-    const transactions_route = APIRoutes.transactions.create;
+    const transactions_route = APIRoutes.receipts.create;
     const valid = this.state.formValid;
     const payload = {
-      "type": this.state.transaction.transaction_type,
+      "transaction_type": this.state.transaction.transaction_type,
       "start_date": this.state.transaction.start_date,
       "end_date": this.state.transaction.end_date,
       "purchase_date": this.state.transaction.purchase_date,
       "price": this.state.transaction.price,
-      "buyer_id": 0,
-      "artist_id": artist_id,
-      "work_id": 0,
+      "request_id": this.props.request_id,
       "comment": this.state.transaction.comment
     }
 
@@ -125,7 +118,7 @@ class CreateTransaction extends React.Component {
     } else {
       Requester.post(transactions_route, payload).then(
         response => {
-          window.location.href = '/transactions/artist/' + artist_id;
+          window.location.href = '/requests';
         },
         error => {
           console.error(error);
@@ -135,7 +128,7 @@ class CreateTransaction extends React.Component {
   }
 
   componentDidMount = () => {
-    const types_route = APIRoutes.transactions.types;
+    const types_route = APIRoutes.receipts.types;
     Requester.get(types_route).then(
       response => {
         this.setState({

@@ -2,14 +2,15 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 380px;
-  width: 320px;
+  height: 600px;
+  width: 800px;
   right: auto;
   bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  border-top: 48px solid #D69B31;
+  border-top: 8px solid $mustard;
+  outline: none;
 
 .cancel-button {
   background-color: white;
@@ -20,4 +21,13 @@
   display: inline-block;
   font-size: 18px;
   }
+}
+
+.overlay-class {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba($black, 0.5);
 }

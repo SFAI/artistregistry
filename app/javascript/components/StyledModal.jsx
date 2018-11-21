@@ -22,10 +22,12 @@ class StyledModal extends React.Component {
     return (
       <div>
         <ReactModal
-          className="ba pa3 modal"
+          className="pa3 modal"
           isOpen={this.state.show}
           onRequestClose={this.hideModal}
-          ariaHideApp={false}>
+          ariaHideApp={false}
+          overlayClassName="overlay-class"
+          >
           <h2 className="f4 lh-title submit">{this.props.title}</h2>
           {this.props.children}
           <button className="cancel-button" onClick={this.hideModal}>
@@ -33,7 +35,7 @@ class StyledModal extends React.Component {
           </button>
         </ReactModal>
         <br />
-        <button className="record-button" onClick={this.showModal}>
+        <button className="button-primary bg-mustard w-100" onClick={this.showModal}>
           {this.props.title}
         </button>
       </div>

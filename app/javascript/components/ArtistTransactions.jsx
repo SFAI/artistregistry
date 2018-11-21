@@ -19,7 +19,7 @@ class ArtistTransactions extends React.Component {
 
   componentDidMount = () => {
     const artist_id = this.props.artist.id;
-    const transactions_route = APIRoutes.transactions.artist(artist_id);
+    const transactions_route = APIRoutes.receipts.artist(artist_id);
     Requester.get(transactions_route).then(
       response => {
         this.setState({

@@ -44,7 +44,6 @@ input[type="checkbox"] {
   -moz-appearance: none;
   font-weight: 500;
   cursor: pointer;
-  border: none;
 
   &:focus {
     outline: none;
@@ -54,6 +53,7 @@ input[type="checkbox"] {
 .button-primary {
   @extend .button;
   @extend .white;
+  border: none;
 }
 
 .button-secondary {

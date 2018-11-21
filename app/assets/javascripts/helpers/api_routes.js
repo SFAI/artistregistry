@@ -44,12 +44,12 @@ class ApiRoutes {
     }
   }
 
-  get transactions() {
+  get receipts() {
     return {
-      create: `/api/transactions`,
-      show: (id) => `/api/transactions/${id}`,
-      types: `/transactions/types`,
-      artist: (id) => `/api/transactions/artist/${id}`
+      create: `/api/receipts`,
+      show: (id) => `/api/receipts/${id}`,
+      types: `/receipts/types`,
+      artist: (id) => `/api/receipts/artist/${id}`
     }
   }
 

@@ -1,4 +1,4 @@
-class TransactionSerializer < ActiveModel::Serializer
+class ReceiptSerializer < ActiveModel::Serializer
   attributes :id, :transaction_type, :start_date, :end_date, :purchase_date,
              :price, :buyer_id, :artist_id, :work_id, :comment, :artist_name,
              :buyer_name, :work_title
