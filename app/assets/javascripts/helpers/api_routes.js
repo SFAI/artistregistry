@@ -34,7 +34,8 @@ class ApiRoutes {
     return {
       show: (id) => `/api/requests/${id}`,
       update: (id) => `/api/requests/${id}`,
-      create: (id) => `/api/requests/${id}`
+      create: `/api/requests`,
+      types: '/requests/types'
     }
   }
 

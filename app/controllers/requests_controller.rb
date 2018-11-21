@@ -5,7 +5,11 @@ class RequestsController < ApplicationController
     end
     @artist = current_artist
     @buyer = current_buyer
+  end
 
+  def get_type_enum
+    types = Request.types
+    render json: types
   end
 
 end

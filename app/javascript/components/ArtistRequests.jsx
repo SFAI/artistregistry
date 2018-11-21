@@ -114,7 +114,7 @@ class ArtistRequests extends React.Component {
               <div className="li-text"> Title </div>
               {buyer && <div className="li-text"> Buyer </div>}
               {artist && <div className="li-text"> Artist </div>}
-              <div className = "li-text"> Placed on </div>
+              <div className = "li-text"> Placed </div>
 
             </li>
 
@@ -165,7 +165,7 @@ class ArtistRequests extends React.Component {
           {this.state.display.map((i) => (
             <div key={this.state.inbox[i].request.id} className="request pa3 bg-white mb3">
               <div className = "request-header">
-                <h5>Purchase</h5>
+                <h5>Request</h5>
                 {this.state.inbox[i].request.open ? <h3>Pending</h3> : <h3>Closed</h3>}
               </div>
               <this.RequestListItem request = {this.state.inbox[i]}/>

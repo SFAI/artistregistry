@@ -26,8 +26,10 @@ Rails.application.routes.draw do
   get '/works' => 'works#index'
   get '/works/categories' => 'works#get_work_category_enums'
   get '/works/new' => 'works#new'
+  get '/works/:id' => 'works#show'
 
   get '/requests' => 'requests#home'
+  get '/requests/types' => 'requests#get_type_enum'
 
   get '/buyers/:id' => 'buyers#show', as: :buyerid
 
