@@ -1,7 +1,6 @@
 class ApiRoutes {
   get works() {
     return {
-
       index: `/api/works`,
       create: `/api/works`,
       show: (id) => `/api/works/${id}`,
@@ -40,7 +39,8 @@ class ApiRoutes {
 
   get commissions() {
     return {
-      create: `/api/commissions`
+      create: `/api/commissions`,
+      types: `/commissions/types`
     }
   }
 
