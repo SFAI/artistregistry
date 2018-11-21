@@ -92,6 +92,44 @@ class ArtistRequests extends React.Component {
     });
   }
 
+  getAttr = (request) => {
+    let attr = {
+      "Request Id": request.request.id,
+      "Buyer": request.buyer.name,
+      "Artist": request.artist.name,
+      "Title": request.work.title,
+      "Placed": new Date(request.request.updated_at).toLocaleDateString(),
+    };
+
+    if (!request.open && request.receipt) {
+      if (request.receipt.transaction_type === "rental") {
+        attr["Start Date"] = request.receipt.start_date;
+        attr["End Date"] = request.receipt.end_date;
+      }
+      attr["Price"] = request.receipt.price;
+      attr["Purchase Date"] = request.receipt.purchase_date;
+    }
+
+    return (
+      <div className="attr">
+        <div className="key">
+          {
+            Object.keys(attr).map((obj, i) => {
+              return <p key={i}>{obj}</p>
+            })
+          }
+        </div>
+        <div className="value">
+          {
+            Object.keys(attr).map((obj, i) => {
+              return <p key={i}>{attr[obj]}</p>
+            })
+          }
+        </div>
+      </div>
+    );
+  }
+
   RequestListItem = (props) => {
     const request = props.request;
     const id = request.request.id;
@@ -109,32 +147,30 @@ class ArtistRequests extends React.Component {
           <div>
             <img src={thumbnail_url} width="128"/>
           </div>
-          <ul className = "items">
-            <li className="items group" id="labels">
-              <div className="li-text"> Title </div>
-              {buyer && <div className="li-text"> Buyer </div>}
-              {artist && <div className="li-text"> Artist </div>}
-              <div className = "li-text"> Placed </div>
-
-            </li>
-
-            <li className="items group">
-              <div className="li-text"> {title} </div>
-              {buyer && <div className="li-text"> {buyer.name} </div>}
-              {artist && <div className="li-text"> {artist.name} </div>}
-              <div className="li-text" id="date"> {created_timestamps} </div>
-
-            </li>
-          </ul>
+          <div className = "items">
+            {
+              this.getAttr(request)
+            }
+          </div>
         </div>
         <div className="request-buttons w4">
-          <StyledModal title="Complete">
-            <CreateTransaction
-              artist={this.props.artist}
-              request_id={id}
-            />
-          </StyledModal>
-          <button type="button" className="button-secondary b--charcoal w-100 mt2" value = {id} onClick = {()=>this.closeRequest(id)}>CLOSE</button>
+          {
+            request.request.open ? (
+              <div className="w4">
+                <StyledModal title="Complete">
+                  <CreateTransaction
+                    artist={this.props.artist}
+                    request_id={id}
+                  />
+                </StyledModal>
+                <button type="button" className="button-secondary b--charcoal w-100 mt2" value = {id} onClick = {()=>this.closeRequest(id)}>CLOSE</button>
+              </div>
+            ) : (
+              <div className = "closed-request-button w4">
+                <p> You closed this request on {closed_timestamps} </p>
+              </div>
+            )
+          }
         </div>
       </div>
 
@@ -150,6 +186,7 @@ class ArtistRequests extends React.Component {
   }
 
   render() {
+    console.log(this.state.inbox);
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>
@@ -165,8 +202,18 @@ class ArtistRequests extends React.Component {
           {this.state.display.map((i) => (
             <div key={this.state.inbox[i].request.id} className="request pa3 bg-white mb3">
               <div className = "request-header">
-                <h5>Request</h5>
-                {this.state.inbox[i].request.open ? <h3>Pending</h3> : <h3>Closed</h3>}
+                <h3>{this.state.inbox[i].request.types}</h3>
+                {
+                  this.state.inbox[i].request.open ? (
+                    <h3>Pending</h3>
+                  ) : (
+                    this.state.inbox[i].receipt ? (
+                      <h3>Complete</h3>
+                    ) : (
+                      <h3>Closed</h3>
+                    )
+                  )
+                }
               </div>
               <this.RequestListItem request = {this.state.inbox[i]}/>
             </div>

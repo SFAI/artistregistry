@@ -19,24 +19,22 @@
 .content-row {
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   .request-content {
     flex: 1;
     display: flex;
     flex-direction: row;
+    align-items: center;
   }
 }
 
 .closed-request-button {
-  float:right;
-  margin:20px;
-  margin-top:10px;
-  padding:10px;
-  font-size:16px;
-  width:20%;
-  background-color:#F2F2F2;
+  padding: 10px;
+  font-size: 16px;
+  background-color: $snow;
   text-align:center;
-
+  width: 100%;
 }
 
 @media only screen and (max-width: 768px) {
@@ -62,5 +60,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .attr {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .key {
+      width: 200px;
+    }
+
+    .value {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
   }
 }

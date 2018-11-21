@@ -9,6 +9,7 @@ class Api::BuyersController < ApplicationController
       this_request = {}
       this_request["request"] = request
       this_request["artist"] = request.artist
+      this_request["buyer"] = buyer
       this_request["receipt"] = request.receipt
       requests_full.append(this_request)
     end
