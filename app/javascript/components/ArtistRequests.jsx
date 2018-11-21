@@ -25,6 +25,17 @@ class ArtistRequests extends React.Component {
     });
   }
 
+  getRequestStatus = (request) => {
+    if (request.open) {
+      return "Pending";
+    } else {
+      if (request.receipt) {
+        return "Complete";
+      }
+      return "Closed";
+    }
+  }
+
   display = (i) => {
     let display = []
     switch(this.toggleState[parseInt(i)]) {
@@ -93,12 +104,12 @@ class ArtistRequests extends React.Component {
   }
 
   getAttr = (request) => {
+    console.log(request);
     let attr = {
-      "Request Id": request.request.id,
       "Buyer": request.buyer.name,
       "Artist": request.artist.name,
-      "Title": request.work.title,
       "Placed": new Date(request.request.updated_at).toLocaleDateString(),
+      "Request Type": request.request.types
     };
 
     if (!request.open && request.receipt) {
@@ -115,14 +126,14 @@ class ArtistRequests extends React.Component {
         <div className="key">
           {
             Object.keys(attr).map((obj, i) => {
-              return <p key={i}>{obj}</p>
+              return <h5 key={i} className="attr-item">{obj}</h5>
             })
           }
         </div>
         <div className="value">
           {
             Object.keys(attr).map((obj, i) => {
-              return <p key={i}>{attr[obj]}</p>
+              return <h6 key={i} className="attr-item">{attr[obj]}</h6>
             })
           }
         </div>
@@ -145,28 +156,26 @@ class ArtistRequests extends React.Component {
       <div className="content-row">
         <div className="request-content">
           <div>
-            <img src={thumbnail_url} width="128"/>
+            <img src={thumbnail_url} className="w4"/>
           </div>
           <div className = "items">
-            {
-              this.getAttr(request)
-            }
+            {this.getAttr(request)}
           </div>
         </div>
-        <div className="request-buttons w4">
+        <div className="request-buttons w5">
           {
             request.request.open ? (
-              <div className="w4">
-                <StyledModal title="Complete">
+              <div className="w-100">
+                <StyledModal title="MARK AS COMPLETE">
                   <CreateTransaction
                     artist={this.props.artist}
                     request_id={id}
                   />
                 </StyledModal>
-                <button type="button" className="button-secondary b--charcoal w-100 mt2" value = {id} onClick = {()=>this.closeRequest(id)}>CLOSE</button>
+                <button type="button" className="button-secondary b--charcoal w-100 mt2" value = {id} onClick = {()=>this.closeRequest(id)}>CLOSE REQUEST</button>
               </div>
             ) : (
-              <div className = "closed-request-button w4">
+              <div className = "closed-request-button pa4 w-100">
                 <p> You closed this request on {closed_timestamps} </p>
               </div>
             )
@@ -202,18 +211,8 @@ class ArtistRequests extends React.Component {
           {this.state.display.map((i) => (
             <div key={this.state.inbox[i].request.id} className="request pa3 bg-white mb3">
               <div className = "request-header">
-                <h3>{this.state.inbox[i].request.types}</h3>
-                {
-                  this.state.inbox[i].request.open ? (
-                    <h3>Pending</h3>
-                  ) : (
-                    this.state.inbox[i].receipt ? (
-                      <h3>Complete</h3>
-                    ) : (
-                      <h3>Closed</h3>
-                    )
-                  )
-                }
+                <h5>{"Request #" + this.state.inbox[i].request.id + ": " + this.state.inbox[i].work.title}</h5>
+                <h3>{this.getRequestStatus(this.state.inbox[i])}</h3>
               </div>
               <this.RequestListItem request = {this.state.inbox[i]}/>
             </div>
