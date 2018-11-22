@@ -38,7 +38,9 @@ class Request extends React.Component {
       "Request Type": request.types
     };
 
-    if (!request.open && request.receipt) {
+    if (request.open) {
+      attr["Message"] = request.message;
+    } else if (request.receipt) {
       if (request.receipt.transaction_type === "rental") {
         attr["Start Date"] = request.receipt.start_date;
         attr["End Date"] = request.receipt.end_date;
@@ -88,20 +90,32 @@ class Request extends React.Component {
           </div>
           <div className="request-buttons w5">
             {
-              request.open ? (
-                <div className="w-100">
-                  <StyledModal title="MARK AS COMPLETE">
-                    <CreateTransaction
-                      artist={this.props.artist}
-                      request_id={id}
-                    />
-                  </StyledModal>
-                  <button type="button" className="button-secondary b--charcoal w-100 mt2" value = {id} onClick = {()=>this.closeRequest(id)}>CLOSE REQUEST</button>
-                </div>
+              this.props.artist ? (
+                request.open ? (
+                  <div className="w-100">
+                    <StyledModal title="MARK AS COMPLETE">
+                      <CreateTransaction
+                        artist={this.props.artist}
+                        request_id={id}
+                      />
+                    </StyledModal>
+                    <button type="button" className="button-secondary b--charcoal w-100 mt2" value = {id} onClick = {()=>this.closeRequest(id)}>CLOSE REQUEST</button>
+                  </div>
+                ) : (
+                  <div className = "closed-request-button pa4 w-100">
+                    <p> You reviewed this request on {closed_timestamps} </p>
+                  </div>
+                )
               ) : (
-                <div className = "closed-request-button pa4 w-100">
-                  <p> You reviewed this request on {closed_timestamps} </p>
-                </div>
+                request.open ? (
+                  <div className = "closed-request-button pa4 w-100">
+                    <p> You requested this work on {closed_timestamps} </p>
+                  </div>
+                ) : (
+                  <div className = "closed-request-button pa4 w-100">
+                    <p>{request.artist.name} reviewed this request on {closed_timestamps} </p>
+                  </div>
+                )
               )
             }
           </div>
