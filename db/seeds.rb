@@ -62,6 +62,7 @@ Jobs.skip_confirmation!
 Jobs.save!
 
 Lisa = Picasso.works.create(
+  id: 0,
   title: 'Mona Lisa',
   material: 'Oil on canvas',
   medium: 0,
