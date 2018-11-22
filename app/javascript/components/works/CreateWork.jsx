@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import { Button, Dialog, Intent } from "@blueprintjs/core"
-import { getCSRFToken } from '../shared/helpers/form_helpers.js'
+import { getCSRFToken } from '../../shared/helpers/form_helpers.js'
 import Dropzone from "react-dropzone";
 
 class CreateWork extends React.Component {

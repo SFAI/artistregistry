@@ -39,7 +39,6 @@ class DetailedWork extends React.Component {
     payload["buyer_id"] = this.props.buyer.id;
     payload["artist_id"] = this.state.work.artist_id;
     payload["work_id"] = this.state.work.id;
-    console.log(payload);
     Requester.post(requests_route, payload).then(
       response => {
         window.location.href = '/works/' + this.props.work.id
