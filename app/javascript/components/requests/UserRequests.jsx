@@ -101,6 +101,7 @@ class UserRequests extends React.Component {
             <Request
               request={this.state.inbox[i]}
               artist={this.props.artist}
+              onChange={() => this.fetchInboxData()}
               key={i}
             />
           ))}

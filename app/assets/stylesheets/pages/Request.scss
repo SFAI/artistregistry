@@ -1,11 +1,3 @@
-#labels {
-  font-weight: bold;
-}
-
-#date {
-  vertical-align:bottom;
-}
-
 .content-row {
   display: flex;
   flex-direction: row;
@@ -33,17 +25,17 @@
 }
 
 @media only screen and (max-width: 768px) {
-    /* For mobile phones: */
-    .request-button {
-      float:none;
-    }
+  /* For mobile phones: */
+  .request-button {
+    float:none;
+  }
 
-    .closed-request-button {
-      float:none;
-      width:40%;
-      display:inline-block;
+  .closed-request-button {
+    float:none;
+    width:40%;
+    display:inline-block;
 
-    }
+  }
 }
 
 .request {
@@ -80,4 +72,8 @@
       }
     }
   }
+}
+
+.toggle {
+  cursor: pointer;
 }

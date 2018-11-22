@@ -15,7 +15,7 @@ class Request extends React.Component {
   closeRequest = (id) => {
     const update_request_route = APIRoutes.requests.update(id);
     Requester.update(update_request_route, {open: false}).then((response) => {
-      this.fetchInboxData();
+      this.props.onChange();
     });
   }
 
@@ -100,7 +100,7 @@ class Request extends React.Component {
                 </div>
               ) : (
                 <div className = "closed-request-button pa4 w-100">
-                  <p> You closed this request on {closed_timestamps} </p>
+                  <p> You reviewed this request on {closed_timestamps} </p>
                 </div>
               )
             }

@@ -4,12 +4,13 @@ class Api::ReceiptsController < ApplicationController
   end
 
   def create
-    transaction = Receipt.new(receipt_params)
-    if transaction.save!
-      transaction.request.open = false
-      transaction.request.save!
-      flash[:success] = "Transaction recorded successfully!"
-      return render json: {"message": 'Transaction recorded successfully!'}
+    receipt = Receipt.new(receipt_params)
+    if receipt.save!
+      receipt.request.open = false
+      if receipt.request.save!
+        flash[:success] = "Transaction recorded successfully!"
+        return render json: {"message": 'Transaction recorded successfully!'}
+      end
     else
       flash[:danger] = "Transaction failed to record."
       return render json: {error: Receipt.errors.full_messages}
