@@ -1,10 +1,5 @@
 import PropTypes from "prop-types"
 import React from 'react';
-import { Button, Dialog, Intent } from "@blueprintjs/core"
-import { getCSRFToken } from '../shared/helpers/form_helpers.js'
-import Dropzone from "react-dropzone";
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 import WorkForm from './WorkForm.jsx';
 
 class UpdateWork extends React.Component {

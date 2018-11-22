@@ -3,22 +3,12 @@ import React from 'react';
 import { Button, Dialog, Intent } from "@blueprintjs/core"
 import { getCSRFToken } from '../shared/helpers/form_helpers.js'
 import Dropzone from "react-dropzone";
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 
 class WorkForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      work: {
-        title: this.props.title,
-        material: this.props.material,
-        medium: this.props.medium,
-        availability: this.props.availability,
-        images: this.props.images,
-        artist_id: this.props.artist_id,
-      },
+      work: this.props.work,
       route: this.props.route,
       method: this.props.method,
       categories: {
@@ -142,20 +132,26 @@ class WorkForm extends React.Component {
                 required
               />
             </p>
-            <div className="drop-down"> Medium:
-                <select onChange={() => {this.handleFormChange("medium", event.target.value)}} value={this.state.work.medium}>{
-                   Object.keys(this.state.categories.medium).map((obj) => {
-                       return <option>{obj}</option>
-                   })
-                }</select>
-              </div>
-              <div className="drop-down"> Availability:
-                <select onChange={() => {this.handleFormChange("availability", event.target.value)}} value={this.state.work.availability}>{
-                   Object.keys(this.state.categories.availability).map((obj) => {
-                       return <option>{obj}</option>
-                   })
-                }</select>
-              </div>
+            <div>
+              <h3>Medium:</h3>
+              <select
+                onChange={() => {this.handleFormChange("medium", event.target.value)}}
+                value={this.state.work.medium}
+                name="medium">
+                {
+                  Object.keys(this.state.categories.medium).map((obj, i) => {
+                    return <option key={i}>{obj}</option>
+                  })
+                }
+              </select>
+            </div>
+            <div className="drop-down"> Availability:
+              <select onChange={() => {this.handleFormChange("availability", event.target.value)}} value={this.state.work.availability}>{
+                 Object.keys(this.state.categories.availability).map((obj) => {
+                     return <option>{obj}</option>
+                 })
+              }</select>
+            </div>
 
             <div className="upload-image-component">Images:
               <Dropzone
