@@ -17,9 +17,6 @@ class BuyerProfile extends React.Component {
       <div className="center mw8">
         <div className="buyer-profile-header">
           <h1>{this.state.buyer.name}</h1>
-          <button className="button-primary bg-indigo w5">
-            Change password
-          </button>
         </div>
         <div className="bg-white w-100 buyer-contents-container pa3">
           <div className="h4 w4 br-100 bg-gray ma4">
