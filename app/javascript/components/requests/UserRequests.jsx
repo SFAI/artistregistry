@@ -34,21 +34,21 @@ class UserRequests extends React.Component {
         break;
       case "Pending":
         this.state.inbox.map((request, i) => {
-          if (request.request.open) {
+          if (request.open) {
             display.push(i);
           }
         });
         break;
       case "Complete":
         this.state.inbox.slice().map((request, i) => {
-          if (!request.request.open && request.receipt) {
+          if (!request.open && request.receipt) {
             display.push(i);
           }
         });
         break;
       case "Archive":
         this.state.inbox.slice().map((request, i) => {
-          if (!request.request.open && !request.receipt) {
+          if (!request.open && !request.receipt) {
             display.push(i);
           }
         });
