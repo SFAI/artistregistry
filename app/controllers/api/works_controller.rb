@@ -8,11 +8,13 @@ class Api::WorksController < ApplicationController
     work_attr = work_params
     attachment_attr = work_attr.delete("attachments_attributes")
     attachments_to_delete = work_attr.delete("attachments_to_delete")
+    featured_image = work_attr.delete("featured_image")
+
     @work = Work.new(work_attr)
     if @work.save
       @work.images.attach(attachment_attr)
+      self.assign_featured_image(featured_image, @work)
       flash[:success] = "Work created successfully!";
-      render json: @work
     else
       flash[:danger] = "Work failed to create.";
     end
@@ -22,6 +24,8 @@ class Api::WorksController < ApplicationController
     work_attr = work_params
     attachment_attr = work_attr.delete("attachments_attributes")
     attachments_to_delete = work_attr.delete("attachments_to_delete")
+    featured_image = work_attr.delete("featured_image")
+
     @work = Work.find(params[:id])
     saved = @work.update(work_attr)
     if saved
@@ -31,10 +35,10 @@ class Api::WorksController < ApplicationController
       attachments_to_delete.each do |attachment|
         @work.images.find(attachment).purge
       end
-      flash[:success] = "Work updated successfully!";
-      render json: @work
+      self.assign_featured_image(featured_image, @work)
+      flash[:success] = "Work updated successfully!"
     else
-      flash[:danger] = "Work failed to create.";
+      flash[:danger] = "Work failed to create."
     end
   end
 
@@ -42,9 +46,9 @@ class Api::WorksController < ApplicationController
     work = Work.find(params[:id])
     work.images.purge
     if work.destroy
-      flash[:success] = "Work deleted successfully!";
+      flash[:success] = "Work deleted successfully!"
     else
-      flash[:danger] = "Work failed to delete.";
+      flash[:danger] = "Work failed to delete."
     end
   end
 
@@ -71,7 +75,15 @@ class Api::WorksController < ApplicationController
       image_url = { :image_url => {} }
       render json: image_url
     end
+  end
 
+  def assign_featured_image(img_name, work)
+    work.images.each do |i|
+      if i.filename == img_name
+        work.featured_image_id = i.id
+        work.save!
+      end
+    end
   end
 
 
@@ -82,7 +94,7 @@ class Api::WorksController < ApplicationController
                                  :status,
                                  :availability,
                                  :artist_id,
-                                 :featured_img_index,
+                                 :featured_image,
                                  :description,
                                  :attachments_attributes => [],
                                  :attachments_to_delete => []

@@ -15,7 +15,6 @@ class UpdateWork extends React.Component {
   componentDidMount() {
     Requester.get(APIRoutes.works.show(this.props.work_id)).then(
       (response) => {
-        response["images"] = [];
         this.setState({ work: response, componentDidMount: true });
       },
       (error) => {
@@ -25,14 +24,14 @@ class UpdateWork extends React.Component {
   }
 
   render() {
-    console.log(this.state.work);
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>
       );
     }
     return (
-      <div className="mw8 center pt3">
+      <div className="mw6 center pt3">
+        <h1>Update Work</h1>
         <WorkForm
           work={this.state.work}
           route={APIRoutes.works.update(this.props.work_id)}

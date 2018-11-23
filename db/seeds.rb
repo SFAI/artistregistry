@@ -61,69 +61,69 @@ Jobs = Buyer.create(
 Jobs.skip_confirmation!
 Jobs.save!
 
-Lisa = Picasso.works.create(
-  id: 0,
-  title: 'Mona Lisa',
-  material: 'Oil on canvas',
-  medium: 0,
-  availability: 0,
-  price: 43.45
-  )
-Lisa.artist_id = Picasso.id
-Lisa.save!
-
-TwoFridas = Work.create(
-  title: 'The Two Fridas',
-  material: 'Oil on canvas',
-  medium: 0,
-  availability: 0,
-  price: 123.45,
-  artist_id: Kahlo.id,
-  )
-TwoFridas.save!
-
-Oceania = Work.create(
-  title: 'Memory of Oceania',
-  material: 'Cutout',
-  medium: 5,
-  availability: 0,
-  price: 234.56,
-  artist_id: Matisse.id,
-  )
-Oceania.save!
-
-TwoDancers = Work.create(
-  title: 'Two Dancers',
-  material: 'Cutout',
-  medium: 5,
-  availability: 0,
-  price: 4578.90,
-  artist_id: Matisse.id,
-  )
-TwoDancers.save!
-
-#Lisa's id is 1
-lisa_request = Request.create(
-
-  message: 'I would like to request the Mona Lisa'
-  )
-lisa_request.buyer = Gates
-lisa_request.work = Lisa
-lisa_request.artist = Lisa.artist
-lisa_request.save!
-
-lisa_request_jobs = Request.create(
-
-  message: 'I would like to request the Mona Lisa as well'
-  )
-lisa_request_jobs.buyer = Jobs
-lisa_request_jobs.work = Lisa
-lisa_request_jobs.artist = Lisa.artist
-lisa_request_jobs.save!
-
-Gates_commission_Picasso = Commission.create(
-  comment: 'Picasso, please paint me a portrait'
-)
-Gates_commission_Picasso.buyer = Gates
-Gates_commission_Picasso.artist = Picasso
-Gates_commission_Picasso.save!
+# Lisa = Picasso.works.create(
+#   id: 0,
+#   title: 'Mona Lisa',
+#   material: 'Oil on canvas',
+#   medium: 0,
+#   availability: 0,
+#   price: 43.45
+#   )
+# Lisa.artist_id = Picasso.id
+# Lisa.save!
+#
+# TwoFridas = Work.create(
+#   title: 'The Two Fridas',
+#   material: 'Oil on canvas',
+#   medium: 0,
+#   availability: 0,
+#   price: 123.45,
+#   artist_id: Kahlo.id,
+#   )
+# TwoFridas.save!
+#
+# Oceania = Work.create(
+#   title: 'Memory of Oceania',
+#   material: 'Cutout',
+#   medium: 5,
+#   availability: 0,
+#   price: 234.56,
+#   artist_id: Matisse.id,
+#   )
+# Oceania.save!
+#
+# TwoDancers = Work.create(
+#   title: 'Two Dancers',
+#   material: 'Cutout',
+#   medium: 5,
+#   availability: 0,
+#   price: 4578.90,
+#   artist_id: Matisse.id,
+#   )
+# TwoDancers.save!
+#
+# #Lisa's id is 1
+# lisa_request = Request.create(
+#
+#   message: 'I would like to request the Mona Lisa'
+#   )
+# lisa_request.buyer = Gates
+# lisa_request.work = Lisa
+# lisa_request.artist = Lisa.artist
+# lisa_request.save!
+#
+# lisa_request_jobs = Request.create(
+#
+#   message: 'I would like to request the Mona Lisa as well'
+#   )
+# lisa_request_jobs.buyer = Jobs
+# lisa_request_jobs.work = Lisa
+# lisa_request_jobs.artist = Lisa.artist
+# lisa_request_jobs.save!
+#
+# Gates_commission_Picasso = Commission.create(
+#   comment: 'Picasso, please paint me a portrait'
+# )
+# Gates_commission_Picasso.buyer = Gates
+# Gates_commission_Picasso.artist = Picasso
+# Gates_commission_Picasso.save!

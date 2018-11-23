@@ -98,7 +98,6 @@ class ArtistProfile extends React.Component {
     });
   }
 
-
   render() {
     const { componentDidMount, activeFilter, artist } = this.state;
     const { name, program } = artist;
@@ -152,9 +151,7 @@ class ArtistProfile extends React.Component {
               <p className="work-title mb1">{work.title}</p>
               <p className="work-medium mb1">{work.medium}</p>
               <p className="work-material">{work.material}</p>
-              {work.attached_images_urls.map((attachment) =>
-                <img src={attachment.url} width="200" height="200" />
-              )}
+              <img src={work.featured_image_url} width="200" height="200" />
               <div>
                 <button onClick={() => {this.updateWork(work.id)}}>Edit Work</button>
                 <button onClick={() => {this.deleteWork(work.id)}}>Delete Work</button>

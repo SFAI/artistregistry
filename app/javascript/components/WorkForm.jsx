@@ -44,6 +44,22 @@ class WorkForm extends React.Component {
     });
   }
 
+  cleanFileName = (str) => {
+    return str.substring(str.lastIndexOf("/") + 1)
+  }
+
+  allFileNames = () => {
+    let filenames = []
+    filenames.push("");
+    this.state.work.attached_images_urls.forEach((attachment) => {
+      filenames.push(this.cleanFileName(attachment.url));
+    })
+    this.state.uploads.forEach((upload) => {
+      filenames.push(upload.img.name);
+    })
+    return filenames;
+  }
+
   handleChange = (event) => {
     const work = this.state.work;
     work[event.target.name] = event.target.value;
@@ -63,15 +79,7 @@ class WorkForm extends React.Component {
     formData.append('work[description]', this.state.work.description);
 
     formData.append('work[attachments_to_delete][]', this.state.attachmentsToDelete);
-
-    let featuredImgIndex = 0;
-    this.state.uploads.forEach((upload, i) => {
-      if (upload.img.name === this.state.featured_image) {
-        featuredImgIndex = i;
-      }
-    });
-
-    formData.append('work[featured_img_index]', featuredImgIndex);
+    formData.append('work[featured_image]', this.state.work.featured_image);
 
     this.state.uploads.forEach((upload) => {
       formData.append('work[attachments_attributes][]', upload.img);
@@ -110,12 +118,12 @@ class WorkForm extends React.Component {
 
   renderThumbnails = () => {
     return (
-      <div className="cards mw6">
+      <div className="cards">
         {
           this.state.work.attached_images_urls.map((attachment) => {
             return (
               <UploadThumbnail
-                filename={attachment.url.substring(attachment.url.lastIndexOf("/") + 1)}
+                filename={this.cleanFileName(attachment.url)}
                 key={attachment.id}
                 src={attachment.url}
                 delete={() => this.deletePosted(attachment.id)}
@@ -155,6 +163,7 @@ class WorkForm extends React.Component {
             onChange={this.handleChange}
             name="title"
             type="text"
+            className="textinput"
             required
           />
           <h5>Material</h5>
@@ -163,13 +172,15 @@ class WorkForm extends React.Component {
             onChange={this.handleChange}
             name="material"
             type="text"
+            className="textinput"
             required
           />
           <h5>Medium</h5>
           <select
             onChange={this.handleChange}
             value={this.state.work.medium}
-            name="medium">
+            name="medium"
+            className="dropdown">
             {
               Object.keys(this.state.categories.medium).map((obj, i) => {
                 return <option key={i}>{obj}</option>
@@ -180,7 +191,8 @@ class WorkForm extends React.Component {
           <select
             onChange={this.handleChange}
             value={this.state.work.availability}
-            name="availability">
+            name="availability"
+            className="dropdown">
             {
               Object.keys(this.state.categories.availability).map((obj, i) => {
                 return <option key={i}>{obj}</option>
@@ -193,37 +205,49 @@ class WorkForm extends React.Component {
             name="description"
             onChange={this.handleChange}
             type="TEXT"
+            className="textarea"
             value={this.state.work.description}
           />
           <h5>Images</h5>
-          <Dropzone
-            onDrop={this.onDrop}
-            multiple={true}
-            accept="image/jpeg, image/png"
-            className="dropzone"
-          />
-          {this.renderThumbnails()}
+          <div className="dropzone-container">
+            <Dropzone
+              onDrop={this.onDrop}
+              multiple={true}
+              accept="image/jpeg, image/png"
+              className="dropzone w-100 mt2 mb2"
+            >
+              <h2>Drop images here to upload.</h2>
+            </Dropzone>
+          </div>
+          <div className="mb2 mt2 w-100">
+            {this.renderThumbnails()}
+          </div>
           <h5>Featured Image</h5>
           <select
             onChange={this.handleChange}
             value={this.state.work.featured_image}
-            name="featured_image">
+            name="featured_image"
+            className="dropdown">
             {
-              this.state.uploads.map((upload, i) => {
-                return <option key={i}>{upload.img.name}</option>
+              this.allFileNames().map((filename, i) => {
+                return <option key={i}>{filename}</option>
               })
             }
           </select>
-          <Button
-            intent={Intent.SECONDARY}
-            type="submit"
-            text="Save"
-          />
-          <Button
-            intent={Intent.PRIMARY}
-            onClick={() => {window.location = `/artists/` + this.state.work.artist_id}}
-            text="Cancel"
-          />
+          <div className="submit-container mt3">
+            <Button
+              intent={Intent.PRIMARY}
+              onClick={() => {window.location = `/artists/` + this.state.work.artist_id}}
+              text="Cancel"
+              className="button-secondary b--magenta w4"
+            />
+            <Button
+              intent={Intent.SECONDARY}
+              type="submit"
+              text="Save"
+              className="button-primary bg-magenta w4 ml3"
+            />
+          </div>
         </form>
       </div>
     )
