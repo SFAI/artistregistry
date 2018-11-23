@@ -183,7 +183,7 @@ class WorkForm extends React.Component {
             onChange={this.handleChange}
             value={this.state.work.medium}
             name="medium"
-            className="dropdown">
+            className="input-dropdown">
             {
               Object.keys(this.state.categories.medium).map((obj, i) => {
                 return <option key={i}>{obj}</option>
@@ -195,7 +195,7 @@ class WorkForm extends React.Component {
             onChange={this.handleChange}
             value={this.state.work.availability}
             name="availability"
-            className="dropdown">
+            className="input-dropdown">
             {
               Object.keys(this.state.categories.availability).map((obj, i) => {
                 return <option key={i}>{obj}</option>
@@ -230,7 +230,7 @@ class WorkForm extends React.Component {
             onChange={this.handleChange}
             value={this.state.work.featured_image}
             name="featured_image"
-            className="dropdown">
+            className="input-dropdown">
             {
               this.allFileNames().map((filename, i) => {
                 return <option key={i}>{filename}</option>
