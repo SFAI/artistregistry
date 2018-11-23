@@ -11,10 +11,9 @@ class WorkForm extends React.Component {
       work: this.props.work,
       route: this.props.route,
       method: this.props.method,
-      categories: {
-        "medium": 0,
-        "availability": 0
-      }
+      categories: null,
+      componentDidMount: false,
+      uploads: []
     }
   }
 
@@ -33,15 +32,18 @@ class WorkForm extends React.Component {
     );
   }
 
+  onDrop = (uploads) => {
+    this.setState({
+      images: images.map(img => ({
+        img: img,
+        preview: URL.createObjectURL(img)
+      }))
+    });
+  }
+
   handleChange = (event) => {
     const work = this.state.work;
     work[event.target.name] = event.target.value;
-    this.setState({ work: work });
-  }
-
-  handleFormChange = (formAttr, value) => {
-    const work = this.state.work;
-    work[formAttr] = value;
     this.setState({ work: work });
   }
 
@@ -55,9 +57,19 @@ class WorkForm extends React.Component {
     formData.append('work[medium]', this.state.work.medium);
     formData.append('work[availability]', this.state.work.availability);
     formData.append('work[artist_id]', this.state.work.artist_id);
+    formData.append('work[description]', this.state.work.description);
 
-    this.state.work.images.forEach((img) => {
-      formData.append('work[attachments_attributes][]', img);
+    let featuredImgIndex = 0;
+    this.state.images.forEach((img, i) => {
+      if (img.img.name === this.state.featured_image) {
+        featuredImgIndex = i;
+      }
+    });
+
+    formData.append('work[featured_img_index]', featuredImgIndex);
+
+    this.state.images.forEach((img) => {
+      formData.append('work[attachments_attributes][]', img.img);
     });
 
     fetch(this.state.route, {
@@ -74,25 +86,6 @@ class WorkForm extends React.Component {
     });
   }
 
-  onDrop = (images) => {
-    var currentImages = this.state.work.images;
-    const [newImages] = images;
-    currentImages.push(newImages);
-    console.log(currentImages);
-
-    // Assign files dropped into component into state
-    var work = this.state.work;
-    work.images = currentImages;
-    this.setState({ work: work });
-  }
-
-  selectFeaturedImage = (img) => {
-    var work = this.state.work;
-    work.featured_image = img;
-    this.setState({work: work});
-    console.log(work);
-  }
-
   deleteImage = (img) => {
     var work = this.state.work;
     var images = work.images;
@@ -102,92 +95,101 @@ class WorkForm extends React.Component {
   }
 
   render() {
-    // TODO: Render thumbnails of images upon upload.
-    // TODO: Retrieve enums using works#get_work_category_enums method, rendering a dropdown
-    // rather than a text box below.
-    // Add error handling
-    // Also address the classNames. I think that they are part of the palantir CSS import,
-    // but we can't import this since it screws with our styles :(
+    console.log(this.state.images);
+    // TODO: error handling
+    if (!this.state.componentDidMount) {
+      return (
+        <div><h2>Loading</h2></div>
+      )
+    }
     return (
       <div>
         <form action={this.state.route} method={this.state.method} onSubmit={this.handleSubmit}>
-          <div className="pt-dialog-body">
-            <p className="pt-ui-text">Title:
-              <input
-                value={this.state.work.title}
-                onChange={this.handleChange}
-                name="title"
-                type="text"
-                className="pt-input"
-                required
-              />
-            </p>
-            <p className="pt-ui-text">Material:
-              <input
-                value={this.state.work.material}
-                onChange={this.handleChange}
-                name="material"
-                type="text"
-                className="pt-input"
-                required
-              />
-            </p>
-            <div>
-              <h3>Medium:</h3>
-              <select
-                onChange={() => {this.handleFormChange("medium", event.target.value)}}
-                value={this.state.work.medium}
-                name="medium">
-                {
-                  Object.keys(this.state.categories.medium).map((obj, i) => {
-                    return <option key={i}>{obj}</option>
-                  })
-                }
-              </select>
-            </div>
-            <div className="drop-down"> Availability:
-              <select onChange={() => {this.handleFormChange("availability", event.target.value)}} value={this.state.work.availability}>{
-                 Object.keys(this.state.categories.availability).map((obj) => {
-                     return <option>{obj}</option>
-                 })
-              }</select>
-            </div>
-
-            <div className="upload-image-component">Images:
-              <Dropzone
-                onDrop={this.onDrop}
-                multiple={true}
-              />
-              <div>
-                <ul>
-                {this.state.work.images.map((img) => {
-                  return (
-                    <div>
-                      <div>{img.name}</div>
-                      <button type="button" onClick={() => {this.selectFeaturedImage(img)}}>Select as Featured Image</button>
-                      <button type="button" onClick={() => {this.deleteImage(img)}}>Delete Image</button>
-                    </div>
-                  )
-                })
-              }
-              </ul>
-            </div>
-          </div>
-          <div className="pt-dialog-footer">
-            <div className="pt-dialog-footer-actions">
-              <Button
-                intent={Intent.SECONDARY}
-                type="submit"
-                text="Save Changes"
-              />
-              <Button
-                intent={Intent.PRIMARY}
-                onClick={() => {window.location = `/artists/` + this.state.work.artist_id}}
-                text="Cancel"
-              />
-            </div>
-          </div>
-        </div>
+          <h5>Title</h5>
+          <input
+            value={this.state.work.title}
+            onChange={this.handleChange}
+            name="title"
+            type="text"
+            required
+          />
+          <h5>Material</h5>
+          <input
+            value={this.state.work.material}
+            onChange={this.handleChange}
+            name="material"
+            type="text"
+            required
+          />
+          <h5>Medium</h5>
+          <select
+            onChange={this.handleChange}
+            value={this.state.work.medium}
+            name="medium">
+            {
+              Object.keys(this.state.categories.medium).map((obj, i) => {
+                return <option key={i}>{obj}</option>
+              })
+            }
+          </select>
+          <h5>Availability</h5>
+          <select
+            onChange={this.handleChange}
+            value={this.state.work.availability}
+            name="availability">
+            {
+              Object.keys(this.state.categories.availability).map((obj, i) => {
+                return <option key={i}>{obj}</option>
+              })
+            }
+          </select>
+          <h5>Description</h5>
+          <textarea
+            rows={4}
+            name="description"
+            onChange={this.handleChange}
+            type="TEXT"
+            value={this.state.work.description}
+          />
+          <h5>Images</h5>
+          <Dropzone
+            onDrop={this.onDrop}
+            multiple={true}
+            accept="image/jpeg, image/png"
+            className="dropzone"
+          >
+            {
+              this.state.images.map((img, i) => {
+                return (
+                  <img
+                    src={img.preview}
+                    className="upload-thumbnail"
+                  />
+                )
+              })
+            }
+          </Dropzone>
+          <h5>Featured Image</h5>
+          <select
+            onChange={this.handleChange}
+            value={this.state.work.featured_image}
+            name="featured_image">
+            {
+              this.state.images.map((img, i) => {
+                return <option key={i}>{img.img.name}</option>
+              })
+            }
+          </select>
+          <Button
+            intent={Intent.SECONDARY}
+            type="submit"
+            text="Save"
+          />
+          <Button
+            intent={Intent.PRIMARY}
+            onClick={() => {window.location = `/artists/` + this.state.work.artist_id}}
+            text="Cancel"
+          />
         </form>
       </div>
     )

@@ -74,3 +74,18 @@ input[type="checkbox"] {
     background-color: rgba($white, 0.3);
   }
 }
+
+.dropzone {
+  width: 300px;
+  height: 300px;
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}

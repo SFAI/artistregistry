@@ -12,8 +12,9 @@ class CreateWork extends React.Component {
         material: '',
         medium: "painting",
         availability: "active",
-        images: [],
-        featured_image: null,
+        attached_images_urls: [],
+        description: '',
+        featured_image: '',
         artist_id: this.props.artist_id
       },
       route: APIRoutes.works.create,
@@ -29,7 +30,8 @@ class CreateWork extends React.Component {
     // Also address the classNames. I think that they are part of the palantir CSS import,
     // but we can't import this since it screws with our styles :(
     return (
-      <div className="mw9 center">
+      <div className="mw8 center pt3">
+        <h1>Add New Art</h1>
         <WorkForm
           work={this.state.work}
           route={this.state.route}

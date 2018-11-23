@@ -1,8 +1,7 @@
 class Api::WorksController < ApplicationController
   respond_to :json
   def show
-    @work = Work.find(params[:id])
-    render json: @work
+    render json: Work.find(params[:id]), serializer: WorkSerializer
   end
 
   def create
@@ -11,7 +10,6 @@ class Api::WorksController < ApplicationController
     @work = Work.new(work_attr)
     if @work.save
       @work.images.attach(attachment_attr)
-    
     end
     render json: @work
   end
@@ -20,19 +18,11 @@ class Api::WorksController < ApplicationController
     work_attr = work_params
     attachment_attr = work_attr.delete("attachments_attributes")
     @work = Work.find(params[:id])
-    new_work = @work.update(work_attr)
-    if new_work
-      @work.attachments = attachment_attr.map do |a|
-        attachment_params = {}
-        attachment_params[:image] = a
-        attachment_params[:work_id] = @work.id
-        @work.attachments.create(attachment_params)
-      end
-      return render json: {message: 'User successfully updated!',
-                     work: @work}
-    else
-      return render json: {error: new_work.errors.full_messages}
+    saved = @work.update(work_attr)
+    if saved
+      @work.images.attach(attachment_attr)
     end
+    render json:@work
   end
 
   def destroy
@@ -78,6 +68,8 @@ class Api::WorksController < ApplicationController
                                  :status,
                                  :availability,
                                  :artist_id,
+                                 :featured_img_index,
+                                 :description,
                                  :attachments_attributes => []
                                 )
   end

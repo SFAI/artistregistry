@@ -20,6 +20,6 @@ class WorksController < ApplicationController
   end
 
   def edit
-    @work = Work.find(params[:id])
+    @work_id = params[:id]
   end
 end

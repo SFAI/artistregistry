@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   get '/works/categories' => 'works#get_work_category_enums'
   get '/works/new' => 'works#new'
   get '/works/:id' => 'works#show', as: "show_work"
-  get 'works/:id/edit' => 'works#edit', as: "edit_work"
+  get '/works/:id/edit' => 'works#edit', as: "edit_work"
 
   get '/requests' => 'requests#home'
 
