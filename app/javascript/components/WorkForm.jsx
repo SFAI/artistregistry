@@ -148,7 +148,6 @@ class WorkForm extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>

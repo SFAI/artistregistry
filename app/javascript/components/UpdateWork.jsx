@@ -15,6 +15,7 @@ class UpdateWork extends React.Component {
   componentDidMount() {
     Requester.get(APIRoutes.works.show(this.props.work_id)).then(
       (response) => {
+        response["featured_image"] = response.featured_image.name;
         this.setState({ work: response, componentDidMount: true });
       },
       (error) => {
