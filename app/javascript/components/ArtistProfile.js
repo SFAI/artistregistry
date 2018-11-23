@@ -80,6 +80,23 @@ class ArtistProfile extends React.Component {
     window.location = `/works/new`;
   }
 
+  updateWork = (work_id) => {
+    window.location = `/works/${work_id}/edit`;
+  }
+
+  deleteWork = (work_id) => {
+    fetch(APIRoutes.works.delete(work_id), {
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
 
   render() {
     const { componentDidMount, activeFilter, artist } = this.state;
@@ -134,9 +151,11 @@ class ArtistProfile extends React.Component {
               <p className="work-title mb1">{work.title}</p>
               <p className="work-medium mb1">{work.medium}</p>
               <p className="work-material">{work.material}</p>
-              {work.attached_images_urls.map((attachment) =>
-                <img src={attachment} width="200" height="200" />
-              )}
+              <img src={work.featured_image.url} width="200" height="200" />
+              <div>
+                <button onClick={() => {this.updateWork(work.id)}}>Edit Work</button>
+                <button onClick={() => {this.deleteWork(work.id)}}>Delete Work</button>
+              </div>
             </div>
           ))}
         </div>

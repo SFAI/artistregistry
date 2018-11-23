@@ -259,7 +259,7 @@ render() {
 
         {this.renderErrorMessages("price")}
 
-        <div className="f6 lh-copy drop-down">Type
+        <div className="f6 lh-copy">Type
           <select name="transaction_type"
                   value={this.state.transaction.transaction_type}
                   onChange={this.handleChange}>
