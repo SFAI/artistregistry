@@ -4,6 +4,7 @@ import { Button, Dialog, Intent } from "@blueprintjs/core"
 import { getCSRFToken } from '../shared/helpers/form_helpers.js'
 import Dropzone from "react-dropzone";
 import UploadThumbnail from "./UploadThumbnail";
+import update from 'immutability-helper';
 
 class WorkForm extends React.Component {
   constructor(props) {
@@ -61,6 +62,8 @@ class WorkForm extends React.Component {
     formData.append('work[artist_id]', this.state.work.artist_id);
     formData.append('work[description]', this.state.work.description);
 
+    formData.append('work[attachments_to_delete][]', this.state.attachmentsToDelete);
+
     let featuredImgIndex = 0;
     this.state.uploads.forEach((upload, i) => {
       if (upload.img.name === this.state.featured_image) {
@@ -70,7 +73,7 @@ class WorkForm extends React.Component {
 
     formData.append('work[featured_img_index]', featuredImgIndex);
 
-    this.state.upload.forEach((upload) => {
+    this.state.uploads.forEach((upload) => {
       formData.append('work[attachments_attributes][]', upload.img);
     });
 
@@ -88,12 +91,21 @@ class WorkForm extends React.Component {
     });
   }
 
-  deleteImage = (img) => {
-    var work = this.state.work;
-    var images = work.images;
-    var index = images.indexOf(img);
-    delete images[index];
-    this.setState({work: work});
+  deletePosted = (id) => {
+    let attachmentsToDelete = this.state.attachmentsToDelete.slice();
+    attachmentsToDelete.push(id);
+
+    const newWork = update(this.state.work, {
+      attached_images_urls: uploads => uploads.filter(upload => upload["id"] != id)
+    });
+
+    this.setState({ attachmentsToDelete: attachmentsToDelete, work: newWork });
+  }
+
+  deleteImage = (i) => {
+    let uploads = this.state.uploads;
+    delete uploads[i];
+    this.setState({ uploads: uploads });
   }
 
   renderThumbnails = () => {
@@ -106,6 +118,7 @@ class WorkForm extends React.Component {
                 filename={attachment.url.substring(attachment.url.lastIndexOf("/") + 1)}
                 key={attachment.id}
                 src={attachment.url}
+                delete={() => this.deletePosted(attachment.id)}
               />
             )
           })
@@ -113,10 +126,11 @@ class WorkForm extends React.Component {
         {
           this.state.uploads.map((upload, i) => {
             return (
-              <img
+              <UploadThumbnail
+                filename={upload.img.name}
                 key={i}
                 src={upload.preview}
-                className="upload-thumbnail"
+                delete={() => this.deleteImage(i)}
               />
             )
           })
@@ -126,6 +140,7 @@ class WorkForm extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>

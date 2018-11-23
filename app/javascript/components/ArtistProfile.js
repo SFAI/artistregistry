@@ -153,7 +153,7 @@ class ArtistProfile extends React.Component {
               <p className="work-medium mb1">{work.medium}</p>
               <p className="work-material">{work.material}</p>
               {work.attached_images_urls.map((attachment) =>
-                <img src={attachment} width="200" height="200" />
+                <img src={attachment.url} width="200" height="200" />
               )}
               <div>
                 <button onClick={() => {this.updateWork(work.id)}}>Edit Work</button>

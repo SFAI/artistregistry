@@ -7,30 +7,44 @@ class Api::WorksController < ApplicationController
   def create
     work_attr = work_params
     attachment_attr = work_attr.delete("attachments_attributes")
+    attachments_to_delete = work_attr.delete("attachments_to_delete")
     @work = Work.new(work_attr)
     if @work.save
       @work.images.attach(attachment_attr)
+      flash[:success] = "Work created successfully!";
+      render json: @work
+    else
+      flash[:danger] = "Work failed to create.";
     end
-    render json: @work
   end
 
   def update
     work_attr = work_params
     attachment_attr = work_attr.delete("attachments_attributes")
+    attachments_to_delete = work_attr.delete("attachments_to_delete")
     @work = Work.find(params[:id])
     saved = @work.update(work_attr)
     if saved
-      @work.images.attach(attachment_attr)
+      if attachment_attr
+        @work.images.attach(attachment_attr)
+      end
+      attachments_to_delete.each do |attachment|
+        @work.images.find(attachment).purge
+      end
+      flash[:success] = "Work updated successfully!";
+      render json: @work
+    else
+      flash[:danger] = "Work failed to create.";
     end
-    render json:@work
   end
 
   def destroy
     work = Work.find(params[:id])
+    work.images.purge
     if work.destroy
-      render_json_message(:ok, message: 'Work successfully deleted')
+      flash[:success] = "Work deleted successfully!";
     else
-      render_json_message(:forbidden, errors: work.errors.full_messages)
+      flash[:danger] = "Work failed to delete.";
     end
   end
 
@@ -70,7 +84,8 @@ class Api::WorksController < ApplicationController
                                  :artist_id,
                                  :featured_img_index,
                                  :description,
-                                 :attachments_attributes => []
+                                 :attachments_attributes => [],
+                                 :attachments_to_delete => []
                                 )
   end
 
