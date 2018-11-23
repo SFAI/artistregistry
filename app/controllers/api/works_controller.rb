@@ -24,8 +24,6 @@ class Api::WorksController < ApplicationController
     work_attr = work_params
     attachment_attr = work_attr.delete("attachments_attributes")
     attachments_to_delete = work_attr.delete("attachments_to_delete")
-    puts "cmon"
-    puts attachments_to_delete
     featured_image = work_attr.delete("featured_image")
 
     @work = Work.find(params[:id])
