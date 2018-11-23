@@ -71,11 +71,11 @@ Lisa = Picasso.works.create(
   description: "Some really cool stuff"
 )
 Lisa.images.attach(
-  io: File.open('storage/1j/jh/IMG_3294.jpg'),
+  io: File.open('app/assets/images/IMG_3294.jpg'),
   filename: 'IMG_3294'
 )
 Lisa.images.attach(
-  io: File.open('storage/1j/jh/IMG_3300.jpg'),
+  io: File.open('app/assets/images/IMG_3300.jpg'),
   filename: 'IMG_3300'
 )
 Lisa.featured_image_id = Lisa.images.first.id
