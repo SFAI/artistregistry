@@ -9,7 +9,7 @@ class UploadThumbnail extends React.Component {
 
   render() {
     return (
-      <div className="thumb-wrapper mr3 mt3 pa2">
+      <div className="thumb-wrapper pa2">
         <div className="upload-thumbnail">
           <div className="thumb-head">
             <button onClick={() => this.props.delete}>

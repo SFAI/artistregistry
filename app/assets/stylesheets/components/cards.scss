@@ -3,7 +3,7 @@
   flex-direction: row;
   flex-wrap: wrap;
 
-  $content-width: 100px;
+  $content-width: 80px;
 
   .upload-thumbnail {
     display: flex;
@@ -24,6 +24,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       color: $gray;
+      width: 100%;
     }
 
     .thumb {
