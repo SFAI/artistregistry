@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Dialog, Intent } from "@blueprintjs/core"
 import { getCSRFToken } from '../shared/helpers/form_helpers.js'
 import Dropzone from "react-dropzone";
+import UploadThumbnail from "./UploadThumbnail";
 
 class WorkForm extends React.Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class WorkForm extends React.Component {
       method: this.props.method,
       categories: null,
       componentDidMount: false,
-      uploads: []
+      uploads: [],
+      attachmentsToDelete: []
     }
   }
 
@@ -32,11 +34,11 @@ class WorkForm extends React.Component {
     );
   }
 
-  onDrop = (uploads) => {
+  onDrop = (images) => {
     this.setState({
-      images: images.map(img => ({
-        img: img,
-        preview: URL.createObjectURL(img)
+      uploads: images.map(image => ({
+        img: image,
+        preview: URL.createObjectURL(image)
       }))
     });
   }
@@ -60,16 +62,16 @@ class WorkForm extends React.Component {
     formData.append('work[description]', this.state.work.description);
 
     let featuredImgIndex = 0;
-    this.state.images.forEach((img, i) => {
-      if (img.img.name === this.state.featured_image) {
+    this.state.uploads.forEach((upload, i) => {
+      if (upload.img.name === this.state.featured_image) {
         featuredImgIndex = i;
       }
     });
 
     formData.append('work[featured_img_index]', featuredImgIndex);
 
-    this.state.images.forEach((img) => {
-      formData.append('work[attachments_attributes][]', img.img);
+    this.state.upload.forEach((upload) => {
+      formData.append('work[attachments_attributes][]', upload.img);
     });
 
     fetch(this.state.route, {
@@ -94,9 +96,36 @@ class WorkForm extends React.Component {
     this.setState({work: work});
   }
 
+  renderThumbnails = () => {
+    return (
+      <div className="cards mw6">
+        {
+          this.state.work.attached_images_urls.map((attachment) => {
+            return (
+              <UploadThumbnail
+                filename={attachment.url.substring(attachment.url.lastIndexOf("/") + 1)}
+                key={attachment.id}
+                src={attachment.url}
+              />
+            )
+          })
+        }
+        {
+          this.state.uploads.map((upload, i) => {
+            return (
+              <img
+                key={i}
+                src={upload.preview}
+                className="upload-thumbnail"
+              />
+            )
+          })
+        }
+      </div>
+    );
+  }
+
   render() {
-    console.log(this.state.images);
-    // TODO: error handling
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>
@@ -157,26 +186,16 @@ class WorkForm extends React.Component {
             multiple={true}
             accept="image/jpeg, image/png"
             className="dropzone"
-          >
-            {
-              this.state.images.map((img, i) => {
-                return (
-                  <img
-                    src={img.preview}
-                    className="upload-thumbnail"
-                  />
-                )
-              })
-            }
-          </Dropzone>
+          />
+          {this.renderThumbnails()}
           <h5>Featured Image</h5>
           <select
             onChange={this.handleChange}
             value={this.state.work.featured_image}
             name="featured_image">
             {
-              this.state.images.map((img, i) => {
-                return <option key={i}>{img.img.name}</option>
+              this.state.uploads.map((upload, i) => {
+                return <option key={i}>{upload.img.name}</option>
               })
             }
           </select>
