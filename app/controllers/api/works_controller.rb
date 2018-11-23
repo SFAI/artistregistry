@@ -24,6 +24,8 @@ class Api::WorksController < ApplicationController
     work_attr = work_params
     attachment_attr = work_attr.delete("attachments_attributes")
     attachments_to_delete = work_attr.delete("attachments_to_delete")
+    puts "cmon"
+    puts attachments_to_delete
     featured_image = work_attr.delete("featured_image")
 
     @work = Work.find(params[:id])
@@ -32,8 +34,10 @@ class Api::WorksController < ApplicationController
       if attachment_attr
         @work.images.attach(attachment_attr)
       end
-      attachments_to_delete.each do |attachment|
-        @work.images.find(attachment).purge
+      if attachments_to_delete
+        attachments_to_delete.each do |attachment|
+          @work.images.find(attachment).purge
+        end
       end
       self.assign_featured_image(featured_image, @work)
       flash[:success] = "Work updated successfully!"

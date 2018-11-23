@@ -78,7 +78,10 @@ class WorkForm extends React.Component {
     formData.append('work[artist_id]', this.state.work.artist_id);
     formData.append('work[description]', this.state.work.description);
 
-    formData.append('work[attachments_to_delete][]', this.state.attachmentsToDelete);
+    this.state.attachmentsToDelete.forEach((attachment) => {
+      formData.append('work[attachments_to_delete][]', attachment);
+    })
+
     formData.append('work[featured_image]', this.state.work.featured_image);
 
     this.state.uploads.forEach((upload) => {
@@ -148,6 +151,7 @@ class WorkForm extends React.Component {
   }
 
   render() {
+    console.log(this.state.work);
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>
@@ -233,7 +237,7 @@ class WorkForm extends React.Component {
               })
             }
           </select>
-          <div className="submit-container mt3">
+          <div className="submit-container mt3 mb3">
             <Button
               intent={Intent.PRIMARY}
               onClick={() => {window.location = `/artists/` + this.state.work.artist_id}}
