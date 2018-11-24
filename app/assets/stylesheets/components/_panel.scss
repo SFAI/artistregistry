@@ -1,0 +1,14 @@
+.panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .header-bar {
+    width: 100%;
+
+  }
+
+  .panel-container {
+    flex-grow: 1;
+  }
+}

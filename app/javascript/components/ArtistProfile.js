@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import CommissionsForm from "components/CommissionsForm";
 
 
 /**
@@ -12,9 +13,7 @@ class ArtistProfile extends React.Component {
     this.state = {
       works: [],
       artist: [],
-      comment: "",
       activeFilter: 'All works',
-      errors: [],
       componentDidMount: false
     }
   }
@@ -27,53 +26,13 @@ class ArtistProfile extends React.Component {
       Requester.get(works_route),
       Requester.get(artist_route)
     ]).then(response => {
-      const [works_response, artist_route] = response;
+      const [works_response, artist_response] = response;
       this.setState({
         works: works_response,
-        artist: artist_route,
+        artist: artist_response,
         componentDidMount: true
       });
     });
-  }
-
-  handleChange = event => {
-    this.setState({ comment: event.target.value });
-  }
-
-  checkErrors = () => {
-    let errors = [];
-    if (this.state.comment === "") {
-      errors.push("This field cannot be empty.");
-    }
-    if (!this.props.buyer) {
-      errors.push("You must be logged in to request a commission.");
-    }
-    return errors;
-  }
-
-  handleSubmit = () => {
-    let errors = this.checkErrors();
-    if (errors.length) {
-      this.setState({ errors: errors });
-    } else {
-      const artist_id = this.props.artist.id;
-      const buyer_id = this.props.buyer.id;
-      const commissions_route = APIRoutes.commissions.create;
-
-      const payload = {
-        "buyer_id": buyer_id,
-        "artist_id": artist_id,
-        "comment": this.state.comment
-      }
-      Requester.post(commissions_route, payload).then(
-        response => {
-          window.location.href = '/artists/' + this.props.artist.id
-        },
-        error => {
-          console.error(error);
-        }
-      );
-    }
   }
 
   createNewWork = () => {
@@ -119,7 +78,7 @@ class ArtistProfile extends React.Component {
               <img src="" />
             </div>
             <div className="info">
-              <h3> Education </h3>
+              <h5 className="uppercase">Education</h5>
               <p> {program} </p>
             </div>
             <div className="mt-auto self-center">
@@ -159,27 +118,23 @@ class ArtistProfile extends React.Component {
             </div>
           ))}
         </div>
-        <div className="mv3">
-          <form onSubmit={this.handleSubmit} name="commissionsForm">
-            <textarea
-              type="TEXT"
-              name="comment"
-              id="comment"
-              value={this.state.comment}
-              onChange={this.handleChange}
+        <button onClick={this.createNewWork}>
+          New Work
+        </button>
+        <div className="contact-wrapper mb4 mt4">
+          <div className="w-50 pr2 dib contact">
+            <div className="bg-charcoal pa3">
+              <h2 className="white">Guidelines for contacting artists</h2>
+              <p className="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet consectetur adipiscing elit duis tristique.<br/><br/>Tortor dignissim convallis aenean et tortor at risus viverra adipiscing. Est ante in nibh mauris cursus mattis molestie a. Sed enim ut sem viverra aliquet eget. Id semper risus in hendrerit gravida rutrum quisque non tellus.<br/><br/>Elit pellentesque habitant morbi tristique senectus et netus et malesuada. Commodo elit at imperdiet dui accumsan sit amet. Tellus elementum sagittis vitae et leo duis ut diam. Eget arcu dictum varius duis at. Donec massa sapien faucibus et molestie ac feugiat sed lectus. Risus pretium quam vulputate dignissim suspendisse in est ante.
+              </p>
+            </div>
+          </div>
+          <div className="w-50 pl2 dib contact">
+            <CommissionsForm
+              buyer={this.props.buyer}
+              artist={this.props.artist}
             />
-            {
-              this.state.errors.map((error, i) => {
-                return (
-                  <span key={i}>{error}</span>
-                );
-              })
-            }
-            <input type="submit" value="Submit" />
-          </form>
-          <button onClick={this.createNewWork}>
-            New Work
-          </button>
+          </div>
         </div>
       </div>
     );

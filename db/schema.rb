@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2018_11_23_070354) do
     t.datetime "updated_at", null: false
     t.bigint "artist_id"
     t.bigint "buyer_id"
+    t.integer "types"
     t.index ["artist_id"], name: "index_commissions_on_artist_id"
     t.index ["buyer_id"], name: "index_commissions_on_buyer_id"
   end

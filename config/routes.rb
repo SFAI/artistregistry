@@ -34,6 +34,8 @@ Rails.application.routes.draw do
 
   get '/buyers/:id' => 'buyers#show', as: :buyerid
 
+  get '/commissions/types' => 'commissions#get_type_enum'
+
 
   namespace :api, defaults: { format: :json } do
     resources :works, :only => [:index, :show, :create, :update, :destroy]

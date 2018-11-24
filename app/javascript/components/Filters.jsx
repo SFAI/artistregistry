@@ -64,7 +64,7 @@ class Filters extends PureComponent {
           {filter_types.map((type, index) => {
             return (
               <div key={index} className="w-100 bg-white pa3 mb3">
-                <h3>{type}</h3>
+                <h3 className="uppercase">{type}</h3>
                 <div className="checkbox-container">
                   {Object.keys(filters[type]).map(item => (
                     <div className="mb2 checkbox-item" key={item}>

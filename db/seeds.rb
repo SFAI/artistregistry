@@ -102,7 +102,8 @@ lisa_request_jobs.artist = Lisa.artist
 lisa_request_jobs.save!
 
 Gates_commission_Picasso = Commission.create(
-  comment: 'Picasso, please paint me a portrait'
+  comment: 'Picasso, please paint me a portrait',
+  types: 'exhibition'
 )
 Gates_commission_Picasso.buyer = Gates
 Gates_commission_Picasso.artist = Picasso
