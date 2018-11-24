@@ -98,11 +98,13 @@ class CommissionsForm extends React.Component {
       >
         <h5>Inquiry Type</h5>
         <FormError error={this.state.errors["commission_type"]}/>
-        <select name="commission_type"
-                value={this.state.commission.types}
-                onChange={this.handleChange}
-                className="w-100 select mt2">
-            {  Object.keys(this.state.commissions_types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
+        <select
+          name="types"
+          value={this.state.commission.types}
+          onChange={this.handleChange}
+          className="w-100 select mt2"
+        >
+          {  Object.keys(this.state.commissions_types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
         </select>
         <h5 className="mt2">Message</h5>
         <FormError error={this.state.errors["comment"]}/>
@@ -113,7 +115,7 @@ class CommissionsForm extends React.Component {
           value={this.state.commission.comment}
           onChange={this.handleChange}
           rows={4}
-          className="w-100 mt2"
+          className="w-100 mt2 textarea"
         />
         <FormError error={this.state.errors["login"]}/>
         <button onClick={this.handleSubmit} className="button-primary bg-indigo w4 mt2">

@@ -77,6 +77,7 @@ input[type="checkbox"] {
 
 .select {
   font-family: $font;
+  outline: none;
 }
 
 .dropzone {
@@ -111,4 +112,5 @@ input[type="checkbox"] {
 .textarea {
   @extend .row-input;
   outline: none;
+  @extend .pa2;
 }
