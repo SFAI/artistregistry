@@ -70,7 +70,7 @@ class ArtistProfile extends React.Component {
     }
 
     return (
-      <div>
+      <div className="mw8 center">
         <h1> {name} </h1>
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
