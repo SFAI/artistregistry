@@ -18,4 +18,8 @@ class WorksController < ApplicationController
 
   def new
   end
+
+  def edit
+    @work_id = params[:id]
+  end
 end
