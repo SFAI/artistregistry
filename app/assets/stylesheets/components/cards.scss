@@ -1,0 +1,47 @@
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  $content-width: 80px;
+
+  .upload-thumbnail {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    width: $content-width;
+
+    .thumb-head {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      visibility: hidden;
+    }
+
+    .thumb-head-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: $gray;
+      width: 100%;
+    }
+
+    .thumb {
+      width: $content-width;
+      height: $content-width;
+      object-fit: cover;
+    }
+
+  }
+
+  .thumb-wrapper {
+    &:hover {
+      background-color: $pale-gray;
+
+      .thumb-head {
+        visibility: visible;
+      }
+    }
+  }
+}

@@ -67,40 +67,20 @@ Lisa = Picasso.works.create(
   material: 'Oil on canvas',
   medium: 0,
   availability: 0,
-  price: 43.45
-  )
+  price: 43.45,
+  description: "Some really cool stuff"
+)
+Lisa.images.attach(
+  io: File.open('app/assets/images/IMG_3294.jpg'),
+  filename: 'IMG_3294'
+)
+Lisa.images.attach(
+  io: File.open('app/assets/images/IMG_3300.jpg'),
+  filename: 'IMG_3300'
+)
+Lisa.featured_image_id = Lisa.images.first.id
 Lisa.artist_id = Picasso.id
 Lisa.save!
-
-TwoFridas = Work.create(
-  title: 'The Two Fridas',
-  material: 'Oil on canvas',
-  medium: 0,
-  availability: 0,
-  price: 123.45,
-  artist_id: Kahlo.id,
-  )
-TwoFridas.save!
-
-Oceania = Work.create(
-  title: 'Memory of Oceania',
-  material: 'Cutout',
-  medium: 5,
-  availability: 0,
-  price: 234.56,
-  artist_id: Matisse.id,
-  )
-Oceania.save!
-
-TwoDancers = Work.create(
-  title: 'Two Dancers',
-  material: 'Cutout',
-  medium: 5,
-  availability: 0,
-  price: 4578.90,
-  artist_id: Matisse.id,
-  )
-TwoDancers.save!
 
 #Lisa's id is 1
 lisa_request = Request.create(
@@ -122,7 +102,8 @@ lisa_request_jobs.artist = Lisa.artist
 lisa_request_jobs.save!
 
 Gates_commission_Picasso = Commission.create(
-  comment: 'Picasso, please paint me a portrait'
+  comment: 'Picasso, please paint me a portrait',
+  types: 'exhibition'
 )
 Gates_commission_Picasso.buyer = Gates
 Gates_commission_Picasso.artist = Picasso

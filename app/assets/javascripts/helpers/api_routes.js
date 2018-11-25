@@ -1,12 +1,11 @@
 class ApiRoutes {
   get works() {
     return {
-
       index: `/api/works`,
       create: `/api/works`,
       show: (id) => `/api/works/${id}`,
       update: (id) => `/api/works/${id}`,
-      delete: (id) => `/api/works/destroy/${id}`,
+      delete: (id) => `/api/works/${id}`,
       filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
       categories: `/works/categories`,
       thumbnail: (id) => `api/works/thumbnail/${id}`
@@ -41,7 +40,8 @@ class ApiRoutes {
 
   get commissions() {
     return {
-      create: `/api/commissions`
+      create: `/api/commissions`,
+      types: `/commissions/types`
     }
   }
 

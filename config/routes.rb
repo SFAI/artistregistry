@@ -26,12 +26,15 @@ Rails.application.routes.draw do
   get '/works' => 'works#index'
   get '/works/categories' => 'works#get_work_category_enums'
   get '/works/new' => 'works#new'
-  get '/works/:id' => 'works#show'
+  get '/works/:id' => 'works#show', as: "show_work"
+  get '/works/:id/edit' => 'works#edit', as: "edit_work"
 
   get '/requests' => 'requests#home'
   get '/requests/types' => 'requests#get_type_enum'
 
   get '/buyers/:id' => 'buyers#show', as: :buyerid
+
+  get '/commissions/types' => 'commissions#get_type_enum'
 
 
   namespace :api, defaults: { format: :json } do
