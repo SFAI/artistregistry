@@ -1,6 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+/**
+ * @prop color: must be color defined in _colors.scss. This is the header bar color
+ * @prop title: title displayed in header bar
+ * @prop children: content displayed in body
+ */
 class Panel extends React.Component {
   constructor(props) {
     super(props);
