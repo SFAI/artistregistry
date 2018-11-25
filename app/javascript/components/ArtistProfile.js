@@ -13,6 +13,7 @@ class ArtistProfile extends React.Component {
     this.state = {
       works: [],
       artist: [],
+      description: "",
       activeFilter: 'All works',
       componentDidMount: false
     }
@@ -59,7 +60,7 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist } = this.state;
-    const { name, program } = artist;
+    const { name, program, genres, description } = artist;
 
     if (!componentDidMount) {
       return (
@@ -77,9 +78,12 @@ class ArtistProfile extends React.Component {
             <div className="h4 w4 br-100 mb4 bg-gray self-center">
               <img src="" />
             </div>
+            <button onClick={()=>{window.location = `/artists/${this.props.artist.id}/update`}}>Edit Profile</button>
             <div className="info">
               <h5 className="uppercase">Education</h5>
               <p> {program} </p>
+              <h5 className="uppercase">Genres</h5>
+              <p> {genres} </p>
             </div>
             <div className="mt-auto self-center">
               <button className="bg-gray white button pv3 ph4 f5">contact</button>
@@ -90,7 +94,7 @@ class ArtistProfile extends React.Component {
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
             <h2>About the artist</h2>
-            <p> Some words</p>
+            <p> {description}</p>
           </div>
         </div>
         <div className="mt5 mb3">
@@ -105,12 +109,11 @@ class ArtistProfile extends React.Component {
           {this.state.works.map(work => (
             <div key={work.id} className="artwork pa3 mr3 bg-white">
               <div className="work-image bg-gray mb2" >
-                <img src={""} />
+                <img src={work.featured_image.url} width="250" height="200"/>
               </div>
               <p className="work-title mb1">{work.title}</p>
               <p className="work-medium mb1">{work.medium}</p>
               <p className="work-material">{work.material}</p>
-              <img src={work.featured_image.url} width="200" height="200" />
               <div>
                 <button onClick={() => {this.updateWork(work.id)}}>Edit Work</button>
                 <button onClick={() => {this.deleteWork(work.id)}}>Delete Work</button>

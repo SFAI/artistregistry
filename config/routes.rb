@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
+  get '/artists/:id/update' => 'artists#update', as: "update_artist"
 
   get '/transactions/artist/:id' => 'artists#transactions', as: :transactions
   get '/transactions/new' => 'transactions#new'

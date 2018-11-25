@@ -11,9 +11,19 @@ class Api::ArtistsController < ApplicationController
   end
 
   def update
-    artist = Artist.find(params[:id])
-    new_work = work.update(params)
-    render_json_message(:ok, message: 'Artist successfully updated!')
+    puts "---------UPDATE ARTIST CONTROLLER------------"
+    @artist = Artist.find(params[:id])
+    saved = @artist.update(artist_params)
+
+    if saved
+      new_artist = @artist
+      flash[:success] = "Artist updated successfully!"
+    else
+      flash[:danger] = "Artist failed to delete."
+    end
+
+    # new_work = work.update(params)
+    # render_json_message(:ok, message: 'Artist successfully updated!')
   end
 
   def destroy
@@ -57,6 +67,14 @@ class Api::ArtistsController < ApplicationController
     transactions = artist.transactions
     render json: transactions,
         each_serializer: TransactionSerializer
+  end
+
+  def artist_params
+    params.require(:artist).permit(:name,
+                                 :program,
+                                 :genres,
+                                 :description,
+                                )
   end
 
 end
