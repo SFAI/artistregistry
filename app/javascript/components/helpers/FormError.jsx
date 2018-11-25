@@ -12,7 +12,7 @@ class FormError extends React.Component {
   render() {
     if (this.props.error) {
       return (
-        <div className="w-100 bg-snow pa2 mt2 error-container">
+        <div className="w-100 bg-snow pa2 mt2 mb2 error-container">
           <FontAwesomeIcon className="gray" icon={faExclamationCircle}/>
           <p className="error ml2 gray">{this.props.error}</p>
         </div>
