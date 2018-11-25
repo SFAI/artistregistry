@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import StyledModal from "../StyledModal";
+import StyledModal from "../helpers/StyledModal";
 import CreateTransaction from "../transactions/CreateTransaction";
 
 class Request extends React.Component {

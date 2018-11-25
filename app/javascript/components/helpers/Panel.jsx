@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import CommissionsForm from "components/CommissionsForm";
 
 class Panel extends React.Component {
   constructor(props) {

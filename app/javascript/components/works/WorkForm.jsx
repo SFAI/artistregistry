@@ -1,7 +1,6 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import { Button, Dialog, Intent } from "@blueprintjs/core"
-import { getCSRFToken } from '../shared/helpers/form_helpers.js'
 import Dropzone from "react-dropzone";
 import UploadThumbnail from "./UploadThumbnail";
 import update from 'immutability-helper';

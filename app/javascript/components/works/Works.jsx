@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Filters from "components/Filters";
+import Filters from "./Filters";
 
 class Works extends React.Component {
   constructor(props) {
