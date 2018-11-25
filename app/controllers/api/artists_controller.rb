@@ -38,25 +38,8 @@ class Api::ArtistsController < ApplicationController
   def requests
     artist = Artist.find(params[:id])
     requests = artist.requests
-    requests_full = []
-    requests.each do |request|
-      this_request = {}
-      this_request["request"] = request
-      this_request["buyer"] = request.buyer
-      requests_full.append(this_request)
-    end
-    if requests
-      render json: requests_full.to_json
-    else
-      render_json_message(:forbidden, errors: requests.errors.full_messages)
-    end
-  end
-
-  def transactions
-    artist = Artist.find(params[:id])
-    transactions = artist.transactions
-    render json: transactions,
-        each_serializer: TransactionSerializer
+    render json: requests,
+        each_serializer: RequestSerializer
   end
 
 end

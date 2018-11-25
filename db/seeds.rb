@@ -84,8 +84,8 @@ Lisa.save!
 
 #Lisa's id is 1
 lisa_request = Request.create(
-
-  message: 'I would like to request the Mona Lisa'
+  message: 'I would like to request the Mona Lisa',
+  types: 0
   )
 lisa_request.buyer = Gates
 lisa_request.work = Lisa
@@ -93,8 +93,8 @@ lisa_request.artist = Lisa.artist
 lisa_request.save!
 
 lisa_request_jobs = Request.create(
-
-  message: 'I would like to request the Mona Lisa as well'
+  message: 'I would like to request the Mona Lisa as well',
+  types: 1
   )
 lisa_request_jobs.buyer = Jobs
 lisa_request_jobs.work = Lisa

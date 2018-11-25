@@ -6,17 +6,13 @@ class Api::RequestsController < ApplicationController
   end
 
   def create
-    request = Request.create(params)
-    begin
-      saved = Request.save!
-    rescue ActiveRecord::RecordInvalid => invalid
-      render_json_message(:forbidden, errors: invalid.record.errors.full_messages)
-      return
-    end
-    if saved
-      render_json_message(:ok, message: 'Request successfully created!')
+    request = Request.create(request_params)
+    if request.save!
+      flash[:success] = "Work requested successfully!";
+      return render json: {"message": 'Work requested successfully!'}
     else
-      render_json_message(:forbidden, errors: request.errors.full_messages)
+      flash[:danger] = "Request failed to send."
+      return render json: {error: request.errors.full_messages}
     end
   end
 
@@ -32,7 +28,8 @@ class Api::RequestsController < ApplicationController
                                     :message,
                                     :buyer_id,
                                     :artist_id,
-                                    :work_id
+                                    :work_id,
+                                    :types
                                 )
 
   end

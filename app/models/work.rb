@@ -3,7 +3,6 @@ class Work < ApplicationRecord
   has_many_attached :images
 
   has_many :requests, :dependent => :destroy
-  has_many :transactions
   has_many :buyers, through: :requests, :dependent => :destroy
 
   has_one :featured_image, :class_name => "Image", :foreign_key => "featured_image_id"

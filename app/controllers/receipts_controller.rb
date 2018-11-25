@@ -1,4 +1,4 @@
-class TransactionsController < ApplicationController
+class ReceiptsController < ApplicationController
   def index
   end
 
@@ -8,9 +8,9 @@ class TransactionsController < ApplicationController
   def new
   end
 
-  def get_transaction_type_enums
+  def get_receipt_type_enums
     # return type enums for dropdown
-    types = Transaction.types
+    types = Receipt.types
     render json: types
   end
 end
