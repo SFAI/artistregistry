@@ -15,7 +15,7 @@ class CreateWork extends React.Component {
         attached_images_urls: [],
         description: '',
         featured_image: '',
-        artist_id: this.props.artist_id
+        artist_id: this.props.artist.id
       },
       route: APIRoutes.works.create,
       method: 'POST',

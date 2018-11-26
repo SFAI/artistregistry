@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
 class FormError extends React.Component {
   constructor(props) {
@@ -10,8 +12,9 @@ class FormError extends React.Component {
   render() {
     if (this.props.error) {
       return (
-        <div className="w-100 bg-snow pa2 mt2">
-          <p className="error">{this.props.error}</p>
+        <div className="w-100 bg-snow pa2 mt2 mb2 error-container">
+          <FontAwesomeIcon className="gray" icon={faExclamationCircle}/>
+          <p className="error ml2 gray">{this.props.error}</p>
         </div>
       );
     }
