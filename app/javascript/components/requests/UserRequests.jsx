@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Request from "./Request";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 
 class UserRequests extends React.Component {
   constructor(props) {
@@ -16,9 +18,11 @@ class UserRequests extends React.Component {
 
   renderToggle() {
     return this.toggleState.map((state, i) => {
+      let active = i === this.state.state;
       return (
-        <div key={i} onClick={() => this.display(i)} className={(state === "Requests" ? "bg-charcoal" : "bg-mustard") + " pa2 mt2 toggle"}>
-          <h4 className="white">{state}</h4>
+        <div key={i} onClick={() => this.display(i)} className={(active ? "bg-ochre" : "toggle-hover") + " pa3 mt2 toggle"}>
+          <h3 className={active ? "white" : "charcoal"}>{state}</h3>
+          <FontAwesomeIcon className={(active ? "white" : "charcoal") + " ml2"} icon={faAngleDoubleRight}/>
         </div>
       );
     });

@@ -41,7 +41,7 @@
 .request {
   display: flex;
   flex-direction: column;
-  border-top: 8px solid $mustard;
+  border-top: 8px solid $ochre;
 
   .request-header {
     display: flex;
@@ -76,4 +76,11 @@
 
 .toggle {
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.toggle-hover:hover {
+  background-color: $pale-gray;
 }
