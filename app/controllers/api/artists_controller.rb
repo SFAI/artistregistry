@@ -13,13 +13,15 @@ class Api::ArtistsController < ApplicationController
   end
 
   def update
+    artist_attr = artist_params
+    avatar_attr = artist_attr.delete("avatar")
     @artist = Artist.find(params[:id])
-    saved = @artist.update(artist_params)
+    saved = @artist.update(artist_attr)
     if saved
-      @artist.pro_pic.attach(params[:pro_pic])
+      @artist.avatar.attach(avatar_attr)
       flash[:success] = "Artist updated successfully!"
     else
-      flash[:danger] = "Artist failed to delete."
+      flash[:danger] = "Artist failed to update."
     end
 
     # new_work = work.update(params)
