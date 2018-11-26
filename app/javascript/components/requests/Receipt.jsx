@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
+import { convertToCurrency } from "../../utils/currency";
 
-class Request extends React.Component {
+class Receipt extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,37 +14,28 @@ class Request extends React.Component {
 
   getAttr = (request) => {
     let attr = {
+      "Price": "$" + convertToCurrency(request.receipt.price),
+      "Purchase Date": new Date(request.receipt.purchase_date).toLocaleDateString(),
+      "Transaction Type": request.receipt.transaction_type
     };
-
-    if (request.open) {
-      attr["Message"] = request.message;
-    } else if (request.receipt) {
-      if (request.receipt.transaction_type === "rental") {
-        attr["Start Date"] = request.receipt.start_date;
-        attr["End Date"] = request.receipt.end_date;
-      }
-      attr["Price"] = request.receipt.price;
-      attr["Purchase Date"] = request.receipt.purchase_date;
+    
+    if (request.receipt.transaction_type === "rental") {
+      attr["Start Date"] = new Date(request.receipt.start_date).toLocaleDateString();
+      attr["End Date"] = new Date(request.receipt.end_date).toLocaleDateString();
     }
 
-    return (
-      <div className="attr">
-        <div className="key">
-          {
-            Object.keys(attr).map((obj, i) => {
-              return <h5 key={i} className="attr-item">{obj}</h5>
-            })
-          }
+    return Object.keys(attr).map((key, i) => {
+      return (
+        <div className="attr" key={i}>
+          <div className="key mr3">
+            <h5>{key}</h5>
+          </div>
+          <div className="value">
+            <h6 key={i}>{attr[key]}</h6>
+          </div>
         </div>
-        <div className="value">
-          {
-            Object.keys(attr).map((obj, i) => {
-              return <h6 key={i} className="attr-item">{attr[obj]}</h6>
-            })
-          }
-        </div>
-      </div>
-    );
+      );
+    });
   }
 
   render() {
@@ -63,11 +55,11 @@ class Request extends React.Component {
                 {
                   this.props.artist ? (
                     <div className = "closed-request-button pa3 w5">
-                      <p> You reviewed this request on {closed_timestamps} </p>
+                      <p> You completed this request on {closed_timestamps} </p>
                     </div>
                   ) : (
                     <div className = "closed-request-button pa3 w5">
-                      <p>{request.artist.name} reviewed this request on {closed_timestamps} </p>
+                      <p>{request.artist.name} completed this request on {closed_timestamps} </p>
                     </div>
                   )
                 }
@@ -83,4 +75,4 @@ class Request extends React.Component {
   }
 }
 
-export default Request;
+export default Receipt;

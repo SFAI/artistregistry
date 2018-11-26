@@ -34,38 +34,22 @@ class Request extends React.Component {
   getAttr = (request) => {
     let attr = {
       "Placed": new Date(request.updated_at).toLocaleDateString(),
-      "Request Type": request.types
+      "Request Type": request.types,
+      "Message": request.message
     };
 
-    if (request.open) {
-      attr["Message"] = request.message;
-    } else if (request.receipt) {
-      if (request.receipt.transaction_type === "rental") {
-        attr["Start Date"] = request.receipt.start_date;
-        attr["End Date"] = request.receipt.end_date;
-      }
-      attr["Price"] = request.receipt.price;
-      attr["Purchase Date"] = request.receipt.purchase_date;
-    }
-
-    return (
-      <div className="attr">
-        <div className="key">
-          {
-            Object.keys(attr).map((obj, i) => {
-              return <h5 key={i} className="attr-item">{obj}</h5>
-            })
-          }
+    return Object.keys(attr).map((key, i) => {
+      return (
+        <div className="attr" key={i}>
+          <div className="key mr3">
+            <h5>{key}</h5>
+          </div>
+          <div className="value">
+            <h6 key={i}>{attr[key]}</h6>
+          </div>
         </div>
-        <div className="value">
-          {
-            Object.keys(attr).map((obj, i) => {
-              return <h6 key={i} className="attr-item">{attr[obj]}</h6>
-            })
-          }
-        </div>
-      </div>
-    );
+      );
+    });
   }
   
   renderRequestButtons() {

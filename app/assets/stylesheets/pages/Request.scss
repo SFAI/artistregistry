@@ -63,23 +63,22 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    @extend .mb2;
+
+    &:last-child {
+      margin: 0;
+    }
 
     .key {
-      width: 200px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
 
     .value {
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .attr-item {
-      @extend .mb2;
-
-      &:last-child {
-        margin: 0;
-      }
+      flex: 4;
     }
   }
 }

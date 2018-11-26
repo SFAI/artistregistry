@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Request from "./Request";
+import Receipt from "./Receipt";
 import None from "../helpers/None";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
