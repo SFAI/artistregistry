@@ -4,7 +4,7 @@ import CommissionsForm from "../commissions/CommissionsForm";
 
 /**
 * @prop user: user currently logged in
-* @prop userType: { "artist", "buyer", "not_logged_in" }
+* @prop userType: { "artist", "buyer" }
 * @prop artist: artist associated with works
 */
 class ArtistProfile extends React.Component {
