@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Request from "./Request";
+import None from "../helpers/None";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -87,6 +88,25 @@ class UserRequests extends React.Component {
       );
     });
   }
+  
+  renderRequests() {
+    if (!this.state.display.length) {
+      return (
+        <div className="bg-white pa2">
+          <None itemType="requests"/>
+        </div>
+      )
+    }
+    return this.state.display.map((i) => (
+      <Request
+        request={this.state.inbox[i]}
+        artist={this.props.artist}
+        buyer={this.props.buyer}
+        onChange={() => this.fetchInboxData()}
+        key={i}
+      />
+    ));
+  }
 
   render() {
     if (!this.state.componentDidMount) {
@@ -96,20 +116,12 @@ class UserRequests extends React.Component {
     }
     return (
       <div className="mw9 center">
-        <div className="w-20 fl pr3 mt6">
+        <div className="w-20 fl pr3 mt5">
           {this.renderToggle()}
         </div>
         <div className="w-80 fl mt2">
           <h1>Requests</h1>
-          {this.state.display.map((i) => (
-            <Request
-              request={this.state.inbox[i]}
-              artist={this.props.artist}
-              buyer={this.props.buyer}
-              onChange={() => this.fetchInboxData()}
-              key={i}
-            />
-          ))}
+          {this.renderRequests()}
         </div>
       </div>
     );
