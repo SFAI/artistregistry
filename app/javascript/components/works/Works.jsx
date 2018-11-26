@@ -63,7 +63,7 @@ class Works extends React.Component {
           <div className="col-list">
           {works.map(work => {
             return (
-              <div className="ba mb2 pa2 dib w-100" key={work.id}>
+              <div className="ba mb2 pa2 w-100 work-item" key={work.id}>
                 {work.featured_image && <img src={work.featured_image.url}/>}
                 <h3>{work.title}</h3>
                 <p>{work.material}</p>

@@ -11,3 +11,9 @@
 .col-list {
   column-count:3;
 }
+
+.work-item {
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+ break-inside: avoid;
+}
