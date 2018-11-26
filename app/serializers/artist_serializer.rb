@@ -1,12 +1,10 @@
 class ArtistSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :name, :program, :genres, :description, :pro_pic_url
+  attributes :id, :name, :program, :genres, :description, :avatar_url
 
-  def pro_pic_url
-    puts "--------OBJECT PRO_PIC--------"
-    puts object.pro_pic.attached
-    if object.pro_pic.attached?
-      variant = object.pro_pic.variant(resize: "100x100")
+  def avatar_url
+    if object.avatar
+      variant = object.avatar.variant(resize: "100x100")
       return rails_representation_url(variant, only_path:true)
     else
       return ''

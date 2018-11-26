@@ -14,7 +14,7 @@ class UpdateArtist extends React.Component {
         genres: this.props.artist.genres,
         program: this.props.artist.program,
         description: this.props.artist.description,
-        pro_pic: this.props.artist.pro_pic,
+        avatar: this.props.artist.avatar,
         artist_id: this.props.artist.id
       }
       // componentDidMount: false,
@@ -48,7 +48,7 @@ class UpdateArtist extends React.Component {
       return;
     }
 
-    this.setState({ pro_pic: files[0] });
+    this.setState({ avatar: files[0] });
   }
 
   handleSubmit = (event) => {
@@ -61,12 +61,12 @@ class UpdateArtist extends React.Component {
     formData.append('artist[genres]', this.state.artist.genres);
     formData.append('artist[description]', this.state.artist.description);
 
-    let { pro_pic } = this.state;
-    if ( pro_pic ) {
+    let { avatar } = this.state;
+    if ( avatar ) {
       formData.append(
-        'artist[pro_pic]',
-        pro_pic,
-        pro_pic.name
+        'artist[avatar]',
+        avatar,
+        avatar.name
       );
     }
 
@@ -127,7 +127,7 @@ class UpdateArtist extends React.Component {
           />
 
           <h5>Profile Photo</h5>
-          <input name="pro_pic" id="pro_pic" type="file" onChange={this.setFile}/>
+          <input name="avatar" id="avatar" type="file" onChange={this.setFile}/>
 
 
           <div className="submit-container mt3 mb3">

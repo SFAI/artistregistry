@@ -2,8 +2,8 @@ class Api::ArtistsController < ApplicationController
   respond_to :json
   def show
     @artist = Artist.find(params[:id])
-    image_url = { :image_url => url_for(@artist.pro_pic) }
-    render json: { artist: @artist, pro_pic_url: image_url }
+    # image_url = { :image_url => url_for(@artist.pro_pic) }
+    render json: { artist: @artist }
   end
 
   def index
@@ -19,6 +19,9 @@ class Api::ArtistsController < ApplicationController
     saved = @artist.update(artist_attr)
     if saved
       @artist.avatar.attach(avatar_attr)
+      puts "--------AVATAR NAME-----------"
+      puts @artist.avatar.filename
+      puts @artist.avatar.attached?
       flash[:success] = "Artist updated successfully!"
     else
       flash[:danger] = "Artist failed to update."
@@ -26,14 +29,6 @@ class Api::ArtistsController < ApplicationController
 
     # new_work = work.update(params)
     # render_json_message(:ok, message: 'Artist successfully updated!')
-  end
-
-  def pro_pic_url
-    pro_pic = work.pro_pic
-    if pro_pic
-      pro_pic_url = { :pro_pic_url => url_for(pro_pic) }
-      render json: pro_pic_url
-    end
   end
 
   def destroy
@@ -84,7 +79,7 @@ class Api::ArtistsController < ApplicationController
                                  :program,
                                  :genres,
                                  :description,
-                                 :pro_pic
+                                 :avatar
                                 )
   end
 

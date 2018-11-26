@@ -27,6 +27,7 @@ class ArtistProfile extends React.Component {
       Requester.get(artist_route)
     ]).then(response => {
       const [works_response, artist_response] = response;
+      console.log(artist_response);
       this.setState({
         works: works_response,
         artist: artist_response,
@@ -59,7 +60,9 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist } = this.state;
+    console.log(artist);
     const { name, program, genres, description } = artist;
+    console.log(name);
 
     if (!componentDidMount) {
       return (
