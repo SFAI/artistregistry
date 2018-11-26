@@ -11,16 +11,9 @@ class CreateTransaction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      transaction: {
-        transaction_type: '',
-        start_date: '',
-        end_date: '',
-        purchase_date: '',
-        price: '',
-        buyer: '',
-        work: '',
-        comment: ''
-      },
+      receipt: this.props.receipt,
+      route: this.props.route,
+      method: this.props.method,
       types: '',
       didMount: false,
       formErrors: {
@@ -43,11 +36,11 @@ class CreateTransaction extends React.Component {
   }
 
   handleChange = (event) => {
-    const transaction = this.state.transaction;
+    const receipt = this.state.receipt;
     const name = event.target.name;
     const value = event.target.value;
-    transaction[name] = value;
-    this.setState({ transaction: transaction },
+    receipt[name] = value;
+    this.setState({ receipt: receipt },
                   () => { this.validateField(name, value) });
   }
 
@@ -61,17 +54,17 @@ class CreateTransaction extends React.Component {
         errors.transaction_type = fields.type_valid ? '' : 'Please specify a type of transaction.'
         break;
       case 'purchase_date':
-        fields.purchase_valid = value != null && this.state.transaction.transaction_type == "purchase";
+        fields.purchase_valid = value != null && this.state.receipt.transaction_type == "purchase";
         errors.purchase_date = fields.purchase_valid ? '' : errors.purchase_date
         break;
       case 'start_date':
-        fields.start_valid = value != null && this.state.transaction.transaction_type == "rental";
+        fields.start_valid = value != null && this.state.receipt.transaction_type == "rental";
         errors.start_date = fields.start_valid ? '' : errors.start_date
         break;
       case 'end_date':
         fields.end_valid = value != null
-                    && this.state.transaction.transaction_type == "rental"
-                    && value >= this.state.transaction.start_date;
+                    && this.state.receipt.transaction_type == "rental"
+                    && value >= this.state.receipt.start_date;
         errors.end_date = fields.end_valid ? '' : 'End Date must occur after Start Date.'
         break;
       case 'price':
@@ -101,22 +94,32 @@ class CreateTransaction extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const transactions_route = APIRoutes.receipts.create;
+    const receipts_route = this.props.route;
+    const method = this.props.method;
     const valid = this.state.formValid;
     const payload = {
-      "transaction_type": this.state.transaction.transaction_type,
-      "start_date": this.state.transaction.start_date,
-      "end_date": this.state.transaction.end_date,
-      "purchase_date": this.state.transaction.purchase_date,
-      "price": this.state.transaction.price,
+      "transaction_type": this.state.receipt.transaction_type,
+      "start_date": this.state.receipt.start_date,
+      "end_date": this.state.receipt.end_date,
+      "purchase_date": this.state.receipt.purchase_date,
+      "price": this.state.receipt.price,
       "request_id": this.props.request_id,
-      "comment": this.state.transaction.comment
+      "comment": this.state.receipt.comment
     }
 
     if (!valid) {
       this.setState({ renderErrors: true })
+    } else if (method == "POST") {
+      Requester.post(receipts_route, payload).then(
+        response => {
+          window.location.href = '/requests';
+        },
+        error => {
+          console.error(error);
+        }
+      )
     } else {
-      Requester.post(transactions_route, payload).then(
+      Requester.update(receipts_route, payload).then(
         response => {
           window.location.href = '/requests';
         },
@@ -143,7 +146,7 @@ class CreateTransaction extends React.Component {
   }
 
   renderPurchaseDate = () => {
-    if (this.state.transaction.transaction_type == "purchase") {
+    if (this.state.receipt.transaction_type == "purchase") {
       return (
         <div>
           <p className="f6 lh-copy">Purchase Date </p>
@@ -151,7 +154,7 @@ class CreateTransaction extends React.Component {
             type="date"
             name="purchase_date"
             id="purchase_date"
-            value={this.state.transaction.purchase_date}
+            value={this.state.receipt.purchase_date}
             onChange={this.handleChange}
           />
 
@@ -162,7 +165,7 @@ class CreateTransaction extends React.Component {
   }
 
   renderRentalDates = () => {
-    if (this.state.transaction.transaction_type == "rental") {
+    if (this.state.receipt.transaction_type == "rental") {
       return (
         <div>
           <p className="f6 lh-copy">Purchase Date  </p>
@@ -170,7 +173,7 @@ class CreateTransaction extends React.Component {
             type="date"
             name="purchase_date"
             id="purchase_date"
-            value={this.state.transaction.purchase_date}
+            value={this.state.receipt.purchase_date}
             onChange={this.handleChange}
           />
 
@@ -181,7 +184,7 @@ class CreateTransaction extends React.Component {
             type="date"
             name="start_date"
             id="start_date"
-            value={this.state.transaction.start_date}
+            value={this.state.receipt.start_date}
             onChange={this.handleChange}
           />
 
@@ -192,7 +195,7 @@ class CreateTransaction extends React.Component {
             type="date"
             name="end_date"
             id="end_date"
-            value={this.state.transaction.end_date}
+            value={this.state.receipt.end_date}
             onChange={this.handleChange}
           />
 
@@ -246,7 +249,7 @@ render() {
           type="TEXT"
           name="price"
           id="price"
-          value={this.currencyDisplay(this.state.transaction.price)}
+          value={this.currencyDisplay(this.state.receipt.price)}
           onChange = {this.handleChange}
         />
 
@@ -254,7 +257,7 @@ render() {
 
         <div className="f6 lh-copy">Type
           <select name="transaction_type"
-                  value={this.state.transaction.transaction_type}
+                  value={this.state.receipt.transaction_type}
                   onChange={this.handleChange}>
               <option value="choose">choose a type</option>
               {  Object.keys(this.state.types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
@@ -271,7 +274,7 @@ render() {
           type="TEXT"
           name="comment"
           id="comment"
-          value={this.state.transaction.comment}
+          value={this.state.receipt.comment}
           onChange = {this.handleChange}
         />
 

@@ -8,7 +8,16 @@ class Request extends React.Component {
     super(props);
     this.state = {
       request: this.props.request,
-      artist: this.props.artist
+      artist: this.props.artist,
+      receipt: {
+        transaction_type: '',
+        start_date: '',
+        end_date: '',
+        purchase_date: '',
+        price: '',
+        comment: '',
+        request_id: ''
+      }
     };
   }
 
@@ -69,9 +78,34 @@ class Request extends React.Component {
     );
   }
 
+  renderEditReceipt = () => {
+    const request = this.state.request;
+    const id = request.id;
+    if (request.receipt) {
+      return (
+        <div className = "w100">
+          <StyledModal title="EDIT RECEIPT">
+            <CreateTransaction
+              artist={this.props.artist}
+              request_id={id}
+              receipt={request.receipt}
+              route={APIRoutes.receipts.update(request.receipt.id)}
+              method="PATCH"
+            />
+          </StyledModal>
+        </div>
+      )
+    } else {
+      return (
+        <div />
+      )
+    }
+  }
+
   render() {
     const request = this.state.request;
     const id = request.id;
+    const empty_receipt = this.state.receipt;
     const thumbnail_url = request.work.thumbnail ? request.work.thumbnail : "https://cdn0.iconfinder.com/data/icons/typicons-2/24/image-128.png";
     const closed_timestamps = new Date(request.updated_at).toLocaleDateString();
 
@@ -97,13 +131,17 @@ class Request extends React.Component {
                       <CreateTransaction
                         artist={this.props.artist}
                         request_id={id}
+                        receipt={empty_receipt}
+                        route={APIRoutes.receipts.create}
+                        method="POST"
                       />
                     </StyledModal>
                     <button type="button" className="button-secondary b--charcoal w-100 mt2" value = {id} onClick = {()=>this.closeRequest(id)}>CLOSE REQUEST</button>
                   </div>
                 ) : (
-                  <div className = "closed-request-button pa4 w-100">
-                    <p> You reviewed this request on {closed_timestamps} </p>
+                  <div className = "w-100">
+                    <p className = "closed-request-button pa4"> You reviewed this request on {closed_timestamps} </p>
+                    {this.renderEditReceipt()}
                   </div>
                 )
               ) : (

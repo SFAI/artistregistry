@@ -18,6 +18,13 @@ class Api::ReceiptsController < ApplicationController
   end
 
   def update
+    receipt = Receipt.find(params[:id])
+    saved = receipt.update(receipt_params)
+    if saved
+      flash[:success] = "Receipt updated successfully!"
+    else
+      flash[:danger] = "Receipt failed to update."
+    end
   end
 
   def destroy
