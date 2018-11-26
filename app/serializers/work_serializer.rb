@@ -24,13 +24,17 @@ class WorkSerializer < ActiveModel::Serializer
   end
 
   def featured_image
-    img = object.images.find(object.featured_image_id)
-    payload = {
-      name: img.filename,
-      url: rails_blob_path(img, :host => 'localhost'),
-      id: object.featured_image_id
-    }
-    return payload
+    if object.featured_image_id
+      img = object.images.find(object.featured_image_id)
+      payload = {
+        name: img.filename,
+        url: rails_blob_path(img, :host => 'localhost'),
+        id: object.featured_image_id
+      }
+      return payload
+    else
+      return nil
+    end
   end
 
   belongs_to :artist
