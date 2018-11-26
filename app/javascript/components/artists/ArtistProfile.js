@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import CommissionsForm from "../commissions/CommissionsForm";
 
-
 /**
 * @prop user: user currently logged in
 * @prop userType: { "artist", "buyer", "not_logged_in" }
@@ -74,7 +73,7 @@ class ArtistProfile extends React.Component {
     }
 
     return (
-      <div className="mw8 center">
+      <div>
         <h1> {name} </h1>
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
@@ -105,19 +104,18 @@ class ArtistProfile extends React.Component {
             return <button onClick={() => this.setState({ activeFilter: filter })} key={filter} className={className}>{filter}</button>
           })}
         </div>
-        <div className="flex">
+        <div className="flex flex-wrap">
           {this.state.works.map(work => (
-            <div key={work.id} className="artwork pa3 mr3 bg-white">
-              <div className="work-image bg-gray mb2" >
-                <img src={""} />
-              </div>
-              <p className="work-title mb1">{work.title}</p>
-              <p className="work-medium mb1">{work.medium}</p>
-              <p className="work-material">{work.material}</p>
-              <img src={work.featured_image.url} width="200" height="200" />
-              <div>
-                <button onClick={() => { this.updateWork(work.id) }}>Edit Work</button>
-                <button onClick={() => { this.deleteWork(work.id) }}>Delete Work</button>
+            <div className="artwork w-25 h-100 pa2">
+              <div key={work.id} className="bg-white pa3">
+                <img className="work-image fit-cover w-100 mb2" src={work.featured_image.url} />
+                <p className="work-title mb1">{work.title}</p>
+                <p className="work-medium mb1">{work.medium}</p>
+                <p className="work-material">{work.material}</p>
+                <div>
+                  <button onClick={() => { this.updateWork(work.id) }}>Edit</button>
+                  <button onClick={() => { this.deleteWork(work.id) }}>Delete</button>
+                </div>
               </div>
             </div>
           ))}
