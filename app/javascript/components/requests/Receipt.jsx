@@ -16,7 +16,8 @@ class Receipt extends React.Component {
     let attr = {
       "Price": "$" + convertToCurrency(request.receipt.price),
       "Purchase Date": new Date(request.receipt.purchase_date).toLocaleDateString(),
-      "Transaction Type": request.receipt.transaction_type
+      "Transaction Type": request.receipt.transaction_type,
+      "Description": request.receipt.comment
     };
     
     if (request.receipt.transaction_type === "rental") {

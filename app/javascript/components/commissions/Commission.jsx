@@ -55,7 +55,6 @@ class Commission extends React.Component {
         <h1>Inquiries</h1>
         {
           this.state.commissions.map((commission) => {
-            console.log(commission);
             return (
               <div key={commission.id} className="request pa3 bg-white mb3">
                 <div className="request-container w-100">
