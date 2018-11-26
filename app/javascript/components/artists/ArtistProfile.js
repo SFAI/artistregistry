@@ -61,7 +61,7 @@ class ArtistProfile extends React.Component {
   }
 
   render() {
-    const { componentDidMount, activeFilter, artist } = this.state;
+    const { componentDidMount, activeFilter, artist, canEditProfile } = this.state;
     const { name, program } = artist;
 
     if (!componentDidMount) {
@@ -88,7 +88,13 @@ class ArtistProfile extends React.Component {
               <button className="bg-gray white button pv3 ph4 f5">contact</button>
             </div>
           </div>
-          <div className="w-50-l mw-400 flex mh3">
+          <div className="w-50-l mw-400 flex relative mh3">
+            {
+              canEditProfile &&
+              <div className="absolute top-0 right-0 mt3 mr3">
+                <button> Edit featured work </button>
+              </div>
+            }
             <img className="fit-cover h-100" src={"https://images.unsplash.com/photo-1542347369-65f48a3018c8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9dded3ad2cbb6ec3ccfe4a9c5f5c0715&auto=format&fit=crop&w=900&q=60"} />
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
@@ -105,24 +111,28 @@ class ArtistProfile extends React.Component {
           })}
         </div>
         <div className="flex flex-wrap">
-          {this.state.works.map(work => (
-            <div className="artwork w-25 h-100 pa2">
-              <div key={work.id} className="bg-white pa3">
-                <img className="work-image fit-cover w-100 mb2" src={work.featured_image.url} />
-                <p className="work-title mb1">{work.title}</p>
-                <p className="work-medium mb1">{work.medium}</p>
-                <p className="work-material">{work.material}</p>
-                <div>
-                  <button onClick={() => { this.updateWork(work.id) }}>Edit</button>
-                  <button onClick={() => { this.deleteWork(work.id) }}>Delete</button>
+          {this.state.works.map(work => {
+            return (
+              <div key={work.id} className="artwork w-25 h-100 pa2">
+                <div className="bg-white pa3">
+                  <img className="work-image fit-cover w-100 mb2" src={work.featured_image.url} />
+                  <p className="work-title mb1">{work.title}</p>
+                  <p className="work-medium mb1">{work.medium}</p>
+                  <p className="work-material">{work.material}</p>
+                  {canEditProfile &&
+                    <div>
+                      <button onClick={() => { this.updateWork(work.id) }}>Edit</button>
+                      <button onClick={() => { this.deleteWork(work.id) }}>Delete</button>
+                    </div>}
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
-        <button onClick={this.createNewWork}>
-          New Work
-        </button>
+        {canEditProfile &&
+          <button onClick={this.createNewWork}>
+            New Work
+          </button>}
         <div className="contact-wrapper mb4 mt4">
           <div className="w-50 pr2 dib contact">
             <div className="bg-charcoal pa3">
