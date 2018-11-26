@@ -1,6 +1,5 @@
 import PropTypes from "prop-types"
 import React from 'react';
-import { getCSRFToken } from '../shared/helpers/form_helpers.js';
 import { Button, Dialog, Intent } from "@blueprintjs/core";
 
 

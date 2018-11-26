@@ -2,14 +2,12 @@ class Api::ArtistsController < ApplicationController
   respond_to :json
   def show
     @artist = Artist.find(params[:id])
-    # image_url = { :image_url => url_for(@artist.pro_pic) }
-    render json: { artist: @artist }
+    render json: @artist, serializer: ArtistSerializer
   end
 
   def index
-
     artists = Artist.all
-    render json: artists
+    render json: artists, serializer: ArtistSerializer
   end
 
   def update
@@ -19,9 +17,6 @@ class Api::ArtistsController < ApplicationController
     saved = @artist.update(artist_attr)
     if saved
       @artist.avatar.attach(avatar_attr)
-      puts "--------AVATAR NAME-----------"
-      puts @artist.avatar.filename
-      puts @artist.avatar.attached?
       flash[:success] = "Artist updated successfully!"
     else
       flash[:danger] = "Artist failed to update."
