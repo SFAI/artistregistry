@@ -9,4 +9,6 @@ class Artist < ApplicationRecord
   has_many :requests
   has_many :transactions
   has_many :buyers, through: :commissions
+  has_one_attached :pro_pic
+  validates :name, presence: true, uniqueness: true
 end

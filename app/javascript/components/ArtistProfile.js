@@ -13,7 +13,6 @@ class ArtistProfile extends React.Component {
     this.state = {
       works: [],
       artist: [],
-      description: "",
       activeFilter: 'All works',
       componentDidMount: false
     }
@@ -76,7 +75,7 @@ class ArtistProfile extends React.Component {
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
             <div className="h4 w4 br-100 mb4 bg-gray self-center">
-              <img src="" />
+              <img src={this.props.artist.pro_pic_url} />
             </div>
             <button onClick={()=>{window.location = `/artists/${this.props.artist.id}/update`}}>Edit Profile</button>
             <div className="info">
