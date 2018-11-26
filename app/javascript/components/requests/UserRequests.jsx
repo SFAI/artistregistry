@@ -28,6 +28,10 @@ class UserRequests extends React.Component {
       );
     });
   }
+  
+  isReceipt(request) {
+    return !request.open && request.receipt;
+  }
 
   display = (i) => {
     let display = []
@@ -46,7 +50,7 @@ class UserRequests extends React.Component {
         break;
       case "Complete":
         this.state.inbox.slice().map((request, i) => {
-          if (!request.open && request.receipt) {
+          if (this.isReceipt(request)) {
             display.push(i);
           }
         });
@@ -97,15 +101,28 @@ class UserRequests extends React.Component {
         </div>
       )
     }
-    return this.state.display.map((i) => (
-      <Request
-        request={this.state.inbox[i]}
-        artist={this.props.artist}
-        buyer={this.props.buyer}
-        onChange={() => this.fetchInboxData()}
-        key={i}
-      />
-    ));
+    return this.state.display.map((i) => {
+      if (this.isReceipt(this.state.inbox[i])) {
+        return (
+          <Receipt
+            request={this.state.inbox[i]}
+            artist={this.props.artist}
+            buyer={this.props.buyer}
+            onChange={() => this.fetchInboxData()}
+            key={i}
+          />
+        )
+      }
+      return (
+        <Request
+          request={this.state.inbox[i]}
+          artist={this.props.artist}
+          buyer={this.props.buyer}
+          onChange={() => this.fetchInboxData()}
+          key={i}
+        />
+      );
+    });
   }
 
   render() {

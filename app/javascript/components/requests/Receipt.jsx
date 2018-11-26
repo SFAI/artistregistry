@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import StyledModal from "../helpers/StyledModal";
-import CreateTransaction from "../transactions/CreateTransaction";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
 
 class Request extends React.Component {
@@ -13,28 +11,8 @@ class Request extends React.Component {
     };
   }
 
-  closeRequest = (id) => {
-    const update_request_route = APIRoutes.requests.update(id);
-    Requester.update(update_request_route, {open: false}).then((response) => {
-      this.props.onChange();
-    });
-  }
-
-  getRequestStatus = (request) => {
-    if (request.open) {
-      return "Pending";
-    } else {
-      if (request.receipt) {
-        return "Complete";
-      }
-      return "Closed";
-    }
-  }
-
   getAttr = (request) => {
     let attr = {
-      "Placed": new Date(request.updated_at).toLocaleDateString(),
-      "Request Type": request.types
     };
 
     if (request.open) {
@@ -67,38 +45,6 @@ class Request extends React.Component {
       </div>
     );
   }
-  
-  renderRequestButtons() {
-    const closed_timestamps = new Date(this.state.request.updated_at).toLocaleDateString();
-    if (!this.state.request.open) {
-      return (
-        <div className="closed-request-button pa3 w5">
-          <p> You archived this request on {closed_timestamps} </p>
-        </div>
-      );
-    }
-    let id = this.state.request.id;
-    return (
-      <div className="request-buttons">
-        <div className="w4">
-          <button type="button" className="button-secondary b--charcoal w-100" value = {id} onClick = {()=>this.closeRequest(id)}>
-            ARCHIVE
-          </button>
-        </div>
-        <div className="ml3 w4">
-          <StyledModal
-            title="COMPLETE"
-            color="ochre"
-          >
-            <CreateTransaction
-              artist={this.props.artist}
-              request_id={id}
-            />
-          </StyledModal>
-        </div>
-      </div>
-    )
-  }
 
   render() {
     const request = this.state.request;
@@ -115,11 +61,13 @@ class Request extends React.Component {
               <div className="request-action">
                 <BuyerSnapshot buyer={this.state.request.buyer} />
                 {
-                  this.props.artist ? 
-                    this.renderRequestButtons()
-                   : (
-                    <div className = "closed-request-button pa4 w5">
-                      <p> You requested this work on {closed_timestamps} </p>
+                  this.props.artist ? (
+                    <div className = "closed-request-button pa3 w5">
+                      <p> You reviewed this request on {closed_timestamps} </p>
+                    </div>
+                  ) : (
+                    <div className = "closed-request-button pa3 w5">
+                      <p>{request.artist.name} reviewed this request on {closed_timestamps} </p>
                     </div>
                   )
                 }

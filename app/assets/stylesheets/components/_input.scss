@@ -44,6 +44,8 @@ input[type="checkbox"] {
   -moz-appearance: none;
   font-weight: 500;
   cursor: pointer;
+  box-sizing: border-box;
+  height: 44px;
 
   &:focus {
     outline: none;
@@ -109,4 +111,8 @@ input[type="checkbox"] {
   @extend .row-input;
   outline: none;
   @extend .pa2;
+}
+
+.pointer {
+  cursor: pointer;
 }
