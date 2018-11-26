@@ -4,7 +4,8 @@ import CommissionsForm from "../commissions/CommissionsForm";
 
 
 /**
-* @prop buyer: buyer currently logged in
+* @prop user: user currently logged in
+* @prop userType: { "artist", "buyer", "not_logged_in" }
 * @prop artist: artist associated with works
 */
 class ArtistProfile extends React.Component {
@@ -14,11 +15,13 @@ class ArtistProfile extends React.Component {
       works: [],
       artist: [],
       activeFilter: 'All works',
+      canEditProfile: false,
       componentDidMount: false
     }
   }
 
   componentDidMount = () => {
+    const { user, userType, artist } = this.props;
     const artist_id = this.props.artist.id;
     const works_route = APIRoutes.artists.works(artist_id);
     const artist_route = APIRoutes.artists.show(artist_id);
@@ -30,6 +33,7 @@ class ArtistProfile extends React.Component {
       this.setState({
         works: works_response,
         artist: artist_response,
+        canEditProfile: userType === "artist" && user.id === artist.id,
         componentDidMount: true
       });
     });
@@ -112,8 +116,8 @@ class ArtistProfile extends React.Component {
               <p className="work-material">{work.material}</p>
               <img src={work.featured_image.url} width="200" height="200" />
               <div>
-                <button onClick={() => {this.updateWork(work.id)}}>Edit Work</button>
-                <button onClick={() => {this.deleteWork(work.id)}}>Delete Work</button>
+                <button onClick={() => { this.updateWork(work.id) }}>Edit Work</button>
+                <button onClick={() => { this.deleteWork(work.id) }}>Delete Work</button>
               </div>
             </div>
           ))}
@@ -125,13 +129,13 @@ class ArtistProfile extends React.Component {
           <div className="w-50 pr2 dib contact">
             <div className="bg-charcoal pa3">
               <h2 className="white">Guidelines for contacting artists</h2>
-              <p className="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet consectetur adipiscing elit duis tristique.<br/><br/>Tortor dignissim convallis aenean et tortor at risus viverra adipiscing. Est ante in nibh mauris cursus mattis molestie a. Sed enim ut sem viverra aliquet eget. Id semper risus in hendrerit gravida rutrum quisque non tellus.<br/><br/>Elit pellentesque habitant morbi tristique senectus et netus et malesuada. Commodo elit at imperdiet dui accumsan sit amet. Tellus elementum sagittis vitae et leo duis ut diam. Eget arcu dictum varius duis at. Donec massa sapien faucibus et molestie ac feugiat sed lectus. Risus pretium quam vulputate dignissim suspendisse in est ante.
+              <p className="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet consectetur adipiscing elit duis tristique.<br /><br />Tortor dignissim convallis aenean et tortor at risus viverra adipiscing. Est ante in nibh mauris cursus mattis molestie a. Sed enim ut sem viverra aliquet eget. Id semper risus in hendrerit gravida rutrum quisque non tellus.<br /><br />Elit pellentesque habitant morbi tristique senectus et netus et malesuada. Commodo elit at imperdiet dui accumsan sit amet. Tellus elementum sagittis vitae et leo duis ut diam. Eget arcu dictum varius duis at. Donec massa sapien faucibus et molestie ac feugiat sed lectus. Risus pretium quam vulputate dignissim suspendisse in est ante.
               </p>
             </div>
           </div>
           <div className="w-50 pl2 dib contact">
             <CommissionsForm
-              buyer={this.props.buyer}
+              buyer={this.props.user}
               artist={this.props.artist}
             />
           </div>
