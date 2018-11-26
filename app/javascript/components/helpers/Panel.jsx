@@ -1,7 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import CommissionsForm from "components/CommissionsForm";
 
+/**
+ * @prop color: must be color defined in _colors.scss. This is the header bar color
+ * @prop title: title displayed in header bar
+ * @prop children: content displayed in body
+ */
 class Panel extends React.Component {
   constructor(props) {
     super(props);

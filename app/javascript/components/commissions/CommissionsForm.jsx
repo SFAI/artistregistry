@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Panel from "components/Panel";
-import FormError from "components/FormError";
+import Panel from "../helpers/Panel";
+import FormError from "../helpers/FormError";
 
 class CommissionsForm extends React.Component {
   constructor(props) {

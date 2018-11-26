@@ -54,6 +54,7 @@ input[type="checkbox"] {
   border: none;
   @extend .button;
   @extend .white;
+  border: none;
 }
 
 .button-secondary {
@@ -73,11 +74,6 @@ input[type="checkbox"] {
   &:hover {
     background-color: rgba($white, 0.3);
   }
-}
-
-.select {
-  font-family: $font;
-  outline: none;
 }
 
 .dropzone {

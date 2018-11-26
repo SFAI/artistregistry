@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+  # before_action :set_current_buyer
   def index
   end
 
