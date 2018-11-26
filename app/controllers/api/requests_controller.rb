@@ -20,8 +20,6 @@ class Api::RequestsController < ApplicationController
   def update
     #only for opening and closing requests
     @request = Request.find(params[:id])
-    NotificationMailer.with(buyer: @request.buyer, work: @request.work).request_closed_email.deliver_later
-    puts @request.open
     new_request = @request.update!(request_params)
     if (new_request) #since requests can only be closed after open
       NotificationMailer.with(buyer: @request.buyer, artist: @request.artist, work: @request.work).request_closed_email.deliver_later
