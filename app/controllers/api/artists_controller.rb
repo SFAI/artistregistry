@@ -42,4 +42,11 @@ class Api::ArtistsController < ApplicationController
         each_serializer: RequestSerializer
   end
 
+  def commissions
+    artist = Artist.find(params[:id])
+    commissions = artist.commissions
+    render json: commissions,
+        each_serializer: CommissionSerializer
+  end
+
 end
