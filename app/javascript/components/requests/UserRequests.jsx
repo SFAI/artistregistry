@@ -133,7 +133,7 @@ class UserRequests extends React.Component {
       );
     }
     return (
-      <div className="mw9 center">
+      <div className="mw8 center">
         <div className="w-20 fl pr3 mt5">
           {this.renderToggle()}
         </div>
