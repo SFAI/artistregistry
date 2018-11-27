@@ -22,6 +22,7 @@ class BuyerProfile extends React.Component {
           <div className="h4 w4 br-100 bg-gray ma4">
             <img src="" />
           </div>
+          <button onClick={()=>{window.location = `/buyers/${this.props.buyer.id}/update`}}>Edit Profile</button>
           <div>
             <div className="buyer-contents">
               <div>

@@ -21,9 +21,6 @@ class Api::ArtistsController < ApplicationController
     else
       flash[:danger] = "Artist failed to update."
     end
-
-    # new_work = work.update(params)
-    # render_json_message(:ok, message: 'Artist successfully updated!')
   end
 
   def destroy

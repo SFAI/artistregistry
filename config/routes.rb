@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get '/requests/types' => 'requests#get_type_enum'
 
   get '/buyers/:id' => 'buyers#show', as: :buyerid
+  get '/buyers/:id/update' => 'buyers#update'
 
   get '/commissions/types' => 'commissions#get_type_enum'
 
