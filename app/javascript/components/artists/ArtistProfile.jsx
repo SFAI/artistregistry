@@ -67,7 +67,7 @@ class ArtistProfile extends React.Component {
   }
 
   render() {
-    const { componentDidMount, activeFilter, artist, canEditProfile } = this.state;
+    const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, genres, description } = artist;
 
     if (!componentDidMount) {
@@ -78,6 +78,7 @@ class ArtistProfile extends React.Component {
       );
     }
 
+    const featured_work = works.find(work => work.id === artist.featured_work_id);
     return (
       <div>
         <h1> {name} </h1>
@@ -98,7 +99,7 @@ class ArtistProfile extends React.Component {
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
-            <img className="fit-cover h-100" src={"https://images.unsplash.com/photo-1542347369-65f48a3018c8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9dded3ad2cbb6ec3ccfe4a9c5f5c0715&auto=format&fit=crop&w=900&q=60"} />
+            <img className="fit-cover h-100" src={featured_work.featured_image.url} />
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
             <h2>About the artist</h2>
@@ -117,7 +118,7 @@ class ArtistProfile extends React.Component {
         </div>
         <div className="flex flex-wrap">
           <div className="col-list-4">
-            {this.state.works.map(work => {
+            {works.map(work => {
               return (
                 <WorkColumnPanel key={work.id} work={work}>
                   {canEditProfile &&
