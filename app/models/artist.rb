@@ -8,5 +8,6 @@ class Artist < ApplicationRecord
   has_many :works
   has_one :featured_work, :class_name => 'Work', :foreign_key => "featured_work_id"
   has_many :requests
+  has_many :commissions
   has_many :buyers, through: :commissions
 end

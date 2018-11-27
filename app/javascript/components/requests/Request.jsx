@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import StyledModal from "../helpers/StyledModal";
 import CreateTransaction from "../transactions/CreateTransaction";
+import BuyerSnapshot from "../buyers/BuyerSnapshot";
+import ArtistSnapshot from "../artists/ArtistSnapshot";
 
 class Request extends React.Component {
   constructor(props) {
@@ -14,7 +16,7 @@ class Request extends React.Component {
 
   closeRequest = (id) => {
     const update_request_route = APIRoutes.requests.update(id);
-    Requester.update(update_request_route, {open: false}).then((response) => {
+    Requester.update(update_request_route, { open: false }).then((response) => {
       this.props.onChange();
     });
   }
@@ -32,41 +34,55 @@ class Request extends React.Component {
 
   getAttr = (request) => {
     let attr = {
-      "Buyer": request.buyer.name,
-      "Artist": request.artist.name,
       "Placed": new Date(request.updated_at).toLocaleDateString(),
-      "Request Type": request.types
+      "Request Type": request.types,
+      "Message": request.message
     };
 
-    if (request.open) {
-      attr["Message"] = request.message;
-    } else if (request.receipt) {
-      if (request.receipt.transaction_type === "rental") {
-        attr["Start Date"] = request.receipt.start_date;
-        attr["End Date"] = request.receipt.end_date;
-      }
-      attr["Price"] = request.receipt.price;
-      attr["Purchase Date"] = request.receipt.purchase_date;
-    }
-
-    return (
-      <div className="attr">
-        <div className="key">
-          {
-            Object.keys(attr).map((obj, i) => {
-              return <h5 key={i} className="attr-item">{obj}</h5>
-            })
-          }
+    return Object.keys(attr).map((key, i) => {
+      return (
+        <div className="attr" key={i}>
+          <div className="key mr3">
+            <h5>{key}</h5>
+          </div>
+          <div className="value">
+            <h6 key={i}>{attr[key]}</h6>
+          </div>
         </div>
-        <div className="value">
-          {
-            Object.keys(attr).map((obj, i) => {
-              return <h6 key={i} className="attr-item">{attr[obj]}</h6>
-            })
-          }
+      );
+    });
+  }
+
+  renderRequestButtons() {
+    const closed_timestamps = new Date(this.state.request.updated_at).toLocaleDateString();
+    if (!this.state.request.open) {
+      return (
+        <div className="closed-request-button pa3 w5">
+          <p> You archived this request on {closed_timestamps} </p>
+        </div>
+      );
+    }
+    let id = this.state.request.id;
+    return (
+      <div className="request-buttons">
+        <div className="w4">
+          <button type="button" className="button-secondary b--charcoal w-100" value={id} onClick={() => this.closeRequest(id)}>
+            ARCHIVE
+          </button>
+        </div>
+        <div className="ml3 w4">
+          <StyledModal
+            title="COMPLETE"
+            color="ochre"
+          >
+            <CreateTransaction
+              artist={this.props.artist}
+              request_id={id}
+            />
+          </StyledModal>
         </div>
       </div>
-    );
+    )
   }
 
   render() {
@@ -77,47 +93,27 @@ class Request extends React.Component {
 
     return (
       <div key={request.id} className="request pa3 bg-white mb3">
-        <div className = "request-header">
-          <h5>{"Request #" + request.id + ": " + request.work.title}</h5>
-          <h3>{this.getRequestStatus(request)}</h3>
-        </div>
-        <div className="content-row">
-          <div className="request-content mt3">
-            <img src={thumbnail_url} className="img"/>
-            <div className = "ml4">
-              {this.getAttr(request)}
-            </div>
-          </div>
-          <div className="request-buttons w5">
+        <img src={thumbnail_url} className="img" />
+        <div className="w-100 ml4">
+          <div className="request-container">
             {
               this.props.artist ? (
-                request.open ? (
-                  <div className="w-100">
-                    <StyledModal title="MARK AS COMPLETE">
-                      <CreateTransaction
-                        artist={this.props.artist}
-                        request_id={id}
-                      />
-                    </StyledModal>
-                    <button type="button" className="button-secondary b--charcoal w-100 mt2" value = {id} onClick = {()=>this.closeRequest(id)}>CLOSE REQUEST</button>
-                  </div>
-                ) : (
-                  <div className = "closed-request-button pa4 w-100">
-                    <p> You reviewed this request on {closed_timestamps} </p>
-                  </div>
-                )
+                <div className="request-action">
+                  <BuyerSnapshot buyer={this.state.request.buyer} />
+                  {this.renderRequestButtons()}
+                </div>
               ) : (
-                request.open ? (
-                  <div className = "closed-request-button pa4 w-100">
+                <div className="request-action">
+                  <ArtistSnapshot artist={this.state.request.artist} />
+                  <div className="closed-request-button pa4 w5">
                     <p> You requested this work on {closed_timestamps} </p>
                   </div>
-                ) : (
-                  <div className = "closed-request-button pa4 w-100">
-                    <p>{request.artist.name} reviewed this request on {closed_timestamps} </p>
-                  </div>
-                )
+                </div>
               )
             }
+            <div className="attr-container pa3 mt2">
+              {this.getAttr(request)}
+            </div>
           </div>
         </div>
       </div>

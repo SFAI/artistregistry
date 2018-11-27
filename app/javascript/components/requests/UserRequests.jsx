@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Request from "./Request";
+import Receipt from "./Receipt";
+import None from "../helpers/None";
+import classNames from "classnames";
 
 class UserRequests extends React.Component {
   constructor(props) {
@@ -16,17 +19,22 @@ class UserRequests extends React.Component {
 
   renderToggle() {
     return this.toggleState.map((state, i) => {
+      let active = i === this.state.state;
       return (
-        <div key={i} onClick={() => this.display(i)} className={(state === "Requests" ? "bg-charcoal" : "bg-mustard") + " pa2 mt2 toggle"}>
-          <h4 className="white">{state}</h4>
+        <div key={i} onClick={() => this.display(i)} className={classNames("mb2 toggle", (active ? "bg-ochre" : "toggle-hover"))}>
+          <p className={classNames("strong", { "white": active })}>{state} »</p>
         </div>
       );
     });
   }
 
+  isReceipt(request) {
+    return !request.open && request.receipt;
+  }
+
   display = (i) => {
     let display = []
-    switch(this.toggleState[parseInt(i)]) {
+    switch (this.toggleState[parseInt(i)]) {
       case "Requests":
         this.state.inbox.map((request, i) => {
           display.push(i);
@@ -41,7 +49,7 @@ class UserRequests extends React.Component {
         break;
       case "Complete":
         this.state.inbox.slice().map((request, i) => {
-          if (!request.open && request.receipt) {
+          if (this.isReceipt(request)) {
             display.push(i);
           }
         });
@@ -84,6 +92,38 @@ class UserRequests extends React.Component {
     });
   }
 
+  renderRequests() {
+    if (!this.state.display.length) {
+      return (
+        <div className="bg-white pa2">
+          <None itemType="requests" />
+        </div>
+      )
+    }
+    return this.state.display.map((i) => {
+      if (this.isReceipt(this.state.inbox[i])) {
+        return (
+          <Receipt
+            request={this.state.inbox[i]}
+            artist={this.props.artist}
+            buyer={this.props.buyer}
+            onChange={() => this.fetchInboxData()}
+            key={i}
+          />
+        )
+      }
+      return (
+        <Request
+          request={this.state.inbox[i]}
+          artist={this.props.artist}
+          buyer={this.props.buyer}
+          onChange={() => this.fetchInboxData()}
+          key={i}
+        />
+      );
+    });
+  }
+
   render() {
     if (!this.state.componentDidMount) {
       return (
@@ -91,21 +131,13 @@ class UserRequests extends React.Component {
       );
     }
     return (
-      <div className="mw9 center">
-        <div className="w-20 fl pr3 mt6">
+      <div className="mw8 center">
+        <div className="w-20 fl pr4 mt6">
           {this.renderToggle()}
         </div>
         <div className="w-80 fl mt2">
           <h1>Requests</h1>
-          {this.state.display.map((i) => (
-            <Request
-              request={this.state.inbox[i]}
-              artist={this.props.artist}
-              buyer={this.props.buyer}
-              onChange={() => this.fetchInboxData()}
-              key={i}
-            />
-          ))}
+          {this.renderRequests()}
         </div>
       </div>
     );

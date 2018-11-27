@@ -34,8 +34,7 @@ class StyledModal extends React.Component {
             Cancel
           </button>
         </ReactModal>
-        <br />
-        <button className="button-primary bg-mustard w-100" onClick={this.showModal}>
+        <button className={"bg-" + this.props.color + " button-primary w-100"} onClick={this.showModal}>
           {this.props.title}
         </button>
       </div>
