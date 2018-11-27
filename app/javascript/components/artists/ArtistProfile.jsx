@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import CommissionsForm from "../commissions/CommissionsForm";
+import WorkColumnPanel from "../works/WorkColumnPanel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Touchable from 'rc-touchable';
 
 /**
 * @prop user: user currently logged in
@@ -114,23 +118,24 @@ class ArtistProfile extends React.Component {
           })}
         </div>
         <div className="flex flex-wrap">
+          <div className="col-list-4">
           {this.state.works.map(work => {
             return (
-              <div key={work.id} className="artwork w-25 h-100 pa2">
-                <div className="bg-white pa3">
-                  <img className="work-image fit-cover w-100 mb2" src={work.featured_image.url} />
-                  <p className="work-title mb1">{work.title}</p>
-                  <p className="work-medium mb1">{work.medium}</p>
-                  <p className="work-material">{work.material}</p>
-                  {canEditProfile &&
-                    <div>
-                      <button onClick={() => { this.updateWork(work.id) }}>Edit</button>
-                      <button onClick={() => { this.deleteWork(work.id) }}>Delete</button>
-                    </div>}
-                </div>
-              </div>
+              <WorkColumnPanel work={work}>
+                {canEditProfile &&
+                  <div className="work-action-wrapper mb2">
+                    <Touchable onPress={() => this.updateWork(work.id)}>
+                      <h4 className="mr1 gray work-action pa1">Edit</h4>
+                    </Touchable>
+                    <Touchable onPress={() => this.deleteWork(work.id)}>
+                      <h4 className="gray work-action pa1">Delete</h4>
+                    </Touchable>
+                  </div>
+                }
+              </WorkColumnPanel>
             )
           })}
+          </div>
         </div>
         {canEditProfile &&
           <button onClick={this.createNewWork}>

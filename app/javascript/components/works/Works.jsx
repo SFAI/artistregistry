@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Filters from "./Filters";
-import Touchable from 'rc-touchable';
+import WorkColumnPanel from "./WorkColumnPanel";
 
 class Works extends React.Component {
   constructor(props) {
@@ -65,17 +65,10 @@ class Works extends React.Component {
         </div>
         <div className="fl w-80 pb5">
           <h1>Artwork</h1>
-          <div className="col-list">
+          <div className="col-list-3">
           {works.map(work => {
             return (
-              <Touchable key={work.id} onPress={() => this.navigateToWork(work.id)}>
-                <div className="mb3 pa3 w-100 work-item bg-white pointer" key={work.id}>
-                  {work.featured_image && <img src={work.featured_image.url} className="mb3"/>}
-                  <h3>{work.title}</h3>
-                  <h6>{work.artist_name}</h6>
-                  <h6 className="work-material">{work.material}</h6>
-                </div>
-              </Touchable>
+              <WorkColumnPanel work={work}/>
             );
           })}
           </div>
