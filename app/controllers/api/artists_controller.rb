@@ -49,6 +49,13 @@ class Api::ArtistsController < ApplicationController
         each_serializer: RequestSerializer
   end
 
+  def commissions
+    artist = Artist.find(params[:id])
+    commissions = artist.commissions
+    render json: commissions,
+        each_serializer: CommissionSerializer
+  end
+
   def artist_params
     params.require(:artist).permit(:name,
                                  :program,
@@ -57,5 +64,4 @@ class Api::ArtistsController < ApplicationController
                                  :avatar
                                 )
   end
-
 end

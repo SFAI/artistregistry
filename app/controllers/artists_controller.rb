@@ -22,4 +22,7 @@ class ArtistsController < ApplicationController
 
   def transactions
   end
+
+  def commissions
+  end
 end

@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   get '/buyers/:id' => 'buyers#show', as: :buyerid
 
   get '/commissions/types' => 'commissions#get_type_enum'
+  get '/commissions' => 'artists#commissions', as: :commissions
 
 
   namespace :api, defaults: { format: :json } do
@@ -50,5 +51,6 @@ Rails.application.routes.draw do
     get 'works/filtered_works/:search_params' => 'works#filtered_works'
     get 'receipts/artist/:id' => 'artists#receipts'
     get 'works/thumbnail/:id' => 'works#thumbnail'
+    get 'artists/commissions/:id' => 'artists#commissions'
   end
 end
