@@ -116,3 +116,15 @@ input[type="checkbox"] {
 .pointer {
   cursor: pointer;
 }
+
+.hover-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba($charcoal, 0.5);
+
+  &:hover {
+    background-color: rgba($charcoal, 0.8);
+  }
+}
