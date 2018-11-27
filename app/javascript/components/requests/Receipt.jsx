@@ -3,7 +3,7 @@ import React from "react";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
 import StyledModal from "../helpers/StyledModal";
-import TransactionForm from "../transactions/TransactionForm";
+import TransactionForm from "../receipts/TransactionForm";
 import WorkFixedPanel from "../works/WorkFixedPanel";
 import { convertToCurrency } from "../../utils/currency";
 
