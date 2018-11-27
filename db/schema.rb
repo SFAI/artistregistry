@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_10_024726) do
+ActiveRecord::Schema.define(version: 2018_11_25_095031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,9 @@ ActiveRecord::Schema.define(version: 2018_11_10_024726) do
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.integer "featured_work_id"
+    t.string "description"
+    t.string "genres"
     t.index ["confirmation_token"], name: "index_artists_on_confirmation_token", unique: true
     t.index ["email"], name: "index_artists_on_email", unique: true
     t.index ["reset_password_token"], name: "index_artists_on_reset_password_token", unique: true
@@ -79,8 +82,22 @@ ActiveRecord::Schema.define(version: 2018_11_10_024726) do
     t.datetime "updated_at", null: false
     t.bigint "artist_id"
     t.bigint "buyer_id"
+    t.integer "types"
     t.index ["artist_id"], name: "index_commissions_on_artist_id"
     t.index ["buyer_id"], name: "index_commissions_on_buyer_id"
+  end
+
+  create_table "receipts", force: :cascade do |t|
+    t.integer "transaction_type"
+    t.date "start_date"
+    t.date "end_date"
+    t.date "purchase_date"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "comment"
+    t.bigint "request_id"
+    t.index ["request_id"], name: "index_receipts_on_request_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -91,26 +108,12 @@ ActiveRecord::Schema.define(version: 2018_11_10_024726) do
     t.boolean "open", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "receipt_id"
+    t.integer "types"
     t.index ["artist_id"], name: "index_requests_on_artist_id"
     t.index ["buyer_id"], name: "index_requests_on_buyer_id"
+    t.index ["receipt_id"], name: "index_requests_on_receipt_id"
     t.index ["work_id"], name: "index_requests_on_work_id"
-  end
-
-  create_table "transactions", force: :cascade do |t|
-    t.integer "transaction_type"
-    t.date "start_date"
-    t.date "end_date"
-    t.date "purchase_date"
-    t.decimal "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "buyer_id"
-    t.bigint "artist_id"
-    t.bigint "work_id"
-    t.text "comment"
-    t.index ["artist_id"], name: "index_transactions_on_artist_id"
-    t.index ["buyer_id"], name: "index_transactions_on_buyer_id"
-    t.index ["work_id"], name: "index_transactions_on_work_id"
   end
 
   create_table "works", force: :cascade do |t|
@@ -120,16 +123,17 @@ ActiveRecord::Schema.define(version: 2018_11_10_024726) do
     t.integer "availability"
     t.decimal "price"
     t.bigint "artist_id", null: false
+    t.string "description"
+    t.integer "featured_image_id"
     t.index ["artist_id"], name: "index_works_on_artist_id"
   end
 
   add_foreign_key "commissions", "artists"
   add_foreign_key "commissions", "buyers"
+  add_foreign_key "receipts", "requests"
   add_foreign_key "requests", "artists"
   add_foreign_key "requests", "buyers"
+  add_foreign_key "requests", "receipts"
   add_foreign_key "requests", "works"
-  add_foreign_key "transactions", "artists"
-  add_foreign_key "transactions", "buyers"
-  add_foreign_key "transactions", "works"
   add_foreign_key "works", "artists"
 end

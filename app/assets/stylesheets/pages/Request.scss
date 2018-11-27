@@ -1,0 +1,100 @@
+.request-wrapper {
+  display: flex;
+  justify-content: center;
+
+  .request-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .request-action {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
+.closed-request-button {
+  font-size: 16px;
+  background-color: $snow;
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .request-button {
+    float:none;
+  }
+
+  .closed-request-button {
+    float:none;
+    width:40%;
+    display:inline-block;
+
+  }
+}
+
+.request {
+  display: flex;
+  flex-direction: row;
+
+  .img {
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+  }
+
+  .request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .attr-container {
+    border: 1px solid $snow;
+    background-color: rgba($snow, 0.4);
+  }
+
+  .attr {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    @extend .mb2;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    .key {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .value {
+      display: flex;
+      flex-direction: column;
+      flex: 4;
+    }
+  }
+}
+
+.request-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.toggle {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 8px;
+}
+
+.toggle-hover:hover {
+  background-color: $pale-gray;
+}

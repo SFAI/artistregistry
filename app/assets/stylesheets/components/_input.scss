@@ -44,7 +44,8 @@ input[type="checkbox"] {
   -moz-appearance: none;
   font-weight: 500;
   cursor: pointer;
-  border: none;
+  box-sizing: border-box;
+  height: 44px;
 
   &:focus {
     outline: none;
@@ -52,8 +53,10 @@ input[type="checkbox"] {
 }
 
 .button-primary {
+  border: none;
   @extend .button;
   @extend .white;
+  border: none;
 }
 
 .button-secondary {
@@ -72,5 +75,56 @@ input[type="checkbox"] {
 
   &:hover {
     background-color: rgba($white, 0.3);
+  }
+}
+
+.dropzone {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed $gray;
+  cursor: pointer;
+}
+
+.row-input {
+  font-family: $font;
+  @extend .mt2;
+  @extend .mb2;
+  @extend .w-100;
+}
+
+.textinput {
+  @extend .pl2;
+  @extend .row-input;
+  outline: none;
+  height: 45px;
+}
+
+.input-dropdown {
+  height: 45px;
+  @extend .row-input;
+  outline: none;
+}
+
+.textarea {
+  @extend .row-input;
+  outline: none;
+  @extend .pa2;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.hover-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba($charcoal, 0.5);
+
+  &:hover {
+    background-color: rgba($charcoal, 0.8);
   }
 }

@@ -12,8 +12,24 @@
 }
 
 .artwork {
-    min-width: 272px;
+    min-width: 100px;
     .work-image {
-        height: 200px;
+        height: 150px;
     }
+
+    &:hover {
+      background-color: rgba($snow, 0.5);
+    }
+}
+
+.contact-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+
+  .contact {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
 }

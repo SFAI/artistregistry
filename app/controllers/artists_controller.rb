@@ -1,8 +1,13 @@
 class ArtistsController < ApplicationController
+  # before_action :set_current_buyer
   def index
   end
 
   def show
+    @artist = Artist.find(params[:id])
+  end
+
+  def update
     @artist = Artist.find(params[:id])
   end
 
@@ -16,5 +21,8 @@ class ArtistsController < ApplicationController
   end
 
   def transactions
+  end
+
+  def commissions
   end
 end

@@ -21,15 +21,16 @@
 
  @import "pages/*";
  @import "components/*";
+ @import "*";
 
  body {
     background-color: $snow;
  }
 
  .dashboard-container {
-     max-width: 90%;
+     max-width: 1190px;
      margin: 0px auto;
-     padding-top: 52px;
+     padding-top: 64px;
  }
 
  body {
