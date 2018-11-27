@@ -1,6 +1,12 @@
 class WorkSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :description, :title, :material, :medium, :availability, :price, :artist_id, :thumbnail, :attached_images_urls, :featured_image
+  attributes :id, :description, :title, :material, :medium, :availability, :price, :artist_id, :artist_name, :thumbnail, :attached_images_urls, :featured_image
+
+  belongs_to :artist
+
+  def artist_name
+    object.artist.name
+  end
 
   def thumbnail
     if object.images[0]
@@ -36,6 +42,4 @@ class WorkSerializer < ActiveModel::Serializer
       return nil
     end
   end
-
-  belongs_to :artist
 end

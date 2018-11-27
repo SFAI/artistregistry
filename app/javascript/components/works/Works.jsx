@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Filters from "./Filters";
+import Touchable from 'rc-touchable';
 
 class Works extends React.Component {
   constructor(props) {
@@ -45,12 +46,16 @@ class Works extends React.Component {
         }
       );
   };
+  
+  navigateToWork = (id) => {
+    window.location = `/works/${id}`;
+  }
 
   render() {
     const { filters, works } = this.state;
 
     return (
-      <div className="mw9 center">
+      <div className="mw9 center pt4">
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
@@ -58,18 +63,19 @@ class Works extends React.Component {
           />
           <button onClick={this.getFilteredWorks} className="button-primary bg-magenta w-100"> Apply </button>
         </div>
-        <div className="fl w-80">
+        <div className="fl w-80 pb5">
           <h1>Artwork</h1>
           <div className="col-list">
           {works.map(work => {
             return (
-              <div className="ba mb2 pa2 w-100 work-item" key={work.id}>
-                {work.featured_image && <img src={work.featured_image.url}/>}
-                <h3>{work.title}</h3>
-                <p>{work.material}</p>
-                <p>{work.medium}</p>
-                <p>{work.artist_name}</p>
-              </div>
+              <Touchable key={work.id} onPress={() => this.navigateToWork(work.id)}>
+                <div className="mb3 pa3 w-100 work-item bg-white pointer" key={work.id}>
+                  {work.featured_image && <img src={work.featured_image.url} className="mb3"/>}
+                  <h3>{work.title}</h3>
+                  <h6>{work.artist_name}</h6>
+                  <h6 className="work-material">{work.material}</h6>
+                </div>
+              </Touchable>
             );
           })}
           </div>
