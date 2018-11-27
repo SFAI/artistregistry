@@ -26,7 +26,7 @@ class StyledModal extends React.Component {
     return (
       <div>
         <ReactModal
-          className="pa3 modal"
+          className={"pa3 modal bt--" + this.props.color}
           isOpen={this.state.show}
           onRequestClose={this.hideModal}
           ariaHideApp={false}
