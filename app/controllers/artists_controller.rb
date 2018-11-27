@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+  # before_action :set_current_buyer
   def index
   end
 
@@ -16,5 +17,8 @@ class ArtistsController < ApplicationController
   end
 
   def transactions
+  end
+
+  def commissions
   end
 end

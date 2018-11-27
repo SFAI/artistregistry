@@ -6,7 +6,7 @@ class RequestSerializer < ActiveModel::Serializer
   belongs_to :artist
   has_one :receipt
 
-  def work
+  def artist
     object.artist
   end
 

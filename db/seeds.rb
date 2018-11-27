@@ -82,9 +82,12 @@ Lisa.featured_image_id = Lisa.images.first.id
 Lisa.artist_id = Picasso.id
 Lisa.save!
 
+Picasso.featured_work_id = Lisa.id
+Picasso.save!
+
 #Lisa's id is 1
 lisa_request = Request.create(
-  message: 'I would like to request the Mona Lisa',
+  message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet consectetur adipiscing elit duis tristique.',
   types: 0
   )
 lisa_request.buyer = Gates
