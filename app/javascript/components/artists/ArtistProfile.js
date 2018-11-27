@@ -62,7 +62,7 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist, canEditProfile } = this.state;
-    const { name, program } = artist;
+    const { name, program, genres, description } = artist;
 
     if (!componentDidMount) {
       return (
@@ -78,11 +78,14 @@ class ArtistProfile extends React.Component {
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
             <div className="h4 w4 br-100 mb4 bg-gray self-center">
-              <img src="" />
+              <img src={artist.avatar.url}/>
             </div>
+            <button onClick={()=>{window.location = `/artists/${this.props.artist.id}/update`}}>Edit Profile</button>
             <div className="info">
               <h5 className="uppercase">Education</h5>
               <p> {program} </p>
+              <h5 className="uppercase">Genres</h5>
+              <p> {genres} </p>
             </div>
             <div className="mt-auto self-center">
               <button className="bg-gray white button pv3 ph4 f5">contact</button>
@@ -99,7 +102,7 @@ class ArtistProfile extends React.Component {
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
             <h2>About the artist</h2>
-            <p> Some words</p>
+            <p> {description}</p>
           </div>
         </div>
         <div className="mt5 mb3">

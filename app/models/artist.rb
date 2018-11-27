@@ -10,4 +10,6 @@ class Artist < ApplicationRecord
   has_many :requests
   has_many :commissions
   has_many :buyers, through: :commissions
+  has_one_attached :avatar
+  validates :name, presence: true, uniqueness: true
 end
