@@ -50,6 +50,7 @@ class ApiRoutes {
     return {
       create: `/api/receipts`,
       show: (id) => `/api/receipts/${id}`,
+      update: (id) => `/api/receipts/${id}`,
       types: `/receipts/types`,
       artist: (id) => `/api/receipts/artist/${id}`
     }
