@@ -12,9 +12,13 @@
 }
 
 .artwork {
-    min-width: 272px;
+    min-width: 100px;
     .work-image {
-        height: 240px;
+        height: 150px;
+    }
+
+    &:hover {
+      background-color: rgba($snow, 0.5);
     }
 }
 
