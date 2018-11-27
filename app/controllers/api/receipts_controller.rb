@@ -22,8 +22,10 @@ class Api::ReceiptsController < ApplicationController
     saved = receipt.update(receipt_params)
     if saved
       flash[:success] = "Receipt updated successfully!"
+      return render json: {"message": 'Receipt updated successfully!'}
     else
       flash[:danger] = "Receipt failed to update."
+      return render json: {error: Receipt.errors.full_messages}
     end
   end
 

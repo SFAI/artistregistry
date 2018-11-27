@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import StyledModal from "../helpers/StyledModal";
-import CreateTransaction from "../transactions/CreateTransaction";
+import TransactionForm from "../transactions/TransactionForm";
 
 class Request extends React.Component {
   constructor(props) {
@@ -10,13 +10,13 @@ class Request extends React.Component {
       request: this.props.request,
       artist: this.props.artist,
       receipt: {
-        transaction_type: '',
+        transaction_type: this.props.request.types,
         start_date: '',
         end_date: '',
         purchase_date: '',
         price: '',
         comment: '',
-        request_id: ''
+        request_id: this.props.request.id
       }
     };
   }
@@ -56,6 +56,8 @@ class Request extends React.Component {
       }
       attr["Price"] = request.receipt.price;
       attr["Purchase Date"] = request.receipt.purchase_date;
+      attr["Receipt Type"] = request.receipt.transaction_type;
+      attr["Message"] = request.receipt.comment;
     }
 
     return (
@@ -85,7 +87,7 @@ class Request extends React.Component {
       return (
         <div className = "w100">
           <StyledModal title="EDIT RECEIPT">
-            <CreateTransaction
+            <TransactionForm
               artist={this.props.artist}
               request_id={id}
               receipt={request.receipt}
@@ -128,7 +130,7 @@ class Request extends React.Component {
                 request.open ? (
                   <div className="w-100">
                     <StyledModal title="MARK AS COMPLETE">
-                      <CreateTransaction
+                      <TransactionForm
                         artist={this.props.artist}
                         request_id={id}
                         receipt={empty_receipt}

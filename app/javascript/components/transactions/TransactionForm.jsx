@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import FormError from '../helpers/FormError';
 
 /**
 * @prop artist: artist creating transaction
@@ -7,31 +8,22 @@ import React from "react";
 * @prop work: work associated with transaction
 */
 
-class CreateTransaction extends React.Component {
+class TransactionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       receipt: this.props.receipt,
       route: this.props.route,
       method: this.props.method,
-      types: '',
+      types: {},
       didMount: false,
-      formErrors: {
-        transaction_type: 'Please specify a type of transaction.',
-        purchase_date: 'Please choose a purchase date.',
-        start_date: 'Please choose a start date for the rental.',
-        end_date: 'Please choose an end date for the rental.',
-        price: 'Please enter a price for your transaction.'
-      },
-      fieldValid: {
-        type_valid: false,
-        purchase_valid: false,
-        start_valid: false,
-        end_valid: false,
-        price_valid: false,
-      },
-      formValid: false,
-      renderErrors: false,
+      errors: {
+        transaction_type: '',
+        purchase_date: '',
+        start_date: '',
+        end_date: '',
+        price: ''
+      }
     }
   }
 
@@ -40,63 +32,40 @@ class CreateTransaction extends React.Component {
     const name = event.target.name;
     const value = event.target.value;
     receipt[name] = value;
-    this.setState({ receipt: receipt },
-                  () => { this.validateField(name, value) });
+    this.setState({ receipt: receipt });
   }
 
-  validateField = (fieldName, value) => {
-    let errors = this.state.formErrors;
-    let fields = this.state.fieldValid;
-
-    switch(fieldName) {
-      case 'transaction_type':
-        fields.type_valid = value != null && value != 'choose';
-        errors.transaction_type = fields.type_valid ? '' : 'Please specify a type of transaction.'
-        break;
-      case 'purchase_date':
-        fields.purchase_valid = value != null && this.state.receipt.transaction_type == "purchase";
-        errors.purchase_date = fields.purchase_valid ? '' : errors.purchase_date
-        break;
-      case 'start_date':
-        fields.start_valid = value != null && this.state.receipt.transaction_type == "rental";
-        errors.start_date = fields.start_valid ? '' : errors.start_date
-        break;
-      case 'end_date':
-        fields.end_valid = value != null
-                    && this.state.receipt.transaction_type == "rental"
-                    && value >= this.state.receipt.start_date;
-        errors.end_date = fields.end_valid ? '' : 'End Date must occur after Start Date.'
-        break;
-      case 'price':
-        fields.price_valid = value > 0 && !(value < 0);
-        errors.price = fields.price_valid ? '' : 'Please enter a price greater than 0.'
-        break;
-      default:
-        break;
+  checkErrors() {
+    let errors = {
+      purchase_date: "",
+      start_date: "",
+      end_date: "",
+      price: ""
+    };
+    if (this.state.receipt.transaction_type === "choose") {
+      errors["transaction_type"] = "Please choose a type of transaction.";
     }
-    this.setState({
-        formErrors: errors,
-        fieldValid: fields
-    }, this.validateForm);
-  }
-
-  validateForm = () => {
-    this.setState({
-      formValid:
-            (this.state.fieldValid.type_valid
-              && this.state.fieldValid.purchase_valid
-              && this.state.fieldValid.price_valid)
-        ||  (this.state.fieldValid.type_valid
-              && this.state.fieldValid.start_valid
-              && this.state.fieldValid.end_valid
-              && this.state.fieldValid.price_valid)
-    });
+    if (!this.state.receipt.purchase_date && this.state.receipt.transaction_type === "purchase") {
+      errors["purchase_date"] = "Please choose a purchase date.";
+    }
+    if (!this.state.receipt.start_date && this.state.receipt.transaction_type === "rental") {
+      errors["start_date"] = "Please choose a start date for the rental.";
+    }
+    if (!this.state.receipt.end_date && this.state.receipt.transaction_type === "rental") {
+      errors["end_date"] = "Please choose an end date for the rental.";
+    }
+    if (this.state.receipt.end_date && this.state.receipt.end_date < this.state.receipt.start_date) {
+      errors["end_date"] = "End date must occur after start date.";
+    }
+    if (!this.state.receipt.price || this.state.receipt.price < 0) {
+      errors["price"] = "Please enter a valid price.";
+    }
+    return errors;
   }
 
   handleSubmit = (event) => {
     const receipts_route = this.props.route;
     const method = this.props.method;
-    const valid = this.state.formValid;
     const payload = {
       "transaction_type": this.state.receipt.transaction_type,
       "start_date": this.state.receipt.start_date,
@@ -107,8 +76,17 @@ class CreateTransaction extends React.Component {
       "comment": this.state.receipt.comment
     }
 
-    if (!valid) {
-      this.setState({ renderErrors: true })
+    let errors = this.checkErrors();
+
+    let hasErrors = false;
+    Object.keys(errors).forEach((key) => {
+      if (errors[key]) {
+        hasErrors = true;
+      }
+    });
+
+    if (hasErrors) {
+      this.setState({ errors: errors });
     } else if (method == "POST") {
       Requester.post(receipts_route, payload).then(
         response => {
@@ -146,7 +124,7 @@ class CreateTransaction extends React.Component {
   }
 
   renderPurchaseDate = () => {
-    if (this.state.receipt.transaction_type == "purchase") {
+    if (this.state.receipt.transaction_type === "purchase") {
       return (
         <div>
           <p className="f6 lh-copy">Purchase Date </p>
@@ -158,27 +136,16 @@ class CreateTransaction extends React.Component {
             onChange={this.handleChange}
           />
 
-          {this.renderErrorMessages("purchase_date")}
+          <FormError error={this.state.errors["purchase_date"]}/>
         </div>
       )
     }
   }
 
   renderRentalDates = () => {
-    if (this.state.receipt.transaction_type == "rental") {
+    if (this.state.receipt.transaction_type === "rental") {
       return (
         <div>
-          <p className="f6 lh-copy">Purchase Date  </p>
-          <input
-            type="date"
-            name="purchase_date"
-            id="purchase_date"
-            value={this.state.receipt.purchase_date}
-            onChange={this.handleChange}
-          />
-
-          {this.renderErrorMessages("purchase_date")}
-
           <p className="f6 lh-copy">Start Date  </p>
           <input
             type="date"
@@ -188,7 +155,7 @@ class CreateTransaction extends React.Component {
             onChange={this.handleChange}
           />
 
-          {this.renderErrorMessages("start_date")}
+          <FormError error={this.state.errors["start_date"]}/>
 
           <p className="f6 lh-copy">End Date  </p>
           <input
@@ -199,23 +166,9 @@ class CreateTransaction extends React.Component {
             onChange={this.handleChange}
           />
 
-          {this.renderErrorMessages("end_date")}
+          <FormError error={this.state.errors["end_date"]}/>
         </div>
       )
-    }
-  }
-
-  renderErrorMessages = (fieldName) => {
-    if (this.state.renderErrors && this.state.formErrors[fieldName].length > 0) {
-      return (
-        <div>
-          <p className="error">{this.state.formErrors[fieldName]}</p>
-        </div>
-      )
-    } else {
-      return (
-        <div />
-      );
     }
   }
 
@@ -238,7 +191,7 @@ render() {
 
   if (!this.state.didMount) {
     return (
-      <div />
+      <div><h2>Loading</h2></div>
     );
   }
   return (
@@ -253,21 +206,33 @@ render() {
           onChange = {this.handleChange}
         />
 
-        {this.renderErrorMessages("price")}
+        <FormError error={this.state.errors["price"]}/>
 
-        <div className="f6 lh-copy">Type
+        <p className="f6 lh-copy">Type
           <select name="transaction_type"
                   value={this.state.receipt.transaction_type}
                   onChange={this.handleChange}>
               <option value="choose">choose a type</option>
               {  Object.keys(this.state.types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
           </select>
-        </div>
+        </p>
 
-        {this.renderErrorMessages("transaction_type")}
+        { console.log(this.state.receipt.transaction_type) }
+
+        <FormError error={this.state.errors["transaction_type"]}/>
 
         { this.renderRentalDates() }
-        { this.renderPurchaseDate() }
+
+        <p className="f6 lh-copy">Purchase Date </p>
+        <input
+          type="date"
+          name="purchase_date"
+          id="purchase_date"
+          value={this.state.receipt.purchase_date}
+          onChange={this.handleChange}
+        />
+
+        <FormError error={this.state.errors["purchase_date"]}/>
 
         <p className="f6 lh-copy">Additional Comments </p>
         <textarea
@@ -288,4 +253,4 @@ render() {
   }
 }
 
-export default CreateTransaction;
+export default TransactionForm;
