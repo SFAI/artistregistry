@@ -61,7 +61,8 @@ class Api::ArtistsController < ApplicationController
                                  :program,
                                  :genres,
                                  :description,
-                                 :avatar
+                                 :avatar,
+                                 :featured_work_id
                                 )
   end
 end
