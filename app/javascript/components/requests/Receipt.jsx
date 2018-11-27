@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
+import ArtistSnapshot from "../artists/ArtistSnapshot";
 import { convertToCurrency } from "../../utils/currency";
 
 class Receipt extends React.Component {
@@ -51,20 +52,23 @@ class Receipt extends React.Component {
         <div className="w-100 ml4">
           <div className="content-row">
             <div className="request-container">
-              <div className="request-action">
-                <BuyerSnapshot buyer={this.state.request.buyer} />
-                {
-                  this.props.artist ? (
+              {
+                this.props.artist ? (
+                  <div className="request-action">
+                    <BuyerSnapshot buyer={this.state.request.buyer} />
                     <div className = "closed-request-button pa3 w5">
                       <p> You completed this request on {closed_timestamps} </p>
                     </div>
-                  ) : (
+                  </div>
+                ) : (
+                  <div className="request-action">
+                    <ArtistSnapshot artist={this.state.request.artist} />
                     <div className = "closed-request-button pa3 w5">
                       <p>{request.artist.name} completed this request on {closed_timestamps} </p>
                     </div>
-                  )
-                }
-              </div>
+                  </div>
+                )
+              }
               <div className="attr-container pa3 mt2">
                 {this.getAttr(request)}
               </div>

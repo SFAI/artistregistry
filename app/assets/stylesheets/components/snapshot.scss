@@ -3,11 +3,8 @@
   flex-direction: row;
   align-items: center;
 
-  &:hover {
-    background-color: $snow;
-
-    h5 {
-      text-decoration: underline;
-    }
+  .snapshot-nav:hover {
+    @extend .pointer;
+    text-decoration: underline;
   }
 }

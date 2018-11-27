@@ -3,6 +3,7 @@ import React from "react";
 import StyledModal from "../helpers/StyledModal";
 import CreateTransaction from "../transactions/CreateTransaction";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
+import ArtistSnapshot from "../artists/ArtistSnapshot";
 
 class Request extends React.Component {
   constructor(props) {
@@ -95,18 +96,21 @@ class Request extends React.Component {
         <img src={thumbnail_url} className="img" />
         <div className="w-100 ml4">
           <div className="request-container">
-            <div className="request-action">
-              <BuyerSnapshot buyer={this.state.request.buyer} />
-              {
-                this.props.artist ?
-                  this.renderRequestButtons()
-                  : (
-                    <div className="closed-request-button pa4 w5">
-                      <p> You requested this work on {closed_timestamps} </p>
-                    </div>
-                  )
-              }
-            </div>
+            {
+              this.props.artist ? (
+                <div className="request-action">
+                  <BuyerSnapshot buyer={this.state.request.buyer} />
+                  {this.renderRequestButtons()}
+                </div>
+              ) : (
+                <div className="request-action">
+                  <ArtistSnapshot artist={this.state.request.artist} />
+                  <div className="closed-request-button pa4 w5">
+                    <p> You requested this work on {closed_timestamps} </p>
+                  </div>
+                </div>
+              )
+            }
             <div className="attr-container pa3 mt2">
               {this.getAttr(request)}
             </div>

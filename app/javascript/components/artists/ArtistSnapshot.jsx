@@ -2,27 +2,27 @@ import PropTypes from "prop-types";
 import React from "react";
 import UserSnapshot from "../helpers/UserSnapshot";
 
-class BuyerSnapshot extends React.Component {
+class ArtistSnapshot extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   
-  navigateToBuyer = () => {
-    window.location = `/buyers/${this.props.buyer.id}`;
+  navigateToArtist = () => {
+    window.location = `/artists/${this.props.artist.id}`;
   }
   
   render() {
     return (
       <UserSnapshot
-        name={this.props.buyer.name}
+        name={this.props.artist.name}
         avatarSrc=""
-        navigate={this.navigateToBuyer}
-        description={this.props.buyer.email}
+        navigate={this.navigateToArtist}
+        description={""}
       >
       </UserSnapshot>
     );
   }
 }
 
-export default BuyerSnapshot;
+export default ArtistSnapshot;
