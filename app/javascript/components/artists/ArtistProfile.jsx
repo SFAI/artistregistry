@@ -125,13 +125,13 @@ class ArtistProfile extends React.Component {
                 {canEditProfile &&
                   <div className="work-action-wrapper mb2">
                     <Touchable onPress={() => this.updateWork(work.id)}>
-                      <div className="hover-button pa2">
+                      <div className="hover-button pa2 pointer">
                         <FontAwesomeIcon className="white" icon={faEdit}/>
                         <h4 className="ml2 white">Edit</h4>
                       </div>
                     </Touchable>
                     <Touchable onPress={() => this.deleteWork(work.id)}>
-                      <div className="hover-button pa2 ml2">
+                      <div className="hover-button pa2 ml2 pointer">
                         <FontAwesomeIcon className="white" icon={faTrash}/>
                         <h4 className="ml2 white">Delete</h4>
                       </div>
