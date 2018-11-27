@@ -21,10 +21,10 @@ class WorkFixedPanel extends React.Component {
             <img className="work-image fit-cover w-100 mb2 pointer" src={work.featured_image.url} />
           </Touchable>
           <Touchable onPress={() => this.navigateToWork(work.id)}>
-            <p className="work-title mb1 pointer">{work.title}</p>
+            <p className="h3 mb1 pointer">{work.title}</p>
           </Touchable>
-          <p className="work-medium mb1">{work.medium}</p>
-          <p className="work-material">{work.material}</p>
+          <p className="mb1">{work.medium}</p>
+          <p className="i">{work.material}</p>
         </div>
       </div>
     );

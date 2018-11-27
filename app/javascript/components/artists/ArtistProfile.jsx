@@ -88,9 +88,9 @@ class ArtistProfile extends React.Component {
             </div>
             <button onClick={() => { window.location = `/artists/${this.props.artist.id}/update` }}>Edit Profile</button>
             <div className="info">
-              <h5 className="uppercase">Education</h5>
+              <h5 className="ttu">Education</h5>
               <p> {program} </p>
-              <h5 className="uppercase">Genres</h5>
+              <h5 className="ttu">Genres</h5>
               <p> {genres} </p>
             </div>
             <div className="mt-auto self-center">
@@ -129,15 +129,15 @@ class ArtistProfile extends React.Component {
               return (
                 <WorkColumnPanel work={work}>
                   {canEditProfile &&
-                    <div className="work-action-wrapper mb2">
+                    <div className="flex flex-row justify-end mb2">
                       <Touchable onPress={() => this.updateWork(work.id)}>
-                        <div className="hover-button pa2 pointer">
+                        <div className="hover-button pa2">
                           <FontAwesomeIcon className="white" icon={faEdit} />
                           <h4 className="ml2 white">Edit</h4>
                         </div>
                       </Touchable>
                       <Touchable onPress={() => this.deleteWork(work.id)}>
-                        <div className="hover-button pa2 ml2 pointer">
+                        <div className="hover-button pa2 ml2">
                           <FontAwesomeIcon className="white" icon={faTrash} />
                           <h4 className="ml2 white">Delete</h4>
                         </div>
@@ -153,15 +153,15 @@ class ArtistProfile extends React.Component {
           <button onClick={this.createNewWork}>
             New Work
           </button>}
-        <div className="contact-wrapper mb4 mt4">
-          <div className="w-50 pr2 dib contact">
+        <div className="flex flex-row items-stretch mb4 mt4">
+          <div className="w-50 pr2 dib flex flex-row items-stretch">
             <div className="bg-charcoal pa3">
               <h2 className="white">Guidelines for contacting artists</h2>
               <p className="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet consectetur adipiscing elit duis tristique.<br /><br />Tortor dignissim convallis aenean et tortor at risus viverra adipiscing. Est ante in nibh mauris cursus mattis molestie a. Sed enim ut sem viverra aliquet eget. Id semper risus in hendrerit gravida rutrum quisque non tellus.<br /><br />Elit pellentesque habitant morbi tristique senectus et netus et malesuada. Commodo elit at imperdiet dui accumsan sit amet. Tellus elementum sagittis vitae et leo duis ut diam. Eget arcu dictum varius duis at. Donec massa sapien faucibus et molestie ac feugiat sed lectus. Risus pretium quam vulputate dignissim suspendisse in est ante.
               </p>
             </div>
           </div>
-          <div className="w-50 pl2 dib contact">
+          <div className="w-50 pl2 dib flex flex-row items-stretch">
             <CommissionsForm
               buyer={this.props.user}
               artist={this.props.artist}

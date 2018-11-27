@@ -20,13 +20,13 @@ class WorkColumnPanel extends React.Component {
           {this.props.children}
         </div>
         <Touchable onPress={() => this.navigateToWork(work.id)}>
-          {work.featured_image && <img src={work.featured_image.url} className="mb3 pointer"/>}
+          {work.featured_image && <img src={work.featured_image.url} className="mb3 pointer" />}
         </Touchable>
         <Touchable onPress={() => this.navigateToWork(work.id)}>
           <h3 className="pointer">{work.title}</h3>
         </Touchable>
         <h6>{work.artist_name}</h6>
-        <h6 className="work-material">{work.material}</h6>
+        <h6 className="i">{work.material}</h6>
       </div>
     );
   }
