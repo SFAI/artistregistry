@@ -3,8 +3,7 @@ import React from "react";
 import Request from "./Request";
 import Receipt from "./Receipt";
 import None from "../helpers/None";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
+import classNames from "classnames";
 
 class UserRequests extends React.Component {
   constructor(props) {
@@ -22,21 +21,20 @@ class UserRequests extends React.Component {
     return this.toggleState.map((state, i) => {
       let active = i === this.state.state;
       return (
-        <div key={i} onClick={() => this.display(i)} className={(active ? "bg-ochre" : "toggle-hover") + " pa3 mt2 toggle"}>
-          <h3 className={active ? "white" : "charcoal"}>{state}</h3>
-          <FontAwesomeIcon className={(active ? "white" : "charcoal") + " ml2"} icon={faAngleDoubleRight}/>
+        <div key={i} onClick={() => this.display(i)} className={classNames("mb2 toggle", (active ? "bg-ochre" : "toggle-hover"))}>
+          <p className={classNames("strong", { "white": active })}>{state} »</p>
         </div>
       );
     });
   }
-  
+
   isReceipt(request) {
     return !request.open && request.receipt;
   }
 
   display = (i) => {
     let display = []
-    switch(this.toggleState[parseInt(i)]) {
+    switch (this.toggleState[parseInt(i)]) {
       case "Requests":
         this.state.inbox.map((request, i) => {
           display.push(i);
@@ -93,12 +91,12 @@ class UserRequests extends React.Component {
       );
     });
   }
-  
+
   renderRequests() {
     if (!this.state.display.length) {
       return (
         <div className="bg-white pa2">
-          <None itemType="requests"/>
+          <None itemType="requests" />
         </div>
       )
     }
@@ -134,7 +132,7 @@ class UserRequests extends React.Component {
     }
     return (
       <div className="mw8 center">
-        <div className="w-20 fl pr3 mt5">
+        <div className="w-20 fl pr4 mt6">
           {this.renderToggle()}
         </div>
         <div className="w-80 fl mt2">

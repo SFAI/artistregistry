@@ -1,20 +1,15 @@
-.content-row {
+.request-container {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
 
-  .request-container {
+  .request-action {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex: 1;
-
-    .request-action {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
+    justify-content: space-between;
+    align-items: center;
   }
 }
 
@@ -94,6 +89,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding: 12px 8px;
 }
 
 .toggle-hover:hover {

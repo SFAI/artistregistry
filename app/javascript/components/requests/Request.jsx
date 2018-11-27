@@ -15,7 +15,7 @@ class Request extends React.Component {
 
   closeRequest = (id) => {
     const update_request_route = APIRoutes.requests.update(id);
-    Requester.update(update_request_route, {open: false}).then((response) => {
+    Requester.update(update_request_route, { open: false }).then((response) => {
       this.props.onChange();
     });
   }
@@ -51,7 +51,7 @@ class Request extends React.Component {
       );
     });
   }
-  
+
   renderRequestButtons() {
     const closed_timestamps = new Date(this.state.request.updated_at).toLocaleDateString();
     if (!this.state.request.open) {
@@ -65,7 +65,7 @@ class Request extends React.Component {
     return (
       <div className="request-buttons">
         <div className="w4">
-          <button type="button" className="button-secondary b--charcoal w-100" value = {id} onClick = {()=>this.closeRequest(id)}>
+          <button type="button" className="button-secondary b--charcoal w-100" value={id} onClick={() => this.closeRequest(id)}>
             ARCHIVE
           </button>
         </div>
@@ -92,25 +92,23 @@ class Request extends React.Component {
 
     return (
       <div key={request.id} className="request pa3 bg-white mb3">
-        <img src={thumbnail_url} className="img"/>
+        <img src={thumbnail_url} className="img" />
         <div className="w-100 ml4">
-          <div className="content-row">
-            <div className="request-container">
-              <div className="request-action">
-                <BuyerSnapshot buyer={this.state.request.buyer} />
-                {
-                  this.props.artist ? 
-                    this.renderRequestButtons()
-                   : (
-                    <div className = "closed-request-button pa4 w5">
+          <div className="request-container">
+            <div className="request-action">
+              <BuyerSnapshot buyer={this.state.request.buyer} />
+              {
+                this.props.artist ?
+                  this.renderRequestButtons()
+                  : (
+                    <div className="closed-request-button pa4 w5">
                       <p> You requested this work on {closed_timestamps} </p>
                     </div>
                   )
-                }
-              </div>
-              <div className="attr-container pa3 mt2">
-                {this.getAttr(request)}
-              </div>
+              }
+            </div>
+            <div className="attr-container pa3 mt2">
+              {this.getAttr(request)}
             </div>
           </div>
         </div>
