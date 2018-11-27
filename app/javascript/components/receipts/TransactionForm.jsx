@@ -170,14 +170,13 @@ class TransactionForm extends React.Component {
     }
   }
 
-render() {
-
-  if (!this.state.didMount) {
+  render() {
+    if (!this.state.didMount) {
+      return (
+        <div><h2>Loading</h2></div>
+      );
+    }
     return (
-      <div><h2>Loading</h2></div>
-    );
-  }
-  return (
       <div className="create-transaction-form">
 
         <p className="f6 lh-copy price">Price  </p>
@@ -198,8 +197,6 @@ render() {
               {  Object.keys(this.state.types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
           </select>
         </p>
-
-        { console.log(this.state.receipt.transaction_type) }
 
         <FormError error={this.state.errors["transaction_type"]}/>
 
