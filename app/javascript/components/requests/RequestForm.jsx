@@ -105,7 +105,7 @@ class RequestForm extends React.Component {
       );
     }
     return (
-      <div className="mw6">
+      <div className="w-100">
         <Panel
           color="magenta"
           title="Request Artwork"

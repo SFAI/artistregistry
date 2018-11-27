@@ -4,6 +4,7 @@ import StyledModal from "../helpers/StyledModal";
 import TransactionForm from "../transactions/TransactionForm";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
+import WorkFixedPanel from "../works/WorkFixedPanel";
 
 class Request extends React.Component {
   constructor(props) {
@@ -103,10 +104,12 @@ class Request extends React.Component {
     const closed_timestamps = new Date(request.updated_at).toLocaleDateString();
 
     return (
-      <div key={request.id} className="request pa3 bg-white mb3">
-        <img src={thumbnail_url} className="img" />
-        <div className="w-100 ml4">
-          <div className="request-container">
+      <div key={request.id} className="request bg-white mb3">
+        <div className="fl w-25">
+          <WorkFixedPanel work={request.work}/>
+        </div>
+        <div className="fl w-75 pa3 request-wrapper">
+          <div className="request-container w-100">
             {
               this.props.artist ? (
                 <div className="request-action">
