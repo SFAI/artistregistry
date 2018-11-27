@@ -93,7 +93,7 @@ class Request extends React.Component {
               this.props.artist ? (
                 request.open ? (
                   <div className="w-100">
-                    <StyledModal title="MARK AS COMPLETE">
+                    <StyledModal title="MARK AS COMPLETE" color="mustard">
                       <CreateTransaction
                         artist={this.props.artist}
                         request_id={id}
