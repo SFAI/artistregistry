@@ -45,8 +45,7 @@ class Receipt extends React.Component {
   renderEditReceipt() {
     const request = this.state.request;
     const id = request.id;
-    if (request.receipt) {
-      return (
+    return (
         <div className = "w100">
           <StyledModal title="EDIT RECEIPT" color="ochre">
             <TransactionForm
@@ -59,11 +58,6 @@ class Receipt extends React.Component {
           </StyledModal>
         </div>
       )
-    } else {
-      return (
-        <div />
-      )
-    }
   }
 
   render() {
