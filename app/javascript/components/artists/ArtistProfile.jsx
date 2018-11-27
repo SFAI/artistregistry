@@ -98,14 +98,6 @@ class ArtistProfile extends React.Component {
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
-            {
-              canEditProfile &&
-              <div className="absolute top-0 right-0 mt3 mr3">
-                <StyledModal title="edit featured work" color="indigo">
-                  <p>hey</p>
-                </StyledModal>
-              </div>
-            }
             <img className="fit-cover h-100" src={"https://images.unsplash.com/photo-1542347369-65f48a3018c8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9dded3ad2cbb6ec3ccfe4a9c5f5c0715&auto=format&fit=crop&w=900&q=60"} />
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
@@ -127,7 +119,7 @@ class ArtistProfile extends React.Component {
           <div className="col-list-4">
             {this.state.works.map(work => {
               return (
-                <WorkColumnPanel work={work}>
+                <WorkColumnPanel key={work.id} work={work}>
                   {canEditProfile &&
                     <div className="flex flex-row justify-end mb2">
                       <Touchable onPress={() => this.updateWork(work.id)}>

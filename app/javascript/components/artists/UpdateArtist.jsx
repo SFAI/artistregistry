@@ -7,15 +7,16 @@ import { Button, Dialog, Intent } from "@blueprintjs/core";
 class UpdateArtist extends React.Component {
   constructor(props) {
     super(props);
+    const { name, genres, program, description, avatar, id } = this.props.artist;
     this.state = {
       artist: {
-        name: this.props.artist.name,
-        genres: this.props.artist.genres,
-        program: this.props.artist.program,
-        description: this.props.artist.description,
-        avatar: this.props.artist.avatar,
-        artist_id: this.props.artist.id
-      }
+        name,
+        genres,
+        program,
+        description,
+        avatar,
+        artist_id: id
+      },
     }
   }
 
@@ -45,7 +46,7 @@ class UpdateArtist extends React.Component {
     formData.append('artist[description]', this.state.artist.description);
 
     let { avatar } = this.state;
-    if ( avatar ) {
+    if (avatar) {
       formData.append(
         'artist[avatar]',
         avatar,
@@ -109,14 +110,26 @@ class UpdateArtist extends React.Component {
             required
           />
 
-          <h5>Profile Photo</h5>
-          <input name="avatar" id="avatar" type="file" onChange={this.setFile}/>
+          <h5>Featured Work</h5>
+          <select
+            onChange={() => { }}
+            value={0}
+            name="featured_image"
+            className="input-dropdown">
+            {
+              ['1', '2', '3'].map((filename, i) => {
+                return <option key={i}>{filename}</option>
+              })
+            }
+          </select>
 
+          <h5>Profile Photo</h5>
+          <input name="avatar" id="avatar" type="file" onChange={this.setFile} />
 
           <div className="submit-container mt3 mb3">
             <Button
               intent={Intent.PRIMARY}
-              onClick={() => {window.location = `/artists/${this.state.artist.artist_id}`}}
+              onClick={() => { window.location = `/artists/${this.state.artist.artist_id}` }}
               text="Cancel"
               className="button-secondary b--magenta w4"
             />
