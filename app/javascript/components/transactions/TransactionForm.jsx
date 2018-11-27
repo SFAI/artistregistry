@@ -188,7 +188,7 @@ render() {
           type="TEXT"
           name="price"
           id="price"
-          value={convertToCurrency(this.state.transaction.price)}
+          value={convertToCurrency(this.state.receipt.price)}
           onChange = {this.handleChange}
         />
 

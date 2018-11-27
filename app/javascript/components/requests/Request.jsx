@@ -62,38 +62,11 @@ class Request extends React.Component {
     });
   }
 
-  renderEditReceipt() {
-    const request = this.state.request;
-    const id = request.id;
-    if (request.receipt) {
-      return (
-        <div className = "w100">
-          <StyledModal title="EDIT RECEIPT">
-            <TransactionForm
-              artist={this.props.artist}
-              request_id={id}
-              receipt={request.receipt}
-              route={APIRoutes.receipts.update(request.receipt.id)}
-              method="PATCH"
-            />
-          </StyledModal>
-        </div>
-      )
-    } else {
-      return (
-        <div />
-      )
-    }
-  }
-
   renderRequestButtons() {
     const closed_timestamps = new Date(this.state.request.updated_at).toLocaleDateString();
     if (!this.state.request.open) {
       return (
-        <div className = "w5">
-          <p className = "closed-request-button pa3"> You archived this request on {closed_timestamps} </p>
-          {this.renderEditReceipt()}
-        </div>
+        <div className = "closed-request-button pa3 w5"> You archived this request on {closed_timestamps} </div>
       );
     }
     let id = this.state.request.id;

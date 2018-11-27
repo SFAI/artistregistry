@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
+import StyledModal from "../helpers/StyledModal";
+import TransactionForm from "../transactions/TransactionForm";
 import { convertToCurrency } from "../../utils/currency";
 
 class Receipt extends React.Component {
@@ -20,7 +22,7 @@ class Receipt extends React.Component {
       "Transaction Type": request.receipt.transaction_type,
       "Description": request.receipt.comment
     };
-    
+
     if (request.receipt.transaction_type === "rental") {
       attr["Start Date"] = new Date(request.receipt.start_date).toLocaleDateString();
       attr["End Date"] = new Date(request.receipt.end_date).toLocaleDateString();
@@ -40,6 +42,30 @@ class Receipt extends React.Component {
     });
   }
 
+  renderEditReceipt() {
+    const request = this.state.request;
+    const id = request.id;
+    if (request.receipt) {
+      return (
+        <div className = "w100">
+          <StyledModal title="EDIT RECEIPT" color="ochre">
+            <TransactionForm
+              artist={this.props.artist}
+              request_id={id}
+              receipt={request.receipt}
+              route={APIRoutes.receipts.update(request.receipt.id)}
+              method="PATCH"
+            />
+          </StyledModal>
+        </div>
+      )
+    } else {
+      return (
+        <div />
+      )
+    }
+  }
+
   render() {
     const request = this.state.request;
     const id = request.id;
@@ -56,8 +82,9 @@ class Receipt extends React.Component {
                 this.props.artist ? (
                   <div className="request-action">
                     <BuyerSnapshot buyer={this.state.request.buyer} />
-                    <div className = "closed-request-button pa3 w5">
-                      <p> You completed this request on {closed_timestamps} </p>
+                    <div className = "w5">
+                      <p className = "closed-request-button pa3"> You completed this request on {closed_timestamps} </p>
+                      {this.renderEditReceipt()}
                     </div>
                   </div>
                 ) : (
