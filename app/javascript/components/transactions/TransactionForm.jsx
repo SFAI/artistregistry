@@ -43,9 +43,6 @@ class TransactionForm extends React.Component {
       end_date: "",
       price: ""
     };
-    if (this.state.receipt.transaction_type === "choose") {
-      errors["transaction_type"] = "Please choose a type of transaction.";
-    }
     if (!this.state.receipt.purchase_date && this.state.receipt.transaction_type === "purchase") {
       errors["purchase_date"] = "Please choose a purchase date.";
     }
@@ -198,7 +195,6 @@ render() {
           <select name="transaction_type"
                   value={this.state.receipt.transaction_type}
                   onChange={this.handleChange}>
-              <option value="choose">choose a type</option>
               {  Object.keys(this.state.types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
           </select>
         </p>

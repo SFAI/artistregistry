@@ -18,6 +18,6 @@ class NotificationMailer < ApplicationMailer
     @buyer = params[:buyer]
     @work = params[:work]
     mail(to: @buyer.email, subject: 'Request Completed')
-
+  end
 
 end
