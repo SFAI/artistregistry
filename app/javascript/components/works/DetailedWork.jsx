@@ -31,15 +31,19 @@ class DetailedWork extends React.Component {
       );
     }
     return (
-      <div className="mw8 center pt2">
-        <h2>{this.state.work.title}</h2>
-        <WorkToggle work={this.state.work}/>
-        <RequestForm
-          buyer={this.props.buyer}
-          artist_id={this.state.work.artist_id}
-          work_id={this.state.work.id}
-          work_status={this.state.work.availability}
-        />
+      <div className="mw9 center pt4">
+        <div className="fl w-60">
+          <WorkToggle work={this.state.work}/>
+        </div>
+        <div className="fl w-40 pl3">
+          <RequestForm
+            buyer={this.props.buyer}
+            artist_id={this.state.work.artist_id}
+            work_id={this.state.work.id}
+            work_status={this.state.work.availability}
+          />
+          <h2>{this.state.work.title}</h2>
+        </div>
       </div>
     );
   }
