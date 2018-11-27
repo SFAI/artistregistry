@@ -12,13 +12,12 @@ class WorkToggle extends React.Component {
   
   render() {
     let work = this.props.work;
-    console.log(work);
     return (
       <div className="bg-white w-100 full-image-container pa3">
         <div className="work-toggle-container">
           <img src={work.attached_images_urls[this.state.image].url} className="full-image"/>
         </div>
-        <div className="thumbs">
+        <div className="thumbs mt3">
           {
             work.attached_images_urls.map((image, i) => {
               return (
