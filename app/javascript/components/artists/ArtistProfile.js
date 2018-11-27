@@ -29,7 +29,6 @@ class ArtistProfile extends React.Component {
       Requester.get(artist_route)
     ]).then(response => {
       const [works_response, artist_response] = response;
-      console.log(artist_response);
       this.setState({
         works: works_response,
         artist: artist_response,

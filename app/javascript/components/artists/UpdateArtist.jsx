@@ -16,24 +16,8 @@ class UpdateArtist extends React.Component {
         avatar: this.props.artist.avatar,
         artist_id: this.props.artist.id
       }
-      // componentDidMount: false,
     }
   }
-
-  // componentDidMount = () => {
-  //   const route = APIRoutes.works.categories;
-  //   Requester.get(route).then(
-  //     response => {
-  //       this.setState({
-  //         categories: response,
-  //         componentDidMount: true
-  //       });
-  //     },
-  //     error => {
-  //       console.error(error);
-  //     }
-  //   );
-  // }
 
   handleChange = (event) => {
     const artist = this.state.artist;
