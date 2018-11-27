@@ -7,7 +7,7 @@ import { Button, Dialog, Intent } from "@blueprintjs/core";
 class UpdateArtist extends React.Component {
   constructor(props) {
     super(props);
-    const { name, genres, program, description, avatar, id } = this.props.artist;
+    const { name, genres, program, description, avatar, id, featured_work_id } = this.props.artist;
     this.state = {
       artist: {
         name,
@@ -15,9 +15,23 @@ class UpdateArtist extends React.Component {
         program,
         description,
         avatar,
+        featured_work_id,
         artist_id: id
       },
+      works: [],
+      componentDidMount: false,
     }
+  }
+
+  componentDidMount = () => {
+    const works_route = APIRoutes.artists.works(this.props.artist.id);
+    Requester.get(works_route)
+      .then(response => {
+        this.setState({
+          works: response,
+          componentDidMount: true
+        });
+      });
   }
 
   handleChange = (event) => {
@@ -44,6 +58,7 @@ class UpdateArtist extends React.Component {
     formData.append('artist[program]', this.state.artist.program);
     formData.append('artist[genres]', this.state.artist.genres);
     formData.append('artist[description]', this.state.artist.description);
+    formData.append('artist[featured_work_id]', this.state.artist.featured_work_id);
 
     let { avatar } = this.state;
     if (avatar) {
@@ -112,13 +127,13 @@ class UpdateArtist extends React.Component {
 
           <h5>Featured Work</h5>
           <select
-            onChange={() => { }}
-            value={0}
-            name="featured_image"
+            onChange={this.handleChange}
+            value={this.state.artist.featured_work_id}
+            name="featured_work_id"
             className="input-dropdown">
             {
-              ['1', '2', '3'].map((filename, i) => {
-                return <option key={i}>{filename}</option>
+              this.state.works.map(work => {
+                return <option key={work.id} value={work.id}>{work.title}</option>
               })
             }
           </select>
