@@ -15,16 +15,18 @@ class WorkFixedPanel extends React.Component {
   render() {
     let work = this.props.work;
     return (
-      <Touchable onPress={() => this.navigateToWork(work.id)}>
-        <div className="artwork w-100 h-100 pointer">
-          <div className="pa3">
-            <img className="work-image fit-cover w-100 mb2" src={work.featured_image.url} />
-            <p className="work-title mb1">{work.title}</p>
-            <p className="work-medium mb1">{work.medium}</p>
-            <p className="work-material">{work.material}</p>
-          </div>
+      <div className="artwork w-100 h-100">
+        <div className="pa3">
+          <Touchable onPress={() => this.navigateToWork(work.id)}>
+            <img className="work-image fit-cover w-100 mb2 pointer" src={work.featured_image.url} />
+          </Touchable>
+          <Touchable onPress={() => this.navigateToWork(work.id)}>
+            <p className="work-title mb1 pointer">{work.title}</p>
+          </Touchable>
+          <p className="work-medium mb1">{work.medium}</p>
+          <p className="work-material">{work.material}</p>
         </div>
-      </Touchable>
+      </div>
     );
   }
 }
