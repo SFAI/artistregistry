@@ -10,7 +10,7 @@ class ReceiptsController < ApplicationController
 
   def get_receipt_type_enums
     # return type enums for dropdown
-    types = Receipt.types
+    types = Receipt.transaction_types
     render json: types
   end
 end

@@ -42,6 +42,10 @@ nav.header
                     li.dropdown-link-item
                       = link_to "Requests", requests_path
                     li.dropdown-link-item
+                      = link_to "Inquiries", commissions_path
+                    li.dropdown-link-item
+                      = link_to "Settings", edit_artist_registration_path
+                    li.dropdown-link-item
                       = link_to "Log Out", destroy_artist_session_path, method: :delete
           - if current_buyer
               div.dropdown
@@ -54,5 +58,7 @@ nav.header
                   ul.dropdown-content
                     li.dropdown-link-item
                       = link_to "Requests", requests_path
+                    li.dropdown-link-item
+                      = link_to "Settings", edit_buyer_registration_path
                     li.dropdown-link-item
                       = link_to "Log Out", destroy_buyer_session_path, method: :delete

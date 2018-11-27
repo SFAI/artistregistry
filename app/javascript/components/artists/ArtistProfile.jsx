@@ -1,8 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 import classNames from "classnames";
+import Touchable from 'rc-touchable';
 import CommissionsForm from "../commissions/CommissionsForm";
 import StyledModal from "../helpers/StyledModal";
+import WorkColumnPanel from "../works/WorkColumnPanel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 /**
 * @prop user: user currently logged in
@@ -64,7 +68,7 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist, canEditProfile } = this.state;
-    const { name, program } = artist;
+    const { name, program, genres, description } = artist;
 
     if (!componentDidMount) {
       return (
@@ -80,11 +84,14 @@ class ArtistProfile extends React.Component {
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
             <div className="h4 w4 br-100 mb4 bg-gray self-center">
-              <img src="" />
+              <img src={artist.avatar.url} />
             </div>
+            <button onClick={() => { window.location = `/artists/${this.props.artist.id}/update` }}>Edit Profile</button>
             <div className="info">
               <h5 className="uppercase">Education</h5>
               <p> {program} </p>
+              <h5 className="uppercase">Genres</h5>
+              <p> {genres} </p>
             </div>
             <div className="mt-auto self-center">
               <button className="button-primary bg-indigo ph4">contact</button>
@@ -103,7 +110,7 @@ class ArtistProfile extends React.Component {
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
             <h2>About the artist</h2>
-            <p> Some words</p>
+            <p> {description}</p>
           </div>
         </div>
         <div className="mt5 mb3">
@@ -117,23 +124,30 @@ class ArtistProfile extends React.Component {
           ))}
         </div>
         <div className="flex flex-wrap">
-          {this.state.works.map(work => {
-            return (
-              <div key={work.id} className="artwork w-25 h-100 pa2">
-                <div className="bg-white pa3">
-                  <img className="work-image fit-cover w-100 mb2" src={work.featured_image.url} />
-                  <p className="work-title mb1">{work.title}</p>
-                  <p className="work-medium mb1">{work.medium}</p>
-                  <p className="work-material">{work.material}</p>
+          <div className="col-list-4">
+            {this.state.works.map(work => {
+              return (
+                <WorkColumnPanel work={work}>
                   {canEditProfile &&
-                    <div>
-                      <button onClick={() => { this.updateWork(work.id) }}>Edit</button>
-                      <button onClick={() => { this.deleteWork(work.id) }}>Delete</button>
-                    </div>}
-                </div>
-              </div>
-            )
-          })}
+                    <div className="work-action-wrapper mb2">
+                      <Touchable onPress={() => this.updateWork(work.id)}>
+                        <div className="hover-button pa2 pointer">
+                          <FontAwesomeIcon className="white" icon={faEdit} />
+                          <h4 className="ml2 white">Edit</h4>
+                        </div>
+                      </Touchable>
+                      <Touchable onPress={() => this.deleteWork(work.id)}>
+                        <div className="hover-button pa2 ml2 pointer">
+                          <FontAwesomeIcon className="white" icon={faTrash} />
+                          <h4 className="ml2 white">Delete</h4>
+                        </div>
+                      </Touchable>
+                    </div>
+                  }
+                </WorkColumnPanel>
+              )
+            })}
+          </div>
         </div>
         {canEditProfile &&
           <button onClick={this.createNewWork}>

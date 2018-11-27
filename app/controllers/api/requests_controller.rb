@@ -9,6 +9,7 @@ class Api::RequestsController < ApplicationController
     request = Request.create(request_params)
     if request.save!
       flash[:success] = "Work requested successfully!";
+      NotificationMailer.with(buyer: request.buyer, artist: request.artist, work: request.work).new_request_email.deliver_later
       return render json: {"message": 'Work requested successfully!'}
     else
       flash[:danger] = "Request failed to send."
@@ -19,7 +20,12 @@ class Api::RequestsController < ApplicationController
   def update
     #only for opening and closing requests
     @request = Request.find(params[:id])
-    new_request = @request.update(request_params)
+    new_request = @request.update!(request_params)
+    if (new_request) #since requests can only be closed after open
+      NotificationMailer.with(buyer: @request.buyer, artist: @request.artist, work: @request.work).request_closed_email.deliver_later
+    end
+
+
     render json: {status: 200, message: 'Request successfully updated!'}
   end
 

@@ -11,6 +11,8 @@ Picasso = Artist.create(
   email: 'picasso@artists.sfai.edu',
   password: 'password',
   program: 'art',
+  description: 'bleh',
+  genres: 'bleh',
   open_to_commissions: true
   )
 #Picasso has id 0
@@ -23,6 +25,8 @@ Kahlo = Artist.create(
   email: 'fkahlo@artists.sfai.edu',
   password: 'password',
   program: 'art',
+  description: 'bleh',
+  genres: 'bleh',
   open_to_commissions: true
   )
 Kahlo.skip_confirmation!
@@ -34,6 +38,8 @@ Matisse = Artist.create(
   email: 'henri@artists.sfai.edu',
   password: 'password',
   program: 'art',
+  description: 'bleh',
+  genres: 'bleh',
   open_to_commissions: true
   )
 Matisse.skip_confirmation!
@@ -87,7 +93,7 @@ Picasso.save!
 
 #Lisa's id is 1
 lisa_request = Request.create(
-  message: 'I would like to request the Mona Lisa',
+  message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet consectetur adipiscing elit duis tristique.',
   types: 0
   )
 lisa_request.buyer = Gates
