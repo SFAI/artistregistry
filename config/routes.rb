@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   get '/artists/', to: 'artists#all_artists'
   get '/artists/:id/update' => 'artists#update', as: "update_artist"
 
-  get '/receipts/new' => 'receipts#new'
   get '/receipts/types' => 'receipts#get_receipt_type_enums'
 
   get '/works' => 'works#index'

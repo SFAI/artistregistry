@@ -5,6 +5,7 @@ class Api::ReceiptsController < ApplicationController
 
   def create
     receipt = Receipt.new(receipt_params)
+    request = receipt.request
     if receipt.save!
       receipt.request.open = false
       if receipt.request.save!
