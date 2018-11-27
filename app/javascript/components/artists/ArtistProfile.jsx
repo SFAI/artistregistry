@@ -2,8 +2,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import CommissionsForm from "../commissions/CommissionsForm";
 import WorkColumnPanel from "../works/WorkColumnPanel";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Touchable from 'rc-touchable';
 
 /**

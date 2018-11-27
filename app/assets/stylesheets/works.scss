@@ -33,3 +33,56 @@
     }
   }
 }
+
+.full-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .work-toggle-container {
+    $width: 600px;
+    $height: 500px;
+    display: flex;
+    width: $width;
+    height: $height;
+    justify-content: center;
+    align-items: center;
+
+    .full-image {
+      width: $width;
+      height: $height;
+      object-fit: contain;
+    }
+  }
+
+  .thumbs {
+    display: flex;
+    flex-direction: row;
+
+    $thumb-width: 80px;
+    $thumb-height: 80px;
+
+    .thumb {
+      margin-right: 12px;
+
+      &:last-child {
+  			margin-right: 0px;
+  		}
+    }
+
+    .toggle-thumb-opacity {
+      position: absolute;
+      z-index: 1;
+      background-color: rgba(255, 255, 255, 0.5);
+      width: $thumb-width;
+      height: $thumb-height;
+    }
+
+    .toggle-thumb {
+      width: $thumb-width;
+      height: $thumb-height;
+      object-fit: cover;
+    }
+  }
+}
