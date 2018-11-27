@@ -1,15 +1,18 @@
-.request-container {
+.request-wrapper {
   display: flex;
-  flex-direction: column;
-  flex: 1;
-  height: 100%;
+  justify-content: center;
 
-  .request-action {
+  .request-container {
     display: flex;
-    flex-direction: row;
-    flex: 1;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    .request-action {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 }
 

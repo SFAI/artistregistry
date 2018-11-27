@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import CommissionsForm from "../commissions/CommissionsForm";
+import WorkColumnPanel from "../works/WorkColumnPanel";
+import Touchable from 'rc-touchable';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 /**
 * @prop user: user currently logged in
@@ -114,23 +118,30 @@ class ArtistProfile extends React.Component {
           })}
         </div>
         <div className="flex flex-wrap">
+          <div className="col-list-4">
           {this.state.works.map(work => {
             return (
-              <div key={work.id} className="artwork w-25 h-100 pa2">
-                <div className="bg-white pa3">
-                  <img className="work-image fit-cover w-100 mb2" src={work.featured_image.url} />
-                  <p className="work-title mb1">{work.title}</p>
-                  <p className="work-medium mb1">{work.medium}</p>
-                  <p className="work-material">{work.material}</p>
-                  {canEditProfile &&
-                    <div>
-                      <button onClick={() => { this.updateWork(work.id) }}>Edit</button>
-                      <button onClick={() => { this.deleteWork(work.id) }}>Delete</button>
-                    </div>}
-                </div>
-              </div>
+              <WorkColumnPanel work={work}>
+                {canEditProfile &&
+                  <div className="work-action-wrapper mb2">
+                    <Touchable onPress={() => this.updateWork(work.id)}>
+                      <div className="hover-button pa2">
+                        <FontAwesomeIcon className="white" icon={faEdit}/>
+                        <h4 className="ml2 white">Edit</h4>
+                      </div>
+                    </Touchable>
+                    <Touchable onPress={() => this.deleteWork(work.id)}>
+                      <div className="hover-button pa2 ml2">
+                        <FontAwesomeIcon className="white" icon={faTrash}/>
+                        <h4 className="ml2 white">Delete</h4>
+                      </div>
+                    </Touchable>
+                  </div>
+                }
+              </WorkColumnPanel>
             )
           })}
+          </div>
         </div>
         {canEditProfile &&
           <button onClick={this.createNewWork}>
