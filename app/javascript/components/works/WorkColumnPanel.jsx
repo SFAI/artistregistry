@@ -8,6 +8,10 @@ class WorkColumnPanel extends React.Component {
     this.state = {};
   }
   
+  navigateToWork = (id) => {
+    window.location = `/works/${id}`;
+  }
+  
   render() {
     let work = this.props.work;
     return (

@@ -46,10 +46,6 @@ class Works extends React.Component {
         }
       );
   };
-  
-  navigateToWork = (id) => {
-    window.location = `/works/${id}`;
-  }
 
   render() {
     const { filters, works } = this.state;
