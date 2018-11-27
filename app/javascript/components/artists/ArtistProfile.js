@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
+import classNames from "classnames";
 import CommissionsForm from "../commissions/CommissionsForm";
+import StyledModal from "../helpers/StyledModal";
 
 /**
 * @prop user: user currently logged in
@@ -15,7 +17,7 @@ class ArtistProfile extends React.Component {
       artist: [],
       activeFilter: 'All works',
       canEditProfile: false,
-      componentDidMount: false
+      componentDidMount: false,
     }
   }
 
@@ -85,14 +87,16 @@ class ArtistProfile extends React.Component {
               <p> {program} </p>
             </div>
             <div className="mt-auto self-center">
-              <button className="bg-gray white button pv3 ph4 f5">contact</button>
+              <button className="button-primary bg-indigo ph4">contact</button>
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
             {
               canEditProfile &&
               <div className="absolute top-0 right-0 mt3 mr3">
-                <button> Edit featured work </button>
+                <StyledModal title="edit featured work" color="indigo">
+                  <p>hey</p>
+                </StyledModal>
               </div>
             }
             <img className="fit-cover h-100" src={"https://images.unsplash.com/photo-1542347369-65f48a3018c8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9dded3ad2cbb6ec3ccfe4a9c5f5c0715&auto=format&fit=crop&w=900&q=60"} />
@@ -103,12 +107,14 @@ class ArtistProfile extends React.Component {
           </div>
         </div>
         <div className="mt5 mb3">
-          {['All works', 'Available', 'Sold/Rented'].map(filter => {
-            const className = activeFilter == filter
-              ? "filter-button bg-gray white f6 mr3"
-              : "filter-button bg-white gray f6 mr3";
-            return <button onClick={() => this.setState({ activeFilter: filter })} key={filter} className={className}>{filter}</button>
-          })}
+          {['All works', 'Available', 'Sold/Rented'].map(filter => (
+            <button
+              onClick={() => this.setState({ activeFilter: filter })} key={filter}
+              className={classNames("button b--none f6 mr3 w4", activeFilter == filter ? "bg-indigo white" : "bg-white indigo")}
+            >
+              {filter}
+            </button>
+          ))}
         </div>
         <div className="flex flex-wrap">
           {this.state.works.map(work => {

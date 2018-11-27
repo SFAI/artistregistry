@@ -5,12 +5,6 @@
     height: 360px;
 }
 
-.filter-button {
-    @extend .button;
-    width: 120px;
-    border: none;
-}
-
 .artwork {
     min-width: 272px;
     .work-image {
