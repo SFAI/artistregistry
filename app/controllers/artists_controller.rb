@@ -7,6 +7,10 @@ class ArtistsController < ApplicationController
     @artist = Artist.find(params[:id])
   end
 
+  def update
+    @artist = Artist.find(params[:id])
+  end
+
   def generate_new_password_email
    artist = Artist.find(params[:user_id])
    artist.send_reset_password_instructions flash[:notice] = 'Reset password instructions have been sent to #{user.email}.'

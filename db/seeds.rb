@@ -11,6 +11,8 @@ Picasso = Artist.create(
   email: 'picasso@artists.sfai.edu',
   password: 'password',
   program: 'art',
+  description: 'bleh',
+  genres: 'bleh',
   open_to_commissions: true
   )
 #Picasso has id 0
@@ -23,6 +25,8 @@ Kahlo = Artist.create(
   email: 'fkahlo@artists.sfai.edu',
   password: 'password',
   program: 'art',
+  description: 'bleh',
+  genres: 'bleh',
   open_to_commissions: true
   )
 Kahlo.skip_confirmation!
@@ -34,6 +38,8 @@ Matisse = Artist.create(
   email: 'henri@artists.sfai.edu',
   password: 'password',
   program: 'art',
+  description: 'bleh',
+  genres: 'bleh',
   open_to_commissions: true
   )
 Matisse.skip_confirmation!
