@@ -7,7 +7,7 @@ class Api::ArtistsController < ApplicationController
 
   def index
     artists = Artist.all
-    render json: artists, serializer: ArtistSerializer
+    render json: artists
   end
 
   def update
