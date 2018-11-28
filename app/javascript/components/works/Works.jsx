@@ -51,7 +51,7 @@ class Works extends React.Component {
     const { filters, works } = this.state;
 
     return (
-      <div className="mw9 center pt4">
+      <div className="pt4">
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
@@ -62,11 +62,11 @@ class Works extends React.Component {
         <div className="fl w-80 pb5">
           <h1>Artwork</h1>
           <div className="col-list-3">
-          {works.map(work => {
-            return (
-              <WorkColumnPanel work={work}/>
-            );
-          })}
+            {works.map(work => {
+              return (
+                <WorkColumnPanel work={work} />
+              );
+            })}
           </div>
         </div>
       </div>
