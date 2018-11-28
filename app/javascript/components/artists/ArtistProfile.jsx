@@ -90,7 +90,7 @@ class ArtistProfile extends React.Component {
             <button onClick={() => { window.location = `/artists/${this.props.artist.id}/update` }}>Edit Profile</button>
             <div className="info">
               <h5 className="ttu">Program</h5>
-              <p> {program} </p>
+              <p className="ttc"> {program.replace(/_/g, ' ').replace(/(and)/, '+')} </p>
               <h5 className="ttu">Media</h5>
               <p> {media} </p>
             </div>

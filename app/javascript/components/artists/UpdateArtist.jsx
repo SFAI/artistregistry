@@ -3,7 +3,6 @@ import React from 'react';
 import { Button, Dialog, Intent } from "@blueprintjs/core";
 
 
-
 class UpdateArtist extends React.Component {
   constructor(props) {
     super(props);
@@ -19,19 +18,30 @@ class UpdateArtist extends React.Component {
         artist_id: id
       },
       works: [],
+      categories: {},
       componentDidMount: false,
     }
   }
 
   componentDidMount = () => {
     const works_route = APIRoutes.artists.works(this.props.artist.id);
-    Requester.get(works_route)
-      .then(response => {
+    const categories_route = APIRoutes.artists.categories;
+    Promise.all([
+      Requester.get(works_route),
+      Requester.get(categories_route)
+    ]).then(
+      response => {
+        const [works_response, categories_response] = response;
         this.setState({
-          works: response,
+          works: works_response,
+          categories: categories_response,
           componentDidMount: true
         });
-      });
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 
   handleChange = (event) => {
@@ -84,6 +94,11 @@ class UpdateArtist extends React.Component {
   }
 
   render() {
+    if (!this.state.componentDidMount) {
+      return (
+        <div><h2>Loading</h2></div>
+      )
+    }
     return (
       <div>
         <h1>UPDATE ARTIST</h1>
@@ -98,15 +113,20 @@ class UpdateArtist extends React.Component {
             required
           />
           <h5>Program</h5>
-          <input
+          <select
             value={this.state.artist.program}
             onChange={this.handleChange}
             name="program"
-            type="text"
-            className="textinput"
+            className="input-dropdown ttc"
             required
-          />
-          <h5>media</h5>
+          >
+            {
+              Object.keys(this.state.categories.program).map((obj, i) => {
+                return <option key={i} value={obj}>{obj.replace(/_/g, ' ').replace(/(and)/, '+')}</option>
+              })
+            }
+          </select>
+          <h5>Media</h5>
           <input
             value={this.state.artist.media}
             onChange={this.handleChange}

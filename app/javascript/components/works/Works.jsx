@@ -62,9 +62,9 @@ class Works extends React.Component {
         <div className="fl w-80 pb5">
           <h1>Artwork</h1>
           <div className="col-list-3">
-            {works.map(work => {
+            {works.map((work, i) => {
               return (
-                <WorkColumnPanel work={work} />
+                <WorkColumnPanel key={i} work={work} />
               );
             })}
           </div>
