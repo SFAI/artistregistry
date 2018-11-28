@@ -12,8 +12,7 @@ Rails.application.routes.draw do
     member do
       get 'requests'
       post :generate_new_password_email
-      resources :works, only: [:index, :new] do
-      end
+      get 'update', to: 'update_artist'
     end
 
   end
@@ -24,11 +23,27 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :works, only: [:index, :new] do
+  resources :works, only: [:index, :new, :show] do
     collection do
       get 'categories', to: 'get_work_category_enums'
     end
+    member do
+      get 'edit', to: 'edit_work'
+    end
   end
+
+  resources :requests, only: [:index] do
+    collection do
+      get 'types', to: 'get_type_enum'
+    end
+  end
+
+  resources :commissions, only: [:index] do
+    collection do
+      get 'commssions'
+    end
+  end
+
   # get 'artists/:id' => 'artists#show', as: :artistid
   # get '/artists/', to: 'artists#all_artists'
   # get 'buyers/:id' => 'buyers#show', as: :buyerid
@@ -36,7 +51,8 @@ Rails.application.routes.draw do
   # get '/artists/', to: 'artists#all_artists'
   # get '/artists/:id/update' => 'artists#update', as: "update_artist"
 
-  # get '/receipts/types' => 'receipts#get_receipt_type_enums'
+  # why isn't this in the api namespace?
+  get '/receipts/types' => 'receipts#get_receipt_type_enums'
 
   # get '/works' => 'works#index'
   # get '/works/categories' => 'works#get_work_category_enums'
