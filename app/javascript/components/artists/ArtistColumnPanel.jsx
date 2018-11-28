@@ -18,13 +18,14 @@ class ArtistColumnPanel extends React.Component {
 
   render() {
     let artist = this.props.artist;
+    const featured_work = artist.works.find(work => work.id === artist.featured_work_id);
     return (
       <div className="mb3 pa3 w-100 col-item bg-white relative" key={artist.id}>
         <div className="item-overlay">
           {this.props.children}
         </div>
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-          {<img src={""} className="mb3 pointer" />}
+          {<img src={featured_work.featured_image.url} className="mb3 pointer" />}
         </Touchable>
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
           <h3 className="pointer">{artist.name}</h3>

@@ -89,7 +89,7 @@ class ArtistProfile extends React.Component {
             </div>
             <button onClick={() => { window.location = `/artists/${this.props.artist.id}/update` }}>Edit Profile</button>
             <div className="info">
-              <h5 className="ttu">Education</h5>
+              <h5 className="ttu">Program</h5>
               <p> {program} </p>
               <h5 className="ttu">Media</h5>
               <p> {media} </p>

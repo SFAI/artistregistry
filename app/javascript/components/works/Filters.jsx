@@ -72,8 +72,9 @@ class Filters extends PureComponent {
                         onClick={() => this.toggleCheckbox(type, item)}
                         type="checkbox"
                         className="checkbox"
+                        value={item}
                       />
-                      <p className="capitalize">{item}</p>
+                      <p className="capitalize">{item.replace(/_/g, ' ').replace(/(and)/, '+')}</p>
                     </div>
                   ))}
                 </div>
