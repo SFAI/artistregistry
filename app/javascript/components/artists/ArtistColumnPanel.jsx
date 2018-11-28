@@ -31,7 +31,7 @@ class ArtistColumnPanel extends React.Component {
           <h3 className="pointer">{artist.name}</h3>
         </Touchable>
         <h6>{artist.artist_name}</h6>
-        <h6 className="i">{artist.program}</h6>
+        <h6 className="i ttc">{artist.program.replace(/_/g, ' ').replace(/(and)/, '+')}</h6>
         <h6>{artist.works.length} works available</h6>
       </div>
     );
