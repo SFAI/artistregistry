@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import FormError from '../helpers/FormError';
 import { convertToCurrency } from "../../utils/currency";
+import WorkFixedPanel from "../works/WorkFixedPanel";
+import Button from "../helpers/Button";
 
 /**
 * @prop artist: artist creating transaction
@@ -121,49 +123,27 @@ class TransactionForm extends React.Component {
     )
   }
 
-  renderPurchaseDate = () => {
-    if (this.state.receipt.transaction_type === "purchase") {
-      return (
-        <div>
-          <p className="f6 lh-copy">Purchase Date </p>
-          <input
-            type="date"
-            name="purchase_date"
-            id="purchase_date"
-            value={this.state.receipt.purchase_date}
-            onChange={this.handleChange}
-          />
-
-          <FormError error={this.state.errors["purchase_date"]}/>
-        </div>
-      )
-    }
-  }
-
   renderRentalDates = () => {
     if (this.state.receipt.transaction_type === "rental") {
       return (
         <div>
-          <p className="f6 lh-copy">Start Date  </p>
+          <h5>Start Date</h5>
           <input
             type="date"
             name="start_date"
-            id="start_date"
+            className="textinput"
             value={this.state.receipt.start_date}
             onChange={this.handleChange}
           />
-
           <FormError error={this.state.errors["start_date"]}/>
-
-          <p className="f6 lh-copy">End Date  </p>
+          <h5>End Date</h5>
           <input
             type="date"
             name="end_date"
-            id="end_date"
+            className="textinput"
             value={this.state.receipt.end_date}
             onChange={this.handleChange}
           />
-
           <FormError error={this.state.errors["end_date"]}/>
         </div>
       )
@@ -177,56 +157,57 @@ class TransactionForm extends React.Component {
       );
     }
     return (
-      <div className="create-transaction-form">
-
-        <p className="f6 lh-copy price">Price  </p>
-        $<input
-          type="TEXT"
-          name="price"
-          id="price"
-          value={convertToCurrency(this.state.receipt.price)}
-          onChange = {this.handleChange}
-        />
-
-        <FormError error={this.state.errors["price"]}/>
-
-        <p className="f6 lh-copy">Type
-          <select name="transaction_type"
-                  value={this.state.receipt.transaction_type}
-                  onChange={this.handleChange}>
-              {  Object.keys(this.state.types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
+      <div className="w-100">
+        <div className="fl w-30">
+          <WorkFixedPanel work={this.props.work}/>
+        </div>
+        <div className="fl w-70 pl3">
+          <h5>Price</h5>
+          <div className="price">
+            <h5 className="mr2">$</h5>
+            <input
+              type="TEXT"
+              name="price"
+              value={convertToCurrency(this.state.receipt.price)}
+              onChange = {this.handleChange}
+              className="textinput"
+            />
+          </div>
+          <FormError error={this.state.errors["price"]}/>
+          <h5>Type</h5>
+          <select
+            name="transaction_type"
+            value={this.state.receipt.transaction_type}
+            onChange={this.handleChange}
+            className="input-dropdown"
+          >
+            {  Object.keys(this.state.types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
           </select>
-        </p>
-
-        <FormError error={this.state.errors["transaction_type"]}/>
-
-        { this.renderRentalDates() }
-
-        <p className="f6 lh-copy">Purchase Date </p>
-        <input
-          type="date"
-          name="purchase_date"
-          id="purchase_date"
-          value={this.state.receipt.purchase_date}
-          onChange={this.handleChange}
-        />
-
-        <FormError error={this.state.errors["purchase_date"]}/>
-
-        <p className="f6 lh-copy">Additional Comments </p>
-        <textarea
-          type="TEXT"
-          name="comment"
-          id="comment"
-          value={this.state.receipt.comment}
-          onChange = {this.handleChange}
-        />
-
-        <p>
-          <button className="record-button" onClick={this.handleSubmit}>
+          <FormError error={this.state.errors["transaction_type"]}/>
+          { this.renderRentalDates() }
+          <h5>Purchase Date</h5>
+          <input
+            type="date"
+            name="purchase_date"
+            value={this.state.receipt.purchase_date}
+            onChange={this.handleChange}
+            className="textinput"
+          />
+          <FormError error={this.state.errors["purchase_date"]}/>
+          <h5>Additional Comments</h5>
+          <textarea
+            type="TEXT"
+            name="comment"
+            id="comment"
+            rows={4}
+            value={this.state.receipt.comment}
+            onChange={this.handleChange}
+            className="textarea"
+          />
+          <Button type="button-primary" className="w4" color="ochre" onClick={this.handleSubmit}>
             Record
-          </button>
-        </p>
+          </Button>
+        </div>
       </div>
     );
   }

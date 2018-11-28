@@ -48,13 +48,18 @@ class Receipt extends React.Component {
     const id = request.id;
     return (
         <div className = "w100">
-          <StyledModal title="EDIT RECEIPT" color="ochre">
+          <StyledModal
+            title="EDIT"
+            color="ochre"
+            buttonType="hover-button"
+          >
             <TransactionForm
               artist={this.props.artist}
               request_id={id}
               receipt={request.receipt}
               route={APIRoutes.receipts.update(request.receipt.id)}
               method="PATCH"
+              work={this.state.request.work}
             />
           </StyledModal>
         </div>
@@ -68,19 +73,18 @@ class Receipt extends React.Component {
     const closed_timestamps = new Date(request.updated_at).toLocaleDateString();
 
     return (
-<div key={request.id} className="request bg-white mb3">
-  <div className="fl w-25">
-    <WorkFixedPanel work={request.work}/>
-  </div>
-  <div className="fl w-75 pa3 request-wrapper">
-    <div className="request-container w-100">
-      {
-        this.props.artist ? (
+      <div key={request.id} className="request bg-white mb3">
+        <div className="fl w-25">
+          <WorkFixedPanel work={request.work}/>
+        </div>
+        <div className="fl w-75 pa3 request-wrapper">
+          <div className="request-container w-100">
+            {
+              this.props.artist ? (
                 <div className="request-action">
                   <BuyerSnapshot buyer={this.state.request.buyer} />
                   <div className = "w5">
                     <p className = "closed-request-button pa3"> You completed this request on {closed_timestamps} </p>
-                    {this.renderEditReceipt()}
                   </div>
                 </div>
               ) : (
@@ -92,7 +96,10 @@ class Receipt extends React.Component {
                 </div>
               )
             }
-            <div className="attr-container pa3 mt2">
+            <div className="attr-container pa3 mt2 relative">
+              <div className="overlay overlay-button">
+                {this.renderEditReceipt()}
+              </div>
               {this.getAttr(request)}
             </div>
           </div>

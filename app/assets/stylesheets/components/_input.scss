@@ -99,6 +99,7 @@ input[type="checkbox"] {
   @extend .row-input;
   outline: none;
   height: 45px;
+  box-sizing: border-box;
 }
 
 .input-dropdown {
@@ -128,4 +129,11 @@ input[type="checkbox"] {
   &:hover {
     background-color: rgba($charcoal, 0.8);
   }
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }

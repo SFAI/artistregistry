@@ -83,6 +83,7 @@ class Request extends React.Component {
           <StyledModal
             title="COMPLETE"
             color="ochre"
+            buttonType="button-primary"
           >
             <TransactionForm
               artist={this.props.artist}
@@ -90,6 +91,7 @@ class Request extends React.Component {
               receipt={empty_receipt}
               route={APIRoutes.receipts.create}
               method="POST"
+              work={this.state.request.work}
             />
           </StyledModal>
         </div>

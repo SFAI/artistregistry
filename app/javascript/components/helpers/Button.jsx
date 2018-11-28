@@ -11,13 +11,13 @@ class Button extends React.Component {
     switch(this.props.type) {
       case "button-primary":
         return (
-          <button className={this.props.className + " button-primary bg-" + this.props.color} onClick={this.props.onClick}>
+          <button className={this.props.className + " button-primary font bg-" + this.props.color} onClick={this.props.onClick}>
             {this.props.children}
           </button>
         );
       case "button-secondary":
         return (
-          <button className={this.props.className + " button-secondary b--" + this.props.color} onClick={this.props.onClick}>
+          <button className={this.props.className + " button-secondary font b--" + this.props.color} onClick={this.props.onClick}>
             {this.props.children}
           </button>
         );
@@ -29,7 +29,7 @@ class Button extends React.Component {
         )
       case "hover-button":
         return (
-          <button className={this.props.className + " hover-button pa2"} onClick={this.props.onClick}>
+          <button className={this.props.className + " hover-button pa2 white font pointer"} onClick={this.props.onClick}>
             {this.props.children}
           </button>
         )

@@ -55,6 +55,17 @@
   .attr-container {
     border: 1px solid $snow;
     background-color: rgba($snow, 0.4);
+
+    &:hover {
+      .overlay-button {
+        visibility: visible;
+      }
+    }
+
+    .overlay-button {
+      right: 16px;
+      visibility: hidden;
+    }
   }
 
   .attr {
