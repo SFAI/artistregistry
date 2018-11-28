@@ -15,7 +15,7 @@ class WorkColumnPanel extends React.Component {
   render() {
     let work = this.props.work;
     return (
-      <div className="mb3 pa3 w-100 work-item bg-white relative" key={work.id}>
+      <div className="mb3 pa3 w-100 col-item bg-white relative" key={work.id}>
         <div className="item-overlay">
           {this.props.children}
         </div>

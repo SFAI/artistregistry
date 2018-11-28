@@ -1,28 +1,18 @@
-.all-artists-page {
-  padding-top: 64px;
-  padding-left: 100px;
-  padding-right: 100px;
-  flex: 1;
+.col-item {
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
 
-  .artists-table {
-    width: 100%;
+  .item-overlay {
+    position: absolute;
+    visibility: hidden;
+    height: 48px;
+    z-index: 5;
+  }
 
-    .all-artists-container {
-      display: flex;
-      flex-flow: column;
-
-      .artist-row {
-        cursor: pointer;
-        background-color: $white;
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 4px;
-
-        &:last-of-type {
-          margin-bottom: 0;
-        }
-      }
+  &:hover {
+    .item-overlay {
+      visibility: visible;
     }
   }
 }
-
