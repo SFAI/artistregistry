@@ -1,5 +1,14 @@
 class Api::ArtistsController < ApplicationController
   respond_to :json
+
+  def get_artist_category_enums
+    # return enums for filtering
+    categories = {
+      "major": Artist.programs
+    }
+    render json: categories
+  end
+
   def show
     @artist = Artist.find(params[:id])
     render json: @artist, serializer: ArtistSerializer
@@ -8,6 +17,13 @@ class Api::ArtistsController < ApplicationController
   def index
     artists = Artist.all
     render json: artists
+  end
+
+  def filtered_artists
+    parsed_query = CGI.parse(params[:search_params])
+    filtered_artists = params[:search_params] == "" ?  Artists.all : Artists.where(parsed_query)
+    render json: filtered_artists,
+      each_serializer: ArtistSerializer
   end
 
   def update

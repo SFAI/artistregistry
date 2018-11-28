@@ -5,19 +5,6 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'works#index'
 
-  resources :artists, only: [:show] do
-    member do
-      post :generate_new_password_email
-    end
-  end
-
-  resources :buyers, only: [:show] do
-    member do
-      post :generate_new_password_email
-    end
-  end
-
-  get '/artists/categories' => 'artists#get_artist_category_enums'
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
   get '/artists/:id/update' => 'artists#update', as: "update_artist"
@@ -39,8 +26,20 @@ Rails.application.routes.draw do
   get '/commissions/types' => 'commissions#get_type_enum'
   get '/commissions' => 'artists#commissions', as: :commissions
 
+  resources :artists, only: [:show] do
+    member do
+      post :generate_new_password_email
+    end
+  end
+
+  resources :buyers, only: [:show] do
+    member do
+      post :generate_new_password_email
+    end
+  end
 
   namespace :api, defaults: { format: :json } do
+    get 'artists/categories' => 'artists#get_artist_category_enums'
     resources :works, :only => [:index, :show, :create, :update, :destroy]
     resources :artists, :only => [:index, :show, :create, :update, :destroy]
     resources :requests, :only => [:show, :create, :update]

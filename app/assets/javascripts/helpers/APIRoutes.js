@@ -21,7 +21,8 @@ class ApiRoutes {
       works       : (id) => `/api/artists/works/${id}`,
       requests    : (id) => `/api/artists/requests/${id}`,
       commissions : (id) => `/api/artists/commissions/${id}`,
-      categories  : `/artists/categories`,
+      filtered_artists: (search_params) => `/api/artists/filtered_artists/${search_params}`,
+      categories  : `/api/artists/categories`,
     }
   }
 
