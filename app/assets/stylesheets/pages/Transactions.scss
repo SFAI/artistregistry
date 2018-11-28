@@ -1,0 +1,21 @@
+.transactions-page {
+  padding-top: 64px;
+  padding-left: 100px;
+  padding-right: 100px;
+  flex: 1;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.create-transaction-form {
+  text-align: left;
+
+  .submit {
+    margin-top: -50px;
+    color: white;
+  }
+
+  .price {
+    margin-top: 20px;
+  }
+}

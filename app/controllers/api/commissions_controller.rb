@@ -26,7 +26,8 @@ class Api::CommissionsController < ApplicationController
       params.permit(
         :buyer_id,
         :artist_id,
-        :comment
+        :comment,
+        :types
       )
     end
 end

@@ -1,0 +1,130 @@
+input[type="checkbox"] {
+  cursor: pointer;
+  font-size: 17px;
+  visibility: hidden;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+
+  &:after {
+    content: " ";
+    background-color: $snow;
+    display: inline-block;
+    color: $white;
+    width: 16px;
+    height: 20px;
+    visibility: visible;
+    padding-left: 4px;
+  }
+
+  &:checked:after {
+    content: url("checkmark.svg");
+    width: 16px;
+    height: 20px;
+    padding: -5px;
+    background-color: $magenta;
+  }
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container {
+  margin-top: 8px;
+}
+
+.button {
+  text-transform: uppercase;
+  font-family: $font;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-weight: 500;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 44px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.button-primary {
+  border: none;
+  @extend .button;
+  @extend .white;
+  border: none;
+}
+
+.button-secondary {
+  @extend .button;
+  @extend .bg-white;
+
+  &:hover {
+    background-color: rgba($white, 0.6);
+  }
+}
+
+.button-tertiary {
+  @extend .button;
+  background-color: rgba($white, 0);
+  border: none;
+
+  &:hover {
+    background-color: rgba($white, 0.3);
+  }
+}
+
+.dropzone {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed $gray;
+  cursor: pointer;
+}
+
+.row-input {
+  font-family: $font;
+  @extend .mt2;
+  @extend .mb2;
+  @extend .w-100;
+}
+
+.textinput {
+  @extend .pl2;
+  @extend .row-input;
+  outline: none;
+  height: 45px;
+}
+
+.input-dropdown {
+  height: 45px;
+  @extend .row-input;
+  outline: none;
+}
+
+.textarea {
+  @extend .row-input;
+  outline: none;
+  @extend .pa2;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.hover-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba($charcoal, 0.5);
+
+  &:hover {
+    background-color: rgba($charcoal, 0.8);
+  }
+}

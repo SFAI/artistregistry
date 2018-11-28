@@ -2,7 +2,7 @@ class Api::ArtistsController < ApplicationController
   respond_to :json
   def show
     @artist = Artist.find(params[:id])
-    render json: @artist
+    render json: @artist, serializer: ArtistSerializer
   end
 
   def index
@@ -11,9 +11,16 @@ class Api::ArtistsController < ApplicationController
   end
 
   def update
-    artist = Artist.find(params[:id])
-    new_work = work.update(params)
-    render_json_message(:ok, message: 'Artist successfully updated!')
+    artist_attr = artist_params
+    avatar_attr = artist_attr.delete("avatar")
+    @artist = Artist.find(params[:id])
+    saved = @artist.update(artist_attr)
+    if saved
+      @artist.avatar.attach(avatar_attr)
+      flash[:success] = "Artist updated successfully!"
+    else
+      flash[:danger] = "Artist failed to update."
+    end
   end
 
   def destroy
@@ -38,18 +45,23 @@ class Api::ArtistsController < ApplicationController
   def requests
     artist = Artist.find(params[:id])
     requests = artist.requests
-    requests_full = []
-    requests.each do |request|
-      this_request = {}
-      this_request["request"] = request
-      this_request["buyer"] = request.buyer
-      requests_full.append(this_request)
-    end
-    if requests
-      render json: requests_full.to_json
-    else
-      render_json_message(:forbidden, errors: requests.errors.full_messages)
-    end
+    render json: requests,
+        each_serializer: RequestSerializer
   end
 
+  def commissions
+    artist = Artist.find(params[:id])
+    commissions = artist.commissions
+    render json: commissions,
+        each_serializer: CommissionSerializer
+  end
+
+  def artist_params
+    params.require(:artist).permit(:name,
+                                 :program,
+                                 :genres,
+                                 :description,
+                                 :avatar
+                                )
+  end
 end

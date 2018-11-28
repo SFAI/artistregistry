@@ -21,32 +21,23 @@
 
  @import "pages/*";
  @import "components/*";
+ @import "*";
 
  body {
     background-color: $snow;
  }
- 
+
  .dashboard-container {
-     max-width: 90%;
+     max-width: 1190px;
      margin: 0px auto;
-     padding-top: 52px;
+     padding-top: 64px;
  }
 
- .button {
-    border: none;
-    text-align: center;
-    text-transform: uppercase;
-    font-family: $font;
-    font-weight: 500;
-    cursor: pointer;
-    outline: none;
+ body {
+    background-color: $snow;
  }
 
- .button:active {
-    filter: brightness(85%);
- }
-
- .mt-auto {
+.mt-auto {
     margin-top: auto; // aligns button to bottom of div
 }
 
