@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import ArtistRow from "./ArtistRow.js";
+import ArtistRow from "./ArtistRow.jsx";
 
 class AllArtists extends React.Component {
   constructor(props) {
