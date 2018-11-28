@@ -75,7 +75,7 @@ class Api::ArtistsController < ApplicationController
   def artist_params
     params.require(:artist).permit(:name,
                                  :program,
-                                 :genres,
+                                 :media,
                                  :description,
                                  :avatar,
                                  :featured_work_id

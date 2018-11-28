@@ -121,7 +121,7 @@ class WorkForm extends React.Component {
       let formData = new FormData();
       formData.append('work[title]', this.state.work.title);
       formData.append('work[material]', this.state.work.material);
-      formData.append('work[medium]', this.state.work.medium);
+      formData.append('work[media]', this.state.work.media);
       formData.append('work[availability]', this.state.work.availability);
       formData.append('work[artist_id]', this.state.work.artist_id);
       formData.append('work[description]', this.state.work.description);
@@ -225,14 +225,14 @@ class WorkForm extends React.Component {
           className="textinput"
         />
         <FormError error={this.state.errors["material"]}/>
-        <h5>Medium</h5>
+        <h5>Media</h5>
         <select
           onChange={this.handleChange}
-          value={this.state.work.medium}
-          name="medium"
+          value={this.state.work.media}
+          name="media"
           className="input-dropdown">
           {
-            Object.keys(this.state.categories.medium).map((obj, i) => {
+            Object.keys(this.state.categories.media).map((obj, i) => {
               return <option key={i}>{obj}</option>
             })
           }
