@@ -3,6 +3,14 @@ class ArtistsController < ApplicationController
   def index
   end
 
+  def get_artist_category_enums
+    # return enums for filtering
+    categories = {
+      "major": Artist.programs
+    }
+    render json: categories
+  end
+
   def show
     @artist = Artist.find(params[:id])
   end

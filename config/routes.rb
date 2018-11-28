@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/artists/categories' => 'artists#get_artist_category_enums'
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
   get '/artists/:id/update' => 'artists#update', as: "update_artist"
