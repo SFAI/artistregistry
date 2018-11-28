@@ -2,8 +2,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 600px;
-  width: 800px;
+  height: 500px;
+  width: 600px;
   right: auto;
   bottom: auto;
   margin-right: -50%;
@@ -11,6 +11,32 @@
   background-color: white;
   border-top: 8px solid $mustard;
   outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  $modal-head-height: 40px;
+
+  .modal-head {
+    position: absolute;
+    height: $modal-head-height;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 5px 5px rgba(black, 0.1);
+  }
+
+  .modal-content {
+    position: absolute;
+    top: $modal-head-height;
+    width: 100%;
+    bottom: 0;
+    overflow: scroll;
+  }
+}
 
 .cancel-button {
   background-color: white;
@@ -20,7 +46,6 @@
   text-decoration: none;
   display: inline-block;
   font-size: 18px;
-  }
 }
 
 .overlay-class {

@@ -5,6 +5,7 @@ import WorkColumnPanel from "../works/WorkColumnPanel";
 import Touchable from 'rc-touchable';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Button from "../helpers/Button";
 
 /**
 * @prop user: user currently logged in
@@ -124,18 +125,14 @@ class ArtistProfile extends React.Component {
               <WorkColumnPanel work={work}>
                 {canEditProfile &&
                   <div className="work-action-wrapper mb2">
-                    <Touchable onPress={() => this.updateWork(work.id)}>
-                      <div className="hover-button pa2 pointer">
-                        <FontAwesomeIcon className="white" icon={faEdit}/>
-                        <h4 className="ml2 white">Edit</h4>
-                      </div>
-                    </Touchable>
-                    <Touchable onPress={() => this.deleteWork(work.id)}>
-                      <div className="hover-button pa2 ml2 pointer">
-                        <FontAwesomeIcon className="white" icon={faTrash}/>
-                        <h4 className="ml2 white">Delete</h4>
-                      </div>
-                    </Touchable>
+                    <Button type="hover-button" onClick={() => this.updateWork(work.id)}>
+                      <FontAwesomeIcon className="white" icon={faEdit}/>
+                      <h4 className="ml2 white">Edit</h4>
+                    </Button>
+                    <Button className="ml2" type="hover-button" onClick={() => this.deleteWork(work.id)}>
+                      <FontAwesomeIcon className="white" icon={faTrash}/>
+                      <h4 className="ml2 white">Delete</h4>
+                    </Button>
                   </div>
                 }
               </WorkColumnPanel>
