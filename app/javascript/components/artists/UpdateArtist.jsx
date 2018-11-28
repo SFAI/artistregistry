@@ -7,11 +7,11 @@ import { Button, Dialog, Intent } from "@blueprintjs/core";
 class UpdateArtist extends React.Component {
   constructor(props) {
     super(props);
-    const { name, genres, program, description, avatar, id, featured_work_id } = this.props.artist;
+    const { name, media, program, description, avatar, id, featured_work_id } = this.props.artist;
     this.state = {
       artist: {
         name,
-        genres,
+        media,
         program,
         description,
         avatar,
@@ -56,7 +56,7 @@ class UpdateArtist extends React.Component {
     let formData = new FormData();
     formData.append('artist[name]', this.state.artist.name);
     formData.append('artist[program]', this.state.artist.program);
-    formData.append('artist[genres]', this.state.artist.genres);
+    formData.append('artist[media]', this.state.artist.media);
     formData.append('artist[description]', this.state.artist.description);
     formData.append('artist[featured_work_id]', this.state.artist.featured_work_id);
 
@@ -106,11 +106,11 @@ class UpdateArtist extends React.Component {
             className="textinput"
             required
           />
-          <h5>Genres</h5>
+          <h5>media</h5>
           <input
-            value={this.state.artist.genres}
+            value={this.state.artist.media}
             onChange={this.handleChange}
-            name="genres"
+            name="media"
             type="text"
             className="textinput"
             required

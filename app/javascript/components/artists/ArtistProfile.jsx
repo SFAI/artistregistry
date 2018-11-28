@@ -68,7 +68,7 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
-    const { name, program, genres, description } = artist;
+    const { name, program, media, description } = artist;
 
     if (!componentDidMount) {
       return (
@@ -91,8 +91,8 @@ class ArtistProfile extends React.Component {
             <div className="info">
               <h5 className="ttu">Education</h5>
               <p> {program} </p>
-              <h5 className="ttu">Genres</h5>
-              <p> {genres} </p>
+              <h5 className="ttu">Media</h5>
+              <p> {media} </p>
             </div>
             <div className="mt-auto self-center">
               <button className="button-primary bg-indigo ph4">contact</button>

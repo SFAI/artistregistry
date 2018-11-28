@@ -23,7 +23,7 @@ class WorkFixedPanel extends React.Component {
           <Touchable onPress={() => this.navigateToWork(work.id)}>
             <p className="h3 mb1 pointer">{work.title}</p>
           </Touchable>
-          <p className="mb1">{work.medium}</p>
+          <p className="mb1">{work.media}</p>
           <p className="i">{work.material}</p>
         </div>
       </div>

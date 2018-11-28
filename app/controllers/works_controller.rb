@@ -7,7 +7,7 @@ class WorksController < ApplicationController
     # Work.statuses
     categories = {
       "availability": Work.availabilities,
-      "medium": Work.media
+      "media": Work.media
     }
     render json: categories
   end
