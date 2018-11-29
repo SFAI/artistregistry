@@ -16,7 +16,8 @@ class UpdateArtist extends React.Component {
       errors: {
         name: "",
         media: "",
-        description: ""
+        description: "",
+        featured_work: ""
       }
     }
   }
@@ -64,32 +65,60 @@ class UpdateArtist extends React.Component {
     this.setState({ avatar: files[0] });
   }
 
+  checkErrors() {
+    const { artist } = this.state;
+    let errors = {};
+    if (!artist.name) {
+      errors.name = "This field cannot be empty."
+    }
+    if (!artist.media) {
+      errors.media = "This field cannot be empty."
+    }
+    if (!artist.description) {
+      errors.description = "This field cannot be empty."
+    }
+    return errors;
+  }
+
   handleSubmit = (event) => {
 
-    event.preventDefault();
-    let formData = new FormData();
-    const formKeys = ['name', 'program', 'media', 'description', 'featured_work_id'];
-    formKeys.forEach(key => {
-      formData.append(`artist[${key}]`, this.state.artist[key]);
-    });
+    let errors = this.checkErrors();
 
-    const { avatar } = this.state;
-    if (avatar) {
-      formData.append('artist[avatar]', avatar, avatar.name);
-    }
-
-    fetch(APIRoutes.artists.update(this.state.artist.artist_id), {
-      method: 'PUT',
-      body: formData,
-      credentials: 'same-origin',
-      headers: {
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+    let hasErrors = false;
+    Object.keys(errors).forEach((key) => {
+      if (errors[key]) {
+        hasErrors = true;
       }
-    }).then((data) => {
-      window.location = `/artists/` + this.state.artist.artist_id;
-    }).catch((data) => {
-      console.error(data);
     });
+
+    if (hasErrors) {
+      this.setState({ errors: errors });
+    } else {
+      event.preventDefault();
+      let formData = new FormData();
+      const formKeys = ['name', 'program', 'media', 'description', 'featured_work_id'];
+      formKeys.forEach(key => {
+        formData.append(`artist[${key}]`, this.state.artist[key]);
+      });
+
+      const { avatar } = this.state;
+      if (avatar) {
+        formData.append('artist[avatar]', avatar, avatar.name);
+      }
+
+      fetch(APIRoutes.artists.update(this.state.artist.artist_id), {
+        method: 'PUT',
+        body: formData,
+        credentials: 'same-origin',
+        headers: {
+          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+        }
+      }).then((data) => {
+        window.location = `/artists/` + this.state.artist.artist_id;
+      }).catch((data) => {
+        console.error(data);
+      });
+    }
   }
 
   render() {
@@ -101,7 +130,7 @@ class UpdateArtist extends React.Component {
     return (
       <div className="mw6 center">
         <h1>UPDATE ARTIST</h1>
-        <div>
+        <div className="bg-white pa3">
           <h5>Name</h5>
           <input
             value={this.state.artist.name}
@@ -111,6 +140,7 @@ class UpdateArtist extends React.Component {
             className="textinput"
             required
           />
+          <FormError error={this.state.errors.name}/>
           <h5>Program</h5>
           <select
             value={this.state.artist.program}
@@ -134,6 +164,7 @@ class UpdateArtist extends React.Component {
             className="textinput"
             required
           />
+          <FormError error={this.state.errors.media}/>
           <h5>Description</h5>
           <input
             value={this.state.artist.description}
@@ -143,7 +174,7 @@ class UpdateArtist extends React.Component {
             className="textinput"
             required
           />
-
+          <FormError error={this.state.errors.description}/>
           <h5>Featured Work</h5>
           <select
             onChange={this.handleChange}
@@ -156,7 +187,6 @@ class UpdateArtist extends React.Component {
               })
             }
           </select>
-
           <h5>Profile Photo</h5>
           <div className="avatar-sel">
             <input
@@ -185,7 +215,7 @@ class UpdateArtist extends React.Component {
               }
             </h5>
           </div>
-          <div className="submit-container mt3 mb3">
+          <div className="submit-container mt3">
             <Button
               onClick={() => { window.location = `/artists/${this.state.artist.artist_id}` }}
               className="w4"
