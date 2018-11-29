@@ -7,6 +7,7 @@ import StyledModal from "../helpers/StyledModal";
 import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Button from "../helpers/Button";
 
 /**
 * @prop user: user currently logged in
@@ -120,21 +121,17 @@ class ArtistProfile extends React.Component {
           <div className="col-list-4">
             {works.map(work => {
               return (
-                <WorkColumnPanel key={work.id} work={work}>
+                <WorkColumnPanel work={work}>
                   {canEditProfile &&
-                    <div className="flex flex-row justify-end mb2">
-                      <Touchable onPress={() => this.updateWork(work.id)}>
-                        <div className="hover-button pa2">
-                          <FontAwesomeIcon className="white" icon={faEdit} />
-                          <h4 className="ml2 white">Edit</h4>
-                        </div>
-                      </Touchable>
-                      <Touchable onPress={() => this.deleteWork(work.id)}>
-                        <div className="hover-button pa2 ml2">
-                          <FontAwesomeIcon className="white" icon={faTrash} />
-                          <h4 className="ml2 white">Delete</h4>
-                        </div>
-                      </Touchable>
+                    <div className="work-action-wrapper mb2">
+                      <Button type="hover-button" onClick={() => this.updateWork(work.id)}>
+                        <FontAwesomeIcon className="white" icon={faEdit} />
+                        <h4 className="ml2 white">Edit</h4>
+                      </Button>
+                      <Button className="ml2" type="hover-button" onClick={() => this.deleteWork(work.id)}>
+                        <FontAwesomeIcon className="white" icon={faTrash} />
+                        <h4 className="ml2 white">Delete</h4>
+                      </Button>
                     </div>
                   }
                 </WorkColumnPanel>

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import StyledModal from "../helpers/StyledModal";
-import CreateTransaction from "../transactions/CreateTransaction";
+import TransactionForm from "../receipts/TransactionForm";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
 import WorkFixedPanel from "../works/WorkFixedPanel";
@@ -11,7 +11,16 @@ class Request extends React.Component {
     super(props);
     this.state = {
       request: this.props.request,
-      artist: this.props.artist
+      artist: this.props.artist,
+      receipt: {
+        transaction_type: this.props.request.types,
+        start_date: '',
+        end_date: '',
+        purchase_date: '',
+        price: '',
+        comment: '',
+        request_id: this.props.request.id
+      }
     };
   }
 
@@ -58,12 +67,11 @@ class Request extends React.Component {
     const closed_timestamps = new Date(this.state.request.updated_at).toLocaleDateString();
     if (!this.state.request.open) {
       return (
-        <div className="closed-request-button pa3 w5">
-          <p> You archived this request on {closed_timestamps} </p>
-        </div>
+        <div className = "closed-request-button pa3 w5"> You archived this request on {closed_timestamps} </div>
       );
     }
     let id = this.state.request.id;
+    const empty_receipt = this.state.receipt;
     return (
       <div className="request-buttons">
         <div className="w4">
@@ -75,10 +83,15 @@ class Request extends React.Component {
           <StyledModal
             title="COMPLETE"
             color="ochre"
+            buttonType="button-primary"
           >
-            <CreateTransaction
+            <TransactionForm
               artist={this.props.artist}
               request_id={id}
+              receipt={empty_receipt}
+              route={APIRoutes.receipts.create}
+              method="POST"
+              work={this.state.request.work}
             />
           </StyledModal>
         </div>

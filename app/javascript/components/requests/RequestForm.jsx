@@ -113,7 +113,7 @@ class RequestForm extends React.Component {
           <h5>Request Type</h5>
           <select
             name="types"
-            value={this.state.request.type}
+            value={this.state.request.types}
             onChange={this.handleChange}
             className="input-dropdown"
           >

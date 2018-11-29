@@ -2,6 +2,10 @@
 
 $font : 'Roboto', sans-serif;
 
+.font {
+	font-family: $font;
+}
+
 html, body {
 	font-family: $font;
 	color: $text;
