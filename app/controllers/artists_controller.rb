@@ -8,7 +8,7 @@ class ArtistsController < ApplicationController
   end
 
   def update
-    @artist = Artist.find(params[:id])
+    @artist_id = params[:id]
   end
 
   def generate_new_password_email

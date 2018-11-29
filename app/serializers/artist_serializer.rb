@@ -7,7 +7,7 @@ class ArtistSerializer < ActiveModel::Serializer
   def avatar
     if object.avatar.attached?
       avatar = object.avatar
-      payload = {
+      return {
         name: avatar.filename,
         url: rails_blob_path(avatar, :host => 'localhost'),
       }

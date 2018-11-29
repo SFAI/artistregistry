@@ -6,17 +6,9 @@ import { Button, Dialog, Intent } from "@blueprintjs/core";
 class UpdateArtist extends React.Component {
   constructor(props) {
     super(props);
-    const { name, media, program, description, avatar, id, featured_work_id } = this.props.artist;
+    const { artist_id } = this.props.artist_id;
     this.state = {
-      artist: {
-        name,
-        media,
-        program,
-        description,
-        avatar,
-        featured_work_id,
-        artist_id: id
-      },
+      artist: {},
       works: [],
       categories: {},
       componentDidMount: false,
@@ -24,15 +16,18 @@ class UpdateArtist extends React.Component {
   }
 
   componentDidMount = () => {
-    const works_route = APIRoutes.artists.works(this.props.artist.id);
+    const artist_route = APIRoutes.artists.show(this.props.artist_id);
+    const works_route = APIRoutes.artists.works(this.props.artist_id);
     const categories_route = APIRoutes.artists.categories;
     Promise.all([
+      Requester.get(artist_route),
       Requester.get(works_route),
       Requester.get(categories_route)
     ]).then(
       response => {
-        const [works_response, categories_response] = response;
+        const [artist_response, works_response, categories_response] = response;
         this.setState({
+          artist: artist_response,
           works: works_response,
           categories: categories_response,
           componentDidMount: true
@@ -88,13 +83,14 @@ class UpdateArtist extends React.Component {
   }
 
   render() {
+    console.log(this.state.artist);
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>
       )
     }
     return (
-      <div>
+      <div className="mw6 center">
         <h1>UPDATE ARTIST</h1>
         <form action={APIRoutes.artists.update(this.state.artist.artist_id)} method="PUT" onSubmit={this.handleSubmit}>
           <h5>Name</h5>
