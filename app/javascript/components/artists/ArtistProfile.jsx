@@ -39,7 +39,7 @@ class ArtistProfile extends React.Component {
       this.setState({
         works: works_response,
         artist: artist_response,
-        canEditProfile: userType === "artist" && user.id === artist.id,
+        canEditProfile: userType === "artist" && user && user.id === artist.id,
         componentDidMount: true
       });
     });
