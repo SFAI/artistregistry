@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import Button from "../helpers/Button";
-
+import FormError from "../helpers/FormError";
 
 class UpdateArtist extends React.Component {
   constructor(props) {
@@ -12,7 +12,12 @@ class UpdateArtist extends React.Component {
       works: [],
       categories: {},
       componentDidMount: false,
-      avatar: null
+      avatar: null,
+      errors: {
+        name: "",
+        media: "",
+        description: ""
+      }
     }
   }
 

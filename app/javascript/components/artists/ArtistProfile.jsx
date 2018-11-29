@@ -8,6 +8,7 @@ import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
+var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 
 /**
 * @prop user: user currently logged in
@@ -111,7 +112,7 @@ class ArtistProfile extends React.Component {
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
-            <img className="fit-cover h-100" src={featured_work.featured_image.url} />
+            <img className="fit-cover h-100" src={featured_work ? featured_work.featured_image.url : sfai_wallpaper} />
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
             <h2>About the artist</h2>
