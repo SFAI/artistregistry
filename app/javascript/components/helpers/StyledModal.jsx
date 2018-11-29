@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import ReactModal from "react-modal";
+import Button from "../helpers/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import Touchable from 'rc-touchable';
 
 class StyledModal extends React.Component {
   constructor(props) {
@@ -9,6 +13,10 @@ class StyledModal extends React.Component {
       show: false
     }
   }
+
+  static propTypes = {
+    color: PropTypes.object.isRequired,
+  };
 
   showModal = () => {
     this.setState({ show: true });
@@ -22,22 +30,28 @@ class StyledModal extends React.Component {
     return (
       <div>
         <ReactModal
-          className="pa3 modal"
+          className="modal"
           isOpen={this.state.show}
           onRequestClose={this.hideModal}
           ariaHideApp={false}
           overlayClassName="overlay-class"
-          >
-          <h2 className="f4 lh-title submit">{this.props.title}</h2>
-          {this.props.children}
+        >
+          <div className="modal-head bg-white pl3 pr3">
+            <h3>{this.props.title}</h3>
+            <Touchable onPress={this.hideModal}>
+              <FontAwesomeIcon className="gray pointer" icon={faTimes} />
+            </Touchable>
+          </div>
+          <div className="modal-content pa4">
+            {this.props.children}
+          </div>
           <button className="cancel-button" onClick={this.hideModal}>
             Cancel
           </button>
         </ReactModal>
-        <br />
-        <button className="button-primary bg-mustard w-100" onClick={this.showModal}>
+        <Button className="w4" type={this.props.buttonType} color="ochre" onClick={this.showModal}>
           {this.props.title}
-        </button>
+        </Button>
       </div>
     );
   }

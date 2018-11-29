@@ -105,7 +105,7 @@ class RequestForm extends React.Component {
       );
     }
     return (
-      <div className="mw6">
+      <div className="w-100">
         <Panel
           color="magenta"
           title="Request Artwork"
@@ -113,9 +113,9 @@ class RequestForm extends React.Component {
           <h5>Request Type</h5>
           <select
             name="types"
-            value={this.state.request.type}
+            value={this.state.request.types}
             onChange={this.handleChange}
-            className="input-dropdown"
+            className="input-dropdown ttc"
           >
             {
               Object.keys(this.state.request_types).map((obj, i) => {
@@ -132,8 +132,8 @@ class RequestForm extends React.Component {
             rows={4}
             className="textarea"
           />
-          <FormError error={this.state.errors["message"]}/>
-          <FormError error={this.state.errors["login"]}/>
+          <FormError error={this.state.errors["message"]} />
+          <FormError error={this.state.errors["login"]} />
           <button onClick={this.handleSubmit} className="button-primary bg-magenta w4 mt2">
             Submit
           </button>

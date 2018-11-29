@@ -5,6 +5,7 @@ class Buyer < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :requests
   has_many :works, through: :requests
+  has_many :commissions
   has_many :artists, through: :commissions
   has_one_attached :avatar
   validates :name, presence: true, uniqueness: true

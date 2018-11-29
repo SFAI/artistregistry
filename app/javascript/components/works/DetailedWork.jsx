@@ -1,25 +1,63 @@
 import PropTypes from "prop-types";
 import React from "react";
 import RequestForm from '../requests/RequestForm';
+import WorkToggle from "./WorkToggle";
+import ArtistSnapshot from "../artists/ArtistSnapshot";
 
 class DetailedWork extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      work: this.props.work,
+      work: null,
+      componentDidMount: false
     };
   }
 
+  componentDidMount() {
+    const route = APIRoutes.works.show(this.props.work_id);
+    Requester.get(route).then(
+      response => {
+        this.setState({ work: response, componentDidMount: true });
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
   render() {
+    if (!this.state.componentDidMount) {
+      return (
+        <div />
+      );
+    }
+
+    const { artist, artist_id, id, availability, title, media, material, description } = this.state.work
     return (
-      <div>
-        <h2>{this.state.work.title}</h2>
-        <RequestForm
-          buyer={this.props.buyer}
-          artist_id={this.props.work.artist_id}
-          work_id={this.state.work.id}
-          work_status={this.state.work.availability}
-        />
+      <div className="pt4">
+        <div className="fl w-70">
+          <WorkToggle work={this.state.work} />
+        </div>
+        <div className="fl w-30 pl3">
+          <div className="bg-white overflow-hidden">
+            <ArtistSnapshot artist={artist} />
+          </div>
+          <div className="bg-white pa3 mv3">
+            <h2>{title}</h2>
+            <h4>Media</h4>
+            <p className="mb2">{media}</p>
+            <h4>Material</h4>
+            <p className="mb2">{material}</p>
+            <h4>Description</h4>
+            <p className="mb2">{description}</p>
+          </div>
+          <RequestForm
+            buyer={this.props.buyer}
+            artist_id={artist_id}
+            work_id={id}
+            work_status={availability}
+          />
+        </div>
       </div>
     );
   }

@@ -5,27 +5,13 @@
     height: 360px;
 }
 
-.filter-button {
-    @extend .button;
-    width: 120px;
-    border: none;
-}
-
 .artwork {
-    min-width: 272px;
+    min-width: 100px;
     .work-image {
-        height: 240px;
+        height: 150px;
     }
-}
 
-.contact-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-
-  .contact {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-  }
+    &:hover {
+      background-color: rgba($snow, 0.5);
+    }
 }
