@@ -13,7 +13,7 @@ class Request extends React.Component {
       request: this.props.request,
       artist: this.props.artist,
       receipt: {
-        transaction_type: this.props.request.types,
+        transaction_type: 0,
         start_date: '',
         end_date: '',
         purchase_date: '',
@@ -82,7 +82,6 @@ class Request extends React.Component {
         <div className="ml3 w4">
           <StyledModal
             title="COMPLETE"
-            color="ochre"
             buttonType="button-primary"
           >
             <TransactionForm
