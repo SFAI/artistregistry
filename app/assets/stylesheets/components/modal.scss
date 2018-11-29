@@ -6,10 +6,10 @@
   width: 600px;
   right: auto;
   bottom: auto;
+  margin-top: 64px; // clear the header
   margin-right: -50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  border-top: 8px solid $mustard;
   outline: none;
   display: flex;
   flex-direction: column;

@@ -92,7 +92,7 @@ class Api::WorksController < ApplicationController
   def work_params
     params.require(:work).permit(:title,
                                  :material,
-                                 :medium,
+                                 :media,
                                  :status,
                                  :availability,
                                  :artist_id,

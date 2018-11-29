@@ -20,7 +20,9 @@ class ApiRoutes {
       delete      : (id) => `/api/artists/destroy/${id}`,
       works       : (id) => `/api/artists/works/${id}`,
       requests    : (id) => `/api/artists/requests/${id}`,
-      commissions : (id) => `/api/artists/commissions/${id}`
+      commissions : (id) => `/api/artists/commissions/${id}`,
+      filtered_artists: (search_params) => `/api/artists/filtered_artists/${search_params}`,
+      categories  : `/api/artists/categories`,
     }
   }
 

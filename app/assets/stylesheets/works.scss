@@ -1,46 +1,6 @@
 // Place all the styles related to the Works controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.flex-grid {
-  display: flex;
-}
-.col {
-  flex: 1;
-}
-
-.col-list-3 {
-  column-count: 3;
-}
-
-.col-list-4 {
-  column-count: 4;
-}
-
-.work-item {
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
-  break-inside: avoid;
-
-  .item-overlay {
-    position: absolute;
-    visibility: hidden;
-    height: 48px;
-    z-index: 5;
-  }
-
-  &:hover {
-    .item-overlay {
-      visibility: visible;
-    }
-  }
-}
-
-.work-action-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-
 .full-image-container {
   display: flex;
   justify-content: center;

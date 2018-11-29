@@ -10,7 +10,7 @@ class CreateWork extends React.Component {
       work: {
         title: '',
         material: '',
-        medium: "painting",
+        media: "painting",
         availability: "active",
         attached_images_urls: [],
         description: '',

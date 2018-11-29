@@ -5,12 +5,6 @@
     height: 360px;
 }
 
-.filter-button {
-    @extend .button;
-    width: 120px;
-    border: none;
-}
-
 .artwork {
     min-width: 100px;
     .work-image {
@@ -20,16 +14,4 @@
     &:hover {
       background-color: rgba($snow, 0.5);
     }
-}
-
-.contact-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-
-  .contact {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-  }
 }

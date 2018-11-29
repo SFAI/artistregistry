@@ -10,9 +10,10 @@ Picasso = Artist.create(
   name: 'Picasso',
   email: 'picasso@artists.sfai.edu',
   password: 'password',
-  program: 'art',
+  program: 4,
   description: 'bleh',
-  genres: 'bleh',
+  media: 'bleh',
+  year: 1901,
   open_to_commissions: true
   )
 #Picasso has id 0
@@ -24,9 +25,10 @@ Kahlo = Artist.create(
   name: 'Frida Kahlo',
   email: 'fkahlo@artists.sfai.edu',
   password: 'password',
-  program: 'art',
+  program: 4,
   description: 'bleh',
-  genres: 'bleh',
+  year: 1932,
+  media: 'bleh',
   open_to_commissions: true
   )
 Kahlo.skip_confirmation!
@@ -37,9 +39,10 @@ Matisse = Artist.create(
   name: 'Matisse',
   email: 'henri@artists.sfai.edu',
   password: 'password',
-  program: 'art',
+  program: 6,
   description: 'bleh',
-  genres: 'bleh',
+  year: 1889,
+  media: 'bleh',
   open_to_commissions: true
   )
 Matisse.skip_confirmation!
@@ -71,7 +74,7 @@ Lisa = Picasso.works.create(
   id: 0,
   title: 'Mona Lisa',
   material: 'Oil on canvas',
-  medium: 0,
+  media: 2,
   availability: 0,
   price: 43.45,
   description: "Some really cool stuff"

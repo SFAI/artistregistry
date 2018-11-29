@@ -14,6 +14,10 @@ class StyledModal extends React.Component {
     }
   }
 
+  static propTypes = {
+    color: PropTypes.object.isRequired,
+  };
+
   showModal = () => {
     this.setState({ show: true });
   };
@@ -35,7 +39,7 @@ class StyledModal extends React.Component {
           <div className="modal-head bg-white pl3 pr3">
             <h3>{this.props.title}</h3>
             <Touchable onPress={this.hideModal}>
-              <FontAwesomeIcon className="gray pointer" icon={faTimes}/>
+              <FontAwesomeIcon className="gray pointer" icon={faTimes} />
             </Touchable>
           </div>
           <div className="modal-content pa4">
