@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     member do
       get 'requests'
       post :generate_new_password_email
-      get 'update', to: 'update_artist'
+      get 'update'
     end
 
   end
@@ -23,24 +23,21 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :works, only: [:index, :new, :show] do
+  resources :works, only: [:index, :new, :show, :edit] do
     collection do
-      get 'categories', to: 'get_work_category_enums'
-    end
-    member do
-      get 'edit', to: 'edit_work'
+      get 'categories', action: :get_work_category_enums
     end
   end
 
   resources :requests, only: [:index] do
     collection do
-      get 'types', to: 'get_type_enum'
+      get 'types', action: :get_type_enum
     end
   end
 
   resources :commissions, only: [:index] do
     collection do
-      get 'commssions'
+      get 'types', action: :get_type_enum
     end
   end
 

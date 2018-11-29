@@ -4,7 +4,9 @@ class ArtistsController < ApplicationController
   def index
   	@artists = Artist.all
   	respond_to do |format|
-      format.html { render :index }
+      format.html {
+
+      }
       format.json {
         render json: @artists
       }
