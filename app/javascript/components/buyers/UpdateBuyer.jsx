@@ -1,6 +1,7 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import Button from "../helpers/Button";
+import FormError from "../helpers/FormError";
 
 class UpdateBuyer extends React.Component {
   constructor(props) {
@@ -9,7 +10,11 @@ class UpdateBuyer extends React.Component {
       buyerId: this.props.buyerId,
       buyer: {},
       avatar: null,
-      componentDidMount: false
+      componentDidMount: false,
+      errors : {
+        name: "",
+        phone_number: ""
+      }
     }
   }
 
@@ -44,38 +49,69 @@ class UpdateBuyer extends React.Component {
     this.avatar.click();
   }
 
-  handleSubmit = (event) => {
-
-    event.preventDefault();
-    let formData = new FormData();
-    formData.append('buyer[name]', this.state.buyer.name);
-    formData.append('buyer[phone_number]', this.state.buyer.phone_number);
-
-    let { avatar } = this.state;
-    if ( avatar ) {
-      formData.append(
-        'buyer[avatar]',
-        avatar,
-        avatar.name
-      );
+  checkErrors = () => {
+    let errors = {
+      name: "",
+      phone_number: ""
     }
 
-    fetch(APIRoutes.buyers.update(this.state.buyer.id), {
-      method: 'PUT',
-      body: formData,
-      credentials: 'same-origin',
-      headers: {
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+    const phoneRegEx = /^[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
+    const { buyer } = this.state;
+    if (!buyer.phone_number.match(phoneRegEx)) {
+      errors.phone_number = "This phone number is invalid.";
+    }
+
+    if (!buyer.name) {
+      errors.name = "This field cannot be empty.";
+    }
+
+    return errors;
+  }
+
+  handleSubmit = (event) => {
+
+    let errors = this.checkErrors();
+
+    let hasErrors = false;
+    Object.keys(errors).forEach((key) => {
+      if (errors[key]) {
+        hasErrors = true;
       }
-    }).then((data) => {
-      window.location = `/buyers/` + this.state.buyer.id;
-    }).catch((data) => {
-      console.error(data);
     });
+
+    if (hasErrors) {
+      this.setState({ errors: errors });
+    } else {
+      event.preventDefault();
+      let formData = new FormData();
+      formData.append('buyer[name]', this.state.buyer.name);
+      formData.append('buyer[phone_number]', this.state.buyer.phone_number);
+
+      let { avatar } = this.state;
+      if ( avatar ) {
+        formData.append(
+          'buyer[avatar]',
+          avatar,
+          avatar.name
+        );
+      }
+
+      fetch(APIRoutes.buyers.update(this.state.buyer.id), {
+        method: 'PUT',
+        body: formData,
+        credentials: 'same-origin',
+        headers: {
+          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+        }
+      }).then((data) => {
+        window.location = `/buyers/` + this.state.buyer.id;
+      }).catch((data) => {
+        console.error(data);
+      });
+    }
   }
 
   render() {
-    console.log(this.state);
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>
@@ -94,6 +130,7 @@ class UpdateBuyer extends React.Component {
             className="textinput"
             required
           />
+          <FormError error={this.state.errors.name}/>
           <h5>Phone Number</h5>
           <input
             value={this.state.buyer.phone_number}
@@ -101,9 +138,9 @@ class UpdateBuyer extends React.Component {
             name="phone_number"
             type="text"
             className="textinput"
-            required
+            placeholder="123-456-7890"
           />
-
+          <FormError error={this.state.errors.phone_number}/>
           <h5>Profile Photo</h5>
           <div className="avatar-sel">
             <input
