@@ -107,7 +107,6 @@ class WorkForm extends React.Component {
 
   handleSubmit = () => {
     let errors = this.checkErrors();
-
     let hasErrors = false;
     Object.keys(errors).forEach((key) => {
       if (errors[key]) {
@@ -119,18 +118,14 @@ class WorkForm extends React.Component {
       this.setState({ errors: errors });
     } else {
       let formData = new FormData();
-      formData.append('work[title]', this.state.work.title);
-      formData.append('work[material]', this.state.work.material);
-      formData.append('work[media]', this.state.work.media);
-      formData.append('work[availability]', this.state.work.availability);
-      formData.append('work[artist_id]', this.state.work.artist_id);
-      formData.append('work[description]', this.state.work.description);
+      const formKeys = ['artist_id', 'title', 'material', 'media', 'availability', 'description'];
+      formKeys.forEach(key => {
+        formData.append(`work[${key}]`, this.state.work[key]);
+      });
 
       this.state.attachmentsToDelete.forEach((attachment) => {
         formData.append('work[attachments_to_delete][]', attachment);
-      })
-
-      formData.append('work[featured_image]', this.state.work.featured_image);
+      });
 
       this.state.uploads.forEach((upload) => {
         formData.append('work[attachments_attributes][]', upload.img);
@@ -215,7 +210,7 @@ class WorkForm extends React.Component {
           type="text"
           className="textinput"
         />
-        <FormError error={this.state.errors["title"]}/>
+        <FormError error={this.state.errors["title"]} />
         <h5>Material</h5>
         <input
           value={this.state.work.material}
@@ -224,7 +219,7 @@ class WorkForm extends React.Component {
           type="text"
           className="textinput"
         />
-        <FormError error={this.state.errors["material"]}/>
+        <FormError error={this.state.errors["material"]} />
         <h5>Media</h5>
         <select
           onChange={this.handleChange}
@@ -258,7 +253,7 @@ class WorkForm extends React.Component {
           className="textarea"
           value={this.state.work.description}
         />
-        <FormError error={this.state.errors["description"]}/>
+        <FormError error={this.state.errors["description"]} />
         <h5>Images</h5>
         <div className="dropzone-container">
           <Dropzone
@@ -273,7 +268,7 @@ class WorkForm extends React.Component {
         <div className="mb2 mt2 w-100">
           {this.renderThumbnails()}
         </div>
-        <FormError error={this.state.errors["images"]}/>
+        <FormError error={this.state.errors["images"]} />
         <h5>Featured Image</h5>
         <select
           onChange={this.handleChange}
@@ -286,10 +281,10 @@ class WorkForm extends React.Component {
             })
           }
         </select>
-        <FormError error={this.state.errors["featuredImage"]}/>
+        <FormError error={this.state.errors["featuredImage"]} />
         <div className="submit-container mt3 mb3">
           <button
-            onClick={() => {window.location = `/artists/` + this.state.work.artist_id}}
+            onClick={() => { window.location = `/artists/` + this.state.work.artist_id }}
             className="button-secondary b--magenta w4"
           >
             Cancel

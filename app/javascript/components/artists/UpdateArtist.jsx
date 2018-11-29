@@ -62,21 +62,15 @@ class UpdateArtist extends React.Component {
   handleSubmit = (event) => {
 
     event.preventDefault();
-    //
     let formData = new FormData();
-    formData.append('artist[name]', this.state.artist.name);
-    formData.append('artist[program]', this.state.artist.program);
-    formData.append('artist[media]', this.state.artist.media);
-    formData.append('artist[description]', this.state.artist.description);
-    formData.append('artist[featured_work_id]', this.state.artist.featured_work_id);
+    const formKeys = ['name', 'program', 'media', 'description', 'featured_work_id'];
+    formKeys.forEach(key => {
+      formData.append(`artist[${key}]`, this.state.artist[key]);
+    });
 
-    let { avatar } = this.state;
+    const { avatar } = this.state;
     if (avatar) {
-      formData.append(
-        'artist[avatar]',
-        avatar,
-        avatar.name
-      );
+      formData.append('artist[avatar]', avatar, avatar.name);
     }
 
     fetch(APIRoutes.artists.update(this.state.artist.artist_id), {

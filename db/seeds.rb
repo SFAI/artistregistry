@@ -74,7 +74,7 @@ Lisa = Picasso.works.create(
   id: 0,
   title: 'Mona Lisa',
   material: 'Oil on canvas',
-  media: 0,
+  media: 2,
   availability: 0,
   price: 43.45,
   description: "Some really cool stuff"
