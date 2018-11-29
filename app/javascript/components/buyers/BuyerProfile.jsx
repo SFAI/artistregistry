@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import Button from "../helpers/Button"
 
 /**
 * @prop buyer: buyer associated with profile
@@ -47,12 +48,22 @@ class BuyerProfile extends React.Component {
       <div className="center mw8">
         <div className="buyer-profile-header">
           <h1>{name}</h1>
+          {
+            this.state.canEditProfile &&
+            <Button
+              onClick={()=>{window.location = `/buyers/${this.props.buyer.id}/update`}}
+              type="button-primary"
+              color="indigo"
+              className="w4"
+            >
+              Edit Profile
+            </Button>
+          }
         </div>
         <div className="bg-white w-100 buyer-contents-container pa3">
           <div className="h4 w4 br-100 bg-gray ma4">
-            <img src={buyer.avatar.url} />
+            <img className="br-100 avatar-img" src={buyer.avatar.url} />
           </div>
-          <button onClick={()=>{window.location = `/buyers/${this.props.buyer.id}/update`}}>Edit Profile</button>
           <div>
             <div className="buyer-contents">
               <div>

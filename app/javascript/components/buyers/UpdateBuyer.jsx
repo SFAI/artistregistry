@@ -1,23 +1,29 @@
 import PropTypes from "prop-types"
 import React from 'react';
-import { Button, Dialog, Intent } from "@blueprintjs/core";
-
-
+import Button from "../helpers/Button";
 
 class UpdateBuyer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      buyer: {
-        id: this.props.buyer.id,
-        name: this.props.buyer.name,
-        email: this.props.buyer.email,
-        phone_number: this.props.buyer.phone_number,
-        avatar: this.props.buyer.avatar
-      }
+      buyerId: this.props.buyerId,
+      buyer: {},
+      avatar: null,
+      componentDidMount: false
     }
   }
 
+  componentDidMount() {
+    const buyerRoute = APIRoutes.buyers.show(this.state.buyerId);
+    Requester.get(buyerRoute).then(
+      response => {
+        this.setState({ buyer: response, componentDidMount: true });
+      },
+      error => {
+        console.error(error);
+      }
+    )
+  }
 
   handleChange = (event) => {
     const buyer = this.state.buyer;
@@ -32,6 +38,10 @@ class UpdateBuyer extends React.Component {
     }
 
     this.setState({ avatar: files[0] });
+  }
+
+  selectFile = () => {
+    this.avatar.click();
   }
 
   handleSubmit = (event) => {
@@ -65,10 +75,16 @@ class UpdateBuyer extends React.Component {
   }
 
   render() {
+    console.log(this.state);
+    if (!this.state.componentDidMount) {
+      return (
+        <div><h2>Loading</h2></div>
+      );
+    }
     return (
-      <div>
+      <div className="mw6 center">
         <h1>UPDATE BUYER</h1>
-        <form action={APIRoutes.buyers.update(this.state.buyer.id)} method="PUT" onSubmit={this.handleSubmit}>
+        <div className="bg-white pa3">
           <h5>Name</h5>
           <input
             value={this.state.buyer.name}
@@ -89,24 +105,52 @@ class UpdateBuyer extends React.Component {
           />
 
           <h5>Profile Photo</h5>
-          <input name="avatar" id="avatar" type="file" onChange={this.setFile}/>
-
-
+          <div className="avatar-sel">
+            <input
+              name="avatar"
+              id="avatar"
+              type="file"
+              ref={(node) => this.avatar = node}
+              onChange={this.setFile}
+            />
+            <Button
+              onClick={this.selectFile}
+              className="w4"
+              type="button-secondary"
+              color="magenta"
+            >
+              Select File
+            </Button>
+            <h5 className="ml2">
+              {
+                this.state.avatar ? (
+                  this.state.avatar.name
+                ) : (
+                  this.state.buyer.avatar &&
+                  this.state.buyer.avatar.name
+                )
+              }
+            </h5>
+          </div>
           <div className="submit-container mt3 mb3">
             <Button
-              intent={Intent.PRIMARY}
               onClick={() => {window.location = `/buyers/${this.state.buyer.id}`}}
-              text="Cancel"
-              className="button-secondary b--magenta w4"
-            />
+              type="button-secondary"
+              color="magenta"
+              className="w4"
+            >
+              Cancel
+            </Button>
             <Button
-              intent={Intent.SECONDARY}
-              type="submit"
-              text="Save"
-              className="button-primary bg-magenta w4 ml3"
-            />
+              onClick={this.handleSubmit}
+              type="button-primary"
+              color="magenta"
+              className="w4 ml2"
+            >
+              Submit
+            </Button>
           </div>
-        </form>
+        </div>
       </div>
     )
   }
