@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import React from 'react';
-import { Button, Dialog, Intent } from "@blueprintjs/core";
+import Button from "../helpers/Button";
 
 
 class UpdateArtist extends React.Component {
@@ -12,6 +12,7 @@ class UpdateArtist extends React.Component {
       works: [],
       categories: {},
       componentDidMount: false,
+      avatar: null
     }
   }
 
@@ -37,6 +38,10 @@ class UpdateArtist extends React.Component {
         console.error(error);
       }
     );
+  }
+
+  selectFile = () => {
+    this.avatar.click();
   }
 
   handleChange = (event) => {
@@ -83,7 +88,6 @@ class UpdateArtist extends React.Component {
   }
 
   render() {
-    console.log(this.state.artist);
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>
@@ -92,7 +96,7 @@ class UpdateArtist extends React.Component {
     return (
       <div className="mw6 center">
         <h1>UPDATE ARTIST</h1>
-        <form action={APIRoutes.artists.update(this.state.artist.artist_id)} method="PUT" onSubmit={this.handleSubmit}>
+        <div>
           <h5>Name</h5>
           <input
             value={this.state.artist.name}
@@ -149,23 +153,52 @@ class UpdateArtist extends React.Component {
           </select>
 
           <h5>Profile Photo</h5>
-          <input name="avatar" id="avatar" type="file" onChange={this.setFile} />
-
+          <div className="avatar-sel">
+            <input
+              name="avatar"
+              id="avatar"
+              type="file"
+              ref={(node) => this.avatar = node}
+              onChange={this.setFile}
+            />
+            <Button
+              onClick={this.selectFile}
+              className="w4"
+              type="button-secondary"
+              color="magenta"
+            >
+              Select File
+            </Button>
+            <h5 className="ml2">
+              {
+                this.state.avatar ? (
+                  this.state.avatar.name
+                ) : (
+                  this.state.artist.avatar &&
+                  this.state.artist.avatar.name
+                )
+              }
+            </h5>
+          </div>
           <div className="submit-container mt3 mb3">
             <Button
-              intent={Intent.PRIMARY}
               onClick={() => { window.location = `/artists/${this.state.artist.artist_id}` }}
-              text="Cancel"
-              className="button-secondary b--magenta w4"
-            />
+              className="w4"
+              type="button-secondary"
+              color="magenta"
+            >
+              Cancel
+            </Button>
             <Button
-              intent={Intent.SECONDARY}
-              type="submit"
-              text="Save"
-              className="button-primary bg-magenta w4 ml3"
-            />
+              onClick={this.handleSubmit}
+              type="button-primary"
+              color="magenta"
+              className="w4 ml2"
+            >
+              Save
+            </Button>
           </div>
-        </form>
+        </div>
       </div>
     )
   }
