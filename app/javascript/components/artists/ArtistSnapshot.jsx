@@ -7,18 +7,19 @@ class ArtistSnapshot extends React.Component {
     super(props);
     this.state = {};
   }
-  
+
   navigateToArtist = () => {
     window.location = `/artists/${this.props.artist.id}`;
   }
-  
+
   render() {
+    const { name, avatar, program } = this.props.artist;
     return (
       <UserSnapshot
-        name={this.props.artist.name}
-        avatarSrc=""
+        name={name}
+        avatarSrc={avatar.url || ""}
         navigate={this.navigateToArtist}
-        description={""}
+        program={program.replace(/_/g, ' ').replace(/(and)/, '+')}
       >
       </UserSnapshot>
     );

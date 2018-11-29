@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import RequestForm from '../requests/RequestForm';
 import WorkToggle from "./WorkToggle";
+import ArtistSnapshot from "../artists/ArtistSnapshot";
 
 class DetailedWork extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class DetailedWork extends React.Component {
       componentDidMount: false
     };
   }
-  
+
   componentDidMount() {
     const route = APIRoutes.works.show(this.props.work_id);
     Requester.get(route).then(
@@ -31,11 +32,14 @@ class DetailedWork extends React.Component {
       );
     }
     return (
-      <div className="mw9 center pt4">
-        <div className="fl w-60">
-          <WorkToggle work={this.state.work}/>
+      <div className="pt4">
+        <div className="fl w-70">
+          <WorkToggle work={this.state.work} />
         </div>
-        <div className="fl w-40 pl3">
+        <div className="fl w-30 pl3">
+          <div className="bg-white mb3 overflow-hidden">
+            <ArtistSnapshot artist={this.state.work.artist} />
+          </div>
           <RequestForm
             buyer={this.props.buyer}
             artist_id={this.state.work.artist_id}
