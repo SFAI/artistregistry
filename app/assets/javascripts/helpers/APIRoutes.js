@@ -28,7 +28,6 @@ class ApiRoutes {
 
   get buyers() {
     return {
-      index       : `/api/buyers`,
       show        : (id) => `/api/buyers/${id}`,
       update      : (id) => `/api/buyers/${id}`,
       requests    : (id) => `/api/buyers/requests/${id}`,

@@ -6,11 +6,6 @@ class Api::BuyersController < ApplicationController
     render json: @buyer, serializer: BuyerSerializer
   end
 
-  def index
-    buyers = Buyer.all
-    render json: buyers
-  end
-
   def requests
     buyer = Buyer.find(params[:id])
     requests = buyer.requests

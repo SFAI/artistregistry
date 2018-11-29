@@ -15,24 +15,9 @@ class UpdateBuyer extends React.Component {
         phone_number: this.props.buyer.phone_number,
         avatar: this.props.buyer.avatar
       }
-      // componentDidMount: false,
     }
   }
-  //
-  // // componentDidMount = () => {
-  // //   const route = APIRoutes.works.categories;
-  // //   Requester.get(route).then(
-  // //     response => {
-  // //       this.setState({
-  // //         categories: response,
-  // //         componentDidMount: true
-  // //       });
-  // //     },
-  // //     error => {
-  // //       console.error(error);
-  // //     }
-  // //   );
-  // // }
+
 
   handleChange = (event) => {
     const buyer = this.state.buyer;
@@ -52,7 +37,6 @@ class UpdateBuyer extends React.Component {
   handleSubmit = (event) => {
 
     event.preventDefault();
-    //
     let formData = new FormData();
     formData.append('buyer[name]', this.state.buyer.name);
     formData.append('buyer[email]', this.state.buyer.email);

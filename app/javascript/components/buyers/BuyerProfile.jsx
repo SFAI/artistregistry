@@ -22,10 +22,9 @@ class BuyerProfile extends React.Component {
       Requester.get(buyer_route)
     ]).then(response => {
       const [buyer_response] = response;
-      console.log(buyer_response);
       this.setState({
         buyer: buyer_response,
-        canEditProfile: userType === "buyer" && user.id === buyer.id,
+        canEditProfile: userType === "buyer" && user && user.id === buyer.id,
         componentDidMount: true
       });
     });

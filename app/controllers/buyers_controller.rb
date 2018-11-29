@@ -1,6 +1,6 @@
 class BuyersController < ApplicationController
-
   def index
+
   end
 
   def show
@@ -11,4 +11,9 @@ class BuyersController < ApplicationController
     @buyer = Buyer.find(params[:id])
   end
 
+  def generate_new_password_email
+   buyer = Buyer.find(params[:user_id])
+   buyer.send_reset_password_instructions flash[:notice] = 'Reset password instructions have been sent to #{user.email}.'
+   redirect_to buyer_user_path(buyer)
+  end
 end
