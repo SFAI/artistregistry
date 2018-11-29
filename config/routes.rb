@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'works#index'
 
-  resources :artists, only: [:show, :index, :update] do
+  resources :artists, only: [:show, :index, :edit] do
     member do
       post :generate_new_password_email
     end

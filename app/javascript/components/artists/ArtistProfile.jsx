@@ -84,7 +84,7 @@ class ArtistProfile extends React.Component {
             <div className="h4 w4 br-100 mb4 bg-gray self-center">
               <img src={artist.avatar.url}/>
             </div>
-            <button onClick={()=>{window.location = `/artists/${this.props.artist.id}/update`}}>Edit Profile</button>
+            <button onClick={()=>{window.location = `/artists/${this.props.artist.id}/edit`}}>Edit Profile</button>
             <div className="info">
               <h5 className="uppercase">Education</h5>
               <p> {program} </p>

@@ -1,6 +1,5 @@
 class ArtistsController < ApplicationController
-  # load_and_authorize_resource
-  # before_action :set_current_buyer
+  load_and_authorize_resource
   def index
   	@artists = Artist.all
   	respond_to do |format|
@@ -19,7 +18,7 @@ class ArtistsController < ApplicationController
     @works = @artist.works
   end
 
-  def update
+  def edit
     @artist = Artist.find(params[:id])
   end
 

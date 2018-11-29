@@ -33,7 +33,7 @@ nav.header
           - if current_artist
               div.dropdown
                 li.header-item#login
-                  = link_to artistid_path(current_artist.id)
+                  = link_to artist_path(current_artist.id)
                     div.header-bar.bg-ochre
                     h4.header-link-item #{current_artist.name}
                 div.dropdown-container

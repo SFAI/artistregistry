@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   before_action :set_current_user
-
 	def current_ability
 		if buyer_signed_in?
 			@current_ability ||= ::Ability.new(current_buyer)
@@ -14,24 +13,11 @@ class ApplicationController < ActionController::Base
 	end
 
 	def after_sign_in_path_for(user)
-	    case
-	    when user.is_a?(Artist)
-	        artist_path
-	    when user.is_a?(Buyer)
-	        buyer_path
-	    else
-	        super
-	    end
+	    root_path
 	end
 
 	def after_sign_out_path_for(user)
-	    if user == :artist
-	        artist_path
-	    elsif user == :buyer
-	        buyer_path
-	    else
-	        root_path
-	   	end
+	    root_path
 	end
 
   def toast(type, text)
