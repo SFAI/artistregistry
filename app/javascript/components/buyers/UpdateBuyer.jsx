@@ -39,7 +39,6 @@ class UpdateBuyer extends React.Component {
     event.preventDefault();
     let formData = new FormData();
     formData.append('buyer[name]', this.state.buyer.name);
-    formData.append('buyer[email]', this.state.buyer.email);
     formData.append('buyer[phone_number]', this.state.buyer.phone_number);
 
     let { avatar } = this.state;
@@ -75,15 +74,6 @@ class UpdateBuyer extends React.Component {
             value={this.state.buyer.name}
             onChange={this.handleChange}
             name="name"
-            type="text"
-            className="textinput"
-            required
-          />
-          <h5>Email</h5>
-          <input
-            value={this.state.buyer.email}
-            onChange={this.handleChange}
-            name="email"
             type="text"
             className="textinput"
             required
