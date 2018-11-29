@@ -45,6 +45,10 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  navigateToEdit = () => {
+    window.location = `/artists/${this.props.artist.id}/update`;
+  }
+
   createNewWork = () => {
     window.location = `/works/new`;
   }
@@ -82,17 +86,24 @@ class ArtistProfile extends React.Component {
     const featured_work = works.find(work => work.id === artist.featured_work_id);
     return (
       <div>
-        <h1> {name} </h1>
+        <div className="row-head flex">
+          <h1> {name} </h1>
+          {
+            canEditProfile &&
+              <Button type="button-primary" className="w4" color="indigo" onClick={this.navigateToEdit}>
+                Edit Profile
+              </Button>
+          }
+        </div>
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
             <div className="h4 w4 br-100 mb4 bg-gray self-center">
-              <img className="br-100" src={artist.avatar.url} />
+              <img className="br-100 avatar-img" src={artist.avatar.url} />
             </div>
-            <button onClick={() => { window.location = `/artists/${this.props.artist.id}/update` }}>Edit Profile</button>
             <div className="info">
               <h5 className="ttu">Program</h5>
               <p className="ttc"> {program.replace(/_/g, ' ').replace(/(and)/, '+')} </p>
-              <h5 className="ttu">Media</h5>
+              <h5 className="ttu mt2">Media</h5>
               <p> {media} </p>
             </div>
             <div className="mt-auto self-center">
@@ -107,21 +118,27 @@ class ArtistProfile extends React.Component {
             <p> {description}</p>
           </div>
         </div>
-        <div className="mt5 mb3">
-          {['All works', 'Available', 'Sold/Rented'].map(filter => (
-            <button
-              onClick={() => this.setState({ activeFilter: filter })} key={filter}
-              className={classNames("button b--none f6 mr3 w4", activeFilter == filter ? "bg-indigo white" : "bg-white indigo")}
-            >
-              {filter}
-            </button>
-          ))}
+        <div className="mt5 mb3 row-head">
+          <div>
+            {['All works', 'Available', 'Sold/Rented'].map(filter => (
+              <button
+                onClick={() => this.setState({ activeFilter: filter })} key={filter}
+                className={classNames("button b--none f6 mr3 w4", activeFilter == filter ? "bg-indigo white" : "bg-white indigo")}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+          {canEditProfile &&
+            <Button type="button-primary" className="w4" color="indigo" onClick={this.createNewWork}>
+              New Work
+            </Button>}
         </div>
         <div className="flex flex-wrap">
           <div className="col-list-4">
             {works.map(work => {
               return (
-                <WorkColumnPanel work={work}>
+                <WorkColumnPanel work={work} key={work.id}>
                   {canEditProfile &&
                     <div className="work-action-wrapper mb2">
                       <Button type="hover-button" onClick={() => this.updateWork(work.id)}>
@@ -139,10 +156,6 @@ class ArtistProfile extends React.Component {
             })}
           </div>
         </div>
-        {canEditProfile &&
-          <button onClick={this.createNewWork}>
-            New Work
-          </button>}
         <div className="flex flex-row items-stretch mb4 mt4">
           <div className="w-50 pr2 dib flex flex-row items-stretch">
             <div className="bg-charcoal pa3">
