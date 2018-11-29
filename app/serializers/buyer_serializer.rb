@@ -5,7 +5,7 @@ class BuyerSerializer < ActiveModel::Serializer
   has_many :works
 
   def avatar
-    if object.avatar
+    if object.avatar.attached?
       avatar = object.avatar
       payload = {
         name: avatar.filename,

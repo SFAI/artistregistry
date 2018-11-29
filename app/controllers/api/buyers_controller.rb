@@ -8,7 +8,7 @@ class Api::BuyersController < ApplicationController
 
   def index
     buyers = Buyer.all
-    render json: buyers, serializer: BuyerSerializer
+    render json: buyers
   end
 
   def requests
@@ -24,7 +24,7 @@ class Api::BuyersController < ApplicationController
     @buyer = Buyer.find(params[:id])
     saved = @buyer.update(buyer_attr)
     if saved
-      @buyer.avatar.attach(buyer_attr)
+      @buyer.avatar.attach(avatar_attr)
       flash[:success] = "Buyer updated successfully!"
     else
       flash[:danger] = "Buyer failed to update."

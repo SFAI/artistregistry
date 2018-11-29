@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   get '/requests/types' => 'requests#get_type_enum'
 
   get '/buyers/:id' => 'buyers#show', as: :buyerid
-  get '/buyers/:id/update' => 'buyers#update'
+  get '/buyers/:id/update' => 'buyers#update', as: "update_buyer"
 
   get '/commissions/types' => 'commissions#get_type_enum'
 
@@ -45,6 +45,7 @@ Rails.application.routes.draw do
     resources :requests, :only => [:show, :create, :update]
     resources :commissions, :only => [:show, :create, :update, :destroy]
     resources :receipts, :only => [:show, :create, :update, :destroy]
+    resources :buyers, :only => [:index, :show, :update]
     get 'artists/works/:id' => 'artists#works'
     get 'artists/requests/:id' => 'artists#requests'
     get 'buyers/requests/:id' => 'buyers#requests'
