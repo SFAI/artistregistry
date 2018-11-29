@@ -83,6 +83,7 @@ class Request extends React.Component {
           <StyledModal
             title="COMPLETE"
             color="ochre"
+            buttonType="button-primary"
           >
             <TransactionForm
               artist={this.props.artist}
@@ -90,6 +91,7 @@ class Request extends React.Component {
               receipt={empty_receipt}
               route={APIRoutes.receipts.create}
               method="POST"
+              work={this.state.request.work}
             />
           </StyledModal>
         </div>
@@ -106,7 +108,7 @@ class Request extends React.Component {
     return (
       <div key={request.id} className="request bg-white mb3">
         <div className="fl w-25">
-          <WorkFixedPanel work={request.work}/>
+          <WorkFixedPanel work={request.work} />
         </div>
         <div className="fl w-75 pa3 request-wrapper">
           <div className="request-container w-100">
@@ -117,13 +119,13 @@ class Request extends React.Component {
                   {this.renderRequestButtons()}
                 </div>
               ) : (
-                <div className="request-action">
-                  <ArtistSnapshot artist={this.state.request.artist} />
-                  <div className="closed-request-button pa4 w5">
-                    <p> You requested this work on {closed_timestamps} </p>
+                  <div className="request-action">
+                    <ArtistSnapshot artist={this.state.request.artist} />
+                    <div className="closed-request-button pa4 w5">
+                      <p> You requested this work on {closed_timestamps} </p>
+                    </div>
                   </div>
-                </div>
-              )
+                )
             }
             <div className="attr-container pa3 mt2">
               {this.getAttr(request)}

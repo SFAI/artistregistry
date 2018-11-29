@@ -28,9 +28,6 @@ class ArtistsController < ApplicationController
    redirect_to artist_user_path(artist)
   end
 
-  def all_artists
-  end
-
   def transactions
   end
 

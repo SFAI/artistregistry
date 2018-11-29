@@ -12,4 +12,6 @@ class Artist < ApplicationRecord
   has_many :buyers, through: :commissions
   has_one_attached :avatar
   validates :name, presence: true, uniqueness: true
+
+  enum program: { art_and_technology: 0, film: 1, history_and_theory: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7 }
 end

@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     end
   end
 
+
+
   resources :requests, only: [:index] do
     collection do
       get 'types', action: :get_type_enum
@@ -40,6 +42,7 @@ Rails.application.routes.draw do
   get '/receipts/types' => 'receipts#get_receipt_type_enums'
 
   namespace :api, defaults: { format: :json } do
+    get 'artists/categories' => 'artists#get_artist_category_enums'
     resources :works, :only => [:index, :show, :create, :update, :destroy]
     resources :artists, :only => [:index, :show, :create, :update, :destroy]
     resources :requests, :only => [:show, :create, :update]
@@ -49,6 +52,7 @@ Rails.application.routes.draw do
     get 'artists/requests/:id' => 'artists#requests'
     get 'buyers/requests/:id' => 'buyers#requests'
     get 'works/filtered_works/:search_params' => 'works#filtered_works'
+    get 'artists/filtered_artists/:search_params' => 'artists#filtered_artists'
     get 'receipts/artist/:id' => 'artists#receipts'
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'

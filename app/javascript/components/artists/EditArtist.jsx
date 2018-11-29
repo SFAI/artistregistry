@@ -3,20 +3,45 @@ import React from 'react';
 import { Button, Dialog, Intent } from "@blueprintjs/core";
 
 
-
 class UpdateArtist extends React.Component {
   constructor(props) {
     super(props);
+    const { name, media, program, description, avatar, id, featured_work_id } = this.props.artist;
     this.state = {
       artist: {
-        name: this.props.artist.name,
-        genres: this.props.artist.genres,
-        program: this.props.artist.program,
-        description: this.props.artist.description,
-        avatar: this.props.artist.avatar,
-        artist_id: this.props.artist.id
-      }
+        name,
+        media,
+        program,
+        description,
+        avatar,
+        featured_work_id,
+        artist_id: id
+      },
+      works: [],
+      categories: {},
+      componentDidMount: false,
     }
+  }
+
+  componentDidMount = () => {
+    const works_route = APIRoutes.artists.works(this.props.artist.id);
+    const categories_route = APIRoutes.artists.categories;
+    Promise.all([
+      Requester.get(works_route),
+      Requester.get(categories_route)
+    ]).then(
+      response => {
+        const [works_response, categories_response] = response;
+        this.setState({
+          works: works_response,
+          categories: categories_response,
+          componentDidMount: true
+        });
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 
   handleChange = (event) => {
@@ -37,20 +62,15 @@ class UpdateArtist extends React.Component {
   handleSubmit = (event) => {
 
     event.preventDefault();
-    //
     let formData = new FormData();
-    formData.append('artist[name]', this.state.artist.name);
-    formData.append('artist[program]', this.state.artist.program);
-    formData.append('artist[genres]', this.state.artist.genres);
-    formData.append('artist[description]', this.state.artist.description);
+    const formKeys = ['name', 'program', 'media', 'description', 'featured_work_id'];
+    formKeys.forEach(key => {
+      formData.append(`artist[${key}]`, this.state.artist[key]);
+    });
 
-    let { avatar } = this.state;
-    if ( avatar ) {
-      formData.append(
-        'artist[avatar]',
-        avatar,
-        avatar.name
-      );
+    const { avatar } = this.state;
+    if (avatar) {
+      formData.append('artist[avatar]', avatar, avatar.name);
     }
 
     fetch(APIRoutes.artists.update(this.state.artist.artist_id), {
@@ -68,6 +88,11 @@ class UpdateArtist extends React.Component {
   }
 
   render() {
+    if (!this.state.componentDidMount) {
+      return (
+        <div><h2>Loading</h2></div>
+      )
+    }
     return (
       <div>
         <h1>UPDATE ARTIST</h1>
@@ -82,19 +107,24 @@ class UpdateArtist extends React.Component {
             required
           />
           <h5>Program</h5>
-          <input
+          <select
             value={this.state.artist.program}
             onChange={this.handleChange}
             name="program"
-            type="text"
-            className="textinput"
+            className="input-dropdown ttc"
             required
-          />
-          <h5>Genres</h5>
+          >
+            {
+              Object.keys(this.state.categories.program).map((obj, i) => {
+                return <option key={i} value={obj}>{obj.replace(/_/g, ' ').replace(/(and)/, '+')}</option>
+              })
+            }
+          </select>
+          <h5>Media</h5>
           <input
-            value={this.state.artist.genres}
+            value={this.state.artist.media}
             onChange={this.handleChange}
-            name="genres"
+            name="media"
             type="text"
             className="textinput"
             required
@@ -109,14 +139,26 @@ class UpdateArtist extends React.Component {
             required
           />
 
-          <h5>Profile Photo</h5>
-          <input name="avatar" id="avatar" type="file" onChange={this.setFile}/>
+          <h5>Featured Work</h5>
+          <select
+            onChange={this.handleChange}
+            value={this.state.artist.featured_work_id}
+            name="featured_work_id"
+            className="input-dropdown">
+            {
+              this.state.works.map(work => {
+                return <option key={work.id} value={work.id}>{work.title}</option>
+              })
+            }
+          </select>
 
+          <h5>Profile Photo</h5>
+          <input name="avatar" id="avatar" type="file" onChange={this.setFile} />
 
           <div className="submit-container mt3 mb3">
             <Button
               intent={Intent.PRIMARY}
-              onClick={() => {window.location = `/artists/${this.state.artist.artist_id}`}}
+              onClick={() => { window.location = `/artists/${this.state.artist.artist_id}` }}
               text="Cancel"
               className="button-secondary b--magenta w4"
             />

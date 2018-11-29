@@ -115,7 +115,7 @@ class RequestForm extends React.Component {
             name="types"
             value={this.state.request.types}
             onChange={this.handleChange}
-            className="input-dropdown"
+            className="input-dropdown ttc"
           >
             {
               Object.keys(this.state.request_types).map((obj, i) => {
@@ -132,8 +132,8 @@ class RequestForm extends React.Component {
             rows={4}
             className="textarea"
           />
-          <FormError error={this.state.errors["message"]}/>
-          <FormError error={this.state.errors["login"]}/>
+          <FormError error={this.state.errors["message"]} />
+          <FormError error={this.state.errors["login"]} />
           <button onClick={this.handleSubmit} className="button-primary bg-magenta w4 mt2">
             Submit
           </button>

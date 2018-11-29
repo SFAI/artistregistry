@@ -22,7 +22,7 @@ input[type="checkbox"] {
     width: 16px;
     height: 20px;
     padding: -5px;
-    background-color: $magenta;
+    background-color: $charcoal;
   }
 }
 
@@ -53,7 +53,6 @@ input[type="checkbox"] {
 }
 
 .button-primary {
-  border: none;
   @extend .button;
   @extend .white;
   border: none;
@@ -99,6 +98,7 @@ input[type="checkbox"] {
   @extend .row-input;
   outline: none;
   height: 45px;
+  box-sizing: border-box;
 }
 
 .input-dropdown {
@@ -118,13 +118,23 @@ input[type="checkbox"] {
 }
 
 .hover-button {
+  outline: none;
+  border: none;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   background-color: rgba($charcoal, 0.5);
 
   &:hover {
     background-color: rgba($charcoal, 0.8);
   }
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
