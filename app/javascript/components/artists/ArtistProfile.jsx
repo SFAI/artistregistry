@@ -91,8 +91,8 @@ class ArtistProfile extends React.Component {
           <h1> {name} </h1>
           {
             canEditProfile &&
-              <Button type="button-primary" className="w4" color="indigo" onClick={this.navigateToEdit}>
-                Edit Profile
+            <Button type="button-primary" className="w4" color="indigo" onClick={this.navigateToEdit}>
+              Edit Profile
               </Button>
           }
         </div>
@@ -106,9 +106,6 @@ class ArtistProfile extends React.Component {
               <p className="ttc"> {program.replace(/_/g, ' ').replace(/(and)/, '+')} </p>
               <h5 className="ttu mt2">Media</h5>
               <p> {media} </p>
-            </div>
-            <div className="mt-auto self-center">
-              <button className="button-primary bg-indigo ph4">contact</button>
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
@@ -139,7 +136,7 @@ class ArtistProfile extends React.Component {
           <div className="col-list-4">
             {works.map(work => {
               return (
-                <WorkColumnPanel work={work} key={work.id}>
+                <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
                   {canEditProfile &&
                     <div className="work-action-wrapper mb2">
                       <Button type="hover-button" onClick={() => this.updateWork(work.id)}>
