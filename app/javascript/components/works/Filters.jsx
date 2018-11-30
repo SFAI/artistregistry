@@ -58,8 +58,6 @@ class Filters extends PureComponent {
   render() {
     const { filters } = this.props;
     const filter_types = Object.keys(filters);
-    console.log("___")
-    console.log(filter_types)
     if (filter_types !== undefined && filter_types.length) {
       return (
         <div className="w-100">

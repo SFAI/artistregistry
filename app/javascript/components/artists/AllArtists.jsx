@@ -7,10 +7,27 @@ class AllArtists extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      artists: this.props.artists,
-      filters: this.props.filters
-    }
-    console.log(this.state)
+      artists: null,
+      filters: this.props.filters,
+      componentDidMount: false
+    };
+  }
+
+  componentDidMount() {
+    const artist_route = APIRoutes.artists.index;
+    Promise.all([
+      Requester.get(artist_route),
+    ]).then(
+      response => {
+        this.setState({
+          artists: response[0],
+          componentDidMount: true
+        });
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 
   getFilteredArtists = () => {
@@ -34,7 +51,16 @@ class AllArtists extends React.Component {
   };
 
   render() {
+    if (!this.state.componentDidMount) {
+      return (
+        <div>
+          <h1>Loading</h1>
+        </div>
+      );
+    }
+
     const { filters, artists } = this.state;
+
     return (
       <div className="pt4">
         <div className="fl w-20 pa3 mt5">
