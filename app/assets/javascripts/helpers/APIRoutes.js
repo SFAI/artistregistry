@@ -20,12 +20,17 @@ class ApiRoutes {
       delete      : (id) => `/api/artists/destroy/${id}`,
       works       : (id) => `/api/artists/works/${id}`,
       requests    : (id) => `/api/artists/requests/${id}`,
+      commissions : (id) => `/api/artists/commissions/${id}`,
+      filtered_artists: (search_params) => `/api/artists/filtered_artists/${search_params}`,
+      categories  : `/api/artists/categories`,
     }
   }
 
   get buyers() {
     return {
-      requests: id => `/api/buyers/requests/${id}`
+      show        : (id) => `/api/buyers/${id}`,
+      update      : (id) => `/api/buyers/${id}`,
+      requests    : (id) => `/api/buyers/requests/${id}`,
     };
   }
 
@@ -41,7 +46,7 @@ class ApiRoutes {
   get commissions() {
     return {
       create: `/api/commissions`,
-      types: `/commissions/types`
+      types: `/commissions/types`,
     }
   }
 
@@ -49,6 +54,7 @@ class ApiRoutes {
     return {
       create: `/api/receipts`,
       show: (id) => `/api/receipts/${id}`,
+      update: (id) => `/api/receipts/${id}`,
       types: `/receipts/types`,
       artist: (id) => `/api/receipts/artist/${id}`
     }

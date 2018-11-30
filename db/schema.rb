@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_23_070354) do
+ActiveRecord::Schema.define(version: 2018_11_28_055427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,12 +44,16 @@ ActiveRecord::Schema.define(version: 2018_11_23_070354) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "program"
+    t.integer "program"
     t.string "name"
     t.boolean "open_to_commissions"
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.integer "featured_work_id"
+    t.string "description"
+    t.string "media"
+    t.integer "year"
     t.index ["confirmation_token"], name: "index_artists_on_confirmation_token", unique: true
     t.index ["email"], name: "index_artists_on_email", unique: true
     t.index ["reset_password_token"], name: "index_artists_on_reset_password_token", unique: true
@@ -116,7 +120,7 @@ ActiveRecord::Schema.define(version: 2018_11_23_070354) do
   create_table "works", force: :cascade do |t|
     t.string "title"
     t.text "material"
-    t.integer "medium"
+    t.integer "media"
     t.integer "availability"
     t.decimal "price"
     t.bigint "artist_id", null: false

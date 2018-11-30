@@ -6,14 +6,14 @@ class WorksController < ApplicationController
     # return enums for filtering
     # Work.statuses
     categories = {
-      "availability": Work.availabilities,
-      "medium": Work.media
+      availability: Work.availabilities,
+      media: Work.media
     }
     render json: categories
   end
 
   def show
-    @work = Work.find(params[:id])
+    @work_id = params[:id]
   end
 
   def new

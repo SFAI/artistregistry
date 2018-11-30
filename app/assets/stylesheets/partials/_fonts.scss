@@ -2,6 +2,10 @@
 
 $font : 'Roboto', sans-serif;
 
+.font {
+	font-family: $font;
+}
+
 html, body {
 	font-family: $font;
 	color: $text;
@@ -23,10 +27,10 @@ h1 {
 h2 {
 	font-weight: 500;
 	font-size: 24px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
-h3, .work-title {
+h3 {
 	font-weight: 500;
 	font-size: 18px;
 }
@@ -47,17 +51,10 @@ h5 {
 	margin-bottom: 4px;
 }
 
-.uppercase {
-	text-transform: uppercase;
-}
-
 h6 {
 	font-size: 16px;
 	font-weight: 400;
-}
-
-.work-material {
-	font-style: italic;
+	margin-bottom: 4px;
 }
 
 .error {

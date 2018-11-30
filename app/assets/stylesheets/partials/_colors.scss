@@ -50,6 +50,9 @@ $sfai-colors: (
     box-sizing: border-box;
     border: 1px solid $hex;
   }
+  .bt--#{$name} {
+    border-top: 8px solid $hex;
+  }
   .hover-bg-#{$name} {
     &:focus,
     &:active,

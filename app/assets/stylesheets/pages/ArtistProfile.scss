@@ -1,31 +1,30 @@
 // Place all the styles related to the artists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.row-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .row-bio {
     height: 360px;
 }
 
-.filter-button {
-    @extend .button;
-    width: 120px;
-    border: none;
-}
-
 .artwork {
-    min-width: 272px;
+    min-width: 100px;
     .work-image {
-        height: 200px;
+        height: 150px;
+    }
+
+    &:hover {
+      background-color: rgba($snow, 0.5);
     }
 }
 
-.contact-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-
-  .contact {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-  }
+.avatar-img {
+  height: inherit;
+  width: inherit;
+  object-fit: cover;
 }

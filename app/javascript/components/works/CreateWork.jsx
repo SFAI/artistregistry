@@ -10,12 +10,12 @@ class CreateWork extends React.Component {
       work: {
         title: '',
         material: '',
-        medium: "painting",
+        media: "painting",
         availability: "active",
         attached_images_urls: [],
         description: '',
         featured_image: '',
-        artist_id: this.props.artist_id
+        artist_id: this.props.artist.id
       },
       route: APIRoutes.works.create,
       method: 'POST',

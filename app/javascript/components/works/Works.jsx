@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Filters from "./Filters";
+import WorkColumnPanel from "./WorkColumnPanel";
 
 class Works extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class Works extends React.Component {
     const { filters, works } = this.state;
 
     return (
-      <div className="mw9 center">
+      <div className="pt4">
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
@@ -58,20 +59,14 @@ class Works extends React.Component {
           />
           <button onClick={this.getFilteredWorks} className="button-primary bg-magenta w-100"> Apply </button>
         </div>
-        <div className="fl w-80">
+        <div className="fl w-80 pb5">
           <h1>Artwork</h1>
-          <div className="col-list">
-          {works.map(work => {
-            return (
-              <div className="ba mb2 pa2 dib w-100" key={work.id}>
-                {work.featured_image && <img src={work.featured_image.url}/>}
-                <h3>{work.title}</h3>
-                <p>{work.material}</p>
-                <p>{work.medium}</p>
-                <p>{work.artist_name}</p>
-              </div>
-            );
-          })}
+          <div className="col-list-3">
+            {works.map((work, i) => {
+              return (
+                <WorkColumnPanel key={i} work={work} />
+              );
+            })}
           </div>
         </div>
       </div>
