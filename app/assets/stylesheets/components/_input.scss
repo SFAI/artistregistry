@@ -115,6 +115,9 @@ input[type="checkbox"] {
 
 .pointer {
   cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .hover-button {

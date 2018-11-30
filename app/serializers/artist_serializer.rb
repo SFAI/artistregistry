@@ -1,6 +1,6 @@
 class ArtistSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :email, :created_at, :updated_at, :name, :program, :open_to_commissions, :media, :description, :avatar, :featured_work_id
+  attributes :id, :email, :created_at, :updated_at, :name, :program, :open_to_commissions, :media, :description, :avatar, :featured_work_id, :year
 
   has_many :works
 
