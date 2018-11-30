@@ -14,10 +14,6 @@ class StyledModal extends React.Component {
     }
   }
 
-  static propTypes = {
-    color: PropTypes.object.isRequired,
-  };
-
   showModal = () => {
     this.setState({ show: true });
   };

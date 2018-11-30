@@ -1,6 +1,13 @@
 // Place all the styles related to the artists controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.row-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .row-bio {
     height: 360px;
 }
@@ -14,4 +21,10 @@
     &:hover {
       background-color: rgba($snow, 0.5);
     }
+}
+
+.avatar-img {
+  height: inherit;
+  width: inherit;
+  object-fit: cover;
 }

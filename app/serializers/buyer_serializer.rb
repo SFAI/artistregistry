@@ -1,13 +1,13 @@
-class ArtistSerializer < ActiveModel::Serializer
+class BuyerSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :email, :created_at, :updated_at, :name, :program, :open_to_commissions, :media, :description, :avatar, :featured_work_id
+  attributes :id, :email, :created_at, :updated_at, :name, :phone_number, :avatar
 
   has_many :works
 
   def avatar
     if object.avatar.attached?
       avatar = object.avatar
-      return {
+      payload = {
         name: avatar.filename,
         url: rails_blob_path(avatar, :host => 'localhost'),
       }
