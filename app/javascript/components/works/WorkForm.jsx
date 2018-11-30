@@ -118,7 +118,7 @@ class WorkForm extends React.Component {
       this.setState({ errors: errors });
     } else {
       let formData = new FormData();
-      const formKeys = ['artist_id', 'title', 'material', 'media', 'availability', 'description'];
+      const formKeys = ['artist_id', 'title', 'material', 'media', 'availability', 'description', 'featured_image'];
       formKeys.forEach(key => {
         formData.append(`work[${key}]`, this.state.work[key]);
       });
