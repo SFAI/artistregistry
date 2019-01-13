@@ -21,7 +21,7 @@ class WorkSerializer < ActiveModel::Serializer
     result = []
     object.images.each do |image|
       payload = {
-        url: rails_blob_path(image, :host => 'localhost'),
+        url: rails_blob_path(image, only_path: true),
         id: image.id
       }
       result.push(payload)
@@ -34,7 +34,7 @@ class WorkSerializer < ActiveModel::Serializer
       img = object.images.find(object.featured_image_id)
       payload = {
         name: img.filename,
-        url: rails_blob_path(img, :host => 'localhost'),
+        url: rails_blob_path(img, only_path: true),
         id: object.featured_image_id
       }
       return payload
