@@ -128,7 +128,7 @@ class UpdateArtist extends React.Component {
   render() {
     if (this.state.apiFetchError) {
       return (
-        <div>
+        <div className="mw6 center pt4">
           <h2>Unable to load page.</h2>
           <button onClick={this.fetchData}>Try again</button>
         </div>
