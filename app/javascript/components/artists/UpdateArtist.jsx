@@ -12,6 +12,7 @@ class UpdateArtist extends React.Component {
       works: [],
       categories: {},
       componentDidMount: false,
+      apiFetchError: false,
       avatar: null,
       errors: {
         name: "",
@@ -22,7 +23,9 @@ class UpdateArtist extends React.Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount = () => { this.fetchData(); }
+
+  fetchData = () => {
     const artist_route = APIRoutes.artists.show(this.props.artist_id);
     const works_route = APIRoutes.artists.works(this.props.artist_id);
     const categories_route = APIRoutes.artists.categories;
@@ -42,6 +45,7 @@ class UpdateArtist extends React.Component {
       },
       error => {
         console.error(error);
+        this.setState({ apiFetchError: true })
       }
     );
   }
@@ -122,6 +126,14 @@ class UpdateArtist extends React.Component {
   }
 
   render() {
+    if (this.state.apiFetchError) {
+      return (
+        <div className="mw6 center pt4">
+          <h2>Unable to load page.</h2>
+          <button onClick={this.fetchData}>Try again</button>
+        </div>
+      )
+    }
     if (!this.state.componentDidMount) {
       return (
         <div><h2>Loading</h2></div>
