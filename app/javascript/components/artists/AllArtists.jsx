@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import ArtistColumnPanel from "./ArtistColumnPanel";
+import Load from "../helpers/Load";
 import Filters from "../works/Filters";
 
 class AllArtists extends React.Component {
@@ -9,7 +10,8 @@ class AllArtists extends React.Component {
     this.state = {
       artists: null,
       filters: [],
-      componentDidMount: false
+      componentDidMount: false,
+      isLoading: true
     };
   }
 
@@ -25,7 +27,8 @@ class AllArtists extends React.Component {
         this.setState({
           artists: artists_response,
           filters: filters_response,
-          componentDidMount: true
+          componentDidMount: true,
+          isLoading: false
         });
       },
       error => {
@@ -38,6 +41,7 @@ class AllArtists extends React.Component {
     // NOTE: Can't pass empty searchParams string to filtered_artists
     // Possible fix by editing routes.fb, but not sure how -B.Y.
     const searchParams = this.filters.getQuery();
+    this.setState({ isLoading: true });
 
     const artists_route = searchParams.length
       ? APIRoutes.artists.filtered_artists(searchParams)
@@ -46,7 +50,10 @@ class AllArtists extends React.Component {
     Requester.get(
       artists_route).then(
         response => {
-          this.setState({ artists: response });
+          this.setState({
+            artists: response,
+            isLoading: false
+          });
         },
         response => {
           console.error(response);
@@ -57,9 +64,7 @@ class AllArtists extends React.Component {
   render() {
     if (!this.state.componentDidMount) {
       return (
-        <div>
-          <h1>Loading</h1>
-        </div>
+        <div><Load itemType="artists" /></div>
       );
     }
 
@@ -67,6 +72,7 @@ class AllArtists extends React.Component {
 
     return (
       <div className="pt4">
+        {this.state.isLoading ? <Load itemType="artists" /> : null}
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
