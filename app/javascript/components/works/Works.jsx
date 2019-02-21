@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Filters from "./Filters";
-import Load from "../helpers/Load";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 import WorkColumnPanel from "./WorkColumnPanel";
 
 class Works extends React.Component {
@@ -58,7 +58,7 @@ class Works extends React.Component {
     const { filters, works } = this.state;
     return (
       <div className="pt4">
-        {this.state.isLoading ? <Load itemType="artwork" /> : null}
+        {this.state.isLoading ? <LoadingOverlay itemType="artwork" /> : null}
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}

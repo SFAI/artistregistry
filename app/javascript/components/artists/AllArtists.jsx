@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import ArtistColumnPanel from "./ArtistColumnPanel";
-import Load from "../helpers/Load";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 import Filters from "../works/Filters";
 
 class AllArtists extends React.Component {
@@ -64,7 +64,7 @@ class AllArtists extends React.Component {
   render() {
     if (!this.state.componentDidMount) {
       return (
-        <div><Load itemType="artists" /></div>
+        <div><LoadingOverlay itemType="artists" /></div>
       );
     }
 
@@ -72,7 +72,7 @@ class AllArtists extends React.Component {
 
     return (
       <div className="pt4">
-        {this.state.isLoading ? <Load itemType="artists" /> : null}
+        {this.state.isLoading ? <LoadingOverlay itemType="artists" /> : null}
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
