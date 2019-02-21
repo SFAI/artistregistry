@@ -88,8 +88,8 @@ class Receipt extends React.Component {
                   </div>
                 </div>
               ) : (
-                <div className="request-action">
-                  <ArtistSnapshot artist={this.state.request.artist} />
+                  <div className="request-action">
+                    <ArtistSnapshot artist={this.state.request.artist} />
                   <div className = "closed-request-button pa3 w5">
                     <p>{request.artist.name} completed this request on {closed_timestamps} </p>
                   </div>
@@ -97,7 +97,7 @@ class Receipt extends React.Component {
               )
             }
             <div className="attr-container pa3 mt2 relative">
-              <div className="overlay overlay-button">
+              <div className="z-1 absolute overlay-button">
                 {this.renderEditReceipt()}
               </div>
               {this.getAttr(request)}
