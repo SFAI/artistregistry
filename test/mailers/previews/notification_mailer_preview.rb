@@ -1,4 +1,4 @@
-# Preview all emails at http://localhost:3000/rails/mailers/notification_mailer
+# Preview all emails at http://calblueprint-sfai.herokuapp.com/rails/mailers/notification_mailer
 class NotificationMailerPreview < ActionMailer::Preview
 
 end
