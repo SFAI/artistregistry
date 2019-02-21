@@ -6,7 +6,7 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 /**
  * @prop itemType: Displays loading animation overlay
  */
-class LoadOverlay extends React.Component {
+class LoadingOverlay extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -27,4 +27,4 @@ class LoadOverlay extends React.Component {
   }
 }
 
-export default LoadOverlay;
+export default LoadingOverlay;
