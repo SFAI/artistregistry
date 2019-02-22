@@ -9,14 +9,25 @@
     @extend .vh-75;
     @extend .pa4;
 
+    form {
+      margin-bottom: 18px;
+    }
 
-    .label {
+
+    label {
       font-family: $font;
+      display: block;
+      margin-bottom: 18px;
     }
 
     .field {
       width: 100%;
       height: 48px;
+    }
+
+    input.field {
+      border-style: none;
+      padding: 0 12px;
     }
 
     .button {

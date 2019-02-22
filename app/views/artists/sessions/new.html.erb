@@ -8,14 +8,14 @@
         <% end %>
         <br />
       <div class="field">
-        <%= f.label :email %><br /><br />
+        <%= f.label :email %>
         <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
       </div>
 
       <br /><br /><br />
 
       <div class="field">
-        <%= f.label :password %><br /><br />
+        <%= f.label :password %>
         <%= f.password_field :password, class: "field", autocomplete: "current-password" %>
       </div>
 
@@ -23,7 +23,7 @@
 
       <% if devise_mapping.rememberable? %>
         <div class="field">
-          <%= f.check_box :remember_me %>
+          <%= f.check_box :remember_me, class: "inline" %>
           <%= f.label :remember_me %>
         </div>
       <% end %>
