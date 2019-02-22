@@ -10,24 +10,29 @@
     @extend .pa4;
 
     form {
-      margin-bottom: 18px;
+      margin: 36px 0;
     }
 
-
-    label {
+    .field>label, .label {
       font-family: $font;
       display: block;
       margin-bottom: 18px;
     }
 
-    .field {
-      width: 100%;
-      height: 48px;
+    div.field {
+      margin-bottom: 24px;
     }
 
     input.field {
       border-style: none;
       padding: 0 12px;
+      height: 48px;
+      width: 100%;
+    }
+
+    .inline {
+      display: inline-block;
+      margin-bottom: 0;
     }
 
     .button {
@@ -39,5 +44,10 @@
       font-family: $font;
     }
 
+  }
+
+  a {
+    color: $gray;
+    margin-right: 12px;
   }
 }

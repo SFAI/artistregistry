@@ -6,35 +6,29 @@
       <%= devise_error_messages! %>
 
       <div class="field">
-        <%= f.label :email %><br /><br />
+        <%= f.label :email %>
         <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
       </div>
 
-      <br /><br /><br />
-
       <div class="field">
-        <%= f.label :password %>
-        <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br /><br />
+        <div class="label">
+          <%= f.label :password %>
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %>
+        </div>
         <%= f.password_field :password, class: "field", autocomplete: "new-password" %>
       </div>
 
-      <br /><br /><br />
-
       <div class="field">
-        <%= f.label :password_confirmation %><br /><br />
+        <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation, class: "field", autocomplete: "new-password" %>
       </div>
-
-      <br /><br /><br />
 
       <div class="actions">
         <%= f.submit "Sign up", class: "button" %>
       </div>
     <% end %>
-
-    <br /><br />
 
     <%= render "artists/shared/links" %>
   </div>
