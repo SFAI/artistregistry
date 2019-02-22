@@ -6,25 +6,20 @@
         <% flash.each do |key, value| %>
            <div class="flash <%= key %>"><%= value %></div>
         <% end %>
-        <br />
       <div class="field">
-        <%= f.label :email %><br /><br />
+        <%= f.label :email %>
         <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
       </div>
 
-      <br /><br /><br />
-
       <div class="field">
-        <%= f.label :password %><br /><br />
+        <%= f.label :password %>
         <%= f.password_field :password, class: "field", autocomplete: "current-password" %>
       </div>
-
-      <br /><br /><br />
 
       <% if devise_mapping.rememberable? %>
         <div class="field">
           <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
+          <%= f.label :remember_me, class: "inline" %>
         </div>
       <% end %>
 
@@ -32,9 +27,7 @@
         <%= f.submit "Log in", class: "button" %>
       </div>
     <% end %>
-
-    <br /><br />
-
+    
     <%= render "artists/shared/links" %>
   </div>
 </div>
