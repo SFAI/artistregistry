@@ -10,22 +10,21 @@
 # enum program: { art_and_technology: 0, film: 1, history_and_theory: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7 }
 
 artist_list = [
-  [ 0, 'Andrew Smith', 'asmith@artists.sfai.edu', 'password', 4, 'Andrew Smith is a painter.', 'digital media', 2009, true ],
-  [ 1, 'Benjamin Evans', 'bevans@artists.sfai.edu', 'password', 0, 'Benjamin Evans is a Art and Technology student.', 'film', 2019, true ],
-  [ 2, 'Christine Ford', 'cford@artists.sfai.edu', 'password', 1, 'Christine Ford is a film student.', 'video, photography', 2020, true ],
-  [ 3, 'Danielle Alexander', 'dalexander@artists.sfai.edu', 'password', 2, 'Danielle Alexander is a History and Theory student.', 'drawing, painting', 2011, true ],
-  [ 4, 'Ethan Blaese', 'eblaese@artists.sfai.edu', 'password', 3, 'Ethan Blaese is a New Genres student.', 'video, photography', 2022, true ],
-  [ 5, 'Frank Hayes', 'fhayes@artists.sfai.edu', 'password', 4, 'Frank Hayes is a painter.', 'oil paint', 2013, true ],
-  [ 6, 'George Ruiz', 'gruiz@artists.sfai.edu', 'password', 5, 'George Ruiz is a photographer and filmmaker.', 'film, photography', 2014, true ],
-  [ 7, 'Helen Price', 'hprice@artists.sfai.edu', 'password', 6, 'Helen Price works with prints and mixed media.', 'prints, watercolor, collage', 2016, true ],
-  [ 8, 'Isabel Phillips', 'iphillips@artists.sfai.edu', 'password', 7, 'Isabel Phillips is sculpture and installation artist.', 'sculpture, installation', 2015, true ],
-  [ 9, 'Jessica Ellis', 'jellis@artists.sfai.edu', 'password', 0, 'Jessica Ellis is a Art and Technology student.', 'video, photo, film', 2011, true ],
-  [ 10, 'Kevin Henderson', 'khenderson@artists.sfai.edu', 'password', 1, 'Kevin Henderson is an aspiring filmmaker.', 'film', 2018, true ]
+  ['Andrew Smith', 'asmith@artists.sfai.edu', 'password', 4, 'Andrew Smith is a painter.', 'digital media', 2009, true ],
+  ['Benjamin Evans', 'bevans@artists.sfai.edu', 'password', 0, 'Benjamin Evans is a Art and Technology student.', 'film', 2019, true ],
+  ['Christine Ford', 'cford@artists.sfai.edu', 'password', 1, 'Christine Ford is a film student.', 'video, photography', 2020, true ],
+  ['Danielle Alexander', 'dalexander@artists.sfai.edu', 'password', 2, 'Danielle Alexander is a History and Theory student.', 'drawing, painting', 2011, true ],
+  ['Ethan Blaese', 'eblaese@artists.sfai.edu', 'password', 3, 'Ethan Blaese is a New Genres student.', 'video, photography', 2022, true ],
+  ['Frank Hayes', 'fhayes@artists.sfai.edu', 'password', 4, 'Frank Hayes is a painter.', 'oil paint', 2013, true ],
+  ['George Ruiz', 'gruiz@artists.sfai.edu', 'password', 5, 'George Ruiz is a photographer and filmmaker.', 'film, photography', 2014, true ],
+  ['Helen Price', 'hprice@artists.sfai.edu', 'password', 6, 'Helen Price works with prints and mixed media.', 'prints, watercolor, collage', 2016, true ],
+  ['Isabel Phillips', 'iphillips@artists.sfai.edu', 'password', 7, 'Isabel Phillips is sculpture and installation artist.', 'sculpture, installation', 2015, true ],
+  ['Jessica Ellis', 'jellis@artists.sfai.edu', 'password', 0, 'Jessica Ellis is a Art and Technology student.', 'video, photo, film', 2011, true ],
+  ['Kevin Henderson', 'khenderson@artists.sfai.edu', 'password', 1, 'Kevin Henderson is an aspiring filmmaker.', 'film', 2018, true ]
 ]
 
-artist_list.each do |i, n, e, pw, pr, d, m, y, s|
+artist_list.each do |n, e, pw, pr, d, m, y, s|
   artist = Artist.create(
-    id: i,
     name: n,
     email: e,
     password: pw,
@@ -40,7 +39,6 @@ artist_list.each do |i, n, e, pw, pr, d, m, y, s|
 end
 
 Gates = Buyer.create(
-  id:0,
   name: 'Bill Gates',
   email: 'bill@gates.com',
   password: 'password1',
@@ -51,7 +49,6 @@ Gates.skip_confirmation!
 Gates.save!
 
 Jobs = Buyer.create(
-  id:1,
   name: 'Steve Jobs',
   email: 'steve@apple.com',
   password: 'appleee',
@@ -64,34 +61,33 @@ Jobs.save!
 # WORKS
 # Should have 2 images each
 works_list = [
-  [ 0, 'Inner Spirit', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'media_1.jpg', 0 ],
-  [ 1, 'Joyous Expression', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_1.jpg', 1 ],
-  [ 2, 'Farmland', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_2.jpg', 2 ],
-  [ 3, 'Lilacs in Bloom', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_3.jpg', 3 ],
-  [ 4, 'Italia', 'Oil on canvas', 2, 2, 1000.00, 'Description of artwork.', 'painting_4.jpg', 4 ],
-  [ 5, 'Salmon in the Water', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_5.jpg', 5 ],
-  [ 6, 'A Pond with Lilies', 'Oil on canvas', 2, 2, 1000.00, 'Description of artwork.', 'painting_6.jpg', 6 ],
-  [ 7, 'Desert Rose', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_7.jpg', 7 ],
-  [ 8, 'Nemo I', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_8.jpg', 8 ],
-  [ 9, 'Nemo II', 'Oil on canvas', 2, 1, 1000.00, 'Description of artwork.', 'painting_9.jpg', 8 ],
-  [ 10, 'Nemo III', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_10.jpg', 8 ],
-  [ 11, 'Mozilla', 'Oil on canvas', 2, 1, 1000.00, 'Description of artwork.', 'painting_11.jpg', 9 ],
-  [ 12, 'Celebration of Color', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_12.jpg', 0 ],
-  [ 13, 'Forest Fire', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_13.jpg', 1 ],
-  [ 14, 'The Lake', 'Digital photo', 6, 1, 1000.00, 'Description of artwork.', 'painting_14.jpg', 2 ],
-  [ 15, 'Vivid', 'Acrylic on bristol', 8, 0, 1000.00, 'Description of artwork.', 'painting_15.jpg', 3 ],
-  [ 16, 'Citrus', 'Acrylic on paper', 4, 1, 1000.00, 'Description of artwork.', 'painting_16.jpg', 5 ],
-  [ 17, 'The Beach', 'Digital photo', 6, 0, 1000.00, 'Description of artwork.', 'photograph_4.jpg', 2 ],
-  [ 18, 'Summer Sherbet', 'Acrylic on Canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_18.jpg', 2 ],
-  [ 19, 'Frame I', 'Digital photo', 6, 0, 1000.00, 'Description of artwork.', 'photograph_1.jpg', 6 ],
-  [ 20, 'In the Hills', 'Digital photo', 6, 0, 1000.00, 'Description of artwork.', 'photograph_2.jpg', 6 ],
-  [ 21, 'Shadows', 'Digital photo', 6, 0, 1000.00, 'Description of artwork.', 'photograph_3.jpg', 10 ],  
+  ['Inner Spirit', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'media_1.jpg', 11 ],
+  ['Joyous Expression', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_1.jpg', 1 ],
+  ['Farmland', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_2.jpg', 2 ],
+  ['Lilacs in Bloom', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_3.jpg', 3 ],
+  ['Italia', 'Oil on canvas', 2, 2, 1000.00, 'Description of artwork.', 'painting_4.jpg', 4 ],
+  ['Salmon in the Water', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_5.jpg', 5 ],
+  ['A Pond with Lilies', 'Oil on canvas', 2, 2, 1000.00, 'Description of artwork.', 'painting_6.jpg', 6 ],
+  ['Desert Rose', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_7.jpg', 7 ],
+  ['Nemo I', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_8.jpg', 8 ],
+  ['Nemo II', 'Oil on canvas', 2, 1, 1000.00, 'Description of artwork.', 'painting_9.jpg', 8 ],
+  ['Nemo III', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_10.jpg', 8 ],
+  ['Mozilla', 'Oil on canvas', 2, 1, 1000.00, 'Description of artwork.', 'painting_11.jpg', 9 ],
+  ['Celebration of Color', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_12.jpg', 11 ],
+  ['Forest Fire', 'Oil on canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_13.jpg', 1 ],
+  ['The Lake', 'Digital photo', 6, 1, 1000.00, 'Description of artwork.', 'painting_14.jpg', 2 ],
+  ['Vivid', 'Acrylic on bristol', 8, 0, 1000.00, 'Description of artwork.', 'painting_15.jpg', 3 ],
+  ['Citrus', 'Acrylic on paper', 4, 1, 1000.00, 'Description of artwork.', 'painting_16.jpg', 5 ],
+  ['The Beach', 'Digital photo', 6, 0, 1000.00, 'Description of artwork.', 'photograph_4.jpg', 2 ],
+  ['Summer Sherbet', 'Acrylic on Canvas', 2, 0, 1000.00, 'Description of artwork.', 'painting_18.jpg', 2 ],
+  ['Frame I', 'Digital photo', 6, 0, 1000.00, 'Description of artwork.', 'photograph_1.jpg', 6 ],
+  ['In the Hills', 'Digital photo', 6, 0, 1000.00, 'Description of artwork.', 'photograph_2.jpg', 6 ],
+  ['Shadows', 'Digital photo', 6, 0, 1000.00, 'Description of artwork.', 'photograph_3.jpg', 10 ],
 ]
 
-works_list.each do |id, t, mat, med, av, pr, des, im_file, a_id|
+works_list.each do |t, mat, med, av, pr, des, im_file, a_id|
   artist = Artist.find(a_id)
   work = Work.create(
-    id: id,
     title: t,
     material: mat,
     media: med,
@@ -112,7 +108,7 @@ works_list.each do |id, t, mat, med, av, pr, des, im_file, a_id|
 end
 
 # Lisa's id is 1
-Lisa = Work.find(0)
+Lisa = Work.find(1)
 lisa_request = Request.create(
   message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet consectetur adipiscing elit duis tristique.',
   types: 0
@@ -136,5 +132,5 @@ Gates_commission = Commission.create(
   types: 'exhibition'
 )
 Gates_commission.buyer = Gates
-Gates_commission.artist = Artist.find(0)
+Gates_commission.artist = Artist.find(1)
 Gates_commission.save!
