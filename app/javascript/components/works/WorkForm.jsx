@@ -4,6 +4,7 @@ import Dropzone from "react-dropzone";
 import UploadThumbnail from "./UploadThumbnail";
 import update from 'immutability-helper';
 import FormError from '../helpers/FormError';
+import { convertSnakeCase } from "../../utils/snake_case";
 
 class WorkForm extends React.Component {
   constructor(props) {
@@ -225,10 +226,10 @@ class WorkForm extends React.Component {
           onChange={this.handleChange}
           value={this.state.work.media}
           name="media"
-          className="input-dropdown">
+          className="input-dropdown ttc">
           {
             Object.keys(this.state.categories.media).map((obj, i) => {
-              return <option key={i}>{obj}</option>
+              return <option key={i}>{convertSnakeCase(obj)}</option>
             })
           }
         </select>
@@ -237,7 +238,7 @@ class WorkForm extends React.Component {
           onChange={this.handleChange}
           value={this.state.work.availability}
           name="availability"
-          className="input-dropdown">
+          className="input-dropdown ttc">
           {
             Object.keys(this.state.categories.availability).map((obj, i) => {
               return <option key={i}>{obj}</option>

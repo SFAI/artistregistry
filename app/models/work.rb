@@ -7,6 +7,6 @@ class Work < ApplicationRecord
 
   has_one :featured_image, :class_name => "Image", :foreign_key => "featured_image_id"
 
-  enum availability: { Active: 0, Sold: 1, Rented: 2 }
-  enum media: { Ceramics: 0, Sculpture: 1, Painting: 2, Print:3,  Multiple_Media: 4, Craft: 5, Photography: 6, Film: 7, Other: 8 }
+  enum availability: { active: 0, sold: 1, rented: 2 }
+  enum media: { ceramics: 0, sculpture: 1, painting: 2, print:3,  multiple_media: 4, craft: 5, photography: 6, film: 7, other: 8 }
 end
