@@ -8,6 +8,7 @@ import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
+import { convertSnakeCase } from "../../utils/snake_case";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 
 /**
@@ -103,7 +104,7 @@ class ArtistProfile extends React.Component {
             </div>
             <div className="info">
               <h5 className="ttu">Program</h5>
-              <p className="ttc"> {program.replace(/_/g, ' ').replace(/(and)/, '+')} </p>
+              <p className="ttc"> {convertSnakeCase(program)} </p>
               <h5 className="ttu mt2">Media</h5>
               <p> {media} </p>
             </div>

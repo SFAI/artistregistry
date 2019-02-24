@@ -1,6 +1,7 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import Touchable from 'rc-touchable';
+import { convertSnakeCase } from "../../utils/snake_case";
 
 class ArtistColumnPanel extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class ArtistColumnPanel extends React.Component {
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
           <h3 className="indigo pointer">{artist.name}</h3>
         </Touchable>
-        <h6 className="ttc">{artist.program.replace(/_/g, ' ').replace(/(and)/, '+')}, {artist.year}</h6>
+        <h6 className="ttc">{convertSnakeCase(artist.program)}, {artist.year}</h6>
         <h6 className="i">{artist.works.length} work{artist.works.length > 1 && "s"} available</h6>
       </div>
     );

@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
+import { convertSnakeCase } from "../../utils/snake_case";
 
 /**
 * @prop filters: sub/categories based on Work enums
@@ -74,7 +75,7 @@ class Filters extends PureComponent {
                         className="checkbox"
                         value={item}
                       />
-                      <p className="capitalize">{item.replace(/_/g, ' ').replace(/(and)/, '+')}</p>
+                      <p className="capitalize">{convertSnakeCase(item)}</p>
                     </div>
                   ))}
                 </div>
