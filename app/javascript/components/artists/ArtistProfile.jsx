@@ -46,6 +46,15 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  getAvailability = (activeFilter) => {
+    var availability = {
+      'All works': ['active', 'sold', 'rented'],
+      'Available': ['active'],
+      'Sold/Rented': ['sold', 'rented'],
+    }
+      return (availability[activeFilter])
+    }
+
   navigateToEdit = () => {
     window.location = `/artists/${this.props.artist.id}/update`;
   }
@@ -135,8 +144,9 @@ class ArtistProfile extends React.Component {
         <div className="flex flex-wrap">
           <div className="col-list-4">
             {works.map(work => {
+              if (this.getAvailability(activeFilter).includes(work.availability)) {
               return (
-                <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
+                    <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
                   {canEditProfile &&
                     <div className="work-action-wrapper mb2">
                       <Button type="hover-button" onClick={() => this.updateWork(work.id)}>
@@ -151,6 +161,7 @@ class ArtistProfile extends React.Component {
                   }
                 </WorkColumnPanel>
               )
+            }
             })}
           </div>
         </div>
