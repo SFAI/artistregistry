@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import UserSnapshot from "../helpers/UserSnapshot";
+import { convertSnakeCase } from "../../utils/snake_case";
 
 class ArtistSnapshot extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class ArtistSnapshot extends React.Component {
         name={name}
         avatarSrc={avatar.url || ""}
         navigate={this.navigateToArtist}
-        program={program.replace(/_/g, ' ').replace(/(and)/, '+')}
+        program={convertSnakeCase(program)}
       >
       </UserSnapshot>
     );

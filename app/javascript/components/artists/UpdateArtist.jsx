@@ -2,6 +2,7 @@ import PropTypes from "prop-types"
 import React from 'react';
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
+import { convertSnakeCase } from "../../utils/snake_case";
 
 class UpdateArtist extends React.Component {
   constructor(props) {
@@ -163,7 +164,7 @@ class UpdateArtist extends React.Component {
           >
             {
               Object.keys(this.state.categories.program).map((obj, i) => {
-                return <option key={i} value={obj}>{obj.replace(/_/g, ' ').replace(/(and)/, '+')}</option>
+                return <option key={i} value={obj}>{convertSnakeCase(obj)}</option>
               })
             }
           </select>
