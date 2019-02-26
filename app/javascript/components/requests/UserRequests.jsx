@@ -4,6 +4,7 @@ import Request from "./Request";
 import Receipt from "./Receipt";
 import None from "../helpers/None";
 import classNames from "classnames";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 
 class UserRequests extends React.Component {
   constructor(props) {
@@ -126,9 +127,7 @@ class UserRequests extends React.Component {
 
   render() {
     if (!this.state.componentDidMount) {
-      return (
-        <div><h2>Loading</h2></div>
-      );
+      return <LoadingOverlay fullPage={true} />;
     }
     return (
       <div className="mw8 center">
