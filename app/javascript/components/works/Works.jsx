@@ -58,7 +58,7 @@ class Works extends React.Component {
     const { filters, works } = this.state;
     return (
       <div className="pt4">
-        {this.state.isLoading ? <LoadingOverlay itemType="artwork" /> : null}
+        {this.state.isLoading ? <LoadingOverlay itemType="artwork" fullPage={true} /> : null}
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}

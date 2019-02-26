@@ -1,6 +1,7 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import WorkForm from './WorkForm.jsx';
+import LodaingOverlay from '../helpers/LodaingOverlay.jsx'
 
 class UpdateWork extends React.Component {
   constructor(props) {
@@ -8,7 +9,8 @@ class UpdateWork extends React.Component {
 
     this.state = {
       work: null,
-      componentDidMount: false
+      componentDidMount: false,
+      updatingWork: false
     }
   }
 
