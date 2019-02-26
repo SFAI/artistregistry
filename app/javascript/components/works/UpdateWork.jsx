@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from 'react';
-import WorkForm from './WorkForm.jsx';
-import LodaingOverlay from '../helpers/LoadingOverlay.jsx'
+import WorkForm from "./WorkForm";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 
 class UpdateWork extends React.Component {
   constructor(props) {
@@ -30,6 +30,7 @@ class UpdateWork extends React.Component {
     if (!this.state.componentDidMount) {
       return <LoadingOverlay fullPage={true} />;
     }
+    return (
       <div className="mw6 center pt3">
         <h1>Update Work</h1>
         <WorkForm
