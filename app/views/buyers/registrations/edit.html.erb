@@ -6,47 +6,38 @@
       <%= devise_error_messages! %>
 
       <div class="field">
-        <%= f.label :email %><br /><br />
+        <%= f.label :email %>
         <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
       </div>
-
-      <br /><br /><br />
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
 
       <div class="field">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br /><br />
+        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
         <%= f.password_field :password, class: "field", autocomplete: "new-password" %>
         <% if @minimum_password_length %>
-          <br />
           <em><%= @minimum_password_length %> characters minimum</em>
         <% end %>
       </div>
 
-      <br /><br /><br /><br />
 
       <div class="field">
-        <%= f.label :password_confirmation %><br />
+        <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation, class: "field", autocomplete: "new-password" %>
       </div>
 
-      <br /><br />
-
       <div class="field">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
         <%= f.password_field :current_password, class: "field", autocomplete: "current-password" %>
       </div>
-
-      <br /><br /><br /><br />
 
       <div class="actions">
         <%= f.submit "Update", class: "button" %>
       </div>
     <% end %>
 
-    <br/><br/>
 
     <h3>Cancel my account</h3>
 

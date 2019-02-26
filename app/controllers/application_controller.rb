@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_current_user
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   def toast(type, text)
     flash[:toastr] = { type => text }
@@ -14,4 +15,12 @@ class ApplicationController < ActionController::Base
       @current_user_type = "buyer"
     end
   end
+
+  protected
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up) {
+        |u| u.permit(:email, :password, :password_confirmation, :terms_and_conditions)
+      }
+    end
 end
