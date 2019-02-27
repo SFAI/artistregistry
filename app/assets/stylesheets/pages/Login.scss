@@ -12,42 +12,11 @@
     form {
       margin: 36px 0;
     }
-
-    .field>label, .label {
-      font-family: $font;
-      display: block;
-      margin-bottom: 18px;
-    }
-
-    div.field {
-      margin-bottom: 24px;
-    }
-
-    input.field {
-      border-style: none;
-      padding: 0 12px;
-      height: 48px;
-      width: 100%;
-    }
-
-    label.inline {
-      display: inline-block;
-      margin-bottom: 0;
-    }
-
-    .button {
-      width: 100%;
-      height: 48px;
-      background-color: $charcoal;
-      color: $white;
-      text-transform: uppercase;
-      font-family: $font;
-    }
-
   }
-
   a {
-    color: $gray;
-    margin-right: 12px;
+    @extend .mustard;
+    &:hover {
+			text-decoration: underline;
+		}
   }
 }

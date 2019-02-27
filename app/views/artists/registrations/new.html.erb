@@ -5,31 +5,31 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
 
-      <div class="field">
+      <div class="mb3">
         <%= f.label :email %>
-        <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
+        <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email" %>
+        <p class="texthelp"> artists.sfai.edu required </p>
       </div>
 
-      <div class="field">
-        <div class="label">
+      <div class="mb3">
           <%= f.label :password %>
+          <%= f.password_field :password, class: "textinput w-100", autocomplete: "new-password" %>
           <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <p class="texthelp"> <%= @minimum_password_length %> characters minimum </p>
           <% end %>
+      </div>
+
+      <div class="mb3">
+        <%= f.label :password_confirmation, class: "mb1" %>
+        <%= f.password_field :password_confirmation, class: "textinput w-100", autocomplete: "new-password" %>
+      </div>
+
+      <div class="flex justify-between">
+        <div class="flex flex-column justify-around">
+        <%= render "artists/shared/links" %>
         </div>
-        <%= f.password_field :password, class: "field", autocomplete: "new-password" %>
-      </div>
-
-      <div class="field">
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation, class: "field", autocomplete: "new-password" %>
-      </div>
-
-      <div class="actions">
-        <%= f.submit "Sign up", class: "button" %>
+        <%= f.submit "Sign up", class: "button-primary bg-mustard w4" %>
       </div>
     <% end %>
-
-    <%= render "artists/shared/links" %>
   </div>
 </div>

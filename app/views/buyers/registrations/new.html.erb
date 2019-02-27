@@ -5,37 +5,33 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
 
-      <div class="field">
-        <%= f.label :email %><br /><br />
-        <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
+      <div class="mb3">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email" %>
+        <p class="texthelp"> alumni.sfai.edu required </p>
       </div>
 
-      <br /><br /><br />
-
-      <div class="field">
-        <%= f.label :password %>
-        <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br /><br />
-        <%= f.password_field :password, class: "field", autocomplete: "new-password" %>
+      <div class="mb3">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "textinput w-100", autocomplete: "new-password" %>
+          <% if @minimum_password_length %>
+            <p class="texthelp"> <%= @minimum_password_length %> characters minimum </p>
+          <% end %>
       </div>
 
-      <br /><br /><br />
 
-      <div class="field">
-        <%= f.label :password_confirmation %><br /><br />
-        <%= f.password_field :password_confirmation, class: "field", autocomplete: "new-password" %>
+      <div class="mb3">
+        <%= f.label :password_confirmation, class: "mb1" %>
+        <%= f.password_field :password_confirmation, class: "textinput w-100", autocomplete: "new-password" %>
       </div>
 
-      <br /><br /><br />
-
-      <div class="actions">
-        <%= f.submit "Sign up", class: "button" %>
+      <div class="flex justify-between">
+        <div class="flex flex-column justify-around">
+        <%= render "buyers/shared/links" %>
+        </div>
+        <%= f.submit "Sign up", class: "button-primary bg-mustard w4" %>
       </div>
     <% end %>
 
-    <br /><br />
-
-    <%= render "buyers/shared/links" %>
   </div>
 </div>
