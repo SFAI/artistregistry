@@ -19,7 +19,6 @@ class TransactionForm extends React.Component {
       route: this.props.route,
       method: this.props.method,
       types: {},
-      didMount: false,
       errors: {
         transaction_type: '',
         purchase_date: '',
@@ -114,7 +113,6 @@ class TransactionForm extends React.Component {
       response => {
         this.setState({
           types: response,
-          didMount: true
         });
       },
       error => {
