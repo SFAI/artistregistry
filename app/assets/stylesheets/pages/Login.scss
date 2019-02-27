@@ -19,4 +19,13 @@
 			text-decoration: underline;
 		}
   }
+  input[type="checkbox"] {
+    &:after {
+      background-color: $white;
+    }
+
+    &:checked:after {
+      background-color: $mustard;
+    }
+  }
 }
