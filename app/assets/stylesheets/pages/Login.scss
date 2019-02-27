@@ -19,6 +19,10 @@
 			text-decoration: underline;
 		}
   }
+  input {
+    border-style: none;
+  }
+  
   input[type="checkbox"] {
     &:after {
       background-color: $white;

@@ -97,7 +97,6 @@ input[type="checkbox"] {
 .textinput {
   @extend .pl2;
   @extend .row-input;
-  border-style: none;
   box-sizing: border-box;
   height: 2.5rem;
 }
