@@ -4,6 +4,7 @@ import FormError from '../helpers/FormError';
 import { convertToCurrency } from "../../utils/currency";
 import WorkFixedPanel from "../works/WorkFixedPanel";
 import Button from "../helpers/Button";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 
 /**
 * @prop artist: artist creating transaction
@@ -19,6 +20,7 @@ class TransactionForm extends React.Component {
       route: this.props.route,
       method: this.props.method,
       types: {},
+      updatingTransaction: false,
       errors: {
         transaction_type: '',
         purchase_date: '',
@@ -87,6 +89,7 @@ class TransactionForm extends React.Component {
     if (hasErrors) {
       this.setState({ errors: errors });
     } else if (method == "POST") {
+      this.setState({ updatingTransaction: true });
       Requester.post(receipts_route, payload).then(
         response => {
           window.location.href = '/requests';
@@ -96,6 +99,7 @@ class TransactionForm extends React.Component {
         }
       )
     } else {
+      this.setState({ updatingTransaction: true });
       Requester.update(receipts_route, payload).then(
         response => {
           window.location.href = '/requests';
@@ -151,6 +155,7 @@ class TransactionForm extends React.Component {
   render() {
     return (
       <div className="w-100">
+        {this.state.updatingTransaction ? <LoadingOverlay /> : null}
         <div className="fl w-30">
           <WorkFixedPanel work={this.props.work}/>
         </div>
