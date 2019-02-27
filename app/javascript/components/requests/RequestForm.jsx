@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import Panel from '../helpers/Panel';
 import FormError from '../helpers/FormError';
+import LoadingOverlay from '../helpers/LoadingOverlay';
 
 class RequestForm extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class RequestForm extends React.Component {
         message: "",
         login: ""
       },
+      updatingRequest: false,
       componentDidMount: false
     }
   }
@@ -51,6 +53,7 @@ class RequestForm extends React.Component {
     if (hasErrors) {
       this.setState({ errors: errors });
     } else {
+      this.setState({ updatingRequest: true })
       const requests_route = APIRoutes.requests.create;
       let payload = this.state.request;
       payload["buyer_id"] = this.props.buyer.id;
@@ -110,6 +113,7 @@ class RequestForm extends React.Component {
           color="magenta"
           title="Request Artwork"
         >
+        {this.state.updatingRequest ? <LoadingOverlay /> : null}
           <h5>Request Type</h5>
           <select
             name="types"

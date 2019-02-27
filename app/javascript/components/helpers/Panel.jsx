@@ -18,7 +18,7 @@ class Panel extends React.Component {
         <div className={"header-bar pl3 pr3 pt2 pb2 bg-" + this.props.color}>
           <h5 className="white mb0">{this.props.title}</h5>
         </div>
-        <div className="panel-container pa3 bg-white">
+        <div className="panel-container pa3 bg-white relative">
           {this.props.children}
         </div>
       </div>
