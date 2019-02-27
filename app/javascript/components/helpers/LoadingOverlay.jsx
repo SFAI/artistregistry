@@ -15,14 +15,15 @@ class LoadingOverlay extends React.Component {
 
   static propTypes = {
     fullPage: PropTypes.bool,
+    itemType: PropTypes.string,
   }
 
   render() {
-    let classes = ("w-100 bg-snow pa2 pt3 pb3 z-1 bg-white-90 top-0 bottom-0 left-0 flex flex-column justify-center items-center ");
-    classes += (this.props.fullPage ? "fixed" : "absolute");
-
-    return (
-      <div className={classes}>
+      <div 
+        className={classNames(
+          "w-100 bg-snow pa2 pt3 pb3 z-1 bg-white-90 top-0 bottom-0 left-0 flex flex-column justify-center items-center",
+          this.props.fullPage ? "fixed" : "absolute")}
+      >
         <FontAwesomeIcon className="gray" icon={faCircleNotch} size="3x" spin/>
         <p className="mt3 f3 i gray">Loading {this.props.itemType}</p>
       </div>

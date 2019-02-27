@@ -4,7 +4,6 @@ import FormError from '../helpers/FormError';
 import { convertToCurrency } from "../../utils/currency";
 import WorkFixedPanel from "../works/WorkFixedPanel";
 import Button from "../helpers/Button";
-import LoadingOverlay from "../helpers/LoadingOverlay";
 
 /**
 * @prop artist: artist creating transaction
@@ -152,9 +151,6 @@ class TransactionForm extends React.Component {
   }
 
   render() {
-    if (!this.state.didMount) {
-      return <LoadingOverlay fullPage={true} />;
-    }
     return (
       <div className="w-100">
         <div className="fl w-30">
