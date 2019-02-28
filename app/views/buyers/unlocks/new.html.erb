@@ -5,20 +5,16 @@
     <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
       <%= devise_error_messages! %>
 
-      <div class="field">
-        <%= f.label :email %><br /><br />
-        <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
+      <div class="mb4">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email" %>
+        <p class="texthelp"> alumni.sfai.edu email required </p>
       </div>
 
-      <br /><br /><br />
-
-      <div class="actions">
-        <%= f.submit "Resend unlock instructions", class: "button" %>
+      <div class="flex justify-between">
+        <%= render "buyers/shared/links" %>
+        <%= f.submit "Submit", class: "button-primary bg-mustard w4" %>
       </div>
     <% end %>
-
-    <br /><br />
-
-    <%= render "buyers/shared/links" %>
   </div>
 </div>
