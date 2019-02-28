@@ -64,7 +64,7 @@ class AllArtists extends React.Component {
   render() {
     if (!this.state.componentDidMount) {
       return (
-        <div><LoadingOverlay itemType="artists" /></div>
+        <div><LoadingOverlay itemType="artists" fullPage={true} /></div>
       );
     }
 
@@ -72,7 +72,7 @@ class AllArtists extends React.Component {
 
     return (
       <div className="pt4">
-        {this.state.isLoading ? <LoadingOverlay itemType="artists" /> : null}
+        {this.state.isLoading ? <LoadingOverlay itemType="artists" fullPage={true} /> : null}
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}

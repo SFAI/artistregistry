@@ -2,6 +2,7 @@ import PropTypes from "prop-types"
 import React from 'react';
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 
 class UpdateBuyer extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class UpdateBuyer extends React.Component {
       buyer: {},
       avatar: null,
       componentDidMount: false,
+      updatingBuyer: false,
       errors : {
         name: "",
         phone_number: ""
@@ -83,6 +85,7 @@ class UpdateBuyer extends React.Component {
       this.setState({ errors: errors });
     } else {
       event.preventDefault();
+      this.setState({ updatingBuyer: true });
       let formData = new FormData();
       formData.append('buyer[name]', this.state.buyer.name);
       formData.append('buyer[phone_number]', this.state.buyer.phone_number);
@@ -114,13 +117,16 @@ class UpdateBuyer extends React.Component {
   render() {
     if (!this.state.componentDidMount) {
       return (
-        <div><h2>Loading</h2></div>
+        <LoadingOverlay itemType="information" fullPage={true} />
       );
     }
+
+    let formLoadingOverlay = this.state.updatingBuyer ? <LoadingOverlay /> : null;
     return (
       <div className="mw6 center">
         <h1>UPDATE BUYER</h1>
-        <div className="bg-white pa3">
+        <div className="bg-white pa3 relative">
+          {formLoadingOverlay}
           <h5>Name</h5>
           <input
             value={this.state.buyer.name}

@@ -2,6 +2,7 @@ import PropTypes from "prop-types"
 import React from 'react';
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 import { convertSnakeCase } from "../../utils/snake_case";
 
 class UpdateArtist extends React.Component {
@@ -14,6 +15,7 @@ class UpdateArtist extends React.Component {
       categories: {},
       componentDidMount: false,
       apiFetchError: false,
+      updatingArtist: false,
       avatar: null,
       errors: {
         name: "",
@@ -99,6 +101,7 @@ class UpdateArtist extends React.Component {
     if (hasErrors) {
       this.setState({ errors: errors });
     } else {
+      this.setState({ updatingArtist: true })
       event.preventDefault();
       let formData = new FormData();
       const formKeys = ['name', 'program', 'media', 'description', 'featured_work_id'];
@@ -136,14 +139,15 @@ class UpdateArtist extends React.Component {
       )
     }
     if (!this.state.componentDidMount) {
-      return (
-        <div><h2>Loading</h2></div>
-      )
+      return <LoadingOverlay itemType="information" fullPage={true} />;
     }
+
+    let formLoadingOverlay = this.state.updatingArtist ? <LoadingOverlay /> : null;
     return (
       <div className="mw6 center">
         <h1>UPDATE ARTIST</h1>
-        <div className="bg-white pa3">
+        <div className="bg-white pa3 relative">
+          {formLoadingOverlay}
           <h5>Name</h5>
           <input
             value={this.state.artist.name}

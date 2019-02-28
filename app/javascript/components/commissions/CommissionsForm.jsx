@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import Panel from "../helpers/Panel";
 import FormError from "../helpers/FormError";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 
 class CommissionsForm extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class CommissionsForm extends React.Component {
         commission_type: "",
         login: ""
       },
+      updatingCommission: false,
       componentDidMount: false
     }
   }
@@ -43,6 +45,7 @@ class CommissionsForm extends React.Component {
     if (hasErrors) {
       this.setState({ errors: errors });
     } else {
+      this.setState({ updatingCommission: true })
       const artist_id = this.props.artist.id;
       const buyer_id = this.props.buyer.id;
       const commissions_route = APIRoutes.commissions.create;
@@ -96,6 +99,7 @@ class CommissionsForm extends React.Component {
         color="indigo"
         title="Contact the Artist"
       >
+        {this.state.updatingCommission ? <LoadingOverlay /> : null}
         <h5>Inquiry Type</h5>
         <FormError error={this.state.errors["commission_type"]}/>
         <select
