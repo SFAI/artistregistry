@@ -1,24 +1,19 @@
 <div class="loginPage">
   <div class="container">
-    <h1>Forgot your password?</h1>
+    <h1>Reset password</h1>
 
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= devise_error_messages! %>
-
-      <div class="field">
-        <%= f.label :email %><br /><br />
-        <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
+      <div class="mb4">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "textinput", autofocus: true, autocomplete: "email" %>
+        <p class="texthelp"> alumni.sfai.edu email required </p>
       </div>
 
-      <br /><br /><br />
-
-      <div class="actions">
-        <%= f.submit "Reset Password", class: "button" %>
+      <div class="flex justify-between">
+        <%= render "buyers/shared/links" %>
+        <%= f.submit "submit", class: "button-primary bg-mustard w4" %>
       </div>
     <% end %>
-
-    <br /><br />
-
-    <%= render "buyers/shared/links" %>
   </div>
 </div>

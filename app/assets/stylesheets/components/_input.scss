@@ -91,25 +91,28 @@ input[type="checkbox"] {
   @extend .mt2;
   @extend .mb2;
   @extend .w-100;
+  outline: none;
 }
 
 .textinput {
   @extend .pl2;
   @extend .row-input;
-  outline: none;
-  height: 45px;
   box-sizing: border-box;
+  height: 2.5rem;
+}
+
+.texthelp {
+  @extend .f6;
+  color: $gray;
 }
 
 .input-dropdown {
-  height: 45px;
   @extend .row-input;
-  outline: none;
+  height: 2rem;
 }
 
 .textarea {
   @extend .row-input;
-  outline: none;
   @extend .pa2;
 }
 

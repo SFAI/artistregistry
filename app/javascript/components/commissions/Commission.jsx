@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 
 class Commission extends React.Component {
   constructor(props) {
@@ -46,9 +47,7 @@ class Commission extends React.Component {
 
   render() {
     if (!this.state.componentDidMount) {
-      return (
-        <div><h2>Loading</h2></div>
-      );
+      return <LoadingOverlay fullPage={true} />;
     }
     return (
       <div className="mw7 center">

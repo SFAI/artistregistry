@@ -6,28 +6,28 @@
         <% flash.each do |key, value| %>
            <div class="flash <%= key %>"><%= value %></div>
         <% end %>
-      <div class="field">
+
+      <div class="mb3">
         <%= f.label :email %>
-        <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email" %>
+        <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email" %>
+        <p class="texthelp"> artists.sfai.edu email required </p>
       </div>
 
-      <div class="field">
-        <%= f.label :password %>
-        <%= f.password_field :password, class: "field", autocomplete: "current-password" %>
+      <div class="mb3">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "textinput w-100", autocomplete: "current-password" %>
       </div>
 
-      <% if devise_mapping.rememberable? %>
-        <div class="field">
+      <% if devise_mapping.rememberable? -%>
+        <div class="mb4">
           <%= f.check_box :remember_me %>
-          <%= f.label :remember_me, class: "inline" %>
+          <%= f.label :remember_me %>
         </div>
-      <% end %>
+      <% end -%>
 
-      <div class="actions">
-        <%= f.submit "Log in", class: "button" %>
+      <div class="flex justify-between">
+        <%= render "artists/shared/links" %>
+        <%= f.submit "Log in", class: "button-primary bg-mustard w4" %>
       </div>
     <% end %>
-    
-    <%= render "artists/shared/links" %>
-  </div>
 </div>

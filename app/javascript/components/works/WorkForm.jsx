@@ -4,6 +4,7 @@ import Dropzone from "react-dropzone";
 import UploadThumbnail from "./UploadThumbnail";
 import update from 'immutability-helper';
 import FormError from '../helpers/FormError';
+import LoadingOverlay from '../helpers/LoadingOverlay';
 import { convertSnakeCase } from "../../utils/snake_case";
 
 class WorkForm extends React.Component {
@@ -15,6 +16,7 @@ class WorkForm extends React.Component {
       method: this.props.method,
       categories: null,
       componentDidMount: false,
+      updatingWork: false,
       uploads: [],
       attachmentsToDelete: [],
       errors: {
@@ -118,6 +120,7 @@ class WorkForm extends React.Component {
     if (hasErrors) {
       this.setState({ errors: errors });
     } else {
+      this.setState({ updatingWork: true });
       let formData = new FormData();
       const formKeys = ['artist_id', 'title', 'material', 'media', 'availability', 'description', 'featured_image'];
       formKeys.forEach(key => {
@@ -198,11 +201,14 @@ class WorkForm extends React.Component {
   render() {
     if (!this.state.componentDidMount) {
       return (
-        <div><h2>Loading</h2></div>
+        <LoadingOverlay itemType="form" fullPage={true} />
       )
     }
+
+    let formLoadingOverlay = (this.state.updatingWork ? <LoadingOverlay /> : null);
     return (
-      <div className="bg-white pa3">
+      <div className="bg-white pa3 relative">
+        {formLoadingOverlay}
         <h5>Title</h5>
         <input
           value={this.state.work.title}

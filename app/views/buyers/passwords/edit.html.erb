@@ -6,30 +6,23 @@
       <%= devise_error_messages! %>
       <%= f.hidden_field :reset_password_token %>
 
-      <div class="field">
-        <%= f.label :password, "New password" %><br />
+      <div class="mb3">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: "textinput w-100", autofocus: true, autocomplete: "new-password" %>
         <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em><br /><br />
+          <p class="texthelp"> <%= @minimum_password_length %> characters minimum </p>
         <% end %>
-        <%= f.password_field :password, class: "field", autofocus: true, autocomplete: "new-password" %>
       </div>
 
-      <br /><br /><br /><br />
-
-      <div class="field">
-        <%= f.label :password_confirmation, "Confirm new password" %><br /><br />
-        <%= f.password_field :password_confirmation, class: "field", autocomplete: "off" %>
+      <div class="mb4">
+        <%= f.label :password_confirmation, "Confirm new password" %>
+        <%= f.password_field :password_confirmation, class: "textinput w-100", autocomplete: "off" %>
       </div>
 
-      <br /><br /><br /><br />
-
-      <div class="actions">
-        <%= f.submit "Change my password", class: "button" %>
+      <div class="flex justify-between">
+        <%= render "buyers/shared/links" %>
+        <%= f.submit "Submit", class: "button-primary bg-mustard w4" %>
       </div>
     <% end %>
-
-    <br /><br />
-
-    <%= render "buyers/shared/links" %>
   </div>
 </div>
