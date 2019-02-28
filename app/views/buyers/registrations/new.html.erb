@@ -20,9 +20,14 @@
       </div>
 
 
-      <div class="mb4">
+      <div class="mb3">
         <%= f.label :password_confirmation, class: "mb1" %>
         <%= f.password_field :password_confirmation, class: "textinput w-100", autocomplete: "new-password" %>
+      </div>
+
+      <div class="mb4">
+        <%= f.check_box :terms_and_conditions %>
+        <%= f.label :terms_and_conditions, "I agree to SFAI's Terms and Conditions" %>
       </div>
 
       <div class="flex justify-between">
