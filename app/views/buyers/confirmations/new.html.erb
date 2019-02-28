@@ -1,23 +1,20 @@
 <div class="loginPage">
   <div class="container">
-    <h1>Resend confirmation instructions</h1>
+    <h1>Resend Confirmation</h1>
 
     <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
       <%= devise_error_messages! %>
 
-      <div class="field">
-        <%= f.label :email, class: "label" %><br /><br />
-        <%= f.email_field :email, class: "field", autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+      <div class="mb4">
+        <%= f.label :email, class: "label" %>
+        <%= f.email_field :email, class: "textinput", autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+        <p class="texthelp"> alumni.sfai.edu email required </p>
       </div>
 
-      <br /><br /><br /><br />
-
-      <div class="actions">
-        <%= f.submit "Resend confirmation instructions", class: "button" %>
+      <div class="flex justify-between">
+        <%= render "buyers/shared/links" %>
+        <%= f.submit "Submit", class: "button-primary bg-mustard w4" %>
       </div>
     <% end %>
-
-    <br /><br />
-    <%= render "buyers/shared/links" %>
   </div>
 </div>
