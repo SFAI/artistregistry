@@ -218,7 +218,7 @@ class UpdateArtist extends React.Component {
           </div>
           <div className="submit-container mt3">
             <Button
-              onClick={() => { window.location = `/artists/${this.state.artist.artist_id}` }}
+              onClick={() => { window.location = `/artists/${this.state.artist.id}` }}
               className="w4"
               type="button-secondary"
               color="magenta"
