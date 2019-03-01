@@ -107,7 +107,7 @@ class UpdateArtist extends React.Component {
         formData.append('artist[avatar]', avatar, avatar.name);
       }
 
-      fetch(APIRoutes.artists.update(this.state.artist.artist_id), {
+      fetch(APIRoutes.artists.update(this.state.artist.id), {
         method: 'PUT',
         body: formData,
         credentials: 'same-origin',
