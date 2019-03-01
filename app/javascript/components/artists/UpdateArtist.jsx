@@ -115,7 +115,7 @@ class UpdateArtist extends React.Component {
           "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
         }
       }).then((data) => {
-        window.location = `/artists/` + this.state.artist.artist_id;
+        window.location = `/artists/` + this.state.artist.id;
       }).catch((data) => {
         console.error(data);
       });
