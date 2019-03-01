@@ -12,6 +12,10 @@
     form {
       margin: 36px 0;
     }
+
+    &.signup.part2 {
+      @extend .mw7;
+    }
   }
   a {
     @extend .mustard;
@@ -31,5 +35,22 @@
     &:checked:after {
       background-color: $mustard;
     }
+  }
+
+  .terms {
+     @extend .bg-white;
+     @extend .mb4;
+     @extend .h-100;
+     @extend .overflow-y-scroll;
+     @extend .pa4;
+     @extend .f6;
+
+     p {
+      @extend .mv3;
+     }
+
+     ol {
+      @extend .ml3;
+     }
   }
 }
