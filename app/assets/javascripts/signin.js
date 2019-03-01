@@ -19,15 +19,23 @@ checkInputs = () => {
 
 validateForm = () => {
 	let valid = true;
-
-	const email = $('input[name="artist[email]"]');
-	const password = $('input[name="artist[password]"]');
-	const passwordConfirmation = $('input[name="artist[password_confirmation]"]');
+	const isArtist = $("form").hasClass("new_artist");
+	let email, password, passwordConfirmation;
+	
+	if (isArtist) {
+		email = $('input[name="artist[email]"]');
+		password = $('input[name="artist[password]"]');
+		passwordConfirmation = $('input[name="artist[password_confirmation]"]');
+	} else {
+		email = $('input[name="buyer[email]"]');
+		password = $('input[name="buyer[password]"]');
+		passwordConfirmation = $('input[name="buyer[password_confirmation]"]');
+	}
 
 	const atIndex = email.val().indexOf("@");
 	if (!email.val() ||
 			atIndex == -1 ||
-			email.val().slice(atIndex + 1, email.val().length) != "artists.sfai.edu") {
+			email.val().slice(atIndex + 1, email.val().length) != (isArtist ? "artists.sfai.edu" : "alumni.sfai.edu")) {
 		email.addClass("invalid");
 		valid = false;
 	}
