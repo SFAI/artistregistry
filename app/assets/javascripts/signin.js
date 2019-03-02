@@ -10,14 +10,6 @@ prevPage = () => {
 	$(".signup.part1").show();
 }
 
-enableNextPage = () => {
-	if (validateForm()) {
-		$('button').removeAttr('disabled');
-	} else {
-		$('button').attr('disabled', 'disabled');
-	}
-}
-
 enableSubmit = (el) => {
 	if ($(el).is(":checked")) {
 		$('input[type="submit"]').removeAttr('disabled');
@@ -26,10 +18,10 @@ enableSubmit = (el) => {
 	}
 }
 
-validateForm = () => {
+validateForm = (showEmailError, showPasswordError, showConfirmationError) => {
+	let valid = true;
 	const isArtist = $("form").hasClass("new_artist");
 	let email, password, passwordConfirmation;
-
 	if (isArtist) {
 		email = $('input[name="artist[email]"]');
 		password = $('input[name="artist[password]"]');
@@ -40,25 +32,47 @@ validateForm = () => {
 		passwordConfirmation = $('input[name="buyer[password_confirmation]"]');
 	}
 
+	/* Validate email domain is correct */
 	const atIndex = email.val().indexOf("@");
 	if (!email.val() ||
 			atIndex == -1 ||
 			email.val().slice(atIndex + 1, email.val().length) != (isArtist ? "artists.sfai.edu" : "alumni.sfai.edu")) {
-		return false;
+		
+		if (showEmailError) { email.next(".texthelp").addClass("error"); }
+		valid = false;
+	} else {
+		email.next(".texthelp").removeClass("error");
 	}
 
+	/* Validate password is minimum length */
 	if (!password.val() || password.val().length < 6) {
-		return false;
+		if (showPasswordError) { password.next(".texthelp").addClass("error"); }
+		valid = false;
+	} else {
+		password.next(".texthelp").removeClass("error");
 	}
 
+	/* Validate password confirmation is minimum length */
 	if (!passwordConfirmation.val() ||
 		passwordConfirmation.val().length < 6) {
-		return false;
+		valid = false;
 	}
 
+	/* Validate password and password confirmation match up */
 	if (password.val() != passwordConfirmation.val()) {
-		return false;
+		if (showConfirmationError &&
+			passwordConfirmation.next(".texthelp").length == 0) { 
+			passwordConfirmation.after('<p class="texthelp error">Passwords must match</p>')
+		}
+		valid = false;
+	} else {
+		passwordConfirmation.next(".texthelp").remove();
 	}
 
-  return true; 
+	/* Enable button if no errors */	
+	if (valid) {
+		$('button').removeAttr('disabled');
+	} else {
+		$('button').attr('disabled', 'disabled');
+	}
 }

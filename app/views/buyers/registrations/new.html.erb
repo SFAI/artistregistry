@@ -1,28 +1,27 @@
 <div class="loginPage">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
   <div class="container signup part1">
     <h1>Sign up</h1>
+    <%= devise_error_messages! %>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= devise_error_messages! %>
+    <div class="mb3">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email", oninput: "validateForm(true, false, false)" %>
+      <p class="texthelp"> alumni.sfai.edu email required </p>
+    </div>
 
-      <div class="mb3">
-        <%= f.label :email %>
-        <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email", oninput: "enableNextPage()" %>
-        <p class="texthelp"> alumni.sfai.edu email required </p>
-      </div>
-
-      <div class="mb3">
-          <%= f.label :password %>
-          <%= f.password_field :password, class: "textinput w-100", autocomplete: "new-password", oninput: "enableNextPage()" %>
-          <% if @minimum_password_length %>
-            <p class="texthelp"> <%= @minimum_password_length %> characters minimum </p>
-          <% end %>
-      </div>
-
+    <div class="mb3">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: "textinput w-100", autocomplete: "new-password", oninput: "validateForm(false, true, false)" %>
+        <% if @minimum_password_length %>
+          <p class="texthelp"> <%= @minimum_password_length %> characters minimum </p>
+        <% end %>
+    </div>
 
     <div class="mb4">
       <%= f.label :password_confirmation, class: "mb1", oninput: "resetStyle(this)" %>
-      <%= f.password_field :password_confirmation, class: "textinput w-100", autocomplete: "new-password", oninput: "enableNextPage()" %>
+      <%= f.password_field :password_confirmation, class: "textinput w-100", autocomplete: "new-password", oninput: "validateForm(false, false, true)" %>
     </div>
 
     <div class="flex justify-between">
