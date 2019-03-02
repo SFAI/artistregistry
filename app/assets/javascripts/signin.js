@@ -1,27 +1,30 @@
-nextPage = (e) => {
-	if (validateForm()) {
+nextPage = () => {
+	if (!$('button').attr('disabled')) {
 		$(".signup.part1").hide();
 		$(".signup.part2").show();
-	} else {
 	}
 }
 
-checkInputs = () => {
-	let isCorrect = true;
-	$('.part1 input').each(function() {
-	  if ($(this).val().length <= 1) {
-	  	isCorrect = false;
-	  }
-	});
+enableNextPage = () => {
+	if (validateForm()) {
+		$('button').removeAttr('disabled');
+	} else {
+		$('button').attr('disabled', 'disabled');
+	}
+}
 
-	return isCorrect;
+enableSubmit = (el) => {
+	if ($(el).is(":checked")) {
+		$('input[type="submit"]').removeAttr('disabled');
+	} else {
+		$('input[type="submit"]').attr('disabled', 'disabled');
+	}
 }
 
 validateForm = () => {
-	let valid = true;
 	const isArtist = $("form").hasClass("new_artist");
 	let email, password, passwordConfirmation;
-	
+
 	if (isArtist) {
 		email = $('input[name="artist[email]"]');
 		password = $('input[name="artist[password]"]');
@@ -36,29 +39,21 @@ validateForm = () => {
 	if (!email.val() ||
 			atIndex == -1 ||
 			email.val().slice(atIndex + 1, email.val().length) != (isArtist ? "artists.sfai.edu" : "alumni.sfai.edu")) {
-		email.addClass("invalid");
-		valid = false;
+		return false;
 	}
 
 	if (!password.val() || password.val().length < 6) {
-		password.addClass("invalid");
-		valid = false;
+		return false;
 	}
 
 	if (!passwordConfirmation.val() ||
 		passwordConfirmation.val().length < 6) {
-		passwordConfirmation.addClass("invalid");
-		valid = false;
+		return false;
 	}
 
 	if (password.val() != passwordConfirmation.val()) {
-		passwordConfirmation.addClass("invalid");
-		valid = false;
+		return false;
 	}
 
-  return valid; 
-}
-
-resetStyle = (el) => {
-	$(el).removeClass("invalid");
+  return true; 
 }

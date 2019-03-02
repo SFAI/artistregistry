@@ -42,6 +42,10 @@
     }
   }
 
+  button[disabled="disabled"], input[disabled="disabled"] {
+    background-color: $gray;
+  }
+
   .terms {
      @extend .bg-white;
      @extend .mb4;
