@@ -7,13 +7,13 @@
 
       <div class="mb3">
         <%= f.label :email %>
-        <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email", oninput: "resetStyle(this)" %>
+        <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email", oninput: "enableNextPage()" %>
         <p class="texthelp"> alumni.sfai.edu email required </p>
       </div>
 
       <div class="mb3">
           <%= f.label :password %>
-          <%= f.password_field :password, class: "textinput w-100", autocomplete: "new-password", oninput: "resetStyle(this)" %>
+          <%= f.password_field :password, class: "textinput w-100", autocomplete: "new-password", oninput: "enableNextPage()" %>
           <% if @minimum_password_length %>
             <p class="texthelp"> <%= @minimum_password_length %> characters minimum </p>
           <% end %>
@@ -22,12 +22,12 @@
 
     <div class="mb4">
       <%= f.label :password_confirmation, class: "mb1", oninput: "resetStyle(this)" %>
-      <%= f.password_field :password_confirmation, class: "textinput w-100", autocomplete: "new-password", oninput: "resetStyle(this)" %>
+      <%= f.password_field :password_confirmation, class: "textinput w-100", autocomplete: "new-password", oninput: "enableNextPage()" %>
     </div>
 
     <div class="flex justify-between">
       <%= render "buyers/shared/links" %>
-      <button type="button" onclick="nextPage()" class="button-primary bg-mustard w4">Next</button>
+      <button type="button" onclick="nextPage()" class="button-primary bg-mustard w4" disabled="disabled">Next</button>
     </div>
   </div>
 
@@ -37,10 +37,10 @@
 
     <div class="flex justify-between items-baseline">
       <div>
-        <%= f.check_box :terms_and_conditions %>
+        <%= f.check_box :terms_and_conditions, onclick: "enableSubmit(this)" %>
         <%= f.label :terms_and_conditions, "I agree to SFAI's Terms and Conditions" %>
       </div>
-      <%= f.submit "Sign up", class: "button-primary bg-mustard w4" %>
+      <%= f.submit "Sign up", class: "button-primary bg-mustard w4", disabled: "disabled" %>
     </div>
   </div>
   <% end %>
