@@ -5,6 +5,11 @@ nextPage = () => {
 	}
 }
 
+prevPage = () => {
+	$(".signup.part2").hide();
+	$(".signup.part1").show();
+}
+
 enableNextPage = () => {
 	if (validateForm()) {
 		$('button').removeAttr('disabled');

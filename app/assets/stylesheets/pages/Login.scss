@@ -19,6 +19,8 @@
   }
   a {
     @extend .mustard;
+    cursor: pointer;
+    
     &:hover {
 			text-decoration: underline;
 		}
