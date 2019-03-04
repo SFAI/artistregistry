@@ -3,6 +3,7 @@ import React from "react";
 import RequestForm from '../requests/RequestForm';
 import WorkToggle from "./WorkToggle";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
+import Linkify from 'react-linkify';
 
 class DetailedWork extends React.Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class DetailedWork extends React.Component {
             <h4>Material</h4>
             <p className="mb2">{material}</p>
             <h4>Description</h4>
-            <p className="mb2">{description}</p>
+            <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
           </div>
           <RequestForm
             buyer={this.props.buyer}
