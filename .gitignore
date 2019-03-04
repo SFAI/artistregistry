@@ -35,3 +35,4 @@ yarn-debug.log*
 
 /config/secrets.yml
 package-lock.json
+.env
