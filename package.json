@@ -17,6 +17,7 @@
     "react-dropzone": "^7.0.1",
     "react-linkify": "^0.2.2",
     "react-modal": "^3.6.1",
+    "react-paginate": "^6.3.0",
     "react_ujs": "^2.4.4",
     "tachyons-sass": "^4.9.3"
   },

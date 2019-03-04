@@ -3,6 +3,7 @@ import React from "react";
 import Filters from "./Filters";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import WorkColumnPanel from "./WorkColumnPanel";
+import ReactPaginate from 'react-paginate'
 
 class Works extends React.Component {
   constructor(props) {
@@ -10,7 +11,10 @@ class Works extends React.Component {
     this.state = {
       works: [],
       filters: {},
-      isLoading: true
+      isLoading: true,
+      pageCount: 0,
+      workStartIndex: 0,
+      workEndIndex: 0
     };
   }
 
@@ -25,7 +29,10 @@ class Works extends React.Component {
       this.setState({
         works: works_response,
         filters: filters_response,
-        isLoading: false
+        isLoading: false,
+        pageCount: works_response.length / 6,
+        workStartIndex: 0,
+        workEndIndex: 6
       });
     });
   };
@@ -54,6 +61,14 @@ class Works extends React.Component {
       );
   };
 
+  handlePageClick = data => {
+    let selected = data.selected;
+    this.setState({
+      workStartIndex: selected * 6,
+      workEndIndex: (selected+1) * 6
+    })
+  };
+
   render() {
     const { filters, works } = this.state;
     return (
@@ -69,30 +84,32 @@ class Works extends React.Component {
         <div className="fl w-80 pb5">
           <h1>Artwork</h1>
           <div className="col-list-3">
-            {works.map((work, i) => {
+            {works.slice(this.state.workStartIndex, this.state.workEndIndex).map((work, i) => {
               return (
                 <WorkColumnPanel key={i} work={work} />
               );
             })}
           </div>
         </div>
-
         <div>
-          <ul className="pagination">
-            {[1, 2, 3].map((r) =>
-           <li key={r}>
-            <a href={"#"+r} onClick={() => this.getPage(r)}>{r}</a>
-           </li>
-        ) }
-        </ul>
+        <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          pageCount={this.state.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+          />
         </div>
-
       </div>
 
     );
   }
 }
-
-
 
 export default Works;
