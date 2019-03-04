@@ -6,11 +6,11 @@ nextPage = () => {
 }
 
 enableNextPage = () => {
-	// if (validateForm()) {
-	$('button').removeAttr('disabled');
-	// } else {
-	// 	$('button').attr('disabled', 'disabled');
-	// }
+	if (validateForm()) {
+		$('button').removeAttr('disabled');
+	} else {
+		$('button').attr('disabled', 'disabled');
+	}
 }
 
 enableSubmit = (el) => {
