@@ -69,10 +69,7 @@ class ArtistProfile extends React.Component {
 
   updateFeatured = (work_id) => {
     let formData = new FormData();
-    const formKeys = ['featured_work_id'];
-    formKeys.forEach(key => {
-      formData.append(`artist[${key}]`, work_id);
-    });
+    formData.append(`artist[featured_work_id]`, work_id);
     fetch(APIRoutes.artists.update(this.props.artist.id), {
       method: 'PUT',
       body: formData,
@@ -81,7 +78,6 @@ class ArtistProfile extends React.Component {
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       }
     }).then((data) => {
-      console.log(this.state.artist.featured_work_id)
       window.location = `/artists/` + this.props.artist.id;
     }).catch((data) => {
       console.error(data);
@@ -96,10 +92,6 @@ class ArtistProfile extends React.Component {
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       }
     }).then((data) => {
-      let works = this.state.works;
-      delete works[work_id];
-      this.setState({ works: works });
-
       if (work_id == this.state.artist.featured_work_id) {
         let newFeaturedId = this.state.works[0].id
         if (newFeaturedId == work_id && this.state.works.length > 1) {
