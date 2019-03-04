@@ -114,7 +114,7 @@ class UpdateArtist extends React.Component {
         formData.append('artist[avatar]', avatar, avatar.name);
       }
 
-      fetch(APIRoutes.artists.update(this.state.artist.artist_id), {
+      fetch(APIRoutes.artists.update(this.state.artist.id), {
         method: 'PUT',
         body: formData,
         credentials: 'same-origin',
@@ -122,7 +122,7 @@ class UpdateArtist extends React.Component {
           "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
         }
       }).then((data) => {
-        window.location = `/artists/` + this.state.artist.artist_id;
+        window.location = `/artists/` + this.state.artist.id;
       }).catch((data) => {
         console.error(data);
       });
@@ -234,7 +234,7 @@ class UpdateArtist extends React.Component {
           </div>
           <div className="submit-container mt3">
             <Button
-              onClick={() => { window.location = `/artists/${this.state.artist.artist_id}` }}
+              onClick={() => { window.location = `/artists/${this.state.artist.id}` }}
               className="w4"
               type="button-secondary"
               color="magenta"
