@@ -10,7 +10,6 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 import { convertSnakeCase } from "../../utils/snake_case";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
-
 /**
 * @prop user: user currently logged in
 * @prop userType: { "artist", "buyer" }
@@ -68,6 +67,23 @@ class ArtistProfile extends React.Component {
     window.location = `/works/${work_id}/edit`;
   }
 
+  updateFeatured = (work_id) => {
+    let formData = new FormData();
+    formData.append(`artist[featured_work_id]`, work_id);
+    fetch(APIRoutes.artists.update(this.props.artist.id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   deleteWork = (work_id) => {
     fetch(APIRoutes.works.delete(work_id), {
       method: 'DELETE',
@@ -76,7 +92,15 @@ class ArtistProfile extends React.Component {
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       }
     }).then((data) => {
-      window.location = `/artists/` + this.props.artist.id;
+      if (work_id == this.state.artist.featured_work_id) {
+        let newFeaturedId = this.state.works[0].id
+        if (newFeaturedId == work_id && this.state.works.length > 1) {
+          newFeaturedId = this.state.works[1].id
+        }
+        this.updateFeatured(newFeaturedId)
+      } else {
+        window.location = `/artists/` + this.props.artist.id;
+      }
     }).catch((data) => {
       console.error(data);
     });
