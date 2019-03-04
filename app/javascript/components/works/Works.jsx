@@ -76,9 +76,23 @@ class Works extends React.Component {
             })}
           </div>
         </div>
+
+        <div>
+          <ul className="pagination">
+            {[1, 2, 3].map((r) =>
+           <li key={r}>
+            <a href={"#"+r} onClick={() => this.getPage(r)}>{r}</a>
+           </li>
+        ) }
+        </ul>
+        </div>
+
       </div>
+
     );
   }
 }
+
+
 
 export default Works;
