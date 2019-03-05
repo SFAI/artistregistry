@@ -18,6 +18,45 @@ enableSubmit = (el) => {
 	}
 }
 
+validateEmail = (email, showError, isArtist) => {
+	const atIndex = email.val().indexOf("@");
+	if (!email.val() ||
+			atIndex == -1 ||
+			email.val().slice(atIndex + 1, email.val().length) != (isArtist ? "artists.sfai.edu" : "alumni.sfai.edu")) {
+		
+		if (showError) { email.next(".texthelp").addClass("error"); }
+		return false;
+	} else {
+		email.next(".texthelp").removeClass("error");
+		return true;
+	}
+}
+
+validatePassword = (password, showError) => {
+	if (!password.val() || password.val().length < 6) {
+		if (showError) { password.next(".texthelp").addClass("error"); }
+		return false;
+	} else {
+		password.next(".texthelp").removeClass("error");
+		return true;
+	}
+}
+
+validateConfirmation = (password, confirmation, showError) => {
+	console.log('hnng');
+	if (password.val() != confirmation.val()) {
+		if (showError &&
+			confirmation.next(".texthelp").length == 0) { 
+			confirmation.after('<p class="texthelp error">Passwords must match</p>')
+		}
+		return false;
+	} else {
+		confirmation.next(".texthelp").remove();
+		return true;
+	}
+
+}
+
 validateForm = (showEmailError, showPasswordError, showConfirmationError) => {
 	let valid = true;
 	const isArtist = $("form").hasClass("new_artist");
@@ -32,42 +71,10 @@ validateForm = (showEmailError, showPasswordError, showConfirmationError) => {
 		passwordConfirmation = $('input[name="buyer[password_confirmation]"]');
 	}
 
-	/* Validate email domain is correct */
-	const atIndex = email.val().indexOf("@");
-	if (!email.val() ||
-			atIndex == -1 ||
-			email.val().slice(atIndex + 1, email.val().length) != (isArtist ? "artists.sfai.edu" : "alumni.sfai.edu")) {
-		
-		if (showEmailError) { email.next(".texthelp").addClass("error"); }
-		valid = false;
-	} else {
-		email.next(".texthelp").removeClass("error");
-	}
-
-	/* Validate password is minimum length */
-	if (!password.val() || password.val().length < 6) {
-		if (showPasswordError) { password.next(".texthelp").addClass("error"); }
-		valid = false;
-	} else {
-		password.next(".texthelp").removeClass("error");
-	}
-
-	/* Validate password confirmation is minimum length */
-	if (!passwordConfirmation.val() ||
-		passwordConfirmation.val().length < 6) {
-		valid = false;
-	}
-
-	/* Validate password and password confirmation match up */
-	if (password.val() != passwordConfirmation.val()) {
-		if (showConfirmationError &&
-			passwordConfirmation.next(".texthelp").length == 0) { 
-			passwordConfirmation.after('<p class="texthelp error">Passwords must match</p>')
-		}
-		valid = false;
-	} else {
-		passwordConfirmation.next(".texthelp").remove();
-	}
+	valid = validateEmail(email, showEmailError, isArtist) &&
+			validatePassword(password, showPasswordError) &&
+			validateConfirmation(
+				password, passwordConfirmation, showConfirmationError);
 
 	/* Enable button if no errors */	
 	if (valid) {
