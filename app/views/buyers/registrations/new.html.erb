@@ -4,6 +4,11 @@
   <div class="container signup part1">
     <h1>Sign up</h1>
     <%= devise_error_messages! %>
+    
+    <div class="mb3">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "textinput w-100", autofocus: true, autocomplete: "name" %>
+    </div>
 
     <div class="mb3">
       <%= f.label :email %>
