@@ -20,10 +20,10 @@ enableSubmit = (el) => {
 
 validateEmail = (email, showError, isArtist) => {
 	const atIndex = email.val().indexOf("@");
-	if (!email.val() ||
-			atIndex == -1 ||
-			email.val().slice(atIndex + 1, email.val().length) != (isArtist ? "artists.sfai.edu" : "alumni.sfai.edu")) {
-		
+	const emailDomain = email.val().slice(atIndex + 1, email.val().length);
+	// Patrons can sign up with any email domain.
+	const isValidDomain = !isArtist || emailDomain == "artists.sfai.edu" || emailDomain == "sfai.edu";
+	if (!email.val() || atIndex == -1 || !isValidDomain) {
 		if (showError) { email.next(".texthelp").addClass("error"); }
 		return false;
 	} else {
