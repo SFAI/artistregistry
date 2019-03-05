@@ -59,16 +59,9 @@ validateConfirmation = (password, confirmation, showError) => {
 validateForm = (showEmailError, showPasswordError, showConfirmationError) => {
 	let valid = true;
 	const isArtist = $("form").hasClass("new_artist");
-	let email, password, passwordConfirmation;
-	if (isArtist) {
-		email = $('input[name="artist[email]"]');
-		password = $('input[name="artist[password]"]');
-		passwordConfirmation = $('input[name="artist[password_confirmation]"]');
-	} else {
-		email = $('input[name="buyer[email]"]');
-		password = $('input[name="buyer[password]"]');
-		passwordConfirmation = $('input[name="buyer[password_confirmation]"]');
-	}
+	const email = $('#email-field');
+	const password = $('#password-field');
+	const passwordConfirmation = $('#confirmation-field');
 
 	valid = validateEmail(email, showEmailError, isArtist) &&
 			validatePassword(password, showPasswordError) &&
