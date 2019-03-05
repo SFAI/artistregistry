@@ -43,7 +43,6 @@ validatePassword = (password, showError) => {
 }
 
 validateConfirmation = (password, confirmation, showError) => {
-	console.log('hnng');
 	if (password.val() != confirmation.val()) {
 		if (showError &&
 			confirmation.next(".texthelp").length == 0) { 
