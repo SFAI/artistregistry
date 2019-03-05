@@ -5,12 +5,9 @@ nextPage = () => {
 	}
 }
 
-enableNextPage = () => {
-	if (validateForm()) {
-		$('button').removeAttr('disabled');
-	} else {
-		$('button').attr('disabled', 'disabled');
-	}
+prevPage = () => {
+	$(".signup.part2").hide();
+	$(".signup.part1").show();
 }
 
 enableSubmit = (el) => {
@@ -21,10 +18,48 @@ enableSubmit = (el) => {
 	}
 }
 
-validateForm = () => {
+validateEmail = (email, showError, isArtist) => {
+	const atIndex = email.val().indexOf("@");
+	if (!email.val() ||
+			atIndex == -1 ||
+			email.val().slice(atIndex + 1, email.val().length) != (isArtist ? "artists.sfai.edu" : "alumni.sfai.edu")) {
+		
+		if (showError) { email.next(".texthelp").addClass("error"); }
+		return false;
+	} else {
+		email.next(".texthelp").removeClass("error");
+		return true;
+	}
+}
+
+validatePassword = (password, showError) => {
+	if (!password.val() || password.val().length < 6) {
+		if (showError) { password.next(".texthelp").addClass("error"); }
+		return false;
+	} else {
+		password.next(".texthelp").removeClass("error");
+		return true;
+	}
+}
+
+validateConfirmation = (password, confirmation, showError) => {
+	if (password.val() != confirmation.val()) {
+		if (showError &&
+			confirmation.next(".texthelp").length == 0) { 
+			confirmation.after('<p class="texthelp error">Passwords must match</p>')
+		}
+		return false;
+	} else {
+		confirmation.next(".texthelp").remove();
+		return true;
+	}
+
+}
+
+validateForm = (showEmailError, showPasswordError, showConfirmationError) => {
+	let valid = true;
 	const isArtist = $("form").hasClass("new_artist");
 	let email, password, passwordConfirmation;
-
 	if (isArtist) {
 		email = $('input[name="artist[email]"]');
 		password = $('input[name="artist[password]"]');
@@ -35,25 +70,15 @@ validateForm = () => {
 		passwordConfirmation = $('input[name="buyer[password_confirmation]"]');
 	}
 
-	const atIndex = email.val().indexOf("@");
-	if (!email.val() ||
-			atIndex == -1 ||
-			email.val().slice(atIndex + 1, email.val().length) != (isArtist ? "artists.sfai.edu" : "alumni.sfai.edu")) {
-		return false;
-	}
+	valid = validateEmail(email, showEmailError, isArtist) &&
+			validatePassword(password, showPasswordError) &&
+			validateConfirmation(
+				password, passwordConfirmation, showConfirmationError);
 
-	if (!password.val() || password.val().length < 6) {
-		return false;
+	/* Enable button if no errors */	
+	if (valid) {
+		$('button').removeAttr('disabled');
+	} else {
+		$('button').attr('disabled', 'disabled');
 	}
-
-	if (!passwordConfirmation.val() ||
-		passwordConfirmation.val().length < 6) {
-		return false;
-	}
-
-	if (password.val() != passwordConfirmation.val()) {
-		return false;
-	}
-
-  return true; 
 }
