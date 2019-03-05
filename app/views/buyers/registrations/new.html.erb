@@ -20,8 +20,8 @@
     </div>
 
     <div class="mb4">
-      <%= f.label :password_confirmation, class: "mb1", id: "confirmation-field", oninput: "resetStyle(this)" %>
-      <%= f.password_field :password_confirmation, class: "textinput w-100", autocomplete: "new-password", oninput: "validateForm()", onblur: "validateForm(false, false, true)" %>
+      <%= f.label :password_confirmation, class: "mb1" %>
+      <%= f.password_field :password_confirmation, class: "textinput w-100", id: "confirmation-field", autocomplete: "new-password", oninput: "validateForm()", onblur: "validateForm(false, false, true)" %>
     </div>
 
     <div class="flex justify-between">
