@@ -25,7 +25,8 @@ class DetailedWork extends React.Component {
         this.setState({ 
           work: response, 
           canEditArtwork: this.props.user_type === "artist" && this.props.user && this.props.user.id === this.props.work.artist_id,
-          componentDidMount: true });
+          componentDidMount: true
+        });
       },
       error => {
         console.error(error);
