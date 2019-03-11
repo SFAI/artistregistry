@@ -107,7 +107,6 @@ class Works extends React.Component {
           />
         </div>
       </div>
-
     );
   }
 }
