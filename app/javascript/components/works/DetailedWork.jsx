@@ -13,6 +13,7 @@ class DetailedWork extends React.Component {
     super(props);
     this.state = {
       work: null,
+      canEditArtwork: false,
       componentDidMount: false
     };
   }
@@ -21,7 +22,10 @@ class DetailedWork extends React.Component {
     const route = APIRoutes.works.show(this.props.work_id);
     Requester.get(route).then(
       response => {
-        this.setState({ work: response, componentDidMount: true });
+        this.setState({ 
+          work: response, 
+          canEditArtwork: this.props.user_type === "artist" && this.props.user && this.props.user.id === this.props.work.artist_id,
+          componentDidMount: true });
       },
       error => {
         console.error(error);
@@ -52,10 +56,13 @@ class DetailedWork extends React.Component {
           </div>
           <div className="bg-white pa3 mv3 position-relative">
             <h2>{title}</h2>
-            <Button className="position-absolute align-top-right" type="hover-button" onClick={() => this.updateWork(this.state.work.id)}>
-              <FontAwesomeIcon className="white" icon={faEdit} />
-              <h4 className="ml2 white">Edit</h4>
-            </Button>
+            {
+              this.state.canEditArtwork &&
+              <Button className="position-absolute align-top-right" type="hover-button" onClick={() => this.updateWork(this.state.work.id)}>
+                <FontAwesomeIcon className="white" icon={faEdit} />
+                <h4 className="ml2 white">Edit</h4>
+              </Button>
+            }
             <h4>Media</h4>
             <p className="mb2">{media}</p>
             <h4>Material</h4>
