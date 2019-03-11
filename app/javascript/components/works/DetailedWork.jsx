@@ -55,11 +55,11 @@ class DetailedWork extends React.Component {
           <div className="bg-white overflow-hidden">
             <ArtistSnapshot artist={artist} />
           </div>
-          <div className="bg-white pa3 mv3 position-relative">
+          <div className="bg-white pa3 mv3 relative">
             <h2>{title}</h2>
             {
               this.state.canEditArtwork &&
-              <Button className="position-absolute align-top-right" type="hover-button" onClick={() => this.updateWork(this.state.work.id)}>
+              <Button className="ma2 absolute top-0 right-0" type="hover-button" onClick={() => this.updateWork(this.state.work.id)}>
                 <FontAwesomeIcon className="white" icon={faEdit} />
                 <h4 className="ml2 white">Edit</h4>
               </Button>
