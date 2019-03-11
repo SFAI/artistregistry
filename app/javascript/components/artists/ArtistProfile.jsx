@@ -106,6 +106,23 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  hideWork = (work_id) => {
+    let formData = new FormData();
+    formData.append(`work[hidden]`, true);
+    fetch(APIRoutes.works.update(work_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, media, description } = artist;
@@ -181,6 +198,10 @@ class ArtistProfile extends React.Component {
                       <Button className="ml2" type="hover-button" onClick={() => this.deleteWork(work.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Delete</h4>
+                      </Button>
+                      <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
+                        <FontAwesomeIcon className="white" icon={faTrash} />
+                        <h4 className="ml2 white">Hide</h4>
                       </Button>
                     </div>
                   }
