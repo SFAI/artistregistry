@@ -69,13 +69,16 @@ class Filters extends PureComponent {
                 <div className="checkbox-container">
                   {Object.keys(filters[type]).map(item => (
                     <div className="mb2 checkbox-item" key={item}>
-                      <input
-                        onClick={() => this.toggleCheckbox(type, item)}
-                        type="checkbox"
-                        className="checkbox"
-                        value={item}
-                      />
-                      <p className="capitalize">{convertSnakeCase(item)}</p>
+                      <label for={`checkbox-${item}`}>
+                        <input
+                          onClick={() => this.toggleCheckbox(type, item)}
+                          type="checkbox"
+                          className="checkbox"
+                          value={item}
+                          id={`checkbox-${item}`}
+                        />
+                        <p className="capitalize display-inline-block">{convertSnakeCase(item)}</p>
+                      </label>
                     </div>
                   ))}
                 </div>
