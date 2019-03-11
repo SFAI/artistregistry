@@ -21,7 +21,7 @@ class WorkToggle extends React.Component {
           {
             work.attached_images_urls.map((image, i) => {
               return (
-                <Touchable onPress={() => this.setState({ image: i })}>
+                <Touchable onPress={() => this.setState({ image: i })} key={i}>
                   <div className="relative thumb pointer">
                     <div className={i === this.state.image ? "" : "toggle-thumb-opacity"} />
                     <img className="toggle-thumb" src={image.url}/>

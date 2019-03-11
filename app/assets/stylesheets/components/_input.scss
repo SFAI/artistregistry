@@ -150,3 +150,16 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: row;
 }
+
+.position-relative {
+  position: relative
+}
+
+.position-absolute {
+  position: absolute
+}
+
+.align-top-right {
+  top: 0;
+  right: 0;
+}
