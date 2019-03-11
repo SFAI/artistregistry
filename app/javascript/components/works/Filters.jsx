@@ -77,7 +77,7 @@ class Filters extends PureComponent {
                           value={item}
                           id={`checkbox-${item}`}
                         />
-                        <p className="capitalize display-inline-block">{convertSnakeCase(item)}</p>
+                        <p className="ttc dib">{convertSnakeCase(item)}</p>
                       </label>
                     </div>
                   ))}
