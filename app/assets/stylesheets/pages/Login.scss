@@ -19,6 +19,8 @@
   }
   a {
     @extend .mustard;
+    cursor: pointer;
+    
     &:hover {
 			text-decoration: underline;
 		}
@@ -26,10 +28,6 @@
 
   input {
     border-style: none;
-  }
-
-  input.invalid {
-    background-color: $red;
   }
   
   input[type="checkbox"] {

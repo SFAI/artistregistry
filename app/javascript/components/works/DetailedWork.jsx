@@ -4,12 +4,16 @@ import RequestForm from '../requests/RequestForm';
 import WorkToggle from "./WorkToggle";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
 import Linkify from 'react-linkify';
+import Button from "../helpers/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 class DetailedWork extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       work: null,
+      canEditArtwork: false,
       componentDidMount: false
     };
   }
@@ -18,12 +22,20 @@ class DetailedWork extends React.Component {
     const route = APIRoutes.works.show(this.props.work_id);
     Requester.get(route).then(
       response => {
-        this.setState({ work: response, componentDidMount: true });
+        this.setState({ 
+          work: response, 
+          canEditArtwork: this.props.user_type === "artist" && this.props.user && this.props.user.id === this.props.work.artist_id,
+          componentDidMount: true
+        });
       },
       error => {
         console.error(error);
       }
     );
+  }
+
+  updateWork = (work_id) => {
+    window.location = `/works/${work_id}/edit`;
   }
 
   render() {
@@ -43,8 +55,15 @@ class DetailedWork extends React.Component {
           <div className="bg-white overflow-hidden">
             <ArtistSnapshot artist={artist} />
           </div>
-          <div className="bg-white pa3 mv3">
+          <div className="bg-white pa3 mv3 relative">
             <h2>{title}</h2>
+            {
+              this.state.canEditArtwork &&
+              <Button className="ma2 absolute top-0 right-0" type="hover-button" onClick={() => this.updateWork(this.state.work.id)}>
+                <FontAwesomeIcon className="white" icon={faEdit} />
+                <h4 className="ml2 white">Edit</h4>
+              </Button>
+            }
             <h4>Media</h4>
             <p className="mb2">{media}</p>
             <h4>Material</h4>

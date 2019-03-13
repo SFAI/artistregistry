@@ -46,7 +46,7 @@ class BuyerProfile extends React.Component {
 
     return (
       <div className="center mw8">
-        <div className="buyer-profile-header">
+        <div className="flex justify-between items-center">
           <h1>{name}</h1>
           {
             this.state.canEditProfile &&
@@ -60,21 +60,21 @@ class BuyerProfile extends React.Component {
             </Button>
           }
         </div>
-        <div className="bg-white w-100 buyer-contents-container pa3">
+        <div className="bg-white w-100 flex justify-start items-center pa3">
           <div className="h4 w4 br-100 bg-gray ma4">
             <img className="br-100 avatar-img" src={buyer.avatar.url} />
           </div>
           <div>
-            <div className="buyer-contents">
+            <div className="flex">
               <div>
                 <h5>Name</h5>
                 <h5>Email</h5>
                 <h5>Phone Number</h5>
               </div>
               <div className="ml4">
-                <h5>{name}</h5>
-                <h5>{email}</h5>
-                <h5>{phone_number}</h5>
+                <p>{name}</p>
+                <p>{email}</p>
+                <p>{phone_number}</p>
               </div>
             </div>
           </div>
