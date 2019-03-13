@@ -14,6 +14,7 @@ class WorksController < ApplicationController
 
   def show
     @work_id = params[:id]
+    @work = Work.find(@work_id)
   end
 
   def new
@@ -21,5 +22,6 @@ class WorksController < ApplicationController
 
   def edit
     @work_id = params[:id]
+    @work = Work.find(@work_id)
   end
 end
