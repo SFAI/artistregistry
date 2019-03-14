@@ -19,12 +19,14 @@ class RequestForm extends React.Component {
         login: "",
         exist: ""
       },
+      exist: false,
       updatingRequest: false,
       componentDidMount: false
     }
   }
 
   componentDidMount = () => {
+    this.checkExist()
     const requests_types_route = APIRoutes.requests.types;
     Requester.get(requests_types_route).then((response) => {
       this.setState({ request_types: response, componentDidMount: true });
@@ -34,11 +36,13 @@ class RequestForm extends React.Component {
   }
 
   handleChange = event => {
+    this.checkExist()
     const request = this.state.request;
     const name = event.target.name;
     const value = event.target.value;
     request[name] = value;
     this.setState({ request: request });
+    console.log(this.state.exist)
   }
 
   handleSubmit = () => {
@@ -84,33 +88,30 @@ class RequestForm extends React.Component {
     if (!this.props.buyer) {
       errors["login"] = "You must be logged in to request a work."
     }
-    let y = this.checkExist()
-    console.log(y)
-    if (y) {
+    if (this.state.exist) {
+      console.log("HERE")
       errors["exist"] = "You have already made a request under this request type."
+      console.log(errors)
     }
-    console.log(errors)
-
     return errors;
   }
 
   checkExist() {
     let stringifiedSearchParams = [`buyer_id=${this.props.buyer.id}`, `artist_id=${this.props.artist_id}`,
       `work_id=${this.props.work_id}`, `types=${this.state.request.types}`].join('&')
-      console.log(stringifiedSearchParams)
+      // console.log(stringifiedSearchParams)
     let request_route = APIRoutes.requests.request_exist(stringifiedSearchParams)
-    console.log(request_route)
-    let result = false
-    let promise = Requester.get(request_route).then(
-          response => {
-            if (response.length == 0) {
-            } else {
-              result = true
-            }
-          },
+    // console.log(request_route)
+    Requester.get(request_route).then(
+        response => {
+          if (response.length != 0) {
+            this.setState({ exist: true })
+          } else {
+            this.setState({ exist: false })
+          }
+        },
           response => { console.error(response); }
       );
-      return result
     }
 
   render() {
@@ -165,6 +166,7 @@ class RequestForm extends React.Component {
           />
           <FormError error={this.state.errors["message"]} />
           <FormError error={this.state.errors["login"]} />
+          <FormError error={this.state.errors["exist"]} />
           <button onClick={this.handleSubmit} className="button-primary bg-magenta w4 mt2">
             Submit
           </button>
