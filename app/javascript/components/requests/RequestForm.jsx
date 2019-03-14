@@ -36,7 +36,10 @@ class RequestForm extends React.Component {
   }
 
   handleChange = event => {
-    this.checkExist()
+    if (event.target.name == 'types') {
+      this.checkExist()
+      console.log("Entered.")
+    }
     const request = this.state.request;
     const name = event.target.name;
     const value = event.target.value;
@@ -89,9 +92,7 @@ class RequestForm extends React.Component {
       errors["login"] = "You must be logged in to request a work."
     }
     if (this.state.exist) {
-      console.log("HERE")
       errors["exist"] = "You have already made a request under this request type."
-      console.log(errors)
     }
     return errors;
   }
@@ -99,9 +100,7 @@ class RequestForm extends React.Component {
   checkExist() {
     let stringifiedSearchParams = [`buyer_id=${this.props.buyer.id}`, `artist_id=${this.props.artist_id}`,
       `work_id=${this.props.work_id}`, `types=${this.state.request.types}`].join('&')
-      // console.log(stringifiedSearchParams)
     let request_route = APIRoutes.requests.request_exist(stringifiedSearchParams)
-    // console.log(request_route)
     Requester.get(request_route).then(
         response => {
           if (response.length != 0) {
