@@ -198,6 +198,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    rb-readline (0.5.5)
     react-rails (2.4.7)
       babel-transpiler (>= 0.7.0)
       connection_pool
@@ -292,6 +293,7 @@ DEPENDENCIES
   pg
   puma (~> 3.11)
   rails (~> 5.2.1)
+  rb-readline
   react-rails
   sass-rails (~> 5.0)
   selenium-webdriver
