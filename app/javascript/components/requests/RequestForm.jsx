@@ -26,7 +26,7 @@ class RequestForm extends React.Component {
   }
 
   componentDidMount = () => {
-    this.checkExist()
+    this.checkExist('sale')
     const requests_types_route = APIRoutes.requests.types;
     Requester.get(requests_types_route).then((response) => {
       this.setState({ request_types: response, componentDidMount: true });
@@ -36,16 +36,14 @@ class RequestForm extends React.Component {
   }
 
   handleChange = event => {
-    if (event.target.name == 'types') {
-      this.checkExist()
-      console.log("Entered.")
-    }
     const request = this.state.request;
     const name = event.target.name;
     const value = event.target.value;
     request[name] = value;
     this.setState({ request: request });
-    console.log(this.state.exist)
+    if (event.target.name == 'types') {
+      this.checkExist(value)
+    }
   }
 
   handleSubmit = () => {
@@ -97,9 +95,9 @@ class RequestForm extends React.Component {
     return errors;
   }
 
-  checkExist() {
+  checkExist = (request_type) => {
     let stringifiedSearchParams = [`buyer_id=${this.props.buyer.id}`, `artist_id=${this.props.artist_id}`,
-      `work_id=${this.props.work_id}`, `types=${this.state.request.types}`].join('&')
+      `work_id=${this.props.work_id}`, `types=${request_type}`].join('&')
     let request_route = APIRoutes.requests.request_exist(stringifiedSearchParams)
     Requester.get(request_route).then(
         response => {
