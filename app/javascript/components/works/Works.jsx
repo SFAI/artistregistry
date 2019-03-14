@@ -82,7 +82,24 @@ class Works extends React.Component {
           <button onClick={this.getFilteredWorks} className="button-primary bg-magenta w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
-          <h1>Artwork</h1>
+          <div className="flex justify-between items-baseline">
+            <h1>Artwork</h1>
+            <nav id="pagination" role="navigation" aria-label="Pagination Navigation">
+              <ReactPaginate
+              previousLabel={"\u00ab"}
+              nextLabel="&raquo;"
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+              />
+            </nav>
+          </div>
           <div className="col-list-3">
             {works.slice(this.state.workStartIndex, this.state.workEndIndex).map((work, i) => {
               return (
@@ -92,19 +109,6 @@ class Works extends React.Component {
           </div>
         </div>
         <div>
-        <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={this.state.pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-          />
         </div>
       </div>
     );
