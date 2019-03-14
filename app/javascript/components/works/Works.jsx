@@ -39,6 +39,7 @@ class Works extends React.Component {
     const works_route = searchParams.length
       ? APIRoutes.works.filtered_works(searchParams)
       : APIRoutes.works.index;
+    console.log(works_route)
 
     Requester.get(
       works_route).then(

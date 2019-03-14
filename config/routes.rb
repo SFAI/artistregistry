@@ -54,5 +54,6 @@ Rails.application.routes.draw do
     get 'receipts/artist/:id' => 'artists#receipts'
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'
+    get 'requests/request_exist/:search_params' => 'requests#request_exist'
   end
 end

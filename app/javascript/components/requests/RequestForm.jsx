@@ -11,12 +11,13 @@ class RequestForm extends React.Component {
       available: this.props.work_status === "active" ? true : false,
       request: {
         message: "",
-        types: 0
+        types: 'sale'
       },
       request_types: {},
       errors: {
         message: "",
-        login: ""
+        login: "",
+        exist: ""
       },
       updatingRequest: false,
       componentDidMount: false
@@ -73,7 +74,8 @@ class RequestForm extends React.Component {
   checkErrors() {
     let errors = {
       message: "",
-      login: ""
+      login: "",
+      exist: ""
     }
 
     if (!this.state.request.message) {
@@ -82,9 +84,34 @@ class RequestForm extends React.Component {
     if (!this.props.buyer) {
       errors["login"] = "You must be logged in to request a work."
     }
+    let y = this.checkExist()
+    console.log(y)
+    if (y) {
+      errors["exist"] = "You have already made a request under this request type."
+    }
+    console.log(errors)
 
     return errors;
   }
+
+  checkExist() {
+    let stringifiedSearchParams = [`buyer_id=${this.props.buyer.id}`, `artist_id=${this.props.artist_id}`,
+      `work_id=${this.props.work_id}`, `types=${this.state.request.types}`].join('&')
+      console.log(stringifiedSearchParams)
+    let request_route = APIRoutes.requests.request_exist(stringifiedSearchParams)
+    console.log(request_route)
+    let result = false
+    let promise = Requester.get(request_route).then(
+          response => {
+            if (response.length == 0) {
+            } else {
+              result = true
+            }
+          },
+          response => { console.error(response); }
+      );
+      return result
+    }
 
   render() {
     if (!this.state.componentDidMount) {

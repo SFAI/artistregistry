@@ -29,6 +29,12 @@ class Api::RequestsController < ApplicationController
     render json: {status: 200, message: 'Request successfully updated!'}
   end
 
+  def request_exist
+    parsed_query = CGI.parse(params[:search_params])
+    exist = Request.where(parsed_query)
+    render json: exist
+  end
+
   def request_params
     params.require(:request).permit(:open,
                                     :message,
