@@ -54,5 +54,7 @@ Rails.application.routes.draw do
     get 'receipts/artist/:id' => 'artists#receipts'
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'
+    post ':blocker_id/block_user/:blocked_id' => 'blocks#block_user', as: :block_user
+    post ':blocker_id/unblock_user/:blocked_id' => 'blocks#unblock_user', as: :unblock_user
   end
 end
