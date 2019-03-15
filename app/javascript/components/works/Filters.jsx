@@ -3,40 +3,41 @@ import PropTypes from "prop-types";
 import { convertSnakeCase } from "../../utils/snake_case";
 
 /**
-* @prop filters: sub/categories based on Work enums
-*/
+ * @prop filters: sub/categories based on Work enums
+ */
 
 class Filters extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      searchParams: {},
+      searchParams: {}
     };
   }
 
   static propTypes = {
-    filters: PropTypes.object,
+    filters: PropTypes.object
   };
 
   getQuery = () => {
     const params = this.state.searchParams;
-    const filteredParams = Object.keys(params).filter(
-      filter_name => params[filter_name].length
-    ).reduce((nonEmptyParams, filter_name) => {
-      nonEmptyParams[filter_name] = params[filter_name];
-      return nonEmptyParams;
-    }, {})
+    const filteredParams = Object.keys(params)
+      .filter(filter_name => params[filter_name].length)
+      .reduce((nonEmptyParams, filter_name) => {
+        nonEmptyParams[filter_name] = params[filter_name];
+        return nonEmptyParams;
+      }, {});
     const stringified = Object.keys(filteredParams)
-      .map(
-        filter_name => {
-          if (filteredParams[filter_name].length) {
-            return `${filter_name}=` + filteredParams[filter_name].join(`&${filter_name}=`)
-          }
+      .map(filter_name => {
+        if (filteredParams[filter_name].length) {
+          return (
+            `${filter_name}=` +
+            filteredParams[filter_name].join(`&${filter_name}=`)
+          );
         }
-      )
+      })
       .join("&");
     return stringified;
-  }
+  };
 
   toggleCheckbox = (filter_name, item) => {
     const prevSearchParams = this.state.searchParams[filter_name];
@@ -69,7 +70,7 @@ class Filters extends PureComponent {
                 <div className="checkbox-container">
                   {Object.keys(filters[type]).map(item => (
                     <div className="mb2 checkbox-item" key={item}>
-                      <label for={`checkbox-${item}`}>
+                      <label htmlFor={`checkbox-${item}`}>
                         <input
                           onClick={() => this.toggleCheckbox(type, item)}
                           type="checkbox"
@@ -83,17 +84,16 @@ class Filters extends PureComponent {
                   ))}
                 </div>
               </div>
-            )
+            );
           })}
         </div>
-      )
-    }
-    else {
+      );
+    } else {
       return (
         <div className="flex flex-column mr2 ba pa2 w-20">
           <p> Loading </p>
         </div>
-      )
+      );
     }
   }
 }
