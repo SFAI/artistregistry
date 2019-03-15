@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_13_234410) do
+ActiveRecord::Schema.define(version: 2019_03_15_035544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,14 @@ ActiveRecord::Schema.define(version: 2019_03_13_234410) do
     t.index ["confirmation_token"], name: "index_artists_on_confirmation_token", unique: true
     t.index ["email"], name: "index_artists_on_email", unique: true
     t.index ["reset_password_token"], name: "index_artists_on_reset_password_token", unique: true
+  end
+
+  create_table "blocks", force: :cascade do |t|
+    t.integer "blocker_id", null: false
+    t.integer "blocked_id", null: false
+    t.index ["blocked_id", "blocker_id"], name: "index_blocks_on_blocked_id_and_blocker_id", unique: true
+    t.index ["blocked_id"], name: "index_blocks_on_blocked_id"
+    t.index ["blocker_id"], name: "index_blocks_on_blocker_id"
   end
 
   create_table "buyers", force: :cascade do |t|
