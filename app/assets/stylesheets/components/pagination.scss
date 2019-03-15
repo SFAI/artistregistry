@@ -1,0 +1,27 @@
+.pagination{
+  ul {
+    display: flex;
+    margin: 8px 0;
+  }
+
+  li {
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    margin-left: 8px;
+    background-color: white;
+
+    &.active {
+      color: white;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
+}
