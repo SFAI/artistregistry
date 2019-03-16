@@ -146,7 +146,7 @@ class WorkForm extends React.Component {
         if (typeof this.state.work.id == 'number') {
           window.location = `/works/` + this.state.work.id;
         } else {
-          window.location = `/artists/` + this.props.artist.id;
+          window.location = `/artists/` + this.state.work.artist_id;
         }
       }).catch((data) => {
         console.error(data);
