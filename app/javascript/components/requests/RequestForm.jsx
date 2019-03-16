@@ -96,8 +96,14 @@ class RequestForm extends React.Component {
   }
 
   checkExist = (request_type) => {
-    let stringifiedSearchParams = [`buyer_id=${this.props.buyer.id}`, `artist_id=${this.props.artist_id}`,
-      `work_id=${this.props.work_id}`, `types=${request_type}`].join('&')
+    const { buyer, artist_id, work_id } = this.props;
+    let stringifiedSearchParams = [
+      `buyer_id=${buyer.id}`,
+      `artist_id=${artist_id}`,
+      `work_id=${work_id}`,
+      `types=${request_type}`
+    ].join("&");
+    
     let request_route = APIRoutes.requests.request_exist(stringifiedSearchParams)
     Requester.get(request_route).then(
         response => {
