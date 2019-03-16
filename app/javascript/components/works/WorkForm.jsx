@@ -143,7 +143,11 @@ class WorkForm extends React.Component {
           "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
         }
       }).then((data) => {
-        window.location = `/works/` + this.state.work.id;
+        if (typeof this.state.work.id == 'number') {
+          window.location = `/works/` + this.state.work.id;
+        } else {
+          window.location = `/artists/` + this.props.artist.id;
+        }
       }).catch((data) => {
         console.error(data);
       });
