@@ -31,6 +31,24 @@ class Request extends React.Component {
     });
   }
 
+  blockUser = () => {
+    const payload = {
+      blocked_id: this.state.request.buyer.id,
+      blocker_id: this.props.artist.id
+    }
+    const block_route = APIRoutes.blocks.block_user;
+
+    Requester.post(
+      block_route, payload).then(
+        response => {
+          console.log("it worked");
+        },
+        response => {
+          console.error(response);
+        }
+      );
+  }
+
   getRequestStatus = (request) => {
     if (request.open) {
       return "Pending";
@@ -77,6 +95,11 @@ class Request extends React.Component {
         <div className="w4">
           <button type="button" className="button-secondary b--charcoal w-100" value={id} onClick={() => this.closeRequest(id)}>
             ARCHIVE
+          </button>
+        </div>
+        <div className="w4">
+          <button type="button" className="button-secondary b--charcoal w-100" onClick={() => this.blockUser()}>
+            BLOCK
           </button>
         </div>
         <div className="ml3 w4">
