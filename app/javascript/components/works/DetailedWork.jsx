@@ -46,6 +46,13 @@ class DetailedWork extends React.Component {
     }
 
     const { artist, artist_id, id, availability, title, media, material, description } = this.state.work
+    const request_form = this.props.blocked ? null : (
+        <RequestForm
+            buyer={this.props.buyer}
+            artist_id={artist_id}
+            work_id={id}
+            work_status={availability}
+          /> );
     return (
       <div className="pt4">
         <div className="fl w-70">
@@ -71,12 +78,7 @@ class DetailedWork extends React.Component {
             <h4>Description</h4>
             <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
           </div>
-          <RequestForm
-            buyer={this.props.buyer}
-            artist_id={artist_id}
-            work_id={id}
-            work_status={availability}
-          />
+          {request_form}
         </div>
       </div>
     );

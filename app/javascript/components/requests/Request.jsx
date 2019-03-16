@@ -33,8 +33,8 @@ class Request extends React.Component {
 
   blockUser = () => {
     const payload = {
-      blocked_id: this.state.request.buyer.id,
-      blocker_id: this.props.artist.id
+      blocker_id: this.props.artist.account_id,
+      blocked_id: this.state.request.buyer.id
     }
     const block_route = APIRoutes.blocks.block_user;
 

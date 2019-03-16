@@ -2,7 +2,11 @@ class Api::BlocksController < ApplicationController
   respond_to :json
 
   def block_user
-    b = Block.create(block_params)
+    # Right now, the blocked_id is a buyer_id as 
+    # Artists can only block from requests/inquiries,
+    # which are always buyers.
+    blocked_account_id = Buyer.find(params[:blocked_id]).account_id
+    b = Block.create(blocker_id: params[:blocker_id], blocked_id: blocked_account_id)
     b.save
   end
 
