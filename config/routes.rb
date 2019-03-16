@@ -5,9 +5,11 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'works#index'
 
+  get '/artists/confirm_email', to: 'artists#confirm_email'
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
   get '/artists/:id/update' => 'artists#update', as: "update_artist"
+  # Add route to email confirmation page
 
   get '/receipts/types' => 'receipts#get_receipt_type_enums'
 
