@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ConfirmEmail() {
+export default function ConfirmEmail(props) {
   return (
     <div className="center mw6 pa4">
       <h1>Sign up</h1>
@@ -11,7 +11,7 @@ export default function ConfirmEmail() {
           sent you.
         </p>
       </div>
-      <a className="mustard" href="/artists/confirmation/new">
+      <a className="mustard" href={`confirmation/new`}>
         Didn’t receive email?
       </a>
     </div>

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get '/requests' => 'requests#home'
   get '/requests/types' => 'requests#get_type_enum'
 
+  get '/buyers/confirm_email', to: 'buyers#confirm_email'
   get '/buyers/:id' => 'buyers#show', as: :buyerid
   get '/buyers/:id/update' => 'buyers#update', as: "update_buyer"
 
