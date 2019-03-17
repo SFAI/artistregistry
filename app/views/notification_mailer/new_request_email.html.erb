@@ -14,9 +14,11 @@
     <p>
       Email: <%= @buyer.name %> <br>
     </p>
-    <p>
-      Phone: <%= @buyer.phone %> <br>
-    </p>
+    <% if @buyer.phone_number %>
+      <p>
+        Phone: <%= @buyer.phone_number %> <br>
+      </p>
+    <% end %>
 
     <p>Thanks for joining and have a great day!</p>
   </body>
