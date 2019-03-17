@@ -33,6 +33,7 @@ artist_list.each do |n, e, pw, pr, d, m, y, s|
     media: m,
     year: y,
     open_to_commissions: s
+    terms_and_conditions: true
   )
   artist.skip_confirmation!
   artist.save!
@@ -43,6 +44,7 @@ Gates = Buyer.create(
   email: 'bill@gates.com',
   password: 'password1',
   phone_number: '111-111-1111'
+  terms_and_conditions: true
   )
 #Gates has id 1
 Gates.skip_confirmation!
