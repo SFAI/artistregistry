@@ -3,6 +3,9 @@ import React from "react";
 import ArtistColumnPanel from "./ArtistColumnPanel";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import Filters from "../works/Filters";
+import ReactPaginate from 'react-paginate'
+
+const perPage = 6
 
 class AllArtists extends React.Component {
   constructor(props) {
@@ -11,7 +14,10 @@ class AllArtists extends React.Component {
       artists: null,
       filters: [],
       componentDidMount: false,
-      isLoading: true
+      isLoading: true,
+      pageCount: 0,
+      workStartIndex: 0,
+      workEndIndex: 0
     };
   }
 
@@ -28,7 +34,10 @@ class AllArtists extends React.Component {
           artists: artists_response,
           filters: filters_response,
           componentDidMount: true,
-          isLoading: false
+          isLoading: false,
+          pageCount: artists_response.length / perPage,
+          workStartIndex: 0,
+          workEndIndex: perPage
         });
       },
       error => {
@@ -61,6 +70,14 @@ class AllArtists extends React.Component {
       );
   };
 
+  handlePageClick = data => {
+    let selected = data.selected;
+    this.setState({
+      workStartIndex: selected * perPage,
+      workEndIndex: (selected+1) * perPage
+    })
+  };
+
   render() {
     if (!this.state.componentDidMount) {
       return (
@@ -81,14 +98,32 @@ class AllArtists extends React.Component {
           <button onClick={this.getFilteredArtists} className="button-primary bg-indigo w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
-          <h1>Artists</h1>
-          <div className="col-list-3">
-            {artists.filter(artist => artist.works.length > 0).map((artist, i) => {
-              return <ArtistColumnPanel key={i} artist={artist} />
-            })}
+          <div className="flex justify-between items-baseline">
+            <h1>Artists</h1>
+            <nav className="work pagination" role="navigation" aria-label="Pagination Navigation">
+              <ReactPaginate
+              previousLabel={"\u00ab"}
+              nextLabel="&raquo;"
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+              disabledClassName={'hidden'}
+              />
+            </nav>
+            </div>
+            <div className="col-list-3">
+              {artists.filter(artist => artist.works.length > 0).slice(this.state.workStartIndex, this.state.workEndIndex).map((artist, i) => {
+                return <ArtistColumnPanel key={i} artist={artist} />
+              })}
+            </div>
           </div>
         </div>
-      </div>
     );
   }
 }

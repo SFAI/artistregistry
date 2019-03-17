@@ -5,6 +5,8 @@ import LoadingOverlay from "../helpers/LoadingOverlay";
 import WorkColumnPanel from "./WorkColumnPanel";
 import ReactPaginate from 'react-paginate'
 
+const perPage = 6
+
 class Works extends React.Component {
   constructor(props) {
     super(props);
@@ -30,9 +32,9 @@ class Works extends React.Component {
         works: works_response,
         filters: filters_response,
         isLoading: false,
-        pageCount: works_response.length / 6,
+        pageCount: works_response.length / perPage,
         workStartIndex: 0,
-        workEndIndex: 6
+        workEndIndex: perPage
       });
     });
   };
@@ -64,8 +66,8 @@ class Works extends React.Component {
   handlePageClick = data => {
     let selected = data.selected;
     this.setState({
-      workStartIndex: selected * 6,
-      workEndIndex: (selected+1) * 6
+      workStartIndex: selected * perPage,
+      workEndIndex: (selected+1) * perPage
     })
   };
 
