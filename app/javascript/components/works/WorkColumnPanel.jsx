@@ -37,6 +37,9 @@ class WorkColumnPanel extends React.Component {
           </Touchable>
         }
         <h6>{work.material}</h6>
+        {work.hidden &&
+          <h6> HIDDEN!!!!! </h6>
+        }
       </div>
     );
   }

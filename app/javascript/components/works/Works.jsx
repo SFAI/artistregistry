@@ -4,6 +4,9 @@ import Filters from "./Filters";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import WorkColumnPanel from "./WorkColumnPanel";
 
+/** @prop userType: { "artist", "buyer", "admin" }
+*/
+
 class Works extends React.Component {
   constructor(props) {
     super(props);
@@ -72,7 +75,7 @@ class Works extends React.Component {
             {works.map((work, i) => {
               return (
                 <div>
-                {!work.hidden &&
+                {(this.props.userType == "admin" || !work.hidden) &&
                   <WorkColumnPanel key={i} work={work} />
                 }
                 </div>

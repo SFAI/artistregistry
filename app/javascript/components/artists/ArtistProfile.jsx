@@ -12,7 +12,7 @@ import { convertSnakeCase } from "../../utils/snake_case";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 /**
 * @prop user: user currently logged in
-* @prop userType: { "artist", "buyer" }
+* @prop userType: { "artist", "buyer" , "admin"}
 * @prop artist: artist associated with works
 */
 class ArtistProfile extends React.Component {
@@ -228,6 +228,22 @@ class ArtistProfile extends React.Component {
                         <h4 className="ml2 white">Unhide</h4>
                       </Button>
                       }
+                    </div>
+                  }
+                  {this.props.userType == "admin" &&
+                    <div>
+                    {work.hidden == false &&
+                    <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
+                      <FontAwesomeIcon className="white" icon={faTrash} />
+                      <h4 className="ml2 white">Hide</h4>
+                    </Button>
+                    }
+                    {work.hidden == true &&
+                    <Button className="ml2" type="hover-button" onClick={() => this.unHideWork(work.id)}>
+                      <FontAwesomeIcon className="white" icon={faTrash} />
+                      <h4 className="ml2 white">Unhide</h4>
+                    </Button>
+                    }
                     </div>
                   }
                 </WorkColumnPanel>
