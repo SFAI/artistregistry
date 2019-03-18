@@ -156,16 +156,16 @@ Gates_commission.artist = Artist.find(1)
 Gates_commission.save!
 
 # Creating an Admin
-Admin = Admin.create(
+Sfai = Admin.create(
   email: 'admin@sfai.edu',
   password: 'password',
   )
 #Gates has id 1
 account = Account.create()
-account.user = Admin
+account.user = Sfai
 account.save!
 
-Admin.account = account
-Admin.account_id = account.id
-Admin.skip_confirmation!
-Admin.save!
+Sfai.account = account
+Sfai.account_id = account.id
+Sfai.skip_confirmation!
+Sfai.save!
