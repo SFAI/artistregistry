@@ -2,7 +2,7 @@ class Admin < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :email, :presence => true, :email => true
-  devise :database_authenticatable, :registerable,
+  devise :confirmable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_one :account, as: :user
   has_one_attached :avatar

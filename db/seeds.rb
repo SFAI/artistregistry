@@ -160,12 +160,11 @@ Sfai = Admin.create(
   email: 'admin@sfai.edu',
   password: 'password',
   )
-#Gates has id 1
+
 account = Account.create()
 account.user = Sfai
 account.save!
 
 Sfai.account = account
-Sfai.account_id = account.id
 Sfai.skip_confirmation!
 Sfai.save!
