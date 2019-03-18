@@ -71,7 +71,11 @@ class Works extends React.Component {
           <div className="col-list-3">
             {works.map((work, i) => {
               return (
-                <WorkColumnPanel key={i} work={work} />
+                <div>
+                {!work.hidden &&
+                  <WorkColumnPanel key={i} work={work} />
+                }
+                </div>
               );
             })}
           </div>
