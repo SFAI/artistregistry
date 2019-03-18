@@ -98,8 +98,9 @@ class Api::WorksController < ApplicationController
                                  :artist_id,
                                  :featured_image,
                                  :description,
+                                 :hidden,
                                  :attachments_attributes => [],
-                                 :attachments_to_delete => []
+                                 :attachments_to_delete => [],
                                 )
   end
 
