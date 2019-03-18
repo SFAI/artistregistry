@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     if current_artist
       @current_user = current_artist
       @current_user_type = "artist"
-    else if current_buyer
+    elsif current_buyer
       @current_user = current_buyer
       @current_user_type = "buyer"
     else
