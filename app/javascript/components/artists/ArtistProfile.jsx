@@ -205,17 +205,35 @@ class ArtistProfile extends React.Component {
             {works.map(work => {
               if (this.getAvailability(activeFilter).includes(work.availability)) {
               return (
-                    <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
-                  {canEditProfile &&
-                    <div className="work-action-wrapper mb2">
-                      <Button type="hover-button" onClick={() => this.updateWork(work.id)}>
-                        <FontAwesomeIcon className="white" icon={faEdit} />
-                        <h4 className="ml2 white">Edit</h4>
-                      </Button>
-                      <Button className="ml2" type="hover-button" onClick={() => this.deleteWork(work.id)}>
-                        <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Delete</h4>
-                      </Button>
+                <div>
+                {(this.props.userType == "admin" || this.props.user.account_id == this.props.artist.account_id || !work.hidden) &&
+                  <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
+                    {canEditProfile &&
+                      <div className="work-action-wrapper mb2">
+                        <Button type="hover-button" onClick={() => this.updateWork(work.id)}>
+                          <FontAwesomeIcon className="white" icon={faEdit} />
+                          <h4 className="ml2 white">Edit</h4>
+                        </Button>
+                        <Button className="ml2" type="hover-button" onClick={() => this.deleteWork(work.id)}>
+                          <FontAwesomeIcon className="white" icon={faTrash} />
+                          <h4 className="ml2 white">Delete</h4>
+                        </Button>
+                        {work.hidden == false &&
+                        <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
+                          <FontAwesomeIcon className="white" icon={faTrash} />
+                          <h4 className="ml2 white">Hide</h4>
+                        </Button>
+                        }
+                        {work.hidden == true &&
+                        <Button className="ml2" type="hover-button" onClick={() => this.unHideWork(work.id)}>
+                          <FontAwesomeIcon className="white" icon={faTrash} />
+                          <h4 className="ml2 white">Unhide</h4>
+                        </Button>
+                        }
+                      </div>
+                    }
+                    {this.props.userType == "admin" &&
+                      <div>
                       {work.hidden == false &&
                       <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
@@ -228,25 +246,11 @@ class ArtistProfile extends React.Component {
                         <h4 className="ml2 white">Unhide</h4>
                       </Button>
                       }
-                    </div>
-                  }
-                  {this.props.userType == "admin" &&
-                    <div>
-                    {work.hidden == false &&
-                    <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
-                      <FontAwesomeIcon className="white" icon={faTrash} />
-                      <h4 className="ml2 white">Hide</h4>
-                    </Button>
+                      </div>
                     }
-                    {work.hidden == true &&
-                    <Button className="ml2" type="hover-button" onClick={() => this.unHideWork(work.id)}>
-                      <FontAwesomeIcon className="white" icon={faTrash} />
-                      <h4 className="ml2 white">Unhide</h4>
-                    </Button>
-                    }
-                    </div>
-                  }
                 </WorkColumnPanel>
+              }
+              </div>
               )
             }
             })}

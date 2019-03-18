@@ -3,6 +3,9 @@ import React from "react";
 import Filters from "./Filters";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import WorkColumnPanel from "./WorkColumnPanel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Button from "../helpers/Button";
 
 /** @prop userType: { "artist", "buyer", "admin" }
 */
@@ -57,6 +60,40 @@ class Works extends React.Component {
       );
   };
 
+  hideWork = (work_id) => {
+    let formData = new FormData();
+    formData.append(`work[hidden]`, true);
+    fetch(APIRoutes.works.update(work_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/`
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+  unHideWork = (work_id) => {
+    let formData = new FormData();
+    formData.append(`work[hidden]`, false);
+    fetch(APIRoutes.works.update(work_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/`
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   render() {
     const { filters, works } = this.state;
     return (
@@ -76,7 +113,20 @@ class Works extends React.Component {
               return (
                 <div>
                 {(this.props.userType == "admin" || !work.hidden) &&
-                  <WorkColumnPanel key={i} work={work} />
+                  <WorkColumnPanel key={i} work={work}>
+                      {work.hidden == false && this.props.userType == "admin" &&
+                      <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
+                        <FontAwesomeIcon className="white" icon={faTrash} />
+                        <h4 className="ml2 white">Hide</h4>
+                      </Button>
+                      }
+                      {work.hidden == true && this.props.userType == "admin" &&
+                      <Button className="ml2" type="hover-button" onClick={() => this.unHideWork(work.id)}>
+                        <FontAwesomeIcon className="white" icon={faTrash} />
+                        <h4 className="ml2 white">Unhide</h4>
+                      </Button>
+                      }
+                  </WorkColumnPanel>
                 }
                 </div>
               );
