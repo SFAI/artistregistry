@@ -16,5 +16,5 @@ class Artist < ApplicationRecord
   # validates :name, presence: true, uniqueness: true
 
 
-  enum program: { art_and_technology: 0, film: 1, history_and_theory: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7 }
+  enum program: { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7 }
 end
