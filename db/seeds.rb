@@ -35,6 +35,12 @@ artist_list.each do |n, e, pw, pr, d, m, y, s|
     open_to_commissions: s,
     terms_and_conditions: true
   )
+  account = Account.create()
+  account.user = artist
+  account.save!
+
+  artist.account = account
+  artist.account_id = account.id
   artist.skip_confirmation!
   artist.save!
 end
@@ -47,6 +53,12 @@ Gates = Buyer.create(
   terms_and_conditions: true
   )
 #Gates has id 1
+account = Account.create()
+account.user = Gates
+account.save!
+
+Gates.account = account
+Gates.account_id = account.id
 Gates.skip_confirmation!
 Gates.save!
 
@@ -56,7 +68,12 @@ Jobs = Buyer.create(
   password: 'appleee',
   phone_number: '111-111-1111'
   )
-#Gates has id 1
+account = Account.create()
+account.user = Jobs
+account.save!
+
+Jobs.account = account
+Jobs.account_id = account.id
 Jobs.skip_confirmation!
 Jobs.save!
 

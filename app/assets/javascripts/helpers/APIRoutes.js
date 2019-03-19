@@ -39,7 +39,8 @@ class ApiRoutes {
       show: (id) => `/api/requests/${id}`,
       update: (id) => `/api/requests/${id}`,
       create: `/api/requests`,
-      types: '/requests/types'
+      types: '/requests/types',
+      request_exist: (search_params) => `/api/requests/request_exist/${search_params}`
     }
   }
 

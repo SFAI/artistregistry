@@ -1,4 +1,4 @@
-class NotificationMailer < ApplicationMailer
+class RequestMailer < ApplicationMailer
   def new_request_email
     @artist = params[:artist]
     @buyer = params[:buyer]

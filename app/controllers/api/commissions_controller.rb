@@ -7,6 +7,7 @@ class Api::CommissionsController < ApplicationController
     commission = Commission.new(commission_params)
     if commission.save!
       flash[:success] = "Commission requested successfully!";
+      CommissionMailer.with(buyer: commission.buyer, artist: commission.artist).new_commission_email.deliver_later
       return render json: {"message": 'Commission requested successfully!'}
     else
       flash[:danger] = "Commission failed to send."
