@@ -86,7 +86,7 @@ class Works extends React.Component {
         <div className="fl w-80 pb5">
           <div className="flex justify-between items-baseline">
             <h1>Artwork</h1>
-            <nav className="work pagination" role="navigation" aria-label="Pagination Navigation">
+            <nav className="li-magenta pagination" role="navigation" aria-label="Pagination Navigation">
               <ReactPaginate
               previousLabel={"\u00ab"}
               nextLabel="&raquo;"
@@ -96,8 +96,6 @@ class Works extends React.Component {
               marginPagesDisplayed={2}
               pageRangeDisplayed={5}
               onPageChange={this.handlePageClick}
-              containerClassName={'pagination'}
-              subContainerClassName={'pages pagination'}
               activeClassName={'active'}
               disabledClassName={'hidden'}
               />
