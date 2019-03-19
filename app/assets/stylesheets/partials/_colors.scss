@@ -64,4 +64,10 @@ $sfai-colors: (
   .hover-#{$name}:visited:hover {
     color: $hex
   }
+
+  .li-#{$name} {
+      li.active {
+      background-color: $hex;
+    }
+  }
 }
