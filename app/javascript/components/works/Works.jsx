@@ -21,7 +21,10 @@ class Works extends React.Component {
   }
 
   componentDidMount = () => {
-    const works_route = APIRoutes.works.index;
+    const unhiddenParams = `hidden=false`
+    const works_route = this.props.userType == "admin"
+      ? APIRoutes.works.index
+      : APIRoutes.works.filtered_works(unhiddenParams)
     const categories_route = APIRoutes.works.categories;
     Promise.all([
       Requester.get(works_route),
@@ -45,7 +48,6 @@ class Works extends React.Component {
     const works_route = searchParams.length
       ? APIRoutes.works.filtered_works(searchParams)
       : APIRoutes.works.index;
-
     Requester.get(
       works_route).then(
         response => {
@@ -112,7 +114,6 @@ class Works extends React.Component {
             {works.map((work, i) => {
               return (
                 <div>
-                {(this.props.userType == "admin" || !work.hidden) &&
                   <WorkColumnPanel key={i} work={work}>
                       {work.hidden == false && this.props.userType == "admin" &&
                       <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
@@ -127,7 +128,6 @@ class Works extends React.Component {
                       </Button>
                       }
                   </WorkColumnPanel>
-                }
                 </div>
               );
             })}
