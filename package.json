@@ -2,13 +2,13 @@
   "name": "SFAI",
   "private": true,
   "dependencies": {
-    "@blueprintjs/core": "^3.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/react-fontawesome": "^0.1.3",
     "@rails/webpacker": "3.5",
     "babel-preset-react": "^6.24.1",
     "caniuse-lite": "^1.0.30000899",
+    "classnames": "^2.2.6",
     "immutability-helper": "^2.8.1",
     "prop-types": "^15.6.2",
     "rc-touchable": "^1.3.1",
@@ -22,6 +22,6 @@
     "tachyons-sass": "^4.9.3"
   },
   "devDependencies": {
-    "webpack-dev-server": "2.11.2"
+    "webpack-dev-server": "^3.1.11"
   }
 }
