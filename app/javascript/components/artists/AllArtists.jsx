@@ -30,12 +30,13 @@ class AllArtists extends React.Component {
     ]).then(
       response => {
         const [artists_response, filters_response] = response;
+        const artists_response_filtered = artists_response.filter(artist => artist.works.length > 0)
         this.setState({
-          artists: artists_response,
+          artists: artists_response_filtered,
           filters: filters_response,
           componentDidMount: true,
           isLoading: false,
-          pageCount: artists_response.length / perPage,
+          pageCount: Math.ceil(artists_response_filtered.length / perPage),
           workStartIndex: 0,
           workEndIndex: perPage
         });
@@ -60,8 +61,9 @@ class AllArtists extends React.Component {
       artists_route).then(
         response => {
           this.setState({
-            artists: response,
-            isLoading: false
+            artists: response.filter(artist => artist.works.length > 0),
+            isLoading: false,
+            pageCount: Math.ceil(response.filter(artist => artist.works.length > 0).length / perPage)
           });
         },
         response => {
@@ -116,7 +118,7 @@ class AllArtists extends React.Component {
             </nav>
             </div>
             <div className="col-list-3">
-              {artists.filter(artist => artist.works.length > 0).slice(this.state.workStartIndex, this.state.workEndIndex).map((artist, i) => {
+              {artists.slice(this.state.workStartIndex, this.state.workEndIndex).map((artist, i) => {
                 return <ArtistColumnPanel key={i} artist={artist} />
               })}
             </div>

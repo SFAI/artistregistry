@@ -32,7 +32,7 @@ class Works extends React.Component {
         works: works_response,
         filters: filters_response,
         isLoading: false,
-        pageCount: works_response.length / perPage,
+        pageCount: Math.ceil(works_response.length / perPage),
         workStartIndex: 0,
         workEndIndex: perPage
       });
@@ -54,7 +54,8 @@ class Works extends React.Component {
         response => {
           this.setState({
             works: response,
-            isLoading: false
+            isLoading: false,
+            pageCount: Math.ceil(response.length / perPage)
           });
         },
         response => {
