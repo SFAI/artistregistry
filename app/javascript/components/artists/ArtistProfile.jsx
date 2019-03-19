@@ -67,9 +67,20 @@ class ArtistProfile extends React.Component {
     window.location = `/works/${work_id}/edit`;
   }
 
-  updateFeatured = (work_id) => {
+  updateFeatured = (work_id, only=false) => {
+    let newFeaturedId = null
+    if (only == true) {
+      console.log("here")
+      newFeaturedId = work_id
+    } else {
+      let newFeatured = this.state.works.filter(work => work.id != work_id).find(work => work.hidden == false)
+      if (newFeatured) {
+        newFeaturedId = newFeatured.id
+      }
+    }
+
     let formData = new FormData();
-    formData.append(`artist[featured_work_id]`, work_id);
+    formData.append(`artist[featured_work_id]`, newFeaturedId);
     fetch(APIRoutes.artists.update(this.props.artist.id), {
       method: 'PUT',
       body: formData,
@@ -93,11 +104,7 @@ class ArtistProfile extends React.Component {
       }
     }).then((data) => {
       if (work_id == this.state.artist.featured_work_id) {
-        let newFeaturedId = this.state.works[0].id
-        if (newFeaturedId == work_id && this.state.works.length > 1) {
-          newFeaturedId = this.state.works[1].id
-        }
-        this.updateFeatured(newFeaturedId)
+        this.updateFeatured(work_id)
       } else {
         window.location = `/artists/` + this.props.artist.id;
       }
@@ -107,6 +114,7 @@ class ArtistProfile extends React.Component {
   }
 
   hideWork = (work_id) => {
+    this.updateFeatured(work_id)
     let formData = new FormData();
     formData.append(`work[hidden]`, true);
     fetch(APIRoutes.works.update(work_id), {
@@ -124,6 +132,7 @@ class ArtistProfile extends React.Component {
   }
 
   unHideWork = (work_id) => {
+    this.updateFeatured(work_id, true)
     let formData = new FormData();
     formData.append(`work[hidden]`, false);
     fetch(APIRoutes.works.update(work_id), {
