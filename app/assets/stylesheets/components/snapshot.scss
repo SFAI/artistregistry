@@ -6,4 +6,8 @@
   .snapshot-nav:hover {
     @extend .pointer;
   }
+
+  .link-magenta {
+    color: $magenta;
+  }
 }

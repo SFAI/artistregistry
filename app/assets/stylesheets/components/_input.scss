@@ -24,18 +24,6 @@ input[type="checkbox"] {
     padding: -5px;
     background-color: $charcoal;
   }
-
-  &[class="checkbox-availability"]:checked:after {
-    background-color: $magenta !important;
-  }
-
-  &[class="checkbox-media"]:checked:after {
-    background-color: $magenta !important;
-  }
-
-  &[class="checkbox-program"]:checked:after {
-    background-color: $indigo !important;
-  }
 }
 
 .checkbox-item {

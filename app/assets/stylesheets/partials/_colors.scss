@@ -64,4 +64,8 @@ $sfai-colors: (
   .hover-#{$name}:visited:hover {
     color: $hex
   }
+
+  input[type="checkbox"][class="checkbox-#{$name}"]:checked:after {
+    background-color: $hex !important;
+  }
 }

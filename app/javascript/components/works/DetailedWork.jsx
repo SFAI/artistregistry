@@ -53,7 +53,7 @@ class DetailedWork extends React.Component {
         </div>
         <div className="fl w-30 pl3">
           <div className="bg-white overflow-hidden">
-            <ArtistSnapshot artist={artist} />
+            <ArtistSnapshot artist={artist} color="magenta"/>
           </div>
           <div className="bg-white pa3 mv3 relative">
             <h2>{title}</h2>
