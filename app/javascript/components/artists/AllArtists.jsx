@@ -16,8 +16,8 @@ class AllArtists extends React.Component {
       componentDidMount: false,
       isLoading: true,
       pageCount: 0,
-      workStartIndex: 0,
-      workEndIndex: 0
+      artistStartIndex: 0,
+      artistEndIndex: 0
     };
   }
 
@@ -37,8 +37,8 @@ class AllArtists extends React.Component {
           componentDidMount: true,
           isLoading: false,
           pageCount: Math.ceil(artists_response_filtered.length / perPage),
-          workStartIndex: 0,
-          workEndIndex: perPage
+          artistStartIndex: 0,
+          artistEndIndex: perPage
         });
       },
       error => {
@@ -75,8 +75,8 @@ class AllArtists extends React.Component {
   handlePageClick = data => {
     let selected = data.selected;
     this.setState({
-      workStartIndex: selected * perPage,
-      workEndIndex: (selected+1) * perPage
+      artistStartIndex: selected * perPage,
+      artistEndIndex: (selected+1) * perPage
     })
   };
 
@@ -87,11 +87,11 @@ class AllArtists extends React.Component {
       );
     }
 
-    const { filters, artists } = this.state;
+    const { isLoading, filters, artists, pageCount, artistStartIndex, artistEndIndex } = this.state;
 
     return (
       <div className="pt4">
-        {this.state.isLoading ? <LoadingOverlay itemType="artists" fullPage={true} /> : null}
+        {isLoading ? <LoadingOverlay itemType="artists" fullPage={true} /> : null}
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
@@ -105,10 +105,10 @@ class AllArtists extends React.Component {
             <nav className="li-indigo pagination" role="navigation" aria-label="Pagination Navigation">
               <ReactPaginate
               previousLabel={"\u00ab"}
-              nextLabel="&raquo;"
+              nextLabel={"\u00bb"}
               breakLabel={'...'}
               breakClassName={'break-me'}
-              pageCount={this.state.pageCount}
+              pageCount={pageCount}
               marginPagesDisplayed={2}
               pageRangeDisplayed={5}
               onPageChange={this.handlePageClick}
@@ -118,7 +118,7 @@ class AllArtists extends React.Component {
             </nav>
             </div>
             <div className="col-list-3">
-              {artists.slice(this.state.workStartIndex, this.state.workEndIndex).map((artist, i) => {
+              {artists.slice(artistStartIndex, artistEndIndex).map((artist, i) => {
                 return <ArtistColumnPanel key={i} artist={artist} />
               })}
             </div>

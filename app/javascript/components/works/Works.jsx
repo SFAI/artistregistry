@@ -73,10 +73,10 @@ class Works extends React.Component {
   };
 
   render() {
-    const { filters, works } = this.state;
+    const { isLoading, pageCount, filters, works, workStartIndex, workEndIndex } = this.state;
     return (
       <div className="pt4">
-        {this.state.isLoading ? <LoadingOverlay itemType="artwork" fullPage={true} /> : null}
+        {isLoading ? <LoadingOverlay itemType="artwork" fullPage={true} /> : null}
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
@@ -90,10 +90,10 @@ class Works extends React.Component {
             <nav className="li-magenta pagination" role="navigation" aria-label="Pagination Navigation">
               <ReactPaginate
               previousLabel={"\u00ab"}
-              nextLabel="&raquo;"
+              nextLabel={"\u00bb"}
               breakLabel={'...'}
               breakClassName={'break-me'}
-              pageCount={this.state.pageCount}
+              pageCount={pageCount}
               marginPagesDisplayed={2}
               pageRangeDisplayed={5}
               onPageChange={this.handlePageClick}
@@ -103,7 +103,7 @@ class Works extends React.Component {
             </nav>
           </div>
           <div className="col-list-3">
-            {works.slice(this.state.workStartIndex, this.state.workEndIndex).map((work, i) => {
+            {works.slice(workStartIndex, workEndIndex).map((work, i) => {
               return (
                 <WorkColumnPanel key={i} work={work} />
               );
