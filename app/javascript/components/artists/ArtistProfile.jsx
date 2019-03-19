@@ -70,7 +70,6 @@ class ArtistProfile extends React.Component {
   updateFeatured = (work_id, only=false) => {
     let newFeaturedId = null
     if (only == true) {
-      console.log("here")
       newFeaturedId = work_id
     } else {
       let newFeatured = this.state.works.filter(work => work.id != work_id).find(work => work.hidden == false)
