@@ -65,6 +65,6 @@ class Buyers::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up for inactive accounts.
   def after_inactive_sign_up_path_for(resource)
-    '/buyers/confirm_email'
+    buyers_confirm_email_path
   end
 end

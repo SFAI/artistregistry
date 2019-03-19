@@ -65,6 +65,6 @@ class Artists::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up for inactive accounts.
   def after_inactive_sign_up_path_for(resource)
-    '/artists/confirm_email'
+    artists_confirm_email_path
   end
 end
