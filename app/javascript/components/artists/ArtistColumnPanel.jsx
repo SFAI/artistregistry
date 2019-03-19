@@ -20,6 +20,7 @@ class ArtistColumnPanel extends React.Component {
   render() {
     let artist = this.props.artist;
     const featured_work = artist.works.find(work => work.id === artist.featured_work_id);
+    const non_hidden_works = artist.works.filter(work => work.hidden === false);
     return (
       <div className="mb3 pa3 w-100 col-item bg-white relative" key={artist.id}>
         <div className="item-overlay">
@@ -32,7 +33,7 @@ class ArtistColumnPanel extends React.Component {
           <h3 className="indigo pointer">{artist.name}</h3>
         </Touchable>
         <h6 className="ttc">{convertSnakeCase(artist.program)}, {artist.year}</h6>
-        <h6 className="i">{artist.works.length} work{artist.works.length > 1 && "s"} available</h6>
+        <h6 className="i">{non_hidden_works.length} work{non_hidden_works.length > 1 && "s"} available</h6>
       </div>
     );
   }
