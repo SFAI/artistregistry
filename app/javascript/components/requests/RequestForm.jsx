@@ -16,7 +16,6 @@ class RequestForm extends React.Component {
       request_types: {},
       errors: {
         message: "",
-        login: "",
         exist: ""
       },
       exist: false,
@@ -79,15 +78,11 @@ class RequestForm extends React.Component {
   checkErrors() {
     let errors = {
       message: "",
-      login: "",
       exist: ""
     }
 
     if (!this.state.request.message) {
       errors["message"] = "This field cannot be empty."
-    }
-    if (!this.props.buyer) {
-      errors["login"] = "You must be logged in to request a work."
     }
     if (this.state.exist) {
       errors["exist"] = "You have already made a request under this request type."
@@ -142,6 +137,22 @@ class RequestForm extends React.Component {
         </div>
       );
     }
+    if (!this.props.buyer) {
+      return (
+        <div className="mw6">
+          <Panel
+            color="magenta"
+            title="Request Artwork"
+          >
+            <div className="pa3">
+              <h6>You must be logged in to request artwork.</h6>
+              <a className="pointer magenta" href="../artists/sign_in">Artist Login</a>
+              <a className="pointer magenta" href="../buyers/sign_in">Patron Login</a>
+            </div>
+          </Panel>
+        </div>
+      );
+    }
     return (
       <div className="w-100">
         <Panel
@@ -172,7 +183,6 @@ class RequestForm extends React.Component {
             className="textarea"
           />
           <FormError error={this.state.errors["message"]} />
-          <FormError error={this.state.errors["login"]} />
           <FormError error={this.state.errors["exist"]} />
           <button onClick={this.handleSubmit} className="button-primary bg-magenta w4 mt2">
             Submit
