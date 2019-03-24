@@ -200,12 +200,15 @@ class ArtistProfile extends React.Component {
               </p>
             </div>
           </div>
-          <div className="w-50 pl2 dib flex flex-row items-stretch">
-            <CommissionsForm
-              buyer={this.props.user}
-              artist={this.props.artist}
-            />
-          </div>
+          {
+            !canEditProfile &&
+            <div className="w-50 pl2 dib flex flex-row items-stretch">
+              <CommissionsForm
+                buyer={this.props.user}
+                artist={this.props.artist}
+              />
+            </div>
+          }
         </div>
       </div>
     );
