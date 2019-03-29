@@ -3,18 +3,15 @@ import React from "react";
 import Filters from "./Filters";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import WorkColumnPanel from "./WorkColumnPanel";
-<<<<<<< HEAD
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 
 /** @prop userType: { "artist", "buyer", "admin" }
 */
-=======
 import ReactPaginate from 'react-paginate'
 
 const perPage = 6
->>>>>>> fe465b81b094698355bfae25d556cc81c4e3dcc3
 
 class Works extends React.Component {
   constructor(props) {
@@ -75,7 +72,6 @@ class Works extends React.Component {
       );
   };
 
-<<<<<<< HEAD
   hideWork = (work_id) => {
     let formData = new FormData();
     formData.append(`work[hidden]`, true);
@@ -109,7 +105,6 @@ class Works extends React.Component {
       console.error(data);
     });
   }
-=======
   handlePageClick = data => {
     let selected = data.selected;
     this.setState({
@@ -117,7 +112,6 @@ class Works extends React.Component {
       workEndIndex: (selected+1) * perPage
     })
   };
->>>>>>> fe465b81b094698355bfae25d556cc81c4e3dcc3
 
   render() {
     const { isLoading, pageCount, filters, works, workStartIndex, workEndIndex } = this.state;
