@@ -3,12 +3,18 @@ import React from "react";
 import Filters from "./Filters";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import WorkColumnPanel from "./WorkColumnPanel";
+<<<<<<< HEAD
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 
 /** @prop userType: { "artist", "buyer", "admin" }
 */
+=======
+import ReactPaginate from 'react-paginate'
+
+const perPage = 6
+>>>>>>> fe465b81b094698355bfae25d556cc81c4e3dcc3
 
 class Works extends React.Component {
   constructor(props) {
@@ -16,7 +22,10 @@ class Works extends React.Component {
     this.state = {
       works: [],
       filters: {},
-      isLoading: true
+      isLoading: true,
+      pageCount: 0,
+      workStartIndex: 0,
+      workEndIndex: 0
     };
   }
 
@@ -34,7 +43,10 @@ class Works extends React.Component {
       this.setState({
         works: works_response,
         filters: filters_response,
-        isLoading: false
+        isLoading: false,
+        pageCount: Math.ceil(works_response.length / perPage),
+        workStartIndex: 0,
+        workEndIndex: perPage
       });
     });
   };
@@ -53,7 +65,8 @@ class Works extends React.Component {
         response => {
           this.setState({
             works: response,
-            isLoading: false
+            isLoading: false,
+            pageCount: Math.ceil(response.length / perPage)
           });
         },
         response => {
@@ -62,6 +75,7 @@ class Works extends React.Component {
       );
   };
 
+<<<<<<< HEAD
   hideWork = (work_id) => {
     let formData = new FormData();
     formData.append(`work[hidden]`, true);
@@ -95,12 +109,21 @@ class Works extends React.Component {
       console.error(data);
     });
   }
+=======
+  handlePageClick = data => {
+    let selected = data.selected;
+    this.setState({
+      workStartIndex: selected * perPage,
+      workEndIndex: (selected+1) * perPage
+    })
+  };
+>>>>>>> fe465b81b094698355bfae25d556cc81c4e3dcc3
 
   render() {
-    const { filters, works } = this.state;
+    const { isLoading, pageCount, filters, works, workStartIndex, workEndIndex } = this.state;
     return (
       <div className="pt4">
-        {this.state.isLoading ? <LoadingOverlay itemType="artwork" fullPage={true} /> : null}
+        {isLoading ? <LoadingOverlay itemType="artwork" fullPage={true} /> : null}
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
@@ -109,9 +132,25 @@ class Works extends React.Component {
           <button onClick={this.getFilteredWorks} className="button-primary bg-magenta w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
-          <h1>Artwork</h1>
+          <div className="flex justify-between items-baseline">
+            <h1>Artwork</h1>
+            <nav className="li-magenta pagination" role="navigation" aria-label="Pagination Navigation">
+              <ReactPaginate
+              previousLabel={"\u00ab"}
+              nextLabel={"\u00bb"}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              activeClassName={'active'}
+              disabledClassName={'hidden'}
+              />
+            </nav>
+          </div>
           <div className="col-list-3">
-            {works.map((work, i) => {
+            {works.slice(workStartIndex, workEndIndex).map((work, i) => {
               return (
                 <div>
                   <WorkColumnPanel key={i} work={work}>
@@ -132,6 +171,8 @@ class Works extends React.Component {
               );
             })}
           </div>
+        </div>
+        <div>
         </div>
       </div>
     );

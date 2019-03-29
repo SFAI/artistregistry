@@ -4,19 +4,21 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Request Opened</h1>
+    <h1>Commission Opened</h1>
     <p>
-      <%= @buyer.name %> has opened a new request for <%= @work.title %>. <br>
+      <%= @buyer.name %> has opened a new commission for you. <br>
     </p>
     <h2>
       Contact Info:
     </h2>
     <p>
-      Email: <%= @buyer.name %> <br>
+      Email: <%= @buyer.email %> <br>
     </p>
-    <p>
-      Phone: <%= @buyer.phone %> <br>
-    </p>
+    <% if @buyer.phone_number %>
+      <p>
+        Phone: <%= @buyer.phone_number %> <br>
+      </p>
+    <% end %>
 
     <p>Thanks for joining and have a great day!</p>
   </body>

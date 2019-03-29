@@ -235,15 +235,25 @@ class ArtistProfile extends React.Component {
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Hide</h4>
                       </Button>
+<<<<<<< HEAD
                       }
                       {work.hidden == true &&
                       <Button className="ml2" type="hover-button" onClick={() => this.unHideWork(work.id)}>
+=======
+                      {(work.availability == 'active') &&
+                      <Button className="ml2" type="hover-button" onClick={() => this.deleteWork(work.id)}>
+>>>>>>> fe465b81b094698355bfae25d556cc81c4e3dcc3
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Unhide</h4>
                       </Button>
                       }
+<<<<<<< HEAD
                       </div>
                     }
+=======
+                    </div>
+                  }
+>>>>>>> fe465b81b094698355bfae25d556cc81c4e3dcc3
                 </WorkColumnPanel>
               }
               </div>
