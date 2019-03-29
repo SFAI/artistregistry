@@ -4,7 +4,7 @@ class Artist < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :email, :presence => true, :email => true
   devise :confirmable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :lockable
   has_one :account, as: :user
   has_many :works
   has_one :featured_work, :class_name => 'Work', :foreign_key => "featured_work_id"
