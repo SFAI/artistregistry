@@ -203,6 +203,11 @@ class ArtistProfile extends React.Component {
               </button>
             ))}
           </div>
+          <div>
+          <Button type="button-primary" className="w4" color="indigo" onClick={this.lockArtist}>
+            LOCK
+          </Button>
+          </div>
           {canEditProfile &&
             <Button type="button-primary" className="w4" color="indigo" onClick={this.createNewWork}>
               New Work
