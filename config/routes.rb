@@ -59,5 +59,6 @@ Rails.application.routes.draw do
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'
     get 'requests/request_exist/:search_params' => 'requests#request_exist'
+    put 'artists/locker_user/:id' => 'artists#lock_user'
   end
 end

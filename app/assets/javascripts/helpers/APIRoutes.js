@@ -23,6 +23,7 @@ class ApiRoutes {
       commissions : (id) => `/api/artists/commissions/${id}`,
       filtered_artists: (search_params) => `/api/artists/filtered_artists/${search_params}`,
       categories  : `/api/artists/categories`,
+      lock_user : (id) => `/api/artists/lock_user/${id}`,
     }
   }
 

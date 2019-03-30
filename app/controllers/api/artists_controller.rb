@@ -72,6 +72,11 @@ class Api::ArtistsController < ApplicationController
         each_serializer: CommissionSerializer
   end
 
+  def lock_user
+    user = Account.find_by_user_id(params[:id])
+    user.lock_access!
+  end
+
   def artist_params
     params.require(:artist).permit(:name,
                                  :program,
