@@ -73,6 +73,7 @@ class Api::ArtistsController < ApplicationController
   end
 
   def lock_user
+    print("hello")
     user = Account.find_by_user_id(params[:id])
     user.lock_access!
   end

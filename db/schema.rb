@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_18_084718) do
+ActiveRecord::Schema.define(version: 2019_03_30_063128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2019_03_18_084718) do
     t.integer "year"
     t.boolean "terms_and_conditions"
     t.bigint "account_id"
+    t.datetime "locked_at"
     t.index ["account_id"], name: "index_artists_on_account_id"
     t.index ["confirmation_token"], name: "index_artists_on_confirmation_token", unique: true
     t.index ["email"], name: "index_artists_on_email", unique: true

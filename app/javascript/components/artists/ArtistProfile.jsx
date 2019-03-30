@@ -150,7 +150,7 @@ class ArtistProfile extends React.Component {
 
   lockArtist = () => {
     let formData = new FormData();
-    fetch(APIRoutes.artists.lock_user(this.props.artist.user_id), {
+    fetch(APIRoutes.artists.lock_user(this.props.artist.id), {
       method: 'PUT',
       body: formData,
       credentials: 'same-origin',
