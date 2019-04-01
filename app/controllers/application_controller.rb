@@ -1,11 +1,13 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   before_action :set_current_user
   before_action :configure_permitted_parameters, if: :devise_controller?
+  after_action :verify_authorized
 
   def toast(type, text)
     flash[:toastr] = { type => text }
   end
-  
+
   def set_current_user
     if current_artist
       @current_user = current_artist
