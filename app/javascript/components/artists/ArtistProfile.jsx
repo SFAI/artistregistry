@@ -235,7 +235,7 @@ class ArtistProfile extends React.Component {
               if (this.getAvailability(activeFilter).includes(work.availability)) {
               return (
                 <div>
-                {(!work.hidden || this.props.userType == "admin" || this.props.user.account_id == this.props.artist.account_id) &&
+                {(!work.hidden || this.props.userType == "admin" || (this.props.user != null && (this.props.user.account_id == this.props.artist.account_id))) &&
                   <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
                     {canEditProfile &&
                       <div className="work-action-wrapper mb2">
