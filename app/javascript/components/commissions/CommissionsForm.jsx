@@ -96,9 +96,9 @@ class CommissionsForm extends React.Component {
         title="Contact the Artist"
         >
           <div className="pa3">
-            <h6>You must be logged in to contact artists.</h6>
-            <a className="pointer indigo" href="../artists/sign_in">Artist Login</a>
-            <a className="pointer indigo" href="../buyers/sign_in">Patron Login</a>
+            <p className="mb4">Log in to your account to contact artists.</p>
+            <a className="pointer indigo mb1" href="../artists/sign_in">Log in (Artist) »</a>
+            <a className="pointer indigo" href="../buyers/sign_in">Log in (Patron) »</a>
           </div>
         </Panel>
       );
