@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_26_080639) do
+ActiveRecord::Schema.define(version: 2019_03_13_234410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "user_type"
+    t.bigint "user_id"
+    t.index ["user_type", "user_id"], name: "index_accounts_on_user_type_and_user_id"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -55,6 +61,8 @@ ActiveRecord::Schema.define(version: 2019_02_26_080639) do
     t.string "media"
     t.integer "year"
     t.boolean "terms_and_conditions"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_artists_on_account_id"
     t.index ["confirmation_token"], name: "index_artists_on_confirmation_token", unique: true
     t.index ["email"], name: "index_artists_on_email", unique: true
     t.index ["reset_password_token"], name: "index_artists_on_reset_password_token", unique: true
@@ -74,6 +82,8 @@ ActiveRecord::Schema.define(version: 2019_02_26_080639) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.boolean "terms_and_conditions"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_buyers_on_account_id"
     t.index ["confirmation_token"], name: "index_buyers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_buyers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_buyers_on_reset_password_token", unique: true

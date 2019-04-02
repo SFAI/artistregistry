@@ -3,6 +3,9 @@ import React from "react";
 import ArtistColumnPanel from "./ArtistColumnPanel";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import Filters from "../works/Filters";
+import ReactPaginate from 'react-paginate'
+
+const perPage = 6
 
 class AllArtists extends React.Component {
   constructor(props) {
@@ -11,7 +14,10 @@ class AllArtists extends React.Component {
       artists: null,
       filters: [],
       componentDidMount: false,
-      isLoading: true
+      isLoading: true,
+      pageCount: 0,
+      artistStartIndex: 0,
+      artistEndIndex: 0
     };
   }
 
@@ -24,11 +30,15 @@ class AllArtists extends React.Component {
     ]).then(
       response => {
         const [artists_response, filters_response] = response;
+        const artists_response_filtered = artists_response.filter(artist => artist.works.length > 0)
         this.setState({
-          artists: artists_response,
+          artists: artists_response_filtered,
           filters: filters_response,
           componentDidMount: true,
-          isLoading: false
+          isLoading: false,
+          pageCount: Math.ceil(artists_response_filtered.length / perPage),
+          artistStartIndex: 0,
+          artistEndIndex: perPage
         });
       },
       error => {
@@ -51,14 +61,23 @@ class AllArtists extends React.Component {
       artists_route).then(
         response => {
           this.setState({
-            artists: response,
-            isLoading: false
+            artists: response.filter(artist => artist.works.length > 0),
+            isLoading: false,
+            pageCount: Math.ceil(response.filter(artist => artist.works.length > 0).length / perPage)
           });
         },
         response => {
           console.error(response);
         }
       );
+  };
+
+  handlePageClick = data => {
+    let selected = data.selected;
+    this.setState({
+      artistStartIndex: selected * perPage,
+      artistEndIndex: (selected+1) * perPage
+    })
   };
 
   render() {
@@ -68,11 +87,11 @@ class AllArtists extends React.Component {
       );
     }
 
-    const { filters, artists } = this.state;
+    const { isLoading, filters, artists, pageCount, artistStartIndex, artistEndIndex } = this.state;
 
     return (
       <div className="pt4">
-        {this.state.isLoading ? <LoadingOverlay itemType="artists" fullPage={true} /> : null}
+        {isLoading ? <LoadingOverlay itemType="artists" fullPage={true} /> : null}
         <div className="fl w-20 pa3 mt5">
           <Filters
             ref={(node) => { this.filters = node }}
@@ -82,14 +101,30 @@ class AllArtists extends React.Component {
           <button onClick={this.getFilteredArtists} className="button-primary bg-indigo w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
-          <h1>Artists</h1>
-          <div className="col-list-3">
-            {artists.filter(artist => artist.works.length > 0).map((artist, i) => {
-              return <ArtistColumnPanel key={i} artist={artist} />
-            })}
+          <div className="flex justify-between items-baseline">
+            <h1>Artists</h1>
+            <nav className="li-indigo pagination" role="navigation" aria-label="Pagination Navigation">
+              <ReactPaginate
+              previousLabel={"\u00ab"}
+              nextLabel={"\u00bb"}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              activeClassName={'active'}
+              disabledClassName={'hidden'}
+              />
+            </nav>
+            </div>
+            <div className="col-list-3">
+              {artists.slice(artistStartIndex, artistEndIndex).map((artist, i) => {
+                return <ArtistColumnPanel key={i} artist={artist} />
+              })}
+            </div>
           </div>
         </div>
-      </div>
     );
   }
 }

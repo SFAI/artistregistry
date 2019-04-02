@@ -10,7 +10,7 @@ class Api::ReceiptsController < ApplicationController
       receipt.request.open = false
       if receipt.request.save!
         flash[:success] = "Transaction recorded successfully!"
-        NotificationMailer.with(buyer: request.buyer, artist: request.artist, work: request.work).request_completed_email.deliver_later
+        RequestMailer.with(buyer: request.buyer, artist: request.artist, work: request.work).request_completed_email.deliver_later
         return render json: {"message": 'Transaction recorded successfully!'}
       end
     else

@@ -5,6 +5,7 @@ class Artist < ApplicationRecord
   validates :email, :presence => true, :email => true
   devise :confirmable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  has_one :account, as: :user
   has_many :works
   has_one :featured_work, :class_name => 'Work', :foreign_key => "featured_work_id"
   has_many :requests

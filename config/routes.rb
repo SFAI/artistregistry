@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
 
-  devise_for :artists
-  devise_for :buyers
+  devise_for :artists, controllers: { registrations: 'artists/registrations' }
+  devise_for :buyers, controllers: { registrations: 'buyers/registrations' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'works#index'
 
+  get '/artists/confirm_email', to: 'artists#confirm_email', as: 'artists_confirm_email'
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
   get '/artists/:id/update' => 'artists#update', as: "update_artist"
+  # Add route to email confirmation page
 
   get '/receipts/types' => 'receipts#get_receipt_type_enums'
 
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
   get '/requests' => 'requests#home'
   get '/requests/types' => 'requests#get_type_enum'
 
+  get '/buyers/confirm_email', to: 'buyers#confirm_email', as: 'buyers_confirm_email'
   get '/buyers/:id' => 'buyers#show', as: :buyerid
   get '/buyers/:id/update' => 'buyers#update', as: "update_buyer"
 
@@ -54,5 +57,6 @@ Rails.application.routes.draw do
     get 'receipts/artist/:id' => 'artists#receipts'
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'
+    get 'requests/request_exist/:search_params' => 'requests#request_exist'
   end
 end

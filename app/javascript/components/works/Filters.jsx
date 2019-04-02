@@ -70,7 +70,7 @@ class Filters extends PureComponent {
                 <div className="checkbox-container">
                   {Object.keys(filters[type]).map(item => (
                     <div className="mb2 checkbox-item" key={item}>
-                      <label className = "ttc dib flex" for={`checkbox-${item}`}>
+                      <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
                         <input
                           onClick={() => this.toggleCheckbox(type, item)}
                           type="checkbox"
