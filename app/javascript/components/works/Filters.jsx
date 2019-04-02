@@ -79,7 +79,9 @@ class Filters extends PureComponent {
                           id={`checkbox-${item}`}
                           className={`checkbox-${color}`}
                         />
-                        {convertSnakeCase(item)}
+                        <span className="filter-item">
+                          {convertSnakeCase(item)}
+                        </span>
                       </label>
                     </div>
                   ))}
