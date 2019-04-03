@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   before_action :set_current_user
   before_action :configure_permitted_parameters, if: :devise_controller?
-  after_action :verify_authorized
+  # after_action :verify_authorized
 
   def toast(type, text)
     flash[:toastr] = { type => text }
@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
       @current_user = current_buyer
       @current_user_type = "buyer"
     end
+  end
+
+  def pundit_user
+    @current_user
   end
 
   protected

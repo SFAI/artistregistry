@@ -6,8 +6,7 @@ class Api::CommissionsController < ApplicationController
 
   def create
     commission = Commission.new(commission_params)
-    buyer = commission.buyer
-    authorize buyer
+    authorize commission
 
     if commission.save!
       flash[:success] = "Commission requested successfully!";
