@@ -6,7 +6,9 @@ class CommissionPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.where(artist_id: user.id)
+      if user.present? && user.account.user_type == "artist"
+        scope.where(artist_id: user.id)
+      end
     end
   end
 end
