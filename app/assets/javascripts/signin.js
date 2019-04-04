@@ -1,5 +1,6 @@
 nextPage = () => {
 	if (!$('button').attr('disabled')) {
+		uncheckTermsAndConditions();
 		$(".signup.part1").hide();
 		$(".signup.part2").show();
 	}
@@ -74,4 +75,10 @@ validateForm = (showEmailError, showPasswordError, showConfirmationError) => {
 	} else {
 		$('button').attr('disabled', 'disabled');
 	}
+}
+
+uncheckTermsAndConditions = () => {
+	if ($('#terms_checkbox').is(':checked')){
+		$('#terms_checkbox').removeAttr('checked')
+    }
 }
