@@ -6388,11 +6388,6 @@ tachyons-sass@^4.9.3:
   dependencies:
     tachyons-custom "^4.9.2"
 
-tachyons-typography@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/tachyons-typography/-/tachyons-typography-3.0.5.tgz#220a0285b3f04cf8502c552a1bc4109cf68de558"
-  integrity sha512-xdopFFlWT+n08mjcX6obc+Gw1a7dd+g8BtdXPfISmIw2BySo0G+lFm3IUE0fUiVHip9q33wvWUG3yby13Ty24g==
-
 tapable@^0.2.7:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-0.2.8.tgz#99372a5c999bf2df160afc0d74bed4f47948cd22"

@@ -22,7 +22,6 @@
     "tachyons-sass": "^4.9.3"
   },
   "devDependencies": {
-    "tachyons-typography": "^3.0.5",
     "webpack-dev-server": "^3.1.11"
   }
 }
