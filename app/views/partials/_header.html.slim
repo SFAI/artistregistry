@@ -2,7 +2,9 @@ nav.header
   .container
     div.flex-start
       a href="/"
-        div = image_tag "sfai_logo.png", class: "img"
+        div.flex
+          = image_tag "sfai_logo_vertical.svg", class: "header-logo"
+          div.header-title Artist Registry
     div.flex-end
       ul.header-links
         li.header-item#artwork
@@ -34,7 +36,7 @@ nav.header
               div.dropdown
                 li.header-item#login
                   = link_to artistid_path(current_artist.id)
-                    div.header-bar.bg-ochre
+                    div.header-bar.bg-moss
                     h4.header-link-item #{current_artist.name}
                 div.dropdown-container
                   div.subnav-header-bar.bg-moss
