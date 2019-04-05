@@ -147,7 +147,9 @@ class ArtistProfile extends React.Component {
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
             <h2>About the artist</h2>
-            <p> {description}</p>
+            <div className="artist-description pr3 overflow-y-scroll">
+              <p> {description}</p>
+            </div>
           </div>
         </div>
         <div className="mt5 mb3 row-head">

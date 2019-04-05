@@ -28,3 +28,21 @@
   width: inherit;
   object-fit: cover;
 }
+
+.artist-description {
+  max-height: 18rem;
+}
+
+.artist-description::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  }
+  
+.artist-description::-webkit-scrollbar-thumb {
+  background: $indigo;  
+  border-radius: 10px;
+  }
+  
+.artist-description::-webkit-scrollbar-thumb:hover {
+  background: $indigo;  
+}

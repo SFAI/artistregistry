@@ -45,7 +45,7 @@ class DetailedWork extends React.Component {
       );
     }
 
-    const { artist, artist_id, id, availability, title, media, material, description } = this.state.work
+    const { artist, artist_id, id, availability, links, title, media, material, description } = this.state.work
     return (
       <div className="pt4">
         <div className="fl w-70">
@@ -68,8 +68,17 @@ class DetailedWork extends React.Component {
             <p className="mb2">{media}</p>
             <h4>Material</h4>
             <p className="mb2">{material}</p>
+            {
+              links &&
+              <div>
+                <h4>Links</h4>
+                <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {links} </Linkify></p>
+              </div>
+            }
             <h4>Description</h4>
-            <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
+            <div className="h4 pr2 artwork-description overflow-y-scroll">
+              <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
+            </div>
           </div>
           <RequestForm
             buyer={this.props.buyer}
