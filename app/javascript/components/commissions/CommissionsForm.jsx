@@ -16,7 +16,6 @@ class CommissionsForm extends React.Component {
       errors: {
         comment: "",
         commission_type: "",
-        login: ""
       },
       updatingCommission: false,
       componentDidMount: false
@@ -77,13 +76,9 @@ class CommissionsForm extends React.Component {
     let errors = {
       comment: "",
       commission_type: "",
-      login: ""
     }
     if (!this.state.commission.comment) {
       errors["comment"] = "This field cannot be empty.";
-    }
-    if (!this.props.buyer) {
-      errors["login"] = "You must be logged in to request a commission.";
     }
     return errors;
   }
@@ -92,6 +87,20 @@ class CommissionsForm extends React.Component {
     if (!this.state.componentDidMount) {
       return (
         <div><p>Loading</p></div>
+      );
+    }
+    if (!this.props.buyer) {
+      return (
+        <Panel
+        color="indigo"
+        title="Contact the Artist"
+        >
+          <div className="pa3">
+            <p className="mb4">Log in to your account to contact artists.</p>
+            <a className="pointer indigo mb1" href="../artists/sign_in">Log in (Artist) »</a>
+            <a className="pointer indigo" href="../buyers/sign_in">Log in (Patron) »</a>
+          </div>
+        </Panel>
       );
     }
     return (
@@ -121,7 +130,6 @@ class CommissionsForm extends React.Component {
           rows={4}
           className="w-100 mt2 textarea"
         />
-        <FormError error={this.state.errors["login"]}/>
         <button onClick={this.handleSubmit} className="button-primary bg-indigo w4 mt2">
           Submit
         </button>

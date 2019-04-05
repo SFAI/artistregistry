@@ -16,12 +16,12 @@ class UserSnapshot extends React.Component {
             <img className="br-100" src={this.props.avatarSrc} />
           </div>
         </Touchable>
-        <div className="snapshot-content">
+        <div className="snapshot-content w4">
           <Touchable onPress={() => this.props.navigate()}>
-            <h5 className="snapshot-nav">{this.props.name}</h5>
+            <h5 className={`snapshot-nav link-${this.props.color}`}>{this.props.name}</h5>
           </Touchable>
           {this.props.program && <h6 className="ttc">{this.props.program}</h6>}
-          {this.props.email && <h6>{this.props.email}</h6>}
+          {this.props.email && <h6 className="truncate">{this.props.email}</h6>}
         </div>
       </div>
     );

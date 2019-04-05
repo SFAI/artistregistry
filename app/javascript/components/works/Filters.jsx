@@ -16,6 +16,7 @@ class Filters extends PureComponent {
 
   static propTypes = {
     filters: PropTypes.object,
+    color: PropTypes.string,
   };
 
   getQuery = () => {
@@ -57,7 +58,7 @@ class Filters extends PureComponent {
   };
 
   render() {
-    const { filters } = this.props;
+    const { filters, color } = this.props;
     const filter_types = Object.keys(filters);
     if (filter_types !== undefined && filter_types.length) {
       return (
@@ -69,15 +70,18 @@ class Filters extends PureComponent {
                 <div className="checkbox-container">
                   {Object.keys(filters[type]).map(item => (
                     <div className="mb2 checkbox-item" key={item}>
-                      <label htmlFor={`checkbox-${item}`}>
+                      <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
                         <input
                           onClick={() => this.toggleCheckbox(type, item)}
                           type="checkbox"
                           className="checkbox"
                           value={item}
                           id={`checkbox-${item}`}
+                          className={`checkbox-${color}`}
                         />
-                        <p className="ttc dib">{convertSnakeCase(item)}</p>
+                        <span className="filter-item">
+                          {convertSnakeCase(item)}
+                        </span>
                       </label>
                     </div>
                   ))}

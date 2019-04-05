@@ -65,6 +65,9 @@ $sfai-colors: (
     color: $hex
   }
 
+  input[type="checkbox"][class="checkbox-#{$name}"]:checked:after {
+    background-color: $hex !important;
+  }
   .li-#{$name} {
       li.active {
       background-color: $hex;

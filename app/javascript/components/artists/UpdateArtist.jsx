@@ -217,7 +217,7 @@ class UpdateArtist extends React.Component {
               onClick={this.selectFile}
               className="w4"
               type="button-secondary"
-              color="magenta"
+              color="indigo"
             >
               Select File
             </Button>
@@ -237,14 +237,14 @@ class UpdateArtist extends React.Component {
               onClick={() => { window.location = `/artists/${this.state.artist.id}` }}
               className="w4"
               type="button-secondary"
-              color="magenta"
+              color="indigo"
             >
               Cancel
             </Button>
             <Button
               onClick={this.handleSubmit}
               type="button-primary"
-              color="magenta"
+              color="indigo"
               className="w4 ml2"
             >
               Save

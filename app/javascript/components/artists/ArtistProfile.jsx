@@ -275,21 +275,24 @@ class ArtistProfile extends React.Component {
             })}
           </div>
         </div>
-        <div className="flex flex-row items-stretch mb4 mt4">
-          <div className="w-50 pr2 dib flex flex-row items-stretch">
-            <div className="bg-charcoal pa3">
-              <h2 className="white">Guidelines for contacting artists</h2>
-              <p className="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet consectetur adipiscing elit duis tristique.<br /><br />Tortor dignissim convallis aenean et tortor at risus viverra adipiscing. Est ante in nibh mauris cursus mattis molestie a. Sed enim ut sem viverra aliquet eget. Id semper risus in hendrerit gravida rutrum quisque non tellus.<br /><br />Elit pellentesque habitant morbi tristique senectus et netus et malesuada. Commodo elit at imperdiet dui accumsan sit amet. Tellus elementum sagittis vitae et leo duis ut diam. Eget arcu dictum varius duis at. Donec massa sapien faucibus et molestie ac feugiat sed lectus. Risus pretium quam vulputate dignissim suspendisse in est ante.
-              </p>
+        {
+          !canEditProfile &&
+          <div className="flex flex-row items-stretch mb4 mt4">
+            <div className="w-50 pr2 dib flex flex-row items-stretch">
+              <div className="bg-charcoal pa3">
+                <h2 className="white">Guidelines for contacting artists</h2>
+                <p className="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet consectetur adipiscing elit duis tristique.<br /><br />Tortor dignissim convallis aenean et tortor at risus viverra adipiscing. Est ante in nibh mauris cursus mattis molestie a. Sed enim ut sem viverra aliquet eget. Id semper risus in hendrerit gravida rutrum quisque non tellus.<br /><br />Elit pellentesque habitant morbi tristique senectus et netus et malesuada. Commodo elit at imperdiet dui accumsan sit amet. Tellus elementum sagittis vitae et leo duis ut diam. Eget arcu dictum varius duis at. Donec massa sapien faucibus et molestie ac feugiat sed lectus. Risus pretium quam vulputate dignissim suspendisse in est ante.
+                </p>
+              </div>
             </div>
+              <div className="w-50 pl2 dib flex flex-row items-stretch">
+                <CommissionsForm
+                  buyer={this.props.user}
+                  artist={this.props.artist}
+                />
+              </div>
           </div>
-          <div className="w-50 pl2 dib flex flex-row items-stretch">
-            <CommissionsForm
-              buyer={this.props.user}
-              artist={this.props.artist}
-            />
-          </div>
-        </div>
+        }
       </div>
     );
   }

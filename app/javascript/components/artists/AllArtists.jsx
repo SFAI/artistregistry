@@ -139,6 +139,7 @@ class AllArtists extends React.Component {
           <Filters
             ref={(node) => { this.filters = node }}
             filters={filters}
+            color="indigo"
           />
           <button onClick={this.getFilteredArtists} className="button-primary bg-indigo w-100"> Apply </button>
         </div>

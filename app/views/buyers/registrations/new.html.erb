@@ -40,7 +40,7 @@
 
     <div class="flex justify-between items-baseline">
       <div>
-        <%= f.check_box :terms_and_conditions, onclick: "enableSubmit(this)" %>
+        <%= f.check_box :terms_and_conditions, onclick: "enableSubmit(this)", id: "terms_checkbox" %>
         <%= f.label :terms_and_conditions, "I agree to SFAI's Terms and Conditions" %>
       </div>
       <%= f.submit "Sign up", class: "button-primary bg-mustard w4", disabled: "disabled" %>
