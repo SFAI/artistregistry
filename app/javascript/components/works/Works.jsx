@@ -81,14 +81,14 @@ class Works extends React.Component {
           <Filters
             ref={(node) => { this.filters = node }}
             filters={filters}
-            color="magenta"
+            color="berry"
           />
-          <button onClick={this.getFilteredWorks} className="button-primary bg-magenta w-100"> Apply </button>
+          <button onClick={this.getFilteredWorks} className="button-primary bg-berry w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
           <div className="flex justify-between items-baseline">
             <h1>Artwork</h1>
-            <nav className="li-magenta pagination" role="navigation" aria-label="Pagination Navigation">
+            <nav className="li-berry pagination" role="navigation" aria-label="Pagination Navigation">
               <ReactPaginate
               previousLabel={"\u00ab"}
               nextLabel={"\u00bb"}

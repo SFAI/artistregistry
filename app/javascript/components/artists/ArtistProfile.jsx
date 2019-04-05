@@ -125,7 +125,7 @@ class ArtistProfile extends React.Component {
           <h1> {name} </h1>
           {
             canEditProfile &&
-            <Button type="button-primary" className="w4" color="indigo" onClick={this.navigateToEdit}>
+            <Button type="button-primary" className="w4" color="denim" onClick={this.navigateToEdit}>
               Edit Profile
               </Button>
           }
@@ -155,14 +155,14 @@ class ArtistProfile extends React.Component {
             {['All works', 'Available', 'Sold/Rented'].map(filter => (
               <button
                 onClick={() => this.setState({ activeFilter: filter })} key={filter}
-                className={classNames("button b--none f6 mr3 w4", activeFilter == filter ? "bg-indigo white" : "bg-white indigo")}
+                className={classNames("button b--none f6 mr3 w4", activeFilter == filter ? "bg-denim white" : "bg-white denim")}
               >
                 {filter}
               </button>
             ))}
           </div>
           {canEditProfile &&
-            <Button type="button-primary" className="w4" color="indigo" onClick={this.createNewWork}>
+            <Button type="button-primary" className="w4" color="denim" onClick={this.createNewWork}>
               New Work
             </Button>}
         </div>

@@ -7,23 +7,23 @@ nav.header
       ul.header-links
         li.header-item#artwork
           = link_to works_path
-            div.header-bar.bg-magenta
+            div.header-bar.bg-berry
             h4.header-link-item Artwork
         li.header-item#artists
           = link_to artists_path
-            div.header-bar.bg-indigo
+            div.header-bar.bg-denim
             h4.header-link-item Artists
         li.header-item#about
           = link_to "https://www.sfai.edu/"
-            div.header-bar.bg-pear
+            div.header-bar.bg-gold
             h4.header-link-item About
         - if not current_artist and not current_buyer
           div.dropdown
             li.header-item#login
-              div.header-bar.bg-ochre
+              div.header-bar.bg-moss
               h4.header-link-item Login
             div.dropdown-container
-              div.subnav-header-bar.bg-ochre
+              div.subnav-header-bar.bg-moss
               ul.dropdown-content
                 li.dropdown-link-item
                   = link_to "Artists", new_artist_session_path
@@ -37,7 +37,7 @@ nav.header
                     div.header-bar.bg-ochre
                     h4.header-link-item #{current_artist.name}
                 div.dropdown-container
-                  div.subnav-header-bar.bg-ochre
+                  div.subnav-header-bar.bg-moss
                   ul.dropdown-content
                     li.dropdown-link-item
                       = link_to "Requests", requests_path
@@ -51,10 +51,10 @@ nav.header
               div.dropdown
                 li.header-item#login
                   = link_to buyerid_path(current_buyer.id)
-                    div.header-bar.bg-ochre
+                    div.header-bar.bg-moss
                     h4.header-link-item #{current_buyer.name}
                 div.dropdown-container
-                  div.subnav-header-bar.bg-ochre
+                  div.subnav-header-bar.bg-moss
                   ul.dropdown-content
                     li.dropdown-link-item
                       = link_to "Requests", requests_path

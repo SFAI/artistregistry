@@ -31,7 +31,7 @@
 
     <div class="flex justify-between">
       <%= render "artists/shared/links" %>
-      <button type="button" onclick="nextPage()" class="button-primary bg-mustard w4" disabled="disabled">Next</button>
+      <button type="button" onclick="nextPage()" class="button-primary bg-moss w4" disabled="disabled">Next</button>
     </div>
   </div>
 
@@ -44,7 +44,7 @@
         <%= f.check_box :terms_and_conditions, onclick: "enableSubmit(this)" %>
         <%= f.label :terms_and_conditions, "I agree to SFAI's Terms and Conditions" %>
       </div>
-      <%= f.submit "Sign up", class: "button-primary bg-mustard w4", disabled: "disabled" %>
+      <%= f.submit "Sign up", class: "button-primary bg-moss w4", disabled: "disabled" %>
     </div>
   </div>
   <% end %>

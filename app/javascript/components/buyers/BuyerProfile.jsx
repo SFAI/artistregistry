@@ -53,7 +53,7 @@ class BuyerProfile extends React.Component {
             <Button
               onClick={()=>{window.location = `/buyers/${this.props.buyer.id}/update`}}
               type="button-primary"
-              color="indigo"
+              color="moss"
               className="w4"
             >
               Edit Profile

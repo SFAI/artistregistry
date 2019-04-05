@@ -92,20 +92,20 @@ class CommissionsForm extends React.Component {
     if (!this.props.buyer) {
       return (
         <Panel
-        color="indigo"
+        color="denim"
         title="Contact the Artist"
         >
           <div className="pa3">
             <p className="mb4">Log in to your account to contact artists.</p>
-            <a className="pointer indigo mb1" href="../artists/sign_in">Log in (Artist) »</a>
-            <a className="pointer indigo" href="../buyers/sign_in">Log in (Patron) »</a>
+            <a className="pointer denim mb1" href="../artists/sign_in">Log in (Artist) »</a>
+            <a className="pointer denim" href="../buyers/sign_in">Log in (Patron) »</a>
           </div>
         </Panel>
       );
     }
     return (
       <Panel
-        color="indigo"
+        color="denim"
         title="Contact the Artist"
       >
         {this.state.updatingCommission ? <LoadingOverlay /> : null}
@@ -130,7 +130,7 @@ class CommissionsForm extends React.Component {
           rows={4}
           className="w-100 mt2 textarea"
         />
-        <button onClick={this.handleSubmit} className="button-primary bg-indigo w4 mt2">
+        <button onClick={this.handleSubmit} className="button-primary bg-denim w4 mt2">
           Submit
         </button>
       </Panel>

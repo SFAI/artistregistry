@@ -96,14 +96,14 @@ class AllArtists extends React.Component {
           <Filters
             ref={(node) => { this.filters = node }}
             filters={filters}
-            color="indigo"
+            color="denim"
           />
-          <button onClick={this.getFilteredArtists} className="button-primary bg-indigo w-100"> Apply </button>
+          <button onClick={this.getFilteredArtists} className="button-primary bg-denim w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
           <div className="flex justify-between items-baseline">
             <h1>Artists</h1>
-            <nav className="li-indigo pagination" role="navigation" aria-label="Pagination Navigation">
+            <nav className="li-denim pagination" role="navigation" aria-label="Pagination Navigation">
               <ReactPaginate
               previousLabel={"\u00ab"}
               nextLabel={"\u00bb"}

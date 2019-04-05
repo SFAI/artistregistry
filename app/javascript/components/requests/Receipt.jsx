@@ -50,7 +50,7 @@ class Receipt extends React.Component {
         <div className = "w100">
           <StyledModal
             title="EDIT"
-            color="ochre"
+            color="moss"
             buttonType="hover-button"
           >
             <TransactionForm

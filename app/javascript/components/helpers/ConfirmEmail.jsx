@@ -11,10 +11,10 @@ export default function ConfirmEmail(props) {
           sent you.
         </p>
       </div>
-      <a className="mustard mb1" href={`sign_in`}>
+      <a className="moss mb1" href={`sign_in`}>
         Log in »
       </a> 
-      <a className="mustard" href={`confirmation/new`}>
+      <a className="moss" href={`confirmation/new`}>
         Didn’t receive email?
       </a>
     </div>
