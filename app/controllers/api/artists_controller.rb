@@ -84,7 +84,8 @@ class Api::ArtistsController < ApplicationController
                                  :media,
                                  :description,
                                  :avatar,
-                                 :featured_work_id
+                                 :featured_work_id,
+                                 :hidden
                                 )
   end
 end

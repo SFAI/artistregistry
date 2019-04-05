@@ -34,6 +34,9 @@ class ArtistColumnPanel extends React.Component {
         </Touchable>
         <h6 className="ttc">{convertSnakeCase(artist.program)}, {artist.year}</h6>
         <h6 className="i">{non_hidden_works.length} work{non_hidden_works.length > 1 && "s"} available</h6>
+        {artist.hidden &&
+          <h6> HIDDEN!!!!! </h6>
+        }
       </div>
     );
   }

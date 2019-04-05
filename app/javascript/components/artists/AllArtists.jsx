@@ -4,6 +4,12 @@ import ArtistColumnPanel from "./ArtistColumnPanel";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import Filters from "../works/Filters";
 import ReactPaginate from 'react-paginate'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Button from "../helpers/Button";
+
+/** @prop userType: { "artist", "buyer", "admin" }
+*/
 
 const perPage = 6
 
@@ -22,7 +28,10 @@ class AllArtists extends React.Component {
   }
 
   componentDidMount() {
-    const artist_route = APIRoutes.artists.index;
+    const unhiddenParams = `hidden=false`
+    const artist_route = this.props.userType == "admin"
+      ? APIRoutes.artists.index
+      : APIRoutes.artists.filtered_artists(unhiddenParams)
     const categories_route = APIRoutes.artists.categories;
     Promise.all([
       Requester.get(artist_route),
@@ -72,6 +81,40 @@ class AllArtists extends React.Component {
       );
   };
 
+  hideArtist = (artist_id) => {
+    let formData = new FormData();
+    formData.append(`artist[hidden]`, true);
+    fetch(APIRoutes.artists.update(artist_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists`
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+  unHideArtist = (artist_id) => {
+    let formData = new FormData();
+    formData.append(`artist[hidden]`, false);
+    fetch(APIRoutes.artists.update(artist_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists`
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   handlePageClick = data => {
     let selected = data.selected;
     this.setState({
@@ -119,7 +162,24 @@ class AllArtists extends React.Component {
             </div>
             <div className="col-list-3">
               {artists.slice(artistStartIndex, artistEndIndex).map((artist, i) => {
-                return <ArtistColumnPanel key={i} artist={artist} />
+                return (
+                  <div>
+                    <ArtistColumnPanel key={i} artist={artist}>
+                      {artist.hidden == false && this.props.userType == "admin" &&
+                      <Button className="ml2" type="hover-button" onClick={() => this.hideArtist(artist.id)}>
+                        <FontAwesomeIcon className="white" icon={faTrash} />
+                        <h4 className="ml2 white">Hide</h4>
+                      </Button>
+                      }
+                      {artist.hidden == true && this.props.userType == "admin" &&
+                      <Button className="ml2" type="hover-button" onClick={() => this.unHideArtist(artist.id)}>
+                        <FontAwesomeIcon className="white" icon={faTrash} />
+                        <h4 className="ml2 white">Unhide</h4>
+                      </Button>
+                      }
+                    </ArtistColumnPanel>
+                  </div>
+                )
               })}
             </div>
           </div>

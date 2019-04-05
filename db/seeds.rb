@@ -33,7 +33,8 @@ artist_list.each do |n, e, pw, pr, d, m, y, s|
     media: m,
     year: y,
     open_to_commissions: s,
-    terms_and_conditions: true
+    terms_and_conditions: true,
+    hidden: false
   )
   account = Account.create()
   account.user = artist
