@@ -79,7 +79,7 @@
 		    width: 100%;
 		    height: $border-stripe-height;
 		    top: 0;
-		    transition: 0.25s;
+		    transition: height 0.25s ease-in-out;
 		    cursor: pointer;
 		}
 
