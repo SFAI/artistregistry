@@ -8,7 +8,8 @@ class ApiRoutes {
       delete: (id) => `/api/works/${id}`,
       filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
       categories: `/works/categories`,
-      thumbnail: (id) => `api/works/thumbnail/${id}`
+      thumbnail: (id) => `api/works/thumbnail/${id}`,
+      filtered_artist_hidden: (search_params) => `/api/works/filtered_artist_hidden/${search_params}`,
     }
   }
 

@@ -27,10 +27,10 @@ class Works extends React.Component {
   }
 
   componentDidMount = () => {
-    const unhiddenParams = `hidden=false`
+    const unhiddenParams = "hidden=false"
     const works_route = this.props.userType == "admin"
       ? APIRoutes.works.index
-      : APIRoutes.works.filtered_works(unhiddenParams)
+      : APIRoutes.works.filtered_artist_hidden(unhiddenParams)
     const categories_route = APIRoutes.works.categories;
     Promise.all([
       Requester.get(works_route),
