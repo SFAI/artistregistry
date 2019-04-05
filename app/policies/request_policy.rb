@@ -5,7 +5,7 @@ class RequestPolicy < ApplicationPolicy
   end
 
   def update?
-    user.present? && user.account.user_type == "artist" && resource.artist_id == user.id
+    user.present? && user.account.user_type == "Artist" && resource.artist_id == user.id
   end
 
   class Scope < Scope
