@@ -92,7 +92,6 @@ class Receipt extends React.Component {
                     <div className="z-1 absolute overlay-button">
                       {this.renderEditReceipt()}
                     </div>
-                    {this.getAttr(request)}
                   </div>
                 </div>
               ) : (
@@ -104,6 +103,9 @@ class Receipt extends React.Component {
                 </div>
               )
             }
+            <div className="attr-container pa3 mt2 relative">
+              {this.getAttr(request)}
+            </div>
           </div>
         </div>
       </div>
