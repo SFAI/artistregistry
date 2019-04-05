@@ -131,7 +131,9 @@ class ArtistProfile extends React.Component {
   }
 
   unHideWork = (work_id) => {
-    this.updateFeatured(work_id, true)
+    if (!this.state.artist.featured_work_id) {
+      this.updateFeatured(work_id, true)
+    }
     let formData = new FormData();
     formData.append(`work[hidden]`, false);
     fetch(APIRoutes.works.update(work_id), {
