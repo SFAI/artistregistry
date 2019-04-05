@@ -16,9 +16,9 @@ class Admins::RegistrationsController < Devise::RegistrationsController
       account.user = admin
       account.save!
 
-      artist.account = account
-      artist.account_id = account.id
-      artist.save!
+      admin.account = account
+      admin.account_id = account.id
+      admin.save!
     end
   end
   # def create
