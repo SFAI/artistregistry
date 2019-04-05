@@ -11,7 +11,7 @@ class ReceiptPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.all
+      scope.joins(:requests).where(requests: {artist_id: user.id}).or(scope.joins(:requests).where(requests: {buyer_id: user.id}))
     end
   end
 end
