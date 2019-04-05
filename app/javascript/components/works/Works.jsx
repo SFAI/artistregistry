@@ -30,7 +30,7 @@ class Works extends React.Component {
     const unhiddenParams = "hidden=false"
     const works_route = this.props.userType == "admin"
       ? APIRoutes.works.index
-      : APIRoutes.works.filtered_artist_hidden(unhiddenParams)
+      : APIRoutes.works.filtered_artist_hidden
     const categories_route = APIRoutes.works.categories;
     Promise.all([
       Requester.get(works_route),

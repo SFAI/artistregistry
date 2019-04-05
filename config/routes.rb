@@ -60,6 +60,6 @@ Rails.application.routes.draw do
     get 'artists/commissions/:id' => 'artists#commissions'
     get 'requests/request_exist/:search_params' => 'requests#request_exist'
     put 'artists/locker_user/:id' => 'artists#lock_user'
-    get 'works/filtered_artist_hidden/:search_params' => 'works#filtered_artist_hidden'
+    get 'works/filtered/artist_hidden' => 'works#filtered_artist_hidden'
   end
 end
