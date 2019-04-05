@@ -46,9 +46,25 @@ class Api::WorksController < ApplicationController
 
   def destroy
     work = Work.find(params[:id])
+    requests = Request.where(work_id: work.id)
+
+    if requests
+      alerts = []
+      requests.each do |req|
+        alerts << {buyer: req.buyer, artist: req.artist}
+      end
+    end
+
+    title = work.title
     work.images.purge
     if work.destroy
       flash[:success] = "Work deleted successfully!"
+      if alerts != []
+        alerts.each do |a|
+          RequestMailer.with(buyer: a[:buyer], artist: a[:artist], title: title).request_deleted_email.deliver_later
+        end
+        return render json: {"message": 'Request deleted!'}
+      end
     else
       flash[:danger] = "Work failed to delete."
     end
