@@ -22,7 +22,7 @@ class UserRequests extends React.Component {
     return this.toggleState.map((state, i) => {
       let active = i === this.state.state;
       return (
-        <div key={i} onClick={() => this.display(i)} className={classNames("mb2 toggle", (active ? "bg-ochre" : "toggle-hover"))}>
+        <div key={i} onClick={() => this.display(i)} className={classNames("mb2 toggle", (active ? "bg-moss" : "toggle-hover"))}>
           <p className={classNames("strong", { "white": active })}>{state} »</p>
         </div>
       );

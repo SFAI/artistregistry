@@ -333,12 +333,12 @@ class WorkForm extends React.Component {
         <div className="submit-container mt3 mb3">
           <button
             onClick={() => { window.location = `/artists/` + this.state.work.artist_id }}
-            className="button-secondary b--magenta w4"
+            className="button-secondary b--berry w4"
           >
             Cancel
           </button>
           <button
-            className="button-primary bg-magenta w4 ml3"
+            className="button-primary bg-berry w4 ml3"
             onClick={this.handleSubmit}
           >
             Save

@@ -3,18 +3,27 @@
 	$sub-nav-height: 36px;
 	$border-stripe-height: 8px;
 	$header-item-width: 120px;
-
-	background: $charcoal;
-	position: fixed;
+	position: relative;
+	color: $text;
+	background: $white;
 	top: 0;
 	width: 100%;
 	z-index: 10;
 	display: flex;
 	height: $nav-height;
 
-	.img {
-		height: $nav-height;
-		margin-left: 48px;
+	.header-logo {
+		height: 3rem;
+		margin-left: 3rem;
+		padding: .5rem 0rem;
+	}
+
+	.header-title {
+		@extend .pa3;
+		@extend .f3;
+		@extend .w5;
+		color: $text;
+		font-weight: normal;
 	}
 
 	.header-bar, .subnav-header-bar {
@@ -28,23 +37,16 @@
 	}
 
 	a {
-		color: inherit;
-		display: inline-block;
-		text-decoration: none;
-		font-weight: normal;
 		position: relative;
 		z-index: 3;
-
-		&:hover {
-			text-decoration: underline;
-		}
 	}
 
 	.container {
-    	align-items: flex-start;
+    align-items: flex-start;
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
+		min-width: 1200px;
 	}
 
 	.header-links {
@@ -58,9 +60,9 @@
 		display: flex;
 		flex-direction: column;
 		height: $nav-height;
-		border-right: 1px solid $gray;
+		border-right: 1px solid $pale-gray;
 		transition: background-color 0.2s ease;
-		background-color: $charcoal;
+		background-color: $white;
 		position: relative;
 		z-index: 1;
 
@@ -84,7 +86,7 @@
 
 		.header-link-item {
 			padding: 4px 8px;
-			color: $white;
+			color: $text;
 		}
 
 		a {
@@ -94,48 +96,41 @@
   }
 
 	#about:after {
-		background-color: $pear;
+		background-color: $gold;
 	}
 
 	#artists:after {
-		background-color: $indigo;
+		background-color: $denim;
 	}
 
 	#artwork:after {
-		background-color: $magenta;
+		background-color: $berry;
 	}
 
 	#login:after {
-		background-color: $ochre;
+		background-color: $moss;
 	}
 
 	.dropdown {
 		width: $header-item-width;
+		z-index: 2;
+
+		.header-item {
+			border-right: 0px;
+		}
 
 		&:hover {
 			.header-item + .dropdown-container {
 				display: flex;
 				flex-direction: column;
-				background-color: $charcoal;
+				background-color: $white;
 				visibility: visible;
 
 				.dropdown-content {
 					justify-content: center;
 					align-items: flex-end;
 					padding-top: $border-stripe-height;
-
-					.dropdown-link-item {
-						padding: 8px 12px;
-						height: $sub-nav-height;
-						background-color: $charcoal;
-						width: 100%;
-
-						a {
-							@extend .f7;
-							text-transform: uppercase;
-							color: $white;
-						}
-					}
+					box-shadow: 0px 5px 5px rgba($black, 0.1);
 				}
 			}
 
@@ -147,6 +142,25 @@
 				height: calc(#{$nav-height} + #{$border-stripe-height});
 			}
 		}
+
+		.dropdown-link-item {
+			padding: 8px 12px;
+			height: $sub-nav-height;
+			background-color: $white;
+			width: 100%;
+			
+			a {
+				@extend .f7;
+				display: inline-block;
+				font-weight: normal;
+				text-transform: uppercase;
+				color: $text;
+				text-decoration: none;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
 	}
 
 	.dropdown-container {
@@ -154,7 +168,7 @@
 		transition: transform 0.25s ease-in-out;
 
 		.dropdown-link-item {
-			background-color: $charcoal;
+			background-color: $white;
 		}
 	}
 }
