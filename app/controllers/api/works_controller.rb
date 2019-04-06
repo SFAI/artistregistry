@@ -127,6 +127,7 @@ class Api::WorksController < ApplicationController
                                  :media,
                                  :status,
                                  :availability,
+                                 :links,
                                  :artist_id,
                                  :featured_image,
                                  :description,
