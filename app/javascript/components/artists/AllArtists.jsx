@@ -69,8 +69,14 @@ class AllArtists extends React.Component {
     Requester.get(
       artists_route).then(
         response => {
+          let artists
+          if (this.props.userType == "admin") {
+            artists = response
+          } else {
+            artists = response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0).filter(artist => artist.hidden == false)
+          }
           this.setState({
-            artists: response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0).filter(artist => artist.hidden == false),
+            artists: artists,
             isLoading: false,
             pageCount: Math.ceil(response.filter(artist => artist.works.length > 0).length / perPage)
           });

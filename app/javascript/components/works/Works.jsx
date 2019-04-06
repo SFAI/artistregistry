@@ -60,8 +60,14 @@ class Works extends React.Component {
     Requester.get(
       works_route).then(
         response => {
+          let works
+          if (this.props.userType == "admin") {
+            works = response
+          } else {
+            works = response.filter(work => work.hidden == false)
+          }
           this.setState({
-            works: response,
+            works: works,
             isLoading: false,
             pageCount: Math.ceil(response.length / perPage)
           });
@@ -73,10 +79,11 @@ class Works extends React.Component {
   };
 
   updateFeatured = (work_id, unhide=false) => {
+    let artist = this.state.works.find(work => work.id == work_id).artist
     let newFeaturedId
     if (unhide == true) {
       newFeaturedId = work_id
-    } else if (this.state.artist.featured_work_id != work_id) {
+    } else if (artist.featured_work_id != work_id) {
       return
     } else {
       let newFeaturedWork = this.state.works.filter(work => work.id != work_id).find(work => work.hidden == false)
@@ -88,7 +95,7 @@ class Works extends React.Component {
     }
     let formData = new FormData();
     formData.append(`artist[featured_work_id]`, newFeaturedId);
-    fetch(APIRoutes.artists.update(this.props.artist.id), {
+    fetch(APIRoutes.artists.update(artist.id), {
       method: 'PUT',
       body: formData,
       credentials: 'same-origin',
@@ -96,7 +103,7 @@ class Works extends React.Component {
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
       }
     }).then((data) => {
-      window.location = `/artists/` + this.props.artist.id;
+      window.location = `/artists/` + artist.id;
     }).catch((data) => {
       console.error(data);
     });
@@ -121,7 +128,8 @@ class Works extends React.Component {
   }
 
   unHideWork = (work_id) => {
-    if (!this.state.artist.featured_work_id) {
+    let artist = this.state.works.find(work => work.id == work_id).artist
+    if (!artist.featured_work_id) {
       this.updateFeatured(work_id, true)
     }
     let formData = new FormData();
