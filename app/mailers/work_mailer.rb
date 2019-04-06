@@ -4,6 +4,6 @@ class WorkMailer < ApplicationMailer
     @work = params[:work]
     @prev_status = params[:prev_status]
     @curr_status = params[:curr_status]
-    mail(to: @buyer.email, subject: 'New Request Opened')
+    mail(to: @buyer.email, subject: 'Requested Work Status Changed')
   end
 end
