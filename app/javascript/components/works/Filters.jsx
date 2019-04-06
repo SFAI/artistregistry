@@ -35,7 +35,7 @@ class Filters extends PureComponent {
           }
         }
       )
-      .join("&") + `&hidden=false`;
+      .join("&");
     return stringified;
   }
 

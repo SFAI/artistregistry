@@ -39,7 +39,10 @@ class AllArtists extends React.Component {
     ]).then(
       response => {
         const [artists_response, filters_response] = response;
-        const artists_response_filtered = artists_response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0)
+        let artists_response_filtered = artists_response
+        if (this.props.userType != "admin") {
+          artists_response_filtered = artists_response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0)
+        }
         this.setState({
           artists: artists_response_filtered,
           filters: filters_response,

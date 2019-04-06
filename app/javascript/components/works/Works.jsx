@@ -27,7 +27,6 @@ class Works extends React.Component {
   }
 
   componentDidMount = () => {
-    const unhiddenParams = "hidden=false"
     const works_route = this.props.userType == "admin"
       ? APIRoutes.works.index
       : APIRoutes.works.filtered_artist_hidden

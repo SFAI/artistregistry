@@ -26,9 +26,13 @@ class ArtistColumnPanel extends React.Component {
         <div className="item-overlay">
           {this.props.children}
         </div>
-        <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-          {<img src={featured_work.featured_image.url} className="mb3 pointer" />}
-        </Touchable>
+        <div>
+          {featured_work &&
+            <Touchable onPress={() => this.navigateToArtist(artist.id)}>
+              {<img src={featured_work.featured_image.url} className="mb3 pointer" />}
+            </Touchable>
+          }
+        </div>
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
           <h3 className="indigo pointer">{artist.name}</h3>
         </Touchable>
