@@ -3,6 +3,7 @@
 	$sub-nav-height: 36px;
 	$border-stripe-height: 8px;
 	$header-item-width: 120px;
+	position: relative;
 	color: $text;
 	background: $white;
 	top: 0;
@@ -64,7 +65,7 @@
 		border-right: 1px solid $pale-gray;
 		transition: background-color 0.2s ease;
 		background-color: rgba($pale-gray, 0);
-		
+
 		.header-link-item {
 			padding: 4px 8px;
 			color: $text;
@@ -90,6 +91,11 @@
 
 	.dropdown {
 		width: $header-item-width;
+		z-index: 2;
+
+		.header-item {
+			border-right: 0px;
+		}
 
 		&:hover {
 			.header-item + .dropdown-container {
@@ -103,6 +109,7 @@
 				.dropdown-content {
 					justify-content: center;
 					align-items: flex-end;
+					box-shadow: 0px 5px 5px rgba($black, 0.1);
 
 					.dropdown-link-item {
 						padding: 8px 12px;
