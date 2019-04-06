@@ -33,6 +33,10 @@
   max-height: 18rem;
 }
 
+.artist-description::-webkit-scrollbar-track {
+  background: $snow; 
+}
+
 .artist-description::-webkit-scrollbar {
   width: 12px;
   height: 12px;
@@ -44,5 +48,5 @@
   }
   
 .artist-description::-webkit-scrollbar-thumb:hover {
-  background: $indigo;  
+  background: darken($indigo, 10%); 
 }
