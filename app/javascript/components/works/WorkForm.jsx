@@ -48,8 +48,9 @@ class WorkForm extends React.Component {
       const works_route = APIRoutes.artists.works(this.state.work.artist_id);
       Requester.get(works_route).then(
         response => {
-          let work_id = Math.max.apply(Math, response.map(function(work) { return work.id; }))
-          let formData = new FormData();
+          if (response.length == 1) {
+            let work_id = response[0].id
+            let formData = new FormData();
           formData.append(`artist[featured_work_id]`, work_id);
           fetch(APIRoutes.artists.update(this.state.work.artist_id), {
             method: 'PUT',
@@ -62,6 +63,7 @@ class WorkForm extends React.Component {
             (data) => {
               console.error(data);
             })
+          } 
         },
         error => {
           console.error(error);
