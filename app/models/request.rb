@@ -3,5 +3,5 @@ class Request < ApplicationRecord
   belongs_to :buyer
   belongs_to :artist
   has_one :receipt
-  enum types: { sale: 0, rental: 1, commission: 2, exhibition: 3, other: 4 }
+  enum types: { sale: 0, rental: 1, exhibition: 2, other: 3 }
 end
