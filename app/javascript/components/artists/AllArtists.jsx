@@ -81,7 +81,7 @@ class AllArtists extends React.Component {
           this.setState({
             artists: artists,
             isLoading: false,
-            pageCount: Math.ceil(response.filter(artist => artist.works.length > 0).length / perPage)
+            pageCount: Math.ceil(artists.filter.length / perPage)
           });
         },
         response => {

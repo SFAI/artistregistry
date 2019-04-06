@@ -68,7 +68,7 @@ class Works extends React.Component {
           this.setState({
             works: works,
             isLoading: false,
-            pageCount: Math.ceil(response.length / perPage)
+            pageCount: Math.ceil(works.length / perPage)
           });
         },
         response => {
