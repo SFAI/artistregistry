@@ -11,6 +11,8 @@ class Api::WorksController < ApplicationController
     featured_image = work_attr.delete("featured_image")
 
     @work = Work.new(work_attr)
+    authorize @work
+
     if @work.save
       @work.images.attach(attachment_attr)
       self.assign_featured_image(featured_image, @work)
@@ -27,6 +29,13 @@ class Api::WorksController < ApplicationController
     featured_image = work_attr.delete("featured_image")
 
     @work = Work.find(params[:id])
+    authorize @work
+
+    if @work.availability != params[:work][:availability]
+      prev_status = @work.availability
+      curr_status = params[:work][:availability]
+    end
+
     saved = @work.update(work_attr)
     if saved
       if attachment_attr
@@ -39,6 +48,13 @@ class Api::WorksController < ApplicationController
       end
       self.assign_featured_image(featured_image, @work)
       flash[:success] = "Work updated successfully!"
+
+      if prev_status
+        requests = Request.where(work_id: @work.id)
+        requests.each do |req|
+          WorkMailer.with(buyer: req.buyer, work: @work, prev_status: prev_status, curr_status: curr_status).work_status_changed.deliver_later
+        end
+      end
     else
       flash[:danger] = "Work failed to create."
     end
@@ -46,9 +62,25 @@ class Api::WorksController < ApplicationController
 
   def destroy
     work = Work.find(params[:id])
+    requests = Request.where(work_id: work.id)
+
+    if requests
+      alerts = []
+      requests.each do |req|
+        alerts << {buyer: req.buyer, artist: req.artist}
+      end
+    end
+
+    title = work.title
     work.images.purge
     if work.destroy
       flash[:success] = "Work deleted successfully!"
+      if alerts != []
+        alerts.each do |a|
+          RequestMailer.with(buyer: a[:buyer], artist: a[:artist], title: title).request_deleted_email.deliver_later
+        end
+        return render json: {"message": 'Request deleted!'}
+      end
     else
       flash[:danger] = "Work failed to delete."
     end
@@ -95,6 +127,7 @@ class Api::WorksController < ApplicationController
                                  :media,
                                  :status,
                                  :availability,
+                                 :links,
                                  :artist_id,
                                  :featured_image,
                                  :description,
