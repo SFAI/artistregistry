@@ -30,6 +30,8 @@ class Api::ArtistsController < ApplicationController
     artist_attr = artist_params
     avatar_attr = artist_attr.delete("avatar")
     @artist = Artist.find(params[:id])
+    authorize @artist
+    
     saved = @artist.update(artist_attr)
     if saved
       @artist.avatar.attach(avatar_attr)
