@@ -81,10 +81,17 @@ class Receipt extends React.Component {
           <div className="request-container w-100">
             {
               this.props.artist ? (
-                <div className="request-action">
-                  <BuyerSnapshot buyer={this.state.request.buyer} />
-                  <div className = "w5">
-                    <p className = "closed-request-button pa3"> You completed this request on {closed_timestamps} </p>
+                <div>
+                  <div className="request-action">
+                    <BuyerSnapshot buyer={this.state.request.buyer} />
+                    <div className = "w5">
+                      <p className = "closed-request-button pa3"> You completed this request on {closed_timestamps} </p>
+                    </div>
+                  </div>
+                  <div className="attr-container pa3 mt2 relative">
+                    <div className="z-1 absolute overlay-button">
+                      {this.renderEditReceipt()}
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -97,9 +104,6 @@ class Receipt extends React.Component {
               )
             }
             <div className="attr-container pa3 mt2 relative">
-              <div className="z-1 absolute overlay-button">
-                {this.renderEditReceipt()}
-              </div>
               {this.getAttr(request)}
             </div>
           </div>
