@@ -44,6 +44,31 @@ class WorkForm extends React.Component {
     );
   }
 
+  updateFeatured = () => {
+      const works_route = APIRoutes.artists.works(this.state.work.artist_id);
+      Requester.get(works_route).then(
+        response => {
+          let work_id = Math.max.apply(Math, response.map(function(work) { return work.id; }))
+          let formData = new FormData();
+          formData.append(`artist[featured_work_id]`, work_id);
+          fetch(APIRoutes.artists.update(this.state.work.artist_id), {
+            method: 'PUT',
+            body: formData,
+            credentials: 'same-origin',
+            headers: {
+              "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+            }
+          }).catch(
+            (data) => {
+              console.error(data);
+            })
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    }
+
   onDrop = (images) => {
     let uploads = this.state.uploads.slice();
     images.forEach((image) => {
@@ -146,6 +171,7 @@ class WorkForm extends React.Component {
         if (typeof this.state.work.id == 'number') {
           window.location = `/works/` + this.state.work.id;
         } else {
+          this.updateFeatured()
           window.location = `/artists/` + this.state.work.artist_id;
         }
       }).catch((data) => {
