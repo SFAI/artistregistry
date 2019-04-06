@@ -71,7 +71,7 @@
 		height: $nav-height;
 		border-right: 1px solid $pale-gray;
 		transition: background-color 0.2s ease;
-		background-color: $charcoal;
+		background-color: $white;
 		position: relative;
 		z-index: 1;
 
@@ -105,19 +105,19 @@
   }
 
 	#about:after {
-		background-color: $pear;
+		background-color: $gold;
 	}
 
 	#artists:after {
-		background-color: $indigo;
+		background-color: $denim;
 	}
 
 	#artwork:after {
-		background-color: $magenta;
+		background-color: $berry;
 	}
 
 	#login:after {
-		background-color: $ochre;
+		background-color: $moss;
 	}
 
 	.dropdown {
@@ -132,32 +132,13 @@
 			.header-item + .dropdown-container {
 				display: flex;
 				flex-direction: column;
-				background-color: $charcoal;
+				background-color: $white;
 				visibility: visible;
 
 				.dropdown-content {
 					justify-content: center;
 					align-items: flex-end;
 					padding-top: $border-stripe-height;
-
-					.dropdown-link-item {
-						padding: 8px 12px;
-						height: $sub-nav-height;
-						background-color: $white;
-						width: 100%;
-						
-						a {
-							@extend .f7;
-							display: inline-block;
-							font-weight: normal;
-							text-transform: uppercase;
-							color: $text;
-							text-decoration: none;
-							&:hover {
-								text-decoration: underline;
-							}
-						}
-					}
 				}
 			}
 
@@ -169,6 +150,25 @@
 				height: calc(#{$nav-height} + #{$border-stripe-height});
 			}
 		}
+
+		.dropdown-link-item {
+			padding: 8px 12px;
+			height: $sub-nav-height;
+			background-color: $white;
+			width: 100%;
+			
+			a {
+				@extend .f7;
+				display: inline-block;
+				font-weight: normal;
+				text-transform: uppercase;
+				color: $text;
+				text-decoration: none;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
 	}
 
 	.dropdown-container {
@@ -176,7 +176,7 @@
 		transition: transform 0.25s ease-in-out;
 
 		.dropdown-link-item {
-			background-color: $charcoal;
+			background-color: $white;
 		}
 	}
 }
