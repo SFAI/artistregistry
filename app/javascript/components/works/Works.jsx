@@ -72,7 +72,38 @@ class Works extends React.Component {
       );
   };
 
+  updateFeatured = (work_id, unhide=false) => {
+    let newFeaturedId
+    if (unhide == true) {
+      newFeaturedId = work_id
+    } else if (this.state.artist.featured_work_id != work_id) {
+      return
+    } else {
+      let newFeaturedWork = this.state.works.filter(work => work.id != work_id).find(work => work.hidden == false)
+      if (!newFeaturedWork) {
+        newFeaturedId = newFeaturedWork
+      } else {
+        newFeaturedId = newFeaturedWork.id
+      }
+    }
+    let formData = new FormData();
+    formData.append(`artist[featured_work_id]`, newFeaturedId);
+    fetch(APIRoutes.artists.update(this.props.artist.id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   hideWork = (work_id) => {
+    this.updateFeatured(work_id)
     let formData = new FormData();
     formData.append(`work[hidden]`, true);
     fetch(APIRoutes.works.update(work_id), {
@@ -90,6 +121,9 @@ class Works extends React.Component {
   }
 
   unHideWork = (work_id) => {
+    if (!this.state.artist.featured_work_id) {
+      this.updateFeatured(work_id, true)
+    }
     let formData = new FormData();
     formData.append(`work[hidden]`, false);
     fetch(APIRoutes.works.update(work_id), {

@@ -67,17 +67,20 @@ class ArtistProfile extends React.Component {
     window.location = `/works/${work_id}/edit`;
   }
 
-  updateFeatured = (work_id, only=false) => {
-    let newFeaturedId = null
-    if (only == true) {
+  updateFeatured = (work_id, unhide=false) => {
+    let newFeaturedId
+    if (unhide == true) {
       newFeaturedId = work_id
+    } else if (this.state.artist.featured_work_id != work_id) {
+      return
     } else {
-      let newFeatured = this.state.works.filter(work => work.id != work_id).find(work => work.hidden == false)
-      if (newFeatured) {
-        newFeaturedId = newFeatured.id
+      let newFeaturedWork = this.state.works.filter(work => work.id != work_id).find(work => work.hidden == false)
+      if (!newFeaturedWork) {
+        newFeaturedId = newFeaturedWork
+      } else {
+        newFeaturedId = newFeaturedWork.id
       }
     }
-
     let formData = new FormData();
     formData.append(`artist[featured_work_id]`, newFeaturedId);
     fetch(APIRoutes.artists.update(this.props.artist.id), {
@@ -191,7 +194,6 @@ class ArtistProfile extends React.Component {
     }
 
     const featured_work = works.find(work => work.id === artist.featured_work_id);
-    console.log(artist.locked_at)
     return (
       <div>
         <div className="row-head flex">
