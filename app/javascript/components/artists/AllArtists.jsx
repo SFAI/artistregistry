@@ -70,7 +70,7 @@ class AllArtists extends React.Component {
       artists_route).then(
         response => {
           this.setState({
-            artists: response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0).filter(artist => artist.hidden => false),
+            artists: response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0).filter(artist => artist.hidden == false),
             isLoading: false,
             pageCount: Math.ceil(response.filter(artist => artist.works.length > 0).length / perPage)
           });
