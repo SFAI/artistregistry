@@ -73,8 +73,15 @@ class Api::ArtistsController < ApplicationController
   end
 
   def lock_user
+    puts("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
     user = Artist.find(params[:id])
     user.lock_access!
+  end
+
+  def unlock_user
+    puts("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    user = Artist.find(params[:id])
+    user.unlock_access!
   end
 
   def artist_params

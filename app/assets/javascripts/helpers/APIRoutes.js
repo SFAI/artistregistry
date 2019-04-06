@@ -25,6 +25,7 @@ class ApiRoutes {
       filtered_artists: (search_params) => `/api/artists/filtered_artists/${search_params}`,
       categories  : `/api/artists/categories`,
       lock_user : (id) => `/api/artists/lock_user/${id}`,
+      unlock_user : (id) => `/api/artists/unlock_user/${id}`,
     }
   }
 

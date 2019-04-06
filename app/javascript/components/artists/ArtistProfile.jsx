@@ -164,6 +164,20 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  unlockArtist = () => {
+    fetch(APIRoutes.artists.unlock_user(this.props.artist.id), {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, media, description } = artist;
@@ -177,6 +191,7 @@ class ArtistProfile extends React.Component {
     }
 
     const featured_work = works.find(work => work.id === artist.featured_work_id);
+    console.log(artist.locked_at)
     return (
       <div>
         <div className="row-head flex">
@@ -220,9 +235,16 @@ class ArtistProfile extends React.Component {
             ))}
           </div>
           <div>
-          <Button type="button-primary" className="w4" color="indigo" onClick={this.lockArtist}>
-            LOCK
-          </Button>
+          {!artist.locked_at &&
+            <Button type="button-primary" className="w4" color="indigo" onClick={this.lockArtist}>
+              LOCK
+            </Button>
+          }
+          {artist.locked_at &&
+            <Button type="button-primary" className="w4" color="indigo" onClick={this.unlockArtist}>
+              UNLOCK
+            </Button>
+          }
           </div>
           {canEditProfile &&
             <Button type="button-primary" className="w4" color="indigo" onClick={this.createNewWork}>
