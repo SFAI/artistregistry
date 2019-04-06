@@ -151,10 +151,8 @@ class ArtistProfile extends React.Component {
   }
 
   lockArtist = () => {
-    let formData = new FormData();
     fetch(APIRoutes.artists.lock_user(this.props.artist.id), {
       method: 'PUT',
-      body: formData,
       credentials: 'same-origin',
       headers: {
         "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
