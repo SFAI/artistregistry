@@ -24,7 +24,6 @@
 		@extend .w5;
 		color: $text;
 		font-weight: normal;
-
 	}
 
 	.header-bar, .subnav-header-bar {
@@ -38,20 +37,12 @@
 	}
 
 	a {
-		color: inherit;
-		display: inline-block;
-		text-decoration: none;
-		font-weight: normal;
 		position: relative;
 		z-index: 3;
-
-		&:hover {
-			text-decoration: underline;
-		}
 	}
 
 	.container {
-    	align-items: flex-start;
+    align-items: flex-start;
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
@@ -139,6 +130,7 @@
 					justify-content: center;
 					align-items: flex-end;
 					padding-top: $border-stripe-height;
+					box-shadow: 0px 5px 5px rgba($black, 0.1);
 				}
 			}
 
