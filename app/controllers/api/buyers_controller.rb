@@ -17,6 +17,8 @@ class Api::BuyersController < ApplicationController
     buyer_attr = buyer_params
     avatar_attr = buyer_attr.delete("avatar")
     @buyer = Buyer.find(params[:id])
+    authorize @buyer
+    
     saved = @buyer.update(buyer_attr)
     if saved
       @buyer.avatar.attach(avatar_attr)

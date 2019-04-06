@@ -1,11 +1,14 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   before_action :set_current_user
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # after_action :verify_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def toast(type, text)
     flash[:toastr] = { type => text }
   end
-  
+
   def set_current_user
     if current_artist
       @current_user = current_artist
@@ -15,6 +18,16 @@ class ApplicationController < ActionController::Base
       @current_user_type = "buyer"
     end
   end
+
+  def pundit_user
+    @current_user
+  end
+
+  private
+
+    def user_not_authorized
+      render json: { message: 'You are not authorized to perform this action.' }, status: :unauthorized
+    end
 
   protected
 
