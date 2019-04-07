@@ -171,7 +171,7 @@ class ArtistProfile extends React.Component {
             {works.map(work => {
               if (this.getAvailability(activeFilter).includes(work.availability)) {
               return (
-                    <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
+                <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
                   {canEditProfile &&
                     <div className="work-action-wrapper mb2">
                       <Button type="hover-button" onClick={() => this.updateWork(work.id)}>

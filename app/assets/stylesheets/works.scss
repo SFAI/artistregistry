@@ -53,3 +53,30 @@
     }
   }
 }
+
+.overlay::after {
+  // content: "hello";
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color:rgba(190,190,190, 0.8);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.overlay-text {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  z-index: 2;
+  font-weight: 600;
+}
