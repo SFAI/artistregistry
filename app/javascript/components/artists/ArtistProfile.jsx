@@ -37,8 +37,14 @@ class ArtistProfile extends React.Component {
       Requester.get(artist_route)
     ]).then(response => {
       const [works_response, artist_response] = response;
+      let works_response_filtered
+        if (this.props.userType == "admin" || this.props.user.account_id == this.props.artist.account_id) {
+          works_response_filtered = works_response
+        } else {
+          works_response_filtered = works_response.filter(work => work.hidden == false)
+        }
       this.setState({
-        works: works_response,
+        works: works_response_filtered,
         artist: artist_response,
         canEditProfile: userType === "artist" && user && user.id === artist.id,
         componentDidMount: true
@@ -259,7 +265,6 @@ class ArtistProfile extends React.Component {
               if (this.getAvailability(activeFilter).includes(work.availability)) {
               return (
                 <div>
-                {(!work.hidden || this.props.userType == "admin" || (this.props.user != null && (this.props.user.account_id == this.props.artist.account_id))) &&
                   <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
                     {canEditProfile &&
                       <div className="work-action-wrapper mb2">
@@ -292,7 +297,6 @@ class ArtistProfile extends React.Component {
                       </div>
                     }
                 </WorkColumnPanel>
-              }
               </div>
               )
             }
