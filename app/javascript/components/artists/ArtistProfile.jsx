@@ -285,12 +285,6 @@ class ArtistProfile extends React.Component {
                           <h4 className="ml2 white">Edit</h4>
                         </Button>
                       }
-                      {(canEditProfile && work.availability == 'active') &&
-                        <Button type="hover-button" className="mr2" onClick={() => this.deleteWork(work.id)}>
-                          <FontAwesomeIcon className="white" icon={faTrash} />
-                          <h4 className="ml2 white">Delete</h4>
-                        </Button>
-                      }
                       <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
                         <FontAwesomeIcon className="white" icon={work.hidden ? faEye : faEyeSlash} />
                         <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
