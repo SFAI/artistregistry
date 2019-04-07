@@ -23,17 +23,12 @@ class WorkColumnPanel extends React.Component {
           <div className="item-overlay">
             {this.props.children}
           </div>
-          <div className={(work.availability == "sold" || work.availability == "rented") ? "relative ib mb3 overlay" : "mb3"}>
+          <div className={(work.availability == "sold" || work.availability == "rented") ? "relative ib mb3 overlay-" + `${work.availability}`: "mb3"}>
             {work.featured_image &&
               <Touchable onPress={() => this.navigateToWork(work.id)}>
                 {
                   <div className="relative ib flex items-center">
                     <img src={work.featured_image.url} className="pointer" />
-                    <h3 className={(work.availability == "sold" || work.availability == "rented") ? "overlay-text" : ""}>
-                      { 
-                        (work.availability == "sold" || work.availability == "rented") && work.availability
-                      }
-                    </h3>
                   </div>
                 }
               </Touchable>

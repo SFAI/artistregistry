@@ -54,9 +54,7 @@
   }
 }
 
-.overlay::after {
-  // content: "hello";
-  content: "";
+.overlay-sold::after, .overlay-rented::after {
   position: absolute;
   top: 0;
   width: 100%;
@@ -64,19 +62,21 @@
   background-color:rgba(190,190,190, 0.8);
   cursor: pointer;
   z-index: 1;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  font-size: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.overlay-text {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  color: white;
-  text-align: center;
-  text-transform: uppercase;
-  cursor: pointer;
-  z-index: 2;
-  font-weight: 600;
+.overlay-sold::after {
+  content: "SOLD";
+}
+
+.overlay-rented::after {
+  content: "RENTED";
 }
