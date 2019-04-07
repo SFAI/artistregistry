@@ -10,7 +10,7 @@ class UserSnapshot extends React.Component {
 
   render() {
     return (
-      <div className="w5 bg-white snapshot pa3">
+      <div className="bg-white snapshot pa3">
         <Touchable onPress={() => this.props.navigate()}>
           <div className="h2 w2 mr3 br-100 bg-gray self-center snapshot-nav">
             <img className="br-100" src={this.props.avatarSrc} />

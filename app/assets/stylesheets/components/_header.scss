@@ -114,6 +114,7 @@
 	.dropdown {
 		width: $header-item-width;
 		z-index: 2;
+		height: $nav-height;
 
 		.header-item {
 			border-right: 0px;
