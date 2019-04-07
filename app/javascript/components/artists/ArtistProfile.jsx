@@ -29,7 +29,7 @@ class ArtistProfile extends React.Component {
 
   componentDidMount = () => {
     const { user, userType, artist } = this.props;
-    const artist_id = this.props.artist.id;
+    const artist_id = artist.id;
     const works_route = APIRoutes.artists.works(artist_id);
     const artist_route = APIRoutes.artists.show(artist_id);
     Promise.all([
@@ -38,7 +38,10 @@ class ArtistProfile extends React.Component {
     ]).then(response => {
       const [works_response, artist_response] = response;
       let works_response_filtered
-        if (this.props.userType == "admin" || this.props.user.account_id == this.props.artist.account_id) {
+        if (!user) {
+          works_response_filtered = works_response.filter(work => work.hidden == false)
+        }
+        else if (userType == "admin" || user.account_id == artist.account_id) {
           works_response_filtered = works_response
         } else {
           works_response_filtered = works_response.filter(work => work.hidden == false)
@@ -190,6 +193,8 @@ class ArtistProfile extends React.Component {
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, media, description } = artist;
+    const { user, userType } = this.props;
+
 
     if (!componentDidMount) {
       return (
@@ -280,7 +285,7 @@ class ArtistProfile extends React.Component {
                         }
                       </div>
                     }
-                    {(this.props.userType == "admin" || this.props.user.account_id == this.props.artist.id) &&
+                    {user != null && (userType == "admin" || user.account_id == artist.id) &&
                       <div>
                       {work.hidden == false &&
                       <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
