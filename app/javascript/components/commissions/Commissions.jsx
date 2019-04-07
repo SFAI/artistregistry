@@ -4,7 +4,7 @@ import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import Inquiry from "./Inquiry";
 
-class Commission extends React.Component {
+class Commissions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,4 +42,4 @@ class Commission extends React.Component {
   }
 }
 
-export default Commission;
+export default Commissions;
