@@ -34,6 +34,11 @@ class Api::WorksController < ApplicationController
     if @work.availability != params[:work][:availability]
       prev_status = @work.availability
       curr_status = params[:work][:availability]
+
+      if !is_available?(@work, curr_status)
+        flash[:danger] = "Unable to mark work as Active."
+        return
+      end
     end
 
     saved = @work.update(work_attr)
@@ -56,7 +61,7 @@ class Api::WorksController < ApplicationController
         end
       end
     else
-      flash[:danger] = "Work failed to create."
+      flash[:danger] = "Work failed to update."
     end
   end
 
@@ -125,6 +130,24 @@ class Api::WorksController < ApplicationController
       end
     end
   end
+
+  private
+    def is_available?(work, curr_status)
+      requests = Request.where(work_id: work.id)
+      if requests
+        requests.each do |req|
+          receipt = Receipt.joins(:request).where(request_id: req.id)
+          if !receipt.blank?
+            if (curr_status == "active" || curr_status == "rented") && (receipt.first.transaction_type == "purchase" || receipt.first.end_date > Date.today)
+              return false
+            elsif curr_status == "sold" && receipt.first.transaction_type == "rental" && receipt.first.end_date > Date.today
+              return false
+            end
+          end
+        end
+      end
+      return true
+    end
 
 
   def work_params
