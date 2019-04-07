@@ -280,7 +280,7 @@ class ArtistProfile extends React.Component {
                         }
                       </div>
                     }
-                    {this.props.userType == "admin" &&
+                    {(this.props.userType == "admin" || this.props.user.account_id == this.props.artist.id) &&
                       <div>
                       {work.hidden == false &&
                       <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
