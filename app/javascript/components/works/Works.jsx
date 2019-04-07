@@ -85,7 +85,7 @@ class Works extends React.Component {
     } else if (artist.featured_work_id != work_id) {
       return
     } else {
-      let newFeaturedWork = this.state.works.filter(work => work.id != work_id).find(work => work.hidden == false)
+      let newFeaturedWork = this.state.works.filter(work => work.artist.id == artist.id).filter(work => work.id != work_id).find(work => work.hidden == false)
       if (!newFeaturedWork) {
         newFeaturedId = newFeaturedWork
       } else {
