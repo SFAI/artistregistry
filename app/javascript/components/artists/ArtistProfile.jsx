@@ -278,7 +278,7 @@ class ArtistProfile extends React.Component {
                           <h4 className="ml2 white">Edit</h4>
                         </Button>
                         {(work.availability == 'active') &&
-                          <Button className="ml2" type="hover-button" onClick={() => this.deleteWork(work.id)}>
+                          <Button type="hover-button" onClick={() => this.deleteWork(work.id)}>
                             <FontAwesomeIcon className="white" icon={faTrash} />
                             <h4 className="ml2 white">Delete</h4>
                           </Button>
@@ -288,13 +288,13 @@ class ArtistProfile extends React.Component {
                     {user != null && (userType == "admin" || user.account_id == artist.id) &&
                       <div>
                       {work.hidden == false &&
-                      <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
+                      <Button type="hover-button" onClick={() => this.hideWork(work.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Hide</h4>
                       </Button>
                       }
                       {work.hidden == true &&
-                      <Button className="ml2" type="hover-button" onClick={() => this.unHideWork(work.id)}>
+                      <Button type="hover-button" onClick={() => this.unHideWork(work.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Unhide</h4>
                       </Button>

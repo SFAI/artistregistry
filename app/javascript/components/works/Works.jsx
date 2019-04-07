@@ -191,13 +191,13 @@ class Works extends React.Component {
                 <div>
                   <WorkColumnPanel key={i} work={work}>
                       {work.hidden == false && this.props.userType == "admin" &&
-                      <Button className="ml2" type="hover-button" onClick={() => this.hideWork(work.id)}>
+                      <Button type="hover-button" onClick={() => this.hideWork(work.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Hide</h4>
                       </Button>
                       }
                       {work.hidden == true && this.props.userType == "admin" &&
-                      <Button className="ml2" type="hover-button" onClick={() => this.unHideWork(work.id)}>
+                      <Button type="hover-button" onClick={() => this.unHideWork(work.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Unhide</h4>
                       </Button>

@@ -176,13 +176,13 @@ class AllArtists extends React.Component {
                   <div>
                     <ArtistColumnPanel key={i} artist={artist}>
                       {artist.hidden == false && this.props.userType == "admin" &&
-                      <Button className="ml2" type="hover-button" onClick={() => this.hideArtist(artist.id)}>
+                      <Button type="hover-button" onClick={() => this.hideArtist(artist.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Hide</h4>
                       </Button>
                       }
                       {artist.hidden == true && this.props.userType == "admin" &&
-                      <Button className="ml2" type="hover-button" onClick={() => this.unHideArtist(artist.id)}>
+                      <Button type="hover-button" onClick={() => this.unHideArtist(artist.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Unhide</h4>
                       </Button>
