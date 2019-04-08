@@ -188,7 +188,6 @@ class Works extends React.Component {
           <div className="col-list-3">
             {works.slice(workStartIndex, workEndIndex).map((work, i) => {
               return (
-                <div>
                   <WorkColumnPanel key={i} work={work}>
                       {work.hidden == false && this.props.userType == "admin" &&
                       <Button type="hover-button" onClick={() => this.hideWork(work.id)}>
@@ -203,7 +202,6 @@ class Works extends React.Component {
                       </Button>
                       }
                   </WorkColumnPanel>
-                </div>
               );
             })}
           </div>
