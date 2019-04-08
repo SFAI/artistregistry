@@ -4,7 +4,6 @@ import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
 import StyledModal from "../helpers/StyledModal";
 import TransactionForm from "../receipts/TransactionForm";
-import WorkFixedPanel from "../works/WorkFixedPanel";
 import { convertToCurrency } from "../../utils/currency";
 import classNames from 'classnames/bind';
 import Touchable from 'rc-touchable';
@@ -43,8 +42,12 @@ class Receipt extends React.Component {
   renderStatus() {
     if (!this.state.request.open) {
       if (this.state.request.receipt) {
+        const purchaseType = this.state.request.receipt.transaction_type == "purchase" ?
+          "sale" : "rental";
         return (
-          <p className="green">Completed on {this.state.request.receipt.purchase_date}</p>
+          <p className="green">
+            Confirmed {purchaseType} on {new Date(this.state.request.receipt.purchase_date).toLocaleDateString()}
+          </p>
         )
       } else {
         return (
@@ -59,8 +62,12 @@ class Receipt extends React.Component {
   }
 
   render() {
-    const startDate = new Date(this.state.request.receipt.start_date).toLocaleDateString();
-    const endDate = new Date(this.state.request.receipt.end_date).toLocaleDateString();
+    const isRental = this.state.request.receipt.transaction_type == "rental";
+
+    const startDate = isRental ? 
+      new Date(this.state.request.receipt.start_date).toLocaleDateString() : "";
+    const endDate = isRental ? 
+      new Date(this.state.request.receipt.end_date).toLocaleDateString() : "";
 
     return (
       <div key={this.state.request.id} className="bg-white mb3">
@@ -70,16 +77,16 @@ class Receipt extends React.Component {
             (<ArtistSnapshot artist={this.state.request.artist} />)
           }
           <div className="pa3 flex-grow-1">
-            <h5>{(this.state.request.receipt.start_date) ? "Rental Start" : ""}</h5>
-            <p>{(this.state.request.receipt.start_date) ? startDate : ""}</p>
+            <h5>{isRental ? "Rental Start" : ""}</h5>
+            <p>{startDate}</p>
           </div>
           <div className="pa3 flex-grow-1">
-            <h5>{(this.state.request.receipt.end_date) ? "Rental End" : ""}</h5>
-            <p>{(this.state.request.receipt.end_date) ? endDate : ""}</p>
+            <h5>{isRental ? "Rental End" : ""}</h5>
+            <p>{endDate}</p>
           </div>
           <div className="pa3">
             <h5>Price</h5>
-            <p>{"$" + this.state.request.work.price}</p>
+            <p>{"$" + convertToCurrency(this.state.request.receipt.price)}</p>
           </div>
           <div className="pa3">
             <h5>Date Placed</h5>

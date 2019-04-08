@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import Inquiry from "./Inquiry";
 

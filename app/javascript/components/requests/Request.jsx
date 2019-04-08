@@ -4,7 +4,6 @@ import StyledModal from "../helpers/StyledModal";
 import TransactionForm from "../receipts/TransactionForm";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
-import WorkFixedPanel from "../works/WorkFixedPanel";
 import classNames from 'classnames/bind';
 import Touchable from 'rc-touchable';
 
@@ -56,9 +55,37 @@ class Request extends React.Component {
     }
   }
 
-  render() {
-    let id = this.state.request.id;
+  renderDropdown(id) {
+    return (
+      <div className={classNames("relative", "mh3", {"requests-dropdown-selected" : this.state.dropDownVisible})}>
+        <button 
+          onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
+          className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
+        </button>
+        <ul className="request-dropdown ml3 absolute nowrap z-3">
+          <li value={id} onClick={() => this.closeRequest(id)}>Archive</li>
+          <li>
+            <StyledModal
+              title="Complete"
+              buttonType=""
+            >
+              <TransactionForm
+                artist={this.props.artist}
+                request_id={id}
+                receipt={this.state.receipt}
+                route={APIRoutes.receipts.create}
+                method="POST"
+                work={this.state.request.work}
+              />
+            </StyledModal>
+          </li>
+          <li>Delete</li>
+          <li>Block user</li>
+        </ul>
+      </div>);
+  }
 
+  render() {
     return (
       <div key={this.state.request.id} className="bg-white mb3">
         <div className="flex justify-between w-100 items-center bb b--light-gray bt-0 bl-0 br-0">
@@ -78,36 +105,11 @@ class Request extends React.Component {
             <h5>Date Placed</h5>
             <p>{new Date(this.state.request.created_at).toLocaleDateString()}</p>
           </div>
-          <div className={classNames("relative", "mh3", {"requests-dropdown-selected" : this.state.dropDownVisible})}>
-            <button 
-              onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
-              className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
-            </button>
-            <ul className="request-dropdown ml3 absolute nowrap z-3">
-              <li value={id} onClick={() => this.closeRequest(id)}>Archive</li>
-              <li>
-                <StyledModal
-                  title="Complete"
-                  buttonType=""
-                >
-                  <TransactionForm
-                    artist={this.props.artist}
-                    request_id={id}
-                    receipt={this.state.receipt}
-                    route={APIRoutes.receipts.create}
-                    method="POST"
-                    work={this.state.request.work}
-                  />
-                </StyledModal>
-              </li>
-              <li>Delete</li>
-              <li>Block user</li>
-            </ul>
-          </div>
+          {this.renderDropdown(this.state.request.id)}
         </div>
 
         <div className="ttu b mt3 ml3 f6">
-          { this.renderStatus() }
+          {this.renderStatus()}
         </div>
         <div className="flex justify-between items-start pr5 pa3">
           <div className="flex">
