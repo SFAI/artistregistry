@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # ARTISTS
-# enum program: { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7 }
+# enum program: { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7, studio_art: 8 }
 
 artist_list = [
   ['Andrew Smith', 'asmith@artists.sfai.edu', 'password', 4, 'Andrew Smith is a painter.', 'digital media', 2009, true ],
