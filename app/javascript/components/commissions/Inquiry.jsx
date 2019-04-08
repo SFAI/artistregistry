@@ -32,7 +32,7 @@ class Inquiry extends React.Component {
 		        	onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
 		        	className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
 		        </button>
-		        <ul className="request-dropdown ml3 absolute nowrap">
+		        <ul className="request-dropdown ml3 absolute nowrap z-3">
 			  			<li>Archive</li>
 			  			<li>Delete inquiry</li>
 			  			<li>Block user</li>
