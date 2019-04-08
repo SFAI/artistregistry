@@ -19,15 +19,21 @@ class WorkColumnPanel extends React.Component {
   render() {
     let work = this.props.work;
     return (
-      <div className="mb3 pa3 w-100 col-item bg-white relative" key={work.id}>
-        <div className="item-overlay">
-          {this.props.children}
-        </div>
-        {work.featured_image &&
-          <Touchable onPress={() => this.navigateToWork(work.id)}>
-            {<img src={work.featured_image.url} className="mb3 pointer" />}
-          </Touchable>
-        }
+        <div className="mb3 pa3 w-100 col-item bg-white relative" key={work.id}>
+          <div className="item-overlay">
+            {this.props.children}
+          </div>
+          <div className={(work.availability == "sold" || work.availability == "rented") ? "relative ib mb3 overlay-" + `${work.availability}`: "mb3"}>
+            {work.featured_image &&
+              <Touchable onPress={() => this.navigateToWork(work.id)}>
+                {
+                  <div className="relative ib flex items-center">
+                    <img src={work.featured_image.url} className="pointer" />
+                  </div>
+                }
+              </Touchable>
+            }
+          </div>
         <Touchable onPress={() => this.navigateToWork(work.id)}>
           <h3 className="pointer">{work.title}</h3>
         </Touchable>
@@ -37,7 +43,7 @@ class WorkColumnPanel extends React.Component {
           </Touchable>
         }
         <h6>{work.material}</h6>
-      </div>
+    </div>
     );
   }
 }
