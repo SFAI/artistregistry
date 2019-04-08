@@ -209,11 +209,10 @@ class ArtistProfile extends React.Component {
       <div>
         <div className="row-head flex">
           <h1> {name} </h1>
-          {
-            canEditProfile &&
+          {canEditProfile &&
             <Button type="button-primary" className="w4" color="indigo" onClick={this.navigateToEdit}>
               Edit Profile
-              </Button>
+            </Button>
           }
         </div>
         <div className="row-bio flex">
@@ -247,22 +246,21 @@ class ArtistProfile extends React.Component {
               </button>
             ))}
           </div>
-          <div>
-          {!artist.locked_at &&
-            <Button type="button-primary" className="w4" color="indigo" onClick={this.lockArtist}>
-              LOCK
+          {userType == "admin" && (
+            <Button
+              type="button-primary"
+              className="w4"
+              color="indigo"
+              onClick={artist.locked_at ? this.unlockArtist : this.lockArtist}
+            >
+              {artist.locked_at ? "UNLOCK" : "LOCK"}
             </Button>
-          }
-          {artist.locked_at &&
-            <Button type="button-primary" className="w4" color="indigo" onClick={this.unlockArtist}>
-              UNLOCK
-            </Button>
-          }
-          </div>
+          )}
           {canEditProfile &&
             <Button type="button-primary" className="w4" color="indigo" onClick={this.createNewWork}>
               New Work
-            </Button>}
+            </Button>
+          }
         </div>
         <div className="flex flex-wrap">
           <div className="col-list-4">
@@ -285,7 +283,7 @@ class ArtistProfile extends React.Component {
                         }
                       </div>
                     }
-                    {user != null && (userType == "admin" || user.account_id == artist.id) &&
+                    {user != null && (userType == "admin" || canEditProfile) &&
                       <div>
                       {work.hidden == false &&
                       <Button type="hover-button" onClick={() => this.hideWork(work.id)}>
