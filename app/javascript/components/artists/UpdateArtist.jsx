@@ -3,7 +3,7 @@ import React from 'react';
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
 import LoadingOverlay from "../helpers/LoadingOverlay";
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase } from "../../utils/strings";
 
 class UpdateArtist extends React.Component {
   constructor(props) {

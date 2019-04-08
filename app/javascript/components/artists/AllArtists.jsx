@@ -8,8 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 
-/** @prop userType: { "artist", "buyer", "admin" }
-*/
+/**
+ * @prop userType: { "artist", "buyer", "admin" }
+ */
 
 const perPage = 6
 
@@ -140,7 +141,8 @@ class AllArtists extends React.Component {
     }
 
     const { isLoading, filters, artists, pageCount, artistStartIndex, artistEndIndex } = this.state;
-
+    const { userType } = this.props;
+    
     return (
       <div className="pt4">
         {isLoading ? <LoadingOverlay itemType="artists" fullPage={true} /> : null}
@@ -174,14 +176,14 @@ class AllArtists extends React.Component {
               {artists.slice(artistStartIndex, artistEndIndex).map((artist, i) => {
                 return (
                   <div>
-                    <ArtistColumnPanel key={i} artist={artist}>
-                      {artist.hidden == false && this.props.userType == "admin" &&
+                    <ArtistColumnPanel key={i} artist={artist} userType={userType}>
+                      {artist.hidden == false && userType == "admin" &&
                       <Button type="hover-button" onClick={() => this.hideArtist(artist.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Hide</h4>
                       </Button>
                       }
-                      {artist.hidden == true && this.props.userType == "admin" &&
+                      {artist.hidden == true && userType == "admin" &&
                       <Button type="hover-button" onClick={() => this.unHideArtist(artist.id)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
                         <h4 className="ml2 white">Unhide</h4>

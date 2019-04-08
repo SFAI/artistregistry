@@ -5,7 +5,7 @@ import UploadThumbnail from "./UploadThumbnail";
 import update from 'immutability-helper';
 import FormError from '../helpers/FormError';
 import LoadingOverlay from '../helpers/LoadingOverlay';
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase } from "../../utils/strings";
 
 class WorkForm extends React.Component {
   constructor(props) {
