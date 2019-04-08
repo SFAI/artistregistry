@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import UserSnapshot from "../helpers/UserSnapshot";
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase } from "../../utils/strings";
 
 class ArtistSnapshot extends React.Component {
   constructor(props) {

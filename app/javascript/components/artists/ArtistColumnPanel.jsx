@@ -1,7 +1,12 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import Touchable from 'rc-touchable';
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase, pluralize } from "../../utils/strings";
+
+/**
+ * @prop artist: artist for this panel
+ * @prop userType: { "artist", "buyer", "admin" }
+ */
 
 class ArtistColumnPanel extends React.Component {
   constructor(props) {
@@ -18,7 +23,8 @@ class ArtistColumnPanel extends React.Component {
   }
 
   render() {
-    let artist = this.props.artist;
+    const { userType, artist } = this.props;
+    // let artist = this.props.artist;
     const featured_work = artist.works.find(work => work.id === artist.featured_work_id);
     const non_hidden_works = artist.works.filter(work => work.hidden === false);
     const hidden_works = artist.works.filter(work => work.hidden === true);
@@ -39,15 +45,15 @@ class ArtistColumnPanel extends React.Component {
         </Touchable>
         <h6 className="ttc">{convertSnakeCase(artist.program)}, {artist.year}</h6>
         <h6 className="i">
-          {non_hidden_works.length} work{non_hidden_works.length > 1 && "s"} available 
-            {hidden_works.length===0 &&
+          {`${pluralize(non_hidden_works, 'work')} available`}
+          { userType == "admin" && hidden_works.length === 0 &&
             <h6 className="i">
-              {hidden_works.length} work{hidden_works.length > 1 && "s"} hidden
+              {`${pluralize(hidden_works, 'work')} hidden`}
             </h6>
-            }
+          }
         </h6>
 
-        {artist.hidden &&
+        { userType == "admin" && artist.hidden &&
           <h6> HIDDEN!!!!! </h6>
         }
       </div>

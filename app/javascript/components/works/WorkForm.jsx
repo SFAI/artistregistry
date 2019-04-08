@@ -5,7 +5,7 @@ import UploadThumbnail from "./UploadThumbnail";
 import update from 'immutability-helper';
 import FormError from '../helpers/FormError';
 import LoadingOverlay from '../helpers/LoadingOverlay';
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase } from "../../utils/strings";
 
 class WorkForm extends React.Component {
   constructor(props) {
@@ -149,7 +149,7 @@ class WorkForm extends React.Component {
     } else {
       this.setState({ updatingWork: true });
       let formData = new FormData();
-      const formKeys = ['artist_id', 'title', 'material', 'media', 'availability', 'description', 'featured_image'];
+      const formKeys = ['artist_id', 'title', 'material', 'media', 'links', 'availability', 'description', 'featured_image'];
       formKeys.forEach(key => {
         formData.append(`work[${key}]`, this.state.work[key]);
       });
@@ -283,6 +283,15 @@ class WorkForm extends React.Component {
             })
           }
         </select>
+        <h5>Links</h5>
+        <textarea
+          rows={2}
+          name="links"
+          onChange={this.handleChange}
+          type="TEXT"
+          className="textarea"
+          value={this.state.work.links}
+        />
         <h5>Description</h5>
         <textarea
           rows={4}

@@ -11,6 +11,8 @@ class Api::WorksController < ApplicationController
     featured_image = work_attr.delete("featured_image")
 
     @work = Work.new(work_attr)
+    authorize @work
+
     if @work.save
       @work.images.attach(attachment_attr)
       self.assign_featured_image(featured_image, @work)
@@ -27,6 +29,8 @@ class Api::WorksController < ApplicationController
     featured_image = work_attr.delete("featured_image")
 
     @work = Work.find(params[:id])
+    authorize @work
+
     if @work.availability != params[:work][:availability]
       prev_status = @work.availability
       curr_status = params[:work][:availability]
@@ -129,6 +133,7 @@ class Api::WorksController < ApplicationController
                                  :media,
                                  :status,
                                  :availability,
+                                 :links,
                                  :artist_id,
                                  :featured_image,
                                  :description,

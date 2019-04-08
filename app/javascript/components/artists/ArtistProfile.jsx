@@ -8,7 +8,7 @@ import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase } from "../../utils/strings";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 /**
 * @prop user: user currently logged in
@@ -162,6 +162,15 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  toggleHideWork = (work) => {
+    if (work.hidden) {
+      this.unHideWork(work.id);
+    }
+    else {
+      this.hideWork(work.id);
+    }
+  }
+
   lockArtist = () => {
     fetch(APIRoutes.artists.lock_user(this.props.artist.id), {
       method: 'PUT',
@@ -209,11 +218,10 @@ class ArtistProfile extends React.Component {
       <div>
         <div className="row-head flex">
           <h1> {name} </h1>
-          {
-            canEditProfile &&
+          {canEditProfile &&
             <Button type="button-primary" className="w4" color="indigo" onClick={this.navigateToEdit}>
               Edit Profile
-              </Button>
+            </Button>
           }
         </div>
         <div className="row-bio flex">
@@ -233,7 +241,9 @@ class ArtistProfile extends React.Component {
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
             <h2>About the artist</h2>
-            <p> {description}</p>
+            <div className="artist-description pr3 overflow-y-auto">
+              <p> {description}</p>
+            </div>
           </div>
         </div>
         <div className="mt5 mb3 row-head">
@@ -247,22 +257,21 @@ class ArtistProfile extends React.Component {
               </button>
             ))}
           </div>
-          <div>
-          {!artist.locked_at &&
-            <Button type="button-primary" className="w4" color="indigo" onClick={this.lockArtist}>
-              LOCK
+          {userType == "admin" && (
+            <Button
+              type="button-primary"
+              className="w4"
+              color="indigo"
+              onClick={artist.locked_at ? this.unlockArtist : this.lockArtist}
+            >
+              {artist.locked_at ? "UNLOCK" : "LOCK"}
             </Button>
-          }
-          {artist.locked_at &&
-            <Button type="button-primary" className="w4" color="indigo" onClick={this.unlockArtist}>
-              UNLOCK
-            </Button>
-          }
-          </div>
+          )}
           {canEditProfile &&
             <Button type="button-primary" className="w4" color="indigo" onClick={this.createNewWork}>
               New Work
-            </Button>}
+            </Button>
+          }
         </div>
         <div className="flex flex-wrap">
           <div className="col-list-4">
@@ -285,18 +294,11 @@ class ArtistProfile extends React.Component {
                         }
                       </div>
                     }
-                    {user != null && (userType == "admin" || user.account_id == artist.id) &&
+                    {user != null && (userType == "admin" || canEditProfile) &&
                       <div>
-                      {work.hidden == false &&
-                      <Button type="hover-button" onClick={() => this.hideWork(work.id)}>
+                      {<Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Hide</h4>
-                      </Button>
-                      }
-                      {work.hidden == true &&
-                      <Button type="hover-button" onClick={() => this.unHideWork(work.id)}>
-                        <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Unhide</h4>
+                        <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
                       </Button>
                       }
                       </div>
