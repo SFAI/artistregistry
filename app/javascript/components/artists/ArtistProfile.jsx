@@ -162,6 +162,15 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  toggleHideWork = (work) => {
+    if (work.hidden) {
+      this.unHideWork(work.id);
+    }
+    else {
+      this.hideWork(work.id);
+    }
+  }
+
   lockArtist = () => {
     fetch(APIRoutes.artists.lock_user(this.props.artist.id), {
       method: 'PUT',
@@ -285,16 +294,9 @@ class ArtistProfile extends React.Component {
                     }
                     {user != null && (userType == "admin" || canEditProfile) &&
                       <div>
-                      {work.hidden == false &&
-                      <Button type="hover-button" onClick={() => this.hideWork(work.id)}>
+                      {<Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
                         <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Hide</h4>
-                      </Button>
-                      }
-                      {work.hidden == true &&
-                      <Button type="hover-button" onClick={() => this.unHideWork(work.id)}>
-                        <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Unhide</h4>
+                        <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
                       </Button>
                       }
                       </div>
