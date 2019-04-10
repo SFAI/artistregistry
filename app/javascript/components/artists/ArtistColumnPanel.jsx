@@ -46,14 +46,13 @@ class ArtistColumnPanel extends React.Component {
         <h6 className="ttc">{convertSnakeCase(artist.program)}, {artist.year}</h6>
         <h6 className="i">
           {`${pluralize(non_hidden_works, 'work')} available`}
-          { userType == "admin" && hidden_works.length === 0 &&
-            <h6 className="i">
-              {`${pluralize(hidden_works, 'work')} hidden`}
-            </h6>
-          }
         </h6>
-
-        { userType == "admin" && artist.hidden &&
+        {userType == "admin" && hidden_works.length > 0 &&
+          <h6 className="i">
+            {pluralize(hidden_works, 'work')} hidden
+          </h6>
+        }
+        {userType == "admin" && artist.hidden &&
           <h6> HIDDEN!!!!! </h6>
         }
       </div>

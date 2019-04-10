@@ -5,7 +5,7 @@ import LoadingOverlay from "../helpers/LoadingOverlay";
 import Filters from "../works/Filters";
 import ReactPaginate from 'react-paginate'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 
 /**
@@ -125,6 +125,15 @@ class AllArtists extends React.Component {
     });
   }
 
+  toggleHideArtist = (artist) => {
+    if (artist.hidden) {
+      this.unHideArtist(artist.id);
+    }
+    else {
+      this.hideArtist(artist.id);
+    }
+  }
+
   handlePageClick = data => {
     let selected = data.selected;
     this.setState({
@@ -175,22 +184,14 @@ class AllArtists extends React.Component {
             <div className="col-list-3">
               {artists.slice(artistStartIndex, artistEndIndex).map((artist, i) => {
                 return (
-                  <div>
-                    <ArtistColumnPanel key={i} artist={artist} userType={userType}>
-                      {artist.hidden == false && userType == "admin" &&
-                      <Button type="hover-button" onClick={() => this.hideArtist(artist.id)}>
-                        <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Hide</h4>
-                      </Button>
-                      }
-                      {artist.hidden == true && userType == "admin" &&
-                      <Button type="hover-button" onClick={() => this.unHideArtist(artist.id)}>
-                        <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Unhide</h4>
-                      </Button>
-                      }
-                    </ArtistColumnPanel>
-                  </div>
+                  <ArtistColumnPanel key={i} artist={artist} userType={userType}>
+                    {userType == "admin" &&
+                    <Button type="hover-button" onClick={() => this.toggleHideArtist(artist)}>
+                      <FontAwesomeIcon className="white" icon={artist.hidden ? faEye : faEyeSlash} />
+                      <h4 className="ml2 white">{artist.hidden ? "Unhide" : "Hide"}</h4>
+                    </Button>
+                    }
+                  </ArtistColumnPanel>
                 )
               })}
             </div>

@@ -11,5 +11,5 @@ export const convertSnakeCase = (str) => {
 // e.g. `0 works`, `1 work`, `2 works`
 export const pluralize = (arr, noun) => {
     if (typeof arr !== 'object' || typeof noun !== 'string' || arr.length < 0) return '';
-    return `${arr.length} ${noun}${arr.length !== 1 ? "" : "s"}`;
+    return `${arr.length} ${noun}${arr.length === 1 ? "" : "s"}`;
 }
