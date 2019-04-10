@@ -123,12 +123,6 @@ class ArtistProfile extends React.Component {
       <div>
         <div className="row-head flex">
           <h1> {name} </h1>
-          {
-            canEditProfile &&
-            <Button type="button-primary" className="w4" color="denim" onClick={this.navigateToEdit}>
-              Edit Profile
-              </Button>
-          }
         </div>
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
@@ -145,7 +139,14 @@ class ArtistProfile extends React.Component {
           <div className="w-50-l mw-400 flex relative mh3">
             <img className="fit-cover h-100" src={featured_work ? featured_work.featured_image.url : sfai_wallpaper} />
           </div>
-          <div className="w-30-l mw-400 pa3 bg-white">
+          <div className="w-30-l mw-400 pa3 bg-white relative">
+            {
+              canEditProfile &&
+              <Button type="hover-button" className="ma2 absolute top-0 right-0" color="denim" onClick={this.navigateToEdit}>
+                <FontAwesomeIcon className="white" icon={faEdit} />
+                <h4 className="ml2 white">Edit</h4>
+              </Button>
+            }
             <h2>About the artist</h2>
             <div className="artist-description pr3 overflow-y-auto">
               <p> {description}</p>
