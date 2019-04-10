@@ -259,7 +259,7 @@ class ArtistProfile extends React.Component {
             <Button
               type="button-primary"
               className="w4"
-              color="indigo"
+              color="denim"
               onClick={artist.locked_at ? this.unlockArtist : this.lockArtist}
             >
               {artist.locked_at ? "UNLOCK" : "LOCK"}
