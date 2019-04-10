@@ -5,7 +5,7 @@ class WorkPolicy < ApplicationPolicy
   end
 
   def update?
-    create?
+    create? || user.account.user_type == "Admin" 
   end
 
   class Scope < Scope
