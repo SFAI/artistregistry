@@ -1,12 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import classNames from "classnames";
-import Touchable from 'rc-touchable';
 import CommissionsForm from "../commissions/CommissionsForm";
-import StyledModal from "../helpers/StyledModal";
 import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 import { convertSnakeCase } from "../../utils/strings";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
@@ -278,33 +276,28 @@ class ArtistProfile extends React.Component {
             {works.map(work => {
               if (this.getAvailability(activeFilter).includes(work.availability)) {
               return (
-                <div>
-                  <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
-                    {canEditProfile &&
-                      <div className="work-action-wrapper mb2">
-                        <Button type="hover-button" onClick={() => this.updateWork(work.id)}>
+                <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
+                  {(userType == "admin" || canEditProfile) &&
+                    <div className="work-action-wrapper mb2">
+                      {canEditProfile &&
+                        <Button type="hover-button"  className="mr2" onClick={() => this.updateWork(work.id)}>
                           <FontAwesomeIcon className="white" icon={faEdit} />
                           <h4 className="ml2 white">Edit</h4>
                         </Button>
-                        {(work.availability == 'active') &&
-                          <Button type="hover-button" onClick={() => this.deleteWork(work.id)}>
-                            <FontAwesomeIcon className="white" icon={faTrash} />
-                            <h4 className="ml2 white">Delete</h4>
-                          </Button>
-                        }
-                      </div>
-                    }
-                    {user != null && (userType == "admin" || canEditProfile) &&
-                      <div>
-                      {<Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
-                        <FontAwesomeIcon className="white" icon={faTrash} />
+                      }
+                      {(canEditProfile && work.availability == 'active') &&
+                        <Button type="hover-button" className="mr2" onClick={() => this.deleteWork(work.id)}>
+                          <FontAwesomeIcon className="white" icon={faTrash} />
+                          <h4 className="ml2 white">Delete</h4>
+                        </Button>
+                      }
+                      <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
+                        <FontAwesomeIcon className="white" icon={work.hidden ? faEye : faEyeSlash} />
                         <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
                       </Button>
-                      }
-                      </div>
-                    }
-                </WorkColumnPanel>
-              </div>
+                    </div>
+                  }
+              </WorkColumnPanel>
               )
             }
             })}
