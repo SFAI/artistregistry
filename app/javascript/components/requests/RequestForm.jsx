@@ -126,11 +126,11 @@ class RequestForm extends React.Component {
       return (
         <div className="mw6">
           <Panel
-            color="magenta"
+            color="berry"
             title="Request Artwork"
           >
             <div className="pa3">
-              <h2 className="magenta">Sorry!</h2>
+              <h2 className="berry">Sorry!</h2>
               <h6>This work has been {this.props.work_status}.</h6>
             </div>
           </Panel>
@@ -141,13 +141,13 @@ class RequestForm extends React.Component {
       return (
         <div className="mw6">
           <Panel
-            color="magenta"
+            color="berry"
             title="Request Artwork"
           >
             <div className="pa3">
               <p className="mb4"> Log in to your account to request artwork.</p>
-              <a className="pointer magenta mb1" href="../artists/sign_in">Log in (Artist) »</a>
-              <a className="pointer magenta" href="../buyers/sign_in">Log in (Patron) »</a>
+              <a className="pointer berry mb1" href="../artists/sign_in">Log in (Artist) »</a>
+              <a className="pointer berry" href="../buyers/sign_in">Log in (Patron) »</a>
             </div>
           </Panel>
         </div>
@@ -156,7 +156,7 @@ class RequestForm extends React.Component {
     return (
       <div className="w-100">
         <Panel
-          color="magenta"
+          color="berry"
           title="Request Artwork"
         >
         {this.state.updatingRequest ? <LoadingOverlay /> : null}
@@ -184,7 +184,7 @@ class RequestForm extends React.Component {
           />
           <FormError error={this.state.errors["message"]} />
           <FormError error={this.state.errors["exist"]} />
-          <button onClick={this.handleSubmit} className="button-primary bg-magenta w4 mt2">
+          <button onClick={this.handleSubmit} className="button-primary bg-berry w4 mt2">
             Submit
           </button>
         </Panel>

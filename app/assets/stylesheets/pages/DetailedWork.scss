@@ -12,10 +12,10 @@
 }
     
 .artwork-description::-webkit-scrollbar-thumb {
-    background: $magenta;  
+    background: $berry;  
     border-radius: 10px;
 }
 
 .artwork-description::-webkit-scrollbar-thumb:hover {
-    background: darken($magenta, 10%);   
+    background: darken($berry, 10%);   
 }

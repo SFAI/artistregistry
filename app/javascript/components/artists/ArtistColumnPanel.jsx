@@ -41,7 +41,7 @@ class ArtistColumnPanel extends React.Component {
           }
         </div>
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-          <h3 className="indigo pointer">{artist.name}</h3>
+          <h3 className="denim pointer">{artist.name}</h3>
         </Touchable>
         <h6 className="ttc">{convertSnakeCase(artist.program)}, {artist.year}</h6>
         <h6 className="i">
