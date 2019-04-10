@@ -147,12 +147,12 @@ class ArtistProfile extends React.Component {
               () => this.setState({showIncompleteBanner: false})}>Dismiss</Button>
           </div>
         </div>
-        <div className="col-list-2 w-50 mv3">
+        <div className="flex flex-wrap w-50 mv3">
         {
           sortedKeys.map((field, i) => {
             const isComplete = completionStatus[field];
             return (
-              <div className="col-item dib w-100 mv3" key={i}>
+              <div className="w-30 mv3" key={i}>
                 <div className="flex items-center">
                   <div className={"flex justify-center items-center br-100 mr2 " + 
                     (isComplete ? "complete" : "incomplete")}></div>
