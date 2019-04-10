@@ -74,13 +74,24 @@ class Api::ArtistsController < ApplicationController
         each_serializer: CommissionSerializer
   end
 
+  def lock_user
+    user = Artist.find(params[:id])
+    user.lock_access!
+  end
+
+  def unlock_user
+    user = Artist.find(params[:id])
+    user.unlock_access!
+  end
+
   def artist_params
     params.require(:artist).permit(:name,
                                  :program,
                                  :media,
                                  :description,
                                  :avatar,
-                                 :featured_work_id
+                                 :featured_work_id,
+                                 :hidden
                                 )
   end
 end

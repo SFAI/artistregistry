@@ -4,6 +4,13 @@ import ArtistColumnPanel from "./ArtistColumnPanel";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import Filters from "../works/Filters";
 import ReactPaginate from 'react-paginate'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import Button from "../helpers/Button";
+
+/**
+ * @prop userType: { "artist", "buyer", "admin" }
+ */
 
 const perPage = 6
 
@@ -22,7 +29,10 @@ class AllArtists extends React.Component {
   }
 
   componentDidMount() {
-    const artist_route = APIRoutes.artists.index;
+    const unhiddenParams = `hidden=false`
+    const artist_route = this.props.userType == "admin"
+      ? APIRoutes.artists.index
+      : APIRoutes.artists.filtered_artists(unhiddenParams)
     const categories_route = APIRoutes.artists.categories;
     Promise.all([
       Requester.get(artist_route),
@@ -30,7 +40,10 @@ class AllArtists extends React.Component {
     ]).then(
       response => {
         const [artists_response, filters_response] = response;
-        const artists_response_filtered = artists_response.filter(artist => artist.works.length > 0)
+        let artists_response_filtered = artists_response
+        if (this.props.userType != "admin") {
+          artists_response_filtered = artists_response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0)
+        }
         this.setState({
           artists: artists_response_filtered,
           filters: filters_response,
@@ -60,10 +73,16 @@ class AllArtists extends React.Component {
     Requester.get(
       artists_route).then(
         response => {
+          let artists
+          if (this.props.userType == "admin") {
+            artists = response
+          } else {
+            artists = response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0).filter(artist => artist.hidden == false)
+          }
           this.setState({
-            artists: response.filter(artist => artist.works.length > 0),
+            artists: artists,
             isLoading: false,
-            pageCount: Math.ceil(response.filter(artist => artist.works.length > 0).length / perPage)
+            pageCount: Math.ceil(artists.filter.length / perPage)
           });
         },
         response => {
@@ -71,6 +90,49 @@ class AllArtists extends React.Component {
         }
       );
   };
+
+  hideArtist = (artist_id) => {
+    let formData = new FormData();
+    formData.append(`artist[hidden]`, true);
+    fetch(APIRoutes.artists.update(artist_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists`
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+  unHideArtist = (artist_id) => {
+    let formData = new FormData();
+    formData.append(`artist[hidden]`, false);
+    fetch(APIRoutes.artists.update(artist_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists`
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+  toggleHideArtist = (artist) => {
+    if (artist.hidden) {
+      this.unHideArtist(artist.id);
+    }
+    else {
+      this.hideArtist(artist.id);
+    }
+  }
 
   handlePageClick = data => {
     let selected = data.selected;
@@ -88,7 +150,8 @@ class AllArtists extends React.Component {
     }
 
     const { isLoading, filters, artists, pageCount, artistStartIndex, artistEndIndex } = this.state;
-
+    const { userType } = this.props;
+    
     return (
       <div className="pt4">
         {isLoading ? <LoadingOverlay itemType="artists" fullPage={true} /> : null}
@@ -120,7 +183,16 @@ class AllArtists extends React.Component {
             </div>
             <div className="col-list-3">
               {artists.slice(artistStartIndex, artistEndIndex).map((artist, i) => {
-                return <ArtistColumnPanel key={i} artist={artist} />
+                return (
+                  <ArtistColumnPanel key={i} artist={artist} userType={userType}>
+                    {userType == "admin" &&
+                    <Button type="hover-button" onClick={() => this.toggleHideArtist(artist)}>
+                      <FontAwesomeIcon className="white" icon={artist.hidden ? faEye : faEyeSlash} />
+                      <h4 className="ml2 white">{artist.hidden ? "Unhide" : "Hide"}</h4>
+                    </Button>
+                    }
+                  </ArtistColumnPanel>
+                )
               })}
             </div>
           </div>
