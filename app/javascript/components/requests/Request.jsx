@@ -90,8 +90,8 @@ class Request extends React.Component {
       <div key={this.state.request.id} className="bg-white mb3">
         <div className="flex justify-between w-100 items-center bb b--light-gray bt-0 bl-0 br-0">
           { this.props.artist ? 
-            (<BuyerSnapshot buyer={this.state.request.buyer} />) : 
-            (<ArtistSnapshot artist={this.state.request.artist} />)
+            (<BuyerSnapshot buyer={this.state.request.buyer} color="moss"/>) : 
+            (<ArtistSnapshot artist={this.state.request.artist} color="moss"/>)
           }
           <div className="pa3 flex-grow-1">
           </div>
