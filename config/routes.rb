@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :admins, controllers: { registrations: 'admins/registrations' }, path_names: { sign_up: '' }
   devise_for :artists, controllers: { registrations: 'artists/registrations' }
   devise_for :buyers, controllers: { registrations: 'buyers/registrations' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -57,5 +58,8 @@ Rails.application.routes.draw do
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'
     get 'requests/request_exist/:search_params' => 'requests#request_exist'
+    put 'artists/lock_user/:id' => 'artists#lock_user'
+    put 'artists/unlock_user/:id' => 'artists#unlock_user'
+    get 'works/filtered/artist_hidden' => 'works#filtered_artist_hidden'
   end
 end

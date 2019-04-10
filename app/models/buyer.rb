@@ -2,7 +2,7 @@ class Buyer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :confirmable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :lockable
   has_one :account, as: :user
   has_many :requests
   has_many :works, through: :requests
