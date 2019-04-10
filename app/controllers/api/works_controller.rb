@@ -99,6 +99,12 @@ class Api::WorksController < ApplicationController
       each_serializer: WorkSerializer
   end
 
+  def filtered_artist_hidden
+    filtered_works = Work.joins(:artist).where("artists.hidden=false").select{|work| work.hidden==false}
+    render json: filtered_works,
+      each_serializer: WorkSerializer
+  end
+
   def thumbnail
     work = Work.find(params[:id])
     images = work.images
@@ -131,8 +137,9 @@ class Api::WorksController < ApplicationController
                                  :artist_id,
                                  :featured_image,
                                  :description,
+                                 :hidden,
                                  :attachments_attributes => [],
-                                 :attachments_to_delete => []
+                                 :attachments_to_delete => [],
                                 )
   end
 

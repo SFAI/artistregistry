@@ -1,0 +1,46 @@
+<div class="loginPage">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+  <div class="container signup part1">
+    <h1>Sign up</h1>
+    <%= devise_error_messages! %>
+
+    <div class="mb3">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "textinput w-100", id: "email-field", autofocus: true, autocomplete: "email", oninput: "validateForm()", onblur: "validateForm(true, false, false)" %>
+      <p class="texthelp"> sfai.edu or artists.sfai.edu email required </p>
+    </div>
+
+    <div class="mb3">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: "textinput w-100", id: "password-field", autocomplete: "new-password", oninput: "validateForm()", onblur: "validateForm(false, true, false)" %>
+        <% if @minimum_password_length %>
+          <p class="texthelp"> <%= @minimum_password_length %> characters minimum </p>
+        <% end %>
+    </div>
+
+    <div class="mb4">
+      <%= f.label :password_confirmation, class: "mb1" %>
+      <%= f.password_field :password_confirmation, class: "textinput w-100", id: "confirmation-field", autocomplete: "new-password", oninput: "validateForm()", onblur: "validateForm(false, false, true)" %>
+    </div>
+
+    <div class="flex justify-between">
+      <%= render "artists/shared/links" %>
+      <button type="button" onclick="nextPage()" class="button-primary bg-mustard w4" disabled="disabled">Next</button>
+    </div>
+  </div>
+
+  <div class="container signup part2 dn">
+    <a id="back" onclick="prevPage()" class="mb3">« Back</a>
+    <%= render "artists/shared/terms" %>
+
+    <div class="flex justify-between items-baseline">
+      <div>
+        <%= f.check_box :terms_and_conditions, onclick: "enableSubmit(this)" %>
+        <%= f.label :terms_and_conditions, "I agree to SFAI's Terms and Conditions" %>
+      </div>
+      <%= f.submit "Sign up", class: "button-primary bg-mustard w4", disabled: "disabled" %>
+    </div>
+  </div>
+  <% end %>
+</div>
