@@ -124,7 +124,6 @@ class ArtistProfile extends React.Component {
     });
   }
 
-<<<<<<< HEAD
   renderIncompleteProfileBanner = () => {
     const artist = this.state.artist;
     const completionStatus = {
@@ -182,7 +181,8 @@ class ArtistProfile extends React.Component {
         </div>
       </div>
     )
-=======
+  }
+
   hideWork = (work_id) => {
     this.updateFeatured(work_id)
     let formData = new FormData();
@@ -256,7 +256,6 @@ class ArtistProfile extends React.Component {
     }).catch((data) => {
       console.error(data);
     });
->>>>>>> ba871c5c2201bc5346789fdf9f7b2cb2c7c8742e
   }
 
   render() {
@@ -277,14 +276,6 @@ class ArtistProfile extends React.Component {
         { canEditProfile && this.state.showIncompleteBanner && this.renderIncompleteProfileBanner() }
         <div className="row-head flex">
           <h1> {name} </h1>
-<<<<<<< HEAD
-=======
-          {canEditProfile &&
-            <Button type="button-primary" className="w4" color="denim" onClick={this.navigateToEdit}>
-              Edit Profile
-            </Button>
-          }
->>>>>>> ba871c5c2201bc5346789fdf9f7b2cb2c7c8742e
         </div>
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
