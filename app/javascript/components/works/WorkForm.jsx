@@ -149,7 +149,7 @@ class WorkForm extends React.Component {
     } else {
       this.setState({ updatingWork: true });
       let formData = new FormData();
-      const formKeys = ['artist_id', 'title', 'material', 'media', 'links', 'availability', 'description', 'featured_image'];
+      const formKeys = ['artist_id', 'title', 'material', 'media', 'links', 'availability', 'hidden', 'description', 'featured_image'];
       formKeys.forEach(key => {
         formData.append(`work[${key}]`, this.state.work[key]);
       });
@@ -230,6 +230,12 @@ class WorkForm extends React.Component {
     );
   }
 
+  toggleHidden = () => {
+    let new_work = this.state.work
+    new_work.hidden = !this.state.work.hidden
+    this.setState({ work: new_work })
+  }
+
   render() {
     if (!this.state.componentDidMount) {
       return (
@@ -283,6 +289,15 @@ class WorkForm extends React.Component {
             })
           }
         </select>
+        <h5>Hidden</h5>
+        <input
+          onClick={() => this.toggleHidden()}
+          type="checkbox"
+          className="checkbox"
+          checked={this.state.work.hidden}
+          id={`checkbox-hidden`}
+          className={`checkbox-denim`}
+        />
         <h5>Links</h5>
         <textarea
           rows={2}
