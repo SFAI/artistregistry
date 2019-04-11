@@ -294,7 +294,7 @@ class WorkForm extends React.Component {
           onClick={() => this.toggleHidden()}
           type="checkbox"
           className="checkbox"
-          value={this.state.work.hidden}
+          checked={this.state.work.hidden}
           id={`checkbox-hidden`}
           className={`checkbox-denim`}
         />
