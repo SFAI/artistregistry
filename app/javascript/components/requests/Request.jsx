@@ -4,6 +4,7 @@ import StyledModal from "../helpers/StyledModal";
 import TransactionForm from "../receipts/TransactionForm";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
+import { convertToCurrency } from "../../utils/currency";
 import classNames from 'classnames/bind';
 import Touchable from 'rc-touchable';
 
@@ -99,7 +100,7 @@ class Request extends React.Component {
           </div>
           <div className="pa3">
             <h5>Price</h5>
-            <p>{"$" + this.state.request.work.price}</p>
+            <p>{"$" + convertToCurrency(this.state.request.work.price)}</p>
           </div>
           <div className="pa3">
             <h5>Date Placed</h5>
@@ -112,17 +113,17 @@ class Request extends React.Component {
           {this.renderStatus()}
         </div>
         <div className="flex justify-between items-start pr5 pa3">
-          <div className="flex">
-            <Touchable onPress={() => this.navigateToWork(this.state.request.work.id)}>
+          <Touchable onPress={() => this.navigateToWork(this.state.request.work.id)}>
+            <div className="flex pointer">
               <div className="w4 pb6 relative mr3">
-                <img className="work-image fit-cover w-100 h-100 pointer absolute" src={this.state.request.work.featured_image.url} />
+                <img className="work-image fit-cover w-100 h-100 absolute" src={this.state.request.work.featured_image.url} />
               </div>
-            </Touchable>
-            <div>
-              <h5>{this.state.request.work.title}</h5>
-              <p>{this.state.request.work.media}</p>
+              <div>
+                <h5>{this.state.request.work.title}</h5>
+                <p>{this.state.request.work.media}</p>
+              </div>
             </div>
-          </div>
+          </Touchable>
           <div className="w-60 gray">
             <p>{this.state.request.message}</p>
           </div>
