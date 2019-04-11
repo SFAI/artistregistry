@@ -32,8 +32,8 @@ class Commissions extends React.Component {
       <div className="mw7 center">
         <h1>Inquiries</h1>
         {
-          this.state.commissions.map((commission) => {
-            return <Inquiry commission={commission} />
+          this.state.commissions.map((commission, i) => {
+            return <Inquiry commission={commission} key={i} />
           })
         }
       </div>
