@@ -159,8 +159,8 @@ ActiveRecord::Schema.define(version: 2019_04_05_082136) do
     t.bigint "artist_id", null: false
     t.string "description"
     t.integer "featured_image_id"
-    t.boolean "hidden"
     t.string "links"
+    t.boolean "hidden"
     t.index ["artist_id"], name: "index_works_on_artist_id"
   end
 
