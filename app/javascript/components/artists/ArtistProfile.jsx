@@ -104,24 +104,6 @@ class ArtistProfile extends React.Component {
     });
   }
 
-  deleteWork = (work_id) => {
-    fetch(APIRoutes.works.delete(work_id), {
-      method: 'DELETE',
-      credentials: 'same-origin',
-      headers: {
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-      }
-    }).then((data) => {
-      if (work_id == this.state.artist.featured_work_id) {
-        this.updateFeatured(work_id)
-      } else {
-        window.location = `/artists/` + this.props.artist.id;
-      }
-    }).catch((data) => {
-      console.error(data);
-    });
-  }
-
   hideWork = (work_id) => {
     this.updateFeatured(work_id)
     let formData = new FormData();
