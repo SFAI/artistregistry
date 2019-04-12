@@ -104,24 +104,6 @@ class ArtistProfile extends React.Component {
     });
   }
 
-  deleteWork = (work_id) => {
-    fetch(APIRoutes.works.delete(work_id), {
-      method: 'DELETE',
-      credentials: 'same-origin',
-      headers: {
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-      }
-    }).then((data) => {
-      if (work_id == this.state.artist.featured_work_id) {
-        this.updateFeatured(work_id)
-      } else {
-        window.location = `/artists/` + this.props.artist.id;
-      }
-    }).catch((data) => {
-      console.error(data);
-    });
-  }
-
   hideWork = (work_id) => {
     this.updateFeatured(work_id)
     let formData = new FormData();
@@ -283,12 +265,6 @@ class ArtistProfile extends React.Component {
                         <Button type="hover-button"  className="mr2" onClick={() => this.updateWork(work.id)}>
                           <FontAwesomeIcon className="white" icon={faEdit} />
                           <h4 className="ml2 white">Edit</h4>
-                        </Button>
-                      }
-                      {(canEditProfile && work.availability == 'active') &&
-                        <Button type="hover-button" className="mr2" onClick={() => this.deleteWork(work.id)}>
-                          <FontAwesomeIcon className="white" icon={faTrash} />
-                          <h4 className="ml2 white">Delete</h4>
                         </Button>
                       }
                       <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
