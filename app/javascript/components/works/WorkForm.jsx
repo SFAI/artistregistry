@@ -352,14 +352,8 @@ class WorkForm extends React.Component {
         <FormError error={this.state.errors["featuredImage"]} />
         <div className="submit-container mt3 mb3">
           <button
-            onClick={() => { if (window.confirm('Are you sure you wish to delete this work?')) this.deleteWork() } }
-            className="button-secondary b--berry w4"
-          >
-            Delete
-          </button>
-          <button
             onClick={() => { window.location = `/artists/` + this.state.work.artist_id }}
-            className="button-secondary b--berry w4"
+            className="button-tertiary berry w4"
           >
             Cancel
           </button>
@@ -368,6 +362,15 @@ class WorkForm extends React.Component {
             onClick={this.handleSubmit}
           >
             Save
+          </button>
+        </div>
+        <div className="mv2">
+          <h5> Remove this work permanently? </h5>
+          <button
+            onClick={() => {if (window.confirm('Are you sure you wish to delete this work?')) this.deleteWork() } }
+            className="button-secondary berry b--berry w4 mv2"
+          >
+            Delete
           </button>
         </div>
       </div>
