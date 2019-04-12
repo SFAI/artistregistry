@@ -352,7 +352,7 @@ class WorkForm extends React.Component {
         <FormError error={this.state.errors["featuredImage"]} />
         <div className="submit-container mt3 mb3">
           <button
-            onClick={() => { this.deleteWork() }}
+            onClick={() => { if (window.confirm('Are you sure you wish to delete this work?')) this.deleteWork() } }
             className="button-secondary b--berry w4"
           >
             Delete

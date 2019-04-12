@@ -68,6 +68,11 @@ class Api::WorksController < ApplicationController
       alerts = []
       requests.each do |req|
         alerts << {buyer: req.buyer, artist: req.artist}
+        receipt = Receipt.joins(:request).where(request_id: req.id)
+        if !receipt.blank? && receipt.first.transaction_type == "purchase"
+          flash[:danger] = "Work failed to delete."
+          return
+        end
       end
     end
 
