@@ -33,6 +33,12 @@ class Button extends React.Component {
             {this.props.children}
           </button>
         )
+      default:
+        return (
+          <div className={this.props.className} onClick={this.props.onClick}>
+            {this.props.children}
+          </div>
+        )
     }
   }
 }

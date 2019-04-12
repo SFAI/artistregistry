@@ -149,7 +149,7 @@ class WorkForm extends React.Component {
     } else {
       this.setState({ updatingWork: true });
       let formData = new FormData();
-      const formKeys = ['artist_id', 'title', 'material', 'media', 'links', 'availability', 'description', 'featured_image'];
+      const formKeys = ['artist_id', 'title', 'material', 'media', 'links', 'availability', 'hidden', 'description', 'featured_image'];
       formKeys.forEach(key => {
         formData.append(`work[${key}]`, this.state.work[key]);
       });
@@ -248,6 +248,11 @@ class WorkForm extends React.Component {
     }).catch((data) => {
       console.error(data);
     });
+    
+  toggleHidden = () => {
+    let new_work = this.state.work
+    new_work.hidden = !this.state.work.hidden
+    this.setState({ work: new_work })
   }
 
   render() {

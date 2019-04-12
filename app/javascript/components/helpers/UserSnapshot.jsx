@@ -10,7 +10,7 @@ class UserSnapshot extends React.Component {
 
   render() {
     return (
-      <div className="w5 bg-white snapshot pa3">
+      <div className="bg-white snapshot pa3 flex-grow-1">
         <Touchable onPress={() => this.props.navigate()}>
           <div className="h2 w2 mr3 br-100 bg-gray self-center snapshot-nav">
             <img className="br-100" src={this.props.avatarSrc} />
@@ -18,7 +18,7 @@ class UserSnapshot extends React.Component {
         </Touchable>
         <div className="snapshot-content w4">
           <Touchable onPress={() => this.props.navigate()}>
-            <h5 className={`snapshot-nav link-${this.props.color}`}>{this.props.name}</h5>
+          <a className={`snapshot-nav ${this.props.color}`}>{this.props.name}</a>
           </Touchable>
           {this.props.program && <h6 className="ttc">{this.props.program}</h6>}
           {this.props.email && <h6 className="truncate">{this.props.email}</h6>}
