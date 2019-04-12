@@ -303,6 +303,16 @@ class WorkForm extends React.Component {
             })
           }
         </select>
+        <div className="flex items-center mv2">
+          <h5 className="mr2 mb0">Hidden</h5>
+          <input
+            onClick={() => this.toggleHidden()}
+            type="checkbox"
+            checked={this.state.work.hidden}
+            id="checkbox-hidden"
+            className="checkbox-berry"
+          />
+        </div>
         <h5>Links</h5>
         <textarea
           rows={2}
