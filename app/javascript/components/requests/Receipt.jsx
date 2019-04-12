@@ -17,6 +17,10 @@ class Receipt extends React.Component {
     };
   }
 
+  navigateToWork = (id) => {
+    window.location = `works/${id}`;
+  }
+
   renderEditReceipt() {
     const request = this.state.request;
     const id = request.id;
