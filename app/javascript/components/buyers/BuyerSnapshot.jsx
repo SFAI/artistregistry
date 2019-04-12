@@ -19,6 +19,7 @@ class BuyerSnapshot extends React.Component {
         avatarSrc=""
         navigate={this.navigateToBuyer}
         email={this.props.buyer.email}
+        color={this.props.color}
       >
       </UserSnapshot>
     );
