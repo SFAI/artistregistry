@@ -6,7 +6,9 @@ class Api::RequestsController < ApplicationController
   end
 
   def create
-    request = Request.create(request_params)
+    request = Request.new(request_params)
+    authorize request
+
     if request.save!
       flash[:success] = "Work requested successfully!";
       RequestMailer.with(buyer: request.buyer, artist: request.artist, work: request.work).new_request_email.deliver_later
@@ -20,6 +22,8 @@ class Api::RequestsController < ApplicationController
   def update
     #only for opening and closing requests
     @request = Request.find(params[:id])
+    authorize @request
+    
     new_request = @request.update!(request_params)
     if (new_request) #since requests can only be closed after open
       RequestMailer.with(buyer: @request.buyer, artist: @request.artist, work: @request.work).request_closed_email.deliver_later

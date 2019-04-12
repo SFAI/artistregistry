@@ -5,7 +5,7 @@ import UploadThumbnail from "./UploadThumbnail";
 import update from 'immutability-helper';
 import FormError from '../helpers/FormError';
 import LoadingOverlay from '../helpers/LoadingOverlay';
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase } from "../../utils/strings";
 
 class WorkForm extends React.Component {
   constructor(props) {
@@ -43,6 +43,33 @@ class WorkForm extends React.Component {
       }
     );
   }
+
+  updateFeatured = () => {
+      const works_route = APIRoutes.artists.works(this.state.work.artist_id);
+      Requester.get(works_route).then(
+        response => {
+          if (response.length == 1) {
+            let work_id = response[0].id
+            let formData = new FormData();
+          formData.append(`artist[featured_work_id]`, work_id);
+          fetch(APIRoutes.artists.update(this.state.work.artist_id), {
+            method: 'PUT',
+            body: formData,
+            credentials: 'same-origin',
+            headers: {
+              "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+            }
+          }).catch(
+            (data) => {
+              console.error(data);
+            })
+          } 
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    }
 
   onDrop = (images) => {
     let uploads = this.state.uploads.slice();
@@ -122,7 +149,7 @@ class WorkForm extends React.Component {
     } else {
       this.setState({ updatingWork: true });
       let formData = new FormData();
-      const formKeys = ['artist_id', 'title', 'material', 'media', 'availability', 'description', 'featured_image'];
+      const formKeys = ['artist_id', 'title', 'material', 'media', 'links', 'availability', 'description', 'featured_image'];
       formKeys.forEach(key => {
         formData.append(`work[${key}]`, this.state.work[key]);
       });
@@ -146,6 +173,7 @@ class WorkForm extends React.Component {
         if (typeof this.state.work.id == 'number') {
           window.location = `/works/` + this.state.work.id;
         } else {
+          this.updateFeatured()
           window.location = `/artists/` + this.state.work.artist_id;
         }
       }).catch((data) => {
@@ -255,6 +283,15 @@ class WorkForm extends React.Component {
             })
           }
         </select>
+        <h5>Links</h5>
+        <textarea
+          rows={2}
+          name="links"
+          onChange={this.handleChange}
+          type="TEXT"
+          className="textarea"
+          value={this.state.work.links}
+        />
         <h5>Description</h5>
         <textarea
           rows={4}
@@ -296,12 +333,12 @@ class WorkForm extends React.Component {
         <div className="submit-container mt3 mb3">
           <button
             onClick={() => { window.location = `/artists/` + this.state.work.artist_id }}
-            className="button-secondary b--magenta w4"
+            className="button-secondary b--berry w4"
           >
             Cancel
           </button>
           <button
-            className="button-primary bg-magenta w4 ml3"
+            className="button-primary bg-berry w4 ml3"
             onClick={this.handleSubmit}
           >
             Save

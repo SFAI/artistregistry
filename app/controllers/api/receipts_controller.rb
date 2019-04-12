@@ -5,6 +5,8 @@ class Api::ReceiptsController < ApplicationController
 
   def create
     receipt = Receipt.new(receipt_params)
+    authorize receipt
+
     request = receipt.request
     if receipt.save!
       receipt.request.open = false
@@ -21,6 +23,8 @@ class Api::ReceiptsController < ApplicationController
 
   def update
     receipt = Receipt.find(params[:id])
+    authorize receipt
+    
     saved = receipt.update(receipt_params)
     if saved
       flash[:success] = "Receipt updated successfully!"

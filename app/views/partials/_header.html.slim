@@ -2,28 +2,29 @@ nav.header
   .container
     div.flex-start
       a href="/"
-        div = image_tag "sfai_logo.png", class: "img"
+        div.flex
+          = image_tag "sfai_logo_vertical.svg", class: "header-logo"
+          div.header-title Artist Registry
     div.flex-end
       ul.header-links
         li.header-item#artwork
           = link_to works_path
-            div.header-bar.bg-magenta
+            div.header-bar.bg-berry
             h4.header-link-item Artwork
         li.header-item#artists
           = link_to artists_path
-            div.header-bar.bg-indigo
+            div.header-bar.bg-denim
             h4.header-link-item Artists
         li.header-item#about
           = link_to "https://www.sfai.edu/"
-            div.header-bar.bg-pear
+            div.header-bar.bg-gold
             h4.header-link-item About
-        - if not current_artist and not current_buyer
+        - if not current_artist and not current_buyer and not current_admin
           div.dropdown
             li.header-item#login
-              div.header-bar.bg-ochre
+              div.header-bar.bg-moss
               h4.header-link-item Login
             div.dropdown-container
-              div.subnav-header-bar.bg-ochre
               ul.dropdown-content
                 li.dropdown-link-item
                   = link_to "Artists", new_artist_session_path
@@ -34,10 +35,9 @@ nav.header
               div.dropdown
                 li.header-item#login
                   = link_to artistid_path(current_artist.id)
-                    div.header-bar.bg-ochre
+                    div.header-bar.bg-moss
                     h4.header-link-item #{current_artist.name}
                 div.dropdown-container
-                  div.subnav-header-bar.bg-ochre
                   ul.dropdown-content
                     li.dropdown-link-item
                       = link_to "Requests", requests_path
@@ -51,10 +51,9 @@ nav.header
               div.dropdown
                 li.header-item#login
                   = link_to buyerid_path(current_buyer.id)
-                    div.header-bar.bg-ochre
+                    div.header-bar.bg-moss
                     h4.header-link-item #{current_buyer.name}
                 div.dropdown-container
-                  div.subnav-header-bar.bg-ochre
                   ul.dropdown-content
                     li.dropdown-link-item
                       = link_to "Requests", requests_path
@@ -62,3 +61,15 @@ nav.header
                       = link_to "Settings", edit_buyer_registration_path
                     li.dropdown-link-item
                       = link_to "Log Out", destroy_buyer_session_path, method: :delete
+
+          - if current_admin
+              div.dropdown
+                li.header-item#login
+                    div.header-bar.bg-moss
+                    h4.header-link-item #{current_admin.email}
+                div.dropdown-container
+                  div.subnav-header-bar.bg-moss
+                  ul.dropdown-content
+
+                    li.dropdown-link-item
+                      = link_to "Log Out", destroy_admin_session_path, method: :delete

@@ -4,7 +4,7 @@ class Artist < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :email, :presence => true, :email => true
   devise :confirmable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :lockable
   has_one :account, as: :user
   has_many :works
   has_one :featured_work, :class_name => 'Work', :foreign_key => "featured_work_id"
@@ -17,5 +17,5 @@ class Artist < ApplicationRecord
   # validates :name, presence: true, uniqueness: true
 
 
-  enum program: { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7 }
+  enum program: { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7, studio_art: 8}
 end

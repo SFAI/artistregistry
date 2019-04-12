@@ -223,7 +223,7 @@ class TransactionForm extends React.Component {
             onChange={this.handleChange}
             className="textarea"
           />
-          <Button type="button-primary" className="w4" color="ochre" onClick={this.handleSubmit}>
+          <Button type="button-primary" className="w4" color="moss" onClick={this.handleSubmit}>
             Record
           </Button>
         </div>

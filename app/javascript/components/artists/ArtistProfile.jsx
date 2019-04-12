@@ -1,18 +1,16 @@
 import PropTypes from "prop-types";
 import React from "react";
 import classNames from "classnames";
-import Touchable from 'rc-touchable';
 import CommissionsForm from "../commissions/CommissionsForm";
-import StyledModal from "../helpers/StyledModal";
 import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase } from "../../utils/strings";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 /**
 * @prop user: user currently logged in
-* @prop userType: { "artist", "buyer" }
+* @prop userType: { "artist", "buyer" , "admin"}
 * @prop artist: artist associated with works
 */
 class ArtistProfile extends React.Component {
@@ -29,7 +27,7 @@ class ArtistProfile extends React.Component {
 
   componentDidMount = () => {
     const { user, userType, artist } = this.props;
-    const artist_id = this.props.artist.id;
+    const artist_id = artist.id;
     const works_route = APIRoutes.artists.works(artist_id);
     const artist_route = APIRoutes.artists.show(artist_id);
     Promise.all([
@@ -37,8 +35,17 @@ class ArtistProfile extends React.Component {
       Requester.get(artist_route)
     ]).then(response => {
       const [works_response, artist_response] = response;
+      let works_response_filtered
+        if (!user) {
+          works_response_filtered = works_response.filter(work => work.hidden == false)
+        }
+        else if (userType == "admin" || user.account_id == artist.account_id) {
+          works_response_filtered = works_response
+        } else {
+          works_response_filtered = works_response.filter(work => work.hidden == false)
+        }
       this.setState({
-        works: works_response,
+        works: works_response_filtered,
         artist: artist_response,
         canEditProfile: userType === "artist" && user && user.id === artist.id,
         componentDidMount: true
@@ -67,9 +74,22 @@ class ArtistProfile extends React.Component {
     window.location = `/works/${work_id}/edit`;
   }
 
-  updateFeatured = (work_id) => {
+  updateFeatured = (work_id, unhide=false) => {
+    let newFeaturedId
+    if (unhide == true) {
+      newFeaturedId = work_id
+    } else if (this.state.artist.featured_work_id != work_id) {
+      return
+    } else {
+      let newFeaturedWork = this.state.works.filter(work => work.id != work_id).find(work => work.hidden == false)
+      if (!newFeaturedWork) {
+        newFeaturedId = newFeaturedWork
+      } else {
+        newFeaturedId = newFeaturedWork.id
+      }
+    }
     let formData = new FormData();
-    formData.append(`artist[featured_work_id]`, work_id);
+    formData.append(`artist[featured_work_id]`, newFeaturedId);
     fetch(APIRoutes.artists.update(this.props.artist.id), {
       method: 'PUT',
       body: formData,
@@ -93,11 +113,7 @@ class ArtistProfile extends React.Component {
       }
     }).then((data) => {
       if (work_id == this.state.artist.featured_work_id) {
-        let newFeaturedId = this.state.works[0].id
-        if (newFeaturedId == work_id && this.state.works.length > 1) {
-          newFeaturedId = this.state.works[1].id
-        }
-        this.updateFeatured(newFeaturedId)
+        this.updateFeatured(work_id)
       } else {
         window.location = `/artists/` + this.props.artist.id;
       }
@@ -106,9 +122,86 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  hideWork = (work_id) => {
+    this.updateFeatured(work_id)
+    let formData = new FormData();
+    formData.append(`work[hidden]`, true);
+    fetch(APIRoutes.works.update(work_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+  unHideWork = (work_id) => {
+    if (!this.state.artist.featured_work_id) {
+      this.updateFeatured(work_id, true)
+    }
+    let formData = new FormData();
+    formData.append(`work[hidden]`, false);
+    fetch(APIRoutes.works.update(work_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+  toggleHideWork = (work) => {
+    if (work.hidden) {
+      this.unHideWork(work.id);
+    }
+    else {
+      this.hideWork(work.id);
+    }
+  }
+
+  lockArtist = () => {
+    fetch(APIRoutes.artists.lock_user(this.props.artist.id), {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+  unlockArtist = () => {
+    fetch(APIRoutes.artists.unlock_user(this.props.artist.id), {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/artists/` + this.props.artist.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, media, description } = artist;
+    const { user, userType } = this.props;
+
 
     if (!componentDidMount) {
       return (
@@ -123,11 +216,10 @@ class ArtistProfile extends React.Component {
       <div>
         <div className="row-head flex">
           <h1> {name} </h1>
-          {
-            canEditProfile &&
-            <Button type="button-primary" className="w4" color="indigo" onClick={this.navigateToEdit}>
+          {canEditProfile &&
+            <Button type="button-primary" className="w4" color="denim" onClick={this.navigateToEdit}>
               Edit Profile
-              </Button>
+            </Button>
           }
         </div>
         <div className="row-bio flex">
@@ -147,7 +239,9 @@ class ArtistProfile extends React.Component {
           </div>
           <div className="w-30-l mw-400 pa3 bg-white">
             <h2>About the artist</h2>
-            <p> {description}</p>
+            <div className="artist-description pr3 overflow-y-auto">
+              <p> {description}</p>
+            </div>
           </div>
         </div>
         <div className="mt5 mb3 row-head">
@@ -155,16 +249,27 @@ class ArtistProfile extends React.Component {
             {['All works', 'Available', 'Sold/Rented'].map(filter => (
               <button
                 onClick={() => this.setState({ activeFilter: filter })} key={filter}
-                className={classNames("button b--none f6 mr3 w4", activeFilter == filter ? "bg-indigo white" : "bg-white indigo")}
+                className={classNames("button b--none f6 mr3 w4", activeFilter == filter ? "bg-denim white" : "bg-white denim")}
               >
                 {filter}
               </button>
             ))}
           </div>
+          {userType == "admin" && (
+            <Button
+              type="button-primary"
+              className="w4"
+              color="denim"
+              onClick={artist.locked_at ? this.unlockArtist : this.lockArtist}
+            >
+              {artist.locked_at ? "UNLOCK" : "LOCK"}
+            </Button>
+          )}
           {canEditProfile &&
-            <Button type="button-primary" className="w4" color="indigo" onClick={this.createNewWork}>
+            <Button type="button-primary" className="w4" color="denim" onClick={this.createNewWork}>
               New Work
-            </Button>}
+            </Button>
+          }
         </div>
         <div className="flex flex-wrap">
           <div className="col-list-4">
@@ -172,21 +277,27 @@ class ArtistProfile extends React.Component {
               if (this.getAvailability(activeFilter).includes(work.availability)) {
               return (
                 <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
-                  {canEditProfile &&
+                  {(userType == "admin" || canEditProfile) &&
                     <div className="work-action-wrapper mb2">
-                      <Button type="hover-button" onClick={() => this.updateWork(work.id)}>
-                        <FontAwesomeIcon className="white" icon={faEdit} />
-                        <h4 className="ml2 white">Edit</h4>
-                      </Button>
-                      {(work.availability == 'active') &&
-                      <Button className="ml2" type="hover-button" onClick={() => this.deleteWork(work.id)}>
-                        <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Delete</h4>
-                      </Button>
+                      {canEditProfile &&
+                        <Button type="hover-button"  className="mr2" onClick={() => this.updateWork(work.id)}>
+                          <FontAwesomeIcon className="white" icon={faEdit} />
+                          <h4 className="ml2 white">Edit</h4>
+                        </Button>
                       }
+                      {(canEditProfile && work.availability == 'active') &&
+                        <Button type="hover-button" className="mr2" onClick={() => this.deleteWork(work.id)}>
+                          <FontAwesomeIcon className="white" icon={faTrash} />
+                          <h4 className="ml2 white">Delete</h4>
+                        </Button>
+                      }
+                      <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
+                        <FontAwesomeIcon className="white" icon={work.hidden ? faEye : faEyeSlash} />
+                        <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
+                      </Button>
                     </div>
                   }
-                </WorkColumnPanel>
+              </WorkColumnPanel>
               )
             }
             })}

@@ -39,10 +39,13 @@ class WorkColumnPanel extends React.Component {
         </Touchable>
         {!this.props.hideArtistName &&
           <Touchable onPress={() => this.navigateToArtist(work.artist_id)}>
-            <h5 className="pointer magenta">{work.artist_name}</h5>
+            <h5 className="pointer berry">{work.artist_name}</h5>
           </Touchable>
         }
         <h6>{work.material}</h6>
+        {work.hidden &&
+          <h6> HIDDEN!!!!! </h6>
+        }
     </div>
     );
   }

@@ -30,6 +30,8 @@ class Api::ArtistsController < ApplicationController
     artist_attr = artist_params
     avatar_attr = artist_attr.delete("avatar")
     @artist = Artist.find(params[:id])
+    authorize @artist
+    
     saved = @artist.update(artist_attr)
     if saved
       @artist.avatar.attach(avatar_attr)
@@ -72,13 +74,24 @@ class Api::ArtistsController < ApplicationController
         each_serializer: CommissionSerializer
   end
 
+  def lock_user
+    user = Artist.find(params[:id])
+    user.lock_access!
+  end
+
+  def unlock_user
+    user = Artist.find(params[:id])
+    user.unlock_access!
+  end
+
   def artist_params
     params.require(:artist).permit(:name,
                                  :program,
                                  :media,
                                  :description,
                                  :avatar,
-                                 :featured_work_id
+                                 :featured_work_id,
+                                 :hidden
                                 )
   end
 end
