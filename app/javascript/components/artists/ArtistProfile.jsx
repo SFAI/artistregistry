@@ -158,7 +158,7 @@ class ArtistProfile extends React.Component {
             <Button type="button-primary" className="w4 mr2" color="denim" onClick={this.navigateToEdit}>
             Edit Profile
             </Button>
-            <Button type="button-tertiary" className="w4" onClick={
+            <Button type="button-tertiary" className="w4" color="denim" onClick={
               () => this.setState({showIncompleteBanner: false})}>Dismiss</Button>
           </div>
         </div>
