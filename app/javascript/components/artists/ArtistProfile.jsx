@@ -146,7 +146,6 @@ class ArtistProfile extends React.Component {
     }
 
     if (numCompleted == sortedKeys.length) {
-      this.setState({showIncompleteBanner: false})
       return null;
     }
 
@@ -345,12 +344,6 @@ class ArtistProfile extends React.Component {
                         <Button type="hover-button"  className="mr2" onClick={() => this.updateWork(work.id)}>
                           <FontAwesomeIcon className="white" icon={faEdit} />
                           <h4 className="ml2 white">Edit</h4>
-                        </Button>
-                      }
-                      {(canEditProfile && work.availability == 'active') &&
-                        <Button type="hover-button" className="mr2" onClick={() => this.deleteWork(work.id)}>
-                          <FontAwesomeIcon className="white" icon={faTrash} />
-                          <h4 className="ml2 white">Delete</h4>
                         </Button>
                       }
                       <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>

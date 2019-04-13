@@ -45,25 +45,25 @@ class WorkForm extends React.Component {
   }
 
   updateFeatured = () => {
-      const works_route = APIRoutes.artists.works(this.state.work.artist_id);
+      const works_route = APIRoutes.artists.works(this.props.work.artist_id);
       Requester.get(works_route).then(
         response => {
           if (response.length == 1) {
             let work_id = response[0].id
             let formData = new FormData();
-          formData.append(`artist[featured_work_id]`, work_id);
-          fetch(APIRoutes.artists.update(this.state.work.artist_id), {
-            method: 'PUT',
-            body: formData,
-            credentials: 'same-origin',
-            headers: {
-              "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-            }
-          }).catch(
-            (data) => {
-              console.error(data);
-            })
-          } 
+            formData.append(`artist[featured_work_id]`, work_id);
+            fetch(APIRoutes.artists.update(this.state.work.artist_id), {
+              method: 'PUT',
+              body: formData,
+              credentials: 'same-origin',
+              headers: {
+                "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+              }
+            }).catch(
+              (data) => {
+                console.error(data);
+              })
+          }
         },
         error => {
           console.error(error);
@@ -149,7 +149,7 @@ class WorkForm extends React.Component {
     } else {
       this.setState({ updatingWork: true });
       let formData = new FormData();
-      const formKeys = ['artist_id', 'title', 'material', 'media', 'links', 'availability', 'description', 'featured_image'];
+      const formKeys = ['artist_id', 'title', 'material', 'media', 'links', 'availability', 'hidden', 'description', 'featured_image'];
       formKeys.forEach(key => {
         formData.append(`work[${key}]`, this.state.work[key]);
       });
@@ -230,6 +230,31 @@ class WorkForm extends React.Component {
     );
   }
 
+  deleteWork = () => {
+    let work_id = this.state.work.id
+    fetch(APIRoutes.works.delete(work_id), {
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      if (work_id == this.state.work.artist.featured_work_id) {
+        this.updateFeatured(work_id)
+        window.location = `/artists/` + this.state.work.artist_id;
+      } else {
+        window.location = `/artists/` + this.state.work.artist_id;
+      }
+    }).catch((data) => {
+      console.error(data);
+    });
+    
+  toggleHidden = () => {
+    let new_work = this.state.work
+    new_work.hidden = !this.state.work.hidden
+    this.setState({ work: new_work })
+  }
+
   render() {
     if (!this.state.componentDidMount) {
       return (
@@ -283,6 +308,16 @@ class WorkForm extends React.Component {
             })
           }
         </select>
+        <div className="flex items-center mv2">
+          <h5 className="mr2 mb0">Hidden</h5>
+          <input
+            onClick={() => this.toggleHidden()}
+            type="checkbox"
+            checked={this.state.work.hidden}
+            id="checkbox-hidden"
+            className="checkbox-berry"
+          />
+        </div>
         <h5>Links</h5>
         <textarea
           rows={2}
@@ -333,7 +368,7 @@ class WorkForm extends React.Component {
         <div className="submit-container mt3 mb3">
           <button
             onClick={() => { window.location = `/artists/` + this.state.work.artist_id }}
-            className="button-secondary b--berry w4"
+            className="button-tertiary berry w4"
           >
             Cancel
           </button>
@@ -342,6 +377,15 @@ class WorkForm extends React.Component {
             onClick={this.handleSubmit}
           >
             Save
+          </button>
+        </div>
+        <div className="mv2">
+          <h5> Remove this work permanently? </h5>
+          <button
+            onClick={() => {if (window.confirm('Are you sure you wish to delete this work?')) this.deleteWork() } }
+            className="button-secondary berry b--berry w4 mv2"
+          >
+            Delete
           </button>
         </div>
       </div>

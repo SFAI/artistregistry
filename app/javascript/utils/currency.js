@@ -4,6 +4,11 @@ export const convertToCurrency = (inputPrice) => {
   value = value.replace(/[^0-9.]/g,'');
   // replace multiple dots with a single dot
   value = value.replace(/\.+/g,'.');
+  // if there is a dot, append a few zeros (extras will be removed later)
+  if (!value.includes('.')) {
+    value += '.';
+  }
+  value += '00';
   // only allow 2 digits after a dot
   value = value.replace(/(.*\.[0-9][0-9]?).*/g,'$1');
   // replace multiple zeros with a single one
