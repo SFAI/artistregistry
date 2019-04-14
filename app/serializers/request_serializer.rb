@@ -1,5 +1,5 @@
 class RequestSerializer < ActiveModel::Serializer
-  attributes :id, :message, :open, :created_at, :updated_at, :types, :artist, :buyer, :work, :receipt
+  attributes :id, :message, :open, :created_at, :updated_at, :types, :artist, :buyer, :work, :receipt, :deleted
 
   belongs_to :work
   belongs_to :buyer

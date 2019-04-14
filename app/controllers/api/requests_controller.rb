@@ -33,6 +33,15 @@ class Api::RequestsController < ApplicationController
     render json: {status: 200, message: 'Request successfully updated!'}
   end
 
+  def delete
+    @request = Request.find(params[:id])
+    # TODO: Pundit authorization
+    # authorize @request
+    new_request = @request.update!(request_params)
+
+    render json: {status: 200, message: 'Request successfully deleted!'}
+  end
+
   def request_exist
     parsed_query = CGI.parse(params[:search_params])
     exist = Request.where(parsed_query)
@@ -45,7 +54,8 @@ class Api::RequestsController < ApplicationController
                                     :buyer_id,
                                     :artist_id,
                                     :work_id,
-                                    :types
+                                    :types,
+                                    :deleted
                                 )
 
   end
