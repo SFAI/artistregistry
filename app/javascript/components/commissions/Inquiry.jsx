@@ -10,6 +10,13 @@ class Inquiry extends React.Component {
     	dropDownVisible: false
     };
   }
+
+  deleteInquiry = (id) => {
+  	const delete_inquiry_route = APIRoutes.commissions.update(id);
+    Requester.update(delete_inquiry_route, { deleted: true }).then((response) => {
+    	window.location.reload();
+    })
+  }
   
   render() {
   	const commission = this.props.commission;
@@ -33,8 +40,11 @@ class Inquiry extends React.Component {
 		        	className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
 		        </button>
 		        <ul className="request-dropdown ml3 absolute nowrap z-3">
-			  			<li>Archive</li>
-			  			<li>Delete inquiry</li>
+			  			<li 
+			  				value={commission.id}
+			  				onClick={() => this.deleteInquiry(commission.id)}>
+			  				Delete inquiry
+			  			</li>
 			  			<li>Block user</li>
 			  		</ul>
 			  	</div>

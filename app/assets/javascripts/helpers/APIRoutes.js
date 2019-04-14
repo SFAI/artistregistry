@@ -52,6 +52,7 @@ class ApiRoutes {
     return {
       create: `/api/commissions`,
       types: `/commissions/types`,
+      update: (id) => `/api/commissions/${id}`,
     }
   }
 

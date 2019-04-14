@@ -34,10 +34,10 @@ class Api::RequestsController < ApplicationController
   end
 
   def delete
-    @request = Request.find(params[:id])
-    # TODO: Pundit authorization
-    # authorize @request
-    new_request = @request.update!(request_params)
+    request = Request.find(params[:id])
+    # TODO: Pundit authorization, possibly? Not sure if needed.
+    # authorize request
+    new_request = request.update!(request_params)
 
     render json: {status: 200, message: 'Request successfully deleted!'}
   end
