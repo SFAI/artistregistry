@@ -14,11 +14,16 @@ class Commissions extends React.Component {
   }
   
   componentDidMount() {
+    this.fetchCommissions();
+    this.setState({ componentDidMount: true });
+  }
+
+  fetchCommissions() {
     const route = APIRoutes.artists.commissions(this.props.artist.id);
     Requester.get(route).then(
       response => {
         response = response.filter(commission => !commission.deleted);
-        this.setState({ commissions: response, componentDidMount: true });
+        this.setState({ commissions: response });
       },
       error => {
         console.error(error);
@@ -45,7 +50,11 @@ class Commissions extends React.Component {
         <h1>Inquiries</h1>
         {
           this.state.commissions.map((commission, i) => {
-            return <Inquiry commission={commission} key={i} />
+            return <Inquiry
+              commission={commission}
+              key={i}
+              onChange={() => this.fetchCommissions()}
+            />
           })
         }
       </div>

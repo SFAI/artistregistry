@@ -14,7 +14,7 @@ class Inquiry extends React.Component {
   deleteInquiry = (id) => {
   	const delete_inquiry_route = APIRoutes.commissions.update(id);
     Requester.update(delete_inquiry_route, { deleted: true }).then((response) => {
-    	window.location.reload();
+    	this.props.onChange();
     })
   }
   
