@@ -20,9 +20,7 @@ class Works extends React.Component {
       works: [],
       filters: {},
       isLoading: true,
-      pageCount: 0,
-      workStartIndex: 0,
-      workEndIndex: 0
+      pageCount: 0
     };
   }
 
@@ -40,9 +38,7 @@ class Works extends React.Component {
         works: works_response,
         filters: filters_response,
         isLoading: false,
-        pageCount: Math.ceil(this.props.work_count / perPage),
-        workStartIndex: 0,
-        workEndIndex: perPage
+        pageCount: Math.ceil(this.props.work_count / perPage)
       });
     });
   };
@@ -194,7 +190,7 @@ class Works extends React.Component {
             </nav>
           </div>
           <div className="col-list-3">
-            {works.slice(workStartIndex, workEndIndex).map((work, i) => {
+            {works.map((work, i) => {
               return (
                   <WorkColumnPanel key={i} work={work}>
                       {work.hidden == false && this.props.userType == "admin" &&
