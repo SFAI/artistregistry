@@ -63,6 +63,23 @@ class UpdateArtist extends React.Component {
     this.setState({ artist: artist });
   }
 
+  toggleCheckbox = (item) => {
+    // const prevPrograms = this.state.artist.program;
+
+    // let newFilterParams;
+    // if (prevSearchParams && prevSearchParams.includes(item)) {
+    //   newFilterParams = prevSearchParams.filter(value => value !== item);
+    // } else {
+    //   newFilterParams = prevSearchParams ? [...prevSearchParams, item] : [item];
+    // }
+
+    const artist = this.state.artist;
+    artist['program'] = item;
+    this.setState({
+      artist: artist
+    });
+  };
+
   setFile = (e) => {
     const files = e.target.files;
     if (!files || !files[0]) {
@@ -104,7 +121,7 @@ class UpdateArtist extends React.Component {
       this.setState({ updatingArtist: true })
       event.preventDefault();
       let formData = new FormData();
-      const formKeys = ['name', 'program', 'media', 'description', 'featured_work_id'];
+      const formKeys = ['name', 'program', 'degree', 'media', 'description', 'featured_work_id'];
       formKeys.forEach(key => {
         formData.append(`artist[${key}]`, this.state.artist[key]);
       });
@@ -158,8 +175,44 @@ class UpdateArtist extends React.Component {
             required
           />
           <FormError error={this.state.errors.name}/>
-          <h5>Program</h5>
+          <h5>Degree</h5>
           <select
+            value={this.state.artist.degree ? this.state.artist.degree : 0}
+            onChange={this.handleChange}
+            name="degree"
+            className="input-dropdown ttu"
+            required
+          >
+            {
+              Object.keys(this.state.categories.degree).map((obj, i) => {
+                return <option key={i} value={obj}>{convertSnakeCase(obj)}</option>
+              })
+            }
+          </select>
+          <h5>Program</h5>
+
+          <div className="checkbox-container">
+                  {Object.keys(this.state.categories.program).map(item => (
+                    <div className="mb2 checkbox-item" key={item}>
+                      <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
+                        <input
+                          onClick={() => this.toggleCheckbox(item)}
+                          type="checkbox"
+                          className="checkbox"
+                          value={item}
+                          id={`checkbox-${item}`}
+                          name="program"
+                          // className={`checkbox-${color}`}
+                        />
+                        <span className="filter-item">
+                          {convertSnakeCase(item)}
+                        </span>
+                      </label>
+                    </div>
+                  ))}
+                </div>
+
+          {/* <select
             value={this.state.artist.program}
             onChange={this.handleChange}
             name="program"
@@ -171,7 +224,7 @@ class UpdateArtist extends React.Component {
                 return <option key={i} value={obj}>{convertSnakeCase(obj)}</option>
               })
             }
-          </select>
+          </select> */}
           <h5>Media</h5>
           <input
             value={this.state.artist.media}

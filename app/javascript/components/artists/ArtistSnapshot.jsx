@@ -14,13 +14,14 @@ class ArtistSnapshot extends React.Component {
   }
 
   render() {
-    const { name, avatar, program } = this.props.artist;
+    const { name, avatar, degree, program } = this.props.artist;
     return (
       <UserSnapshot
         name={name}
         avatarSrc={avatar.url || ""}
         navigate={this.navigateToArtist}
         program={convertSnakeCase(program)}
+        degree={degree}
         color={this.props.color}
       >
       </UserSnapshot>

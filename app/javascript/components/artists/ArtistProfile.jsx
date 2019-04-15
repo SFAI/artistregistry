@@ -199,7 +199,7 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
-    const { name, program, media, description } = artist;
+    const { name, program, degree, media, description } = artist;
     const { user, userType } = this.props;
 
 
@@ -228,7 +228,9 @@ class ArtistProfile extends React.Component {
               <img className="br-100 avatar-img" src={artist.avatar.url} />
             </div>
             <div className="info">
-              <h5 className="ttu">Program</h5>
+              <h5 className="ttu">Degree</h5>
+              <p className="ttu"> {degree} </p>
+              <h5 className="ttu mt2">Program</h5>
               <p className="ttc"> {convertSnakeCase(program)} </p>
               <h5 className="ttu mt2">Media</h5>
               <p> {media} </p>
