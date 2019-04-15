@@ -97,7 +97,8 @@ class Api::WorksController < ApplicationController
   end
 
   def index
-    works = Work.all
+    # works = Work.all
+    works = Work.page(1).per(8)
     render json: works,
       each_serializer: WorkSerializer
   end
