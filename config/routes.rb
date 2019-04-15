@@ -44,12 +44,13 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     get 'artists/categories' => 'artists#get_artist_category_enums'
-    resources :works, :only => [:index, :show, :create, :update, :destroy]
+    resources :works, :only => [:show, :create, :update, :destroy]
     resources :artists, :only => [:index, :show, :create, :update, :destroy]
     resources :requests, :only => [:show, :create, :update]
     resources :commissions, :only => [:show, :create, :update, :destroy]
     resources :receipts, :only => [:show, :create, :update, :destroy]
     resources :buyers, :only => [:show, :update]
+    get 'works/page/:page' => 'works#index'
     get 'artists/works/:id' => 'artists#works'
     get 'artists/requests/:id' => 'artists#requests'
     get 'buyers/requests/:id' => 'buyers#requests'

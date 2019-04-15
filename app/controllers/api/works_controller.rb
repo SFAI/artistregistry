@@ -98,7 +98,7 @@ class Api::WorksController < ApplicationController
 
   def index
     # works = Work.all
-    works = Work.page(1).per(8)
+    works = Work.page(params[:page])
     render json: works,
       each_serializer: WorkSerializer
   end
@@ -167,6 +167,7 @@ class Api::WorksController < ApplicationController
                                  :featured_image,
                                  :description,
                                  :hidden,
+                                 :page,
                                  :attachments_attributes => [],
                                  :attachments_to_delete => [],
                                 )

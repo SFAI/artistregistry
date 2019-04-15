@@ -28,7 +28,7 @@ class Works extends React.Component {
 
   componentDidMount = () => {
     const works_route = this.props.userType == "admin"
-      ? APIRoutes.works.index
+      ? APIRoutes.works.index(1)
       : APIRoutes.works.filtered_artist_hidden
     const categories_route = APIRoutes.works.categories;
     Promise.all([
@@ -55,7 +55,7 @@ class Works extends React.Component {
 
     const works_route = searchParams.length
       ? APIRoutes.works.filtered_works(searchParams)
-      : APIRoutes.works.index;
+      : APIRoutes.works.index(1);
     Requester.get(
       works_route).then(
         response => {
