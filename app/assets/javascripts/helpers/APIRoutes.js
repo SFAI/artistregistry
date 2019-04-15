@@ -9,7 +9,7 @@ class ApiRoutes {
       filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
       categories: `/works/categories`,
       thumbnail: (id) => `api/works/thumbnail/${id}`,
-      filtered_artist_hidden: `/api/works/filtered/artist_hidden`,
+      filtered_artist_hidden: (page) => `/api/works/filtered/artist_hidden/${page}`,
     }
   }
 

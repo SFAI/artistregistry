@@ -27,7 +27,7 @@ class Works extends React.Component {
   componentDidMount = () => {
     const works_route = this.props.userType == "admin"
       ? APIRoutes.works.index(1)
-      : APIRoutes.works.filtered_artist_hidden
+      : APIRoutes.works.filtered_artist_hidden(1)
     const categories_route = APIRoutes.works.categories;
     Promise.all([
       Requester.get(works_route),
@@ -144,7 +144,9 @@ class Works extends React.Component {
   }
   handlePageClick = data => {
     let selected = data.selected + 1;
-    const works_route = APIRoutes.works.index(selected)
+    const works_route = this.props.userType == "admin"
+    ? APIRoutes.works.index(selected)
+    : APIRoutes.works.filtered_artist_hidden(selected)
     Requester.get(
       works_route).then(
         response => {

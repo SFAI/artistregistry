@@ -98,6 +98,7 @@ class Api::WorksController < ApplicationController
 
   def index
     # works = Work.all
+    @work_count = Work.count
     works = Work.page(params[:page])
     render json: works,
       each_serializer: WorkSerializer
@@ -111,7 +112,7 @@ class Api::WorksController < ApplicationController
   end
 
   def filtered_artist_hidden
-    filtered_works = Work.joins(:artist).where("artists.hidden=false").select{|work| work.hidden==false}
+    filtered_works = Work.joins(:artist).where("artists.hidden" => false, "works.hidden" => false).page(params[:page])
     render json: filtered_works,
       each_serializer: WorkSerializer
   end
