@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 
-/** @prop userType: { "artist", "buyer", "admin" }
+/** @prop userType: { "artist", "buyer", "admin" }, work_count
 */
 import ReactPaginate from 'react-paginate'
 
@@ -40,7 +40,7 @@ class Works extends React.Component {
         works: works_response,
         filters: filters_response,
         isLoading: false,
-        pageCount: Math.ceil(works_response.length / perPage),
+        pageCount: Math.ceil(this.props.work_count / perPage),
         workStartIndex: 0,
         workEndIndex: perPage
       });
@@ -147,11 +147,19 @@ class Works extends React.Component {
     });
   }
   handlePageClick = data => {
-    let selected = data.selected;
-    this.setState({
-      workStartIndex: selected * perPage,
-      workEndIndex: (selected+1) * perPage
-    })
+    let selected = data.selected + 1;
+    const works_route = APIRoutes.works.index(selected)
+    Requester.get(
+      works_route).then(
+        response => {
+          this.setState({
+            works: response,
+          });
+        },
+        response => {
+          console.error(response);
+        }
+      );
   };
 
   render() {
