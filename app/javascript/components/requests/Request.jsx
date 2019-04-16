@@ -35,10 +35,12 @@ class Request extends React.Component {
   }
 
   deleteRequest = (id) => {
-    const delete_request_route = APIRoutes.requests.delete(id);
-    Requester.update(delete_request_route, { deleted: true}).then((response) => {
-      this.props.onChange();
-    })
+    if (confirm('Are you sure you would like to delete this request?')) {
+      const delete_request_route = APIRoutes.requests.delete(id);
+      Requester.update(delete_request_route, { deleted: true}).then((response) => {
+        this.props.onChange();
+      })
+    }
   }
 
   navigateToWork = (id) => {
