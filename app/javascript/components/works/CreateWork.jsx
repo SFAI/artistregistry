@@ -12,6 +12,7 @@ class CreateWork extends React.Component {
         material: '',
         media: "painting",
         availability: "active",
+        hidden: false,
         attached_images_urls: [],
         description: '',
         links: '',
