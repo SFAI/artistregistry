@@ -250,9 +250,9 @@ class WorkForm extends React.Component {
     });
   }
     
-  toggleHidden = () => {
+  toggleHidden = (event) => {
     let new_work = this.state.work
-    new_work.hidden = !this.state.work.hidden
+    new_work.hidden = event.target.checked
     this.setState({ work: new_work })
   }
 
@@ -312,7 +312,9 @@ class WorkForm extends React.Component {
         <div className="flex items-center mv2">
           <h5 className="mr2 mb0">Hidden</h5>
           <input
-            onClick={() => this.toggleHidden()}
+            onChange={this.toggleHidden}
+            value={this.state.work.hidden}
+            name="hidden"
             type="checkbox"
             checked={this.state.work.hidden}
             id="checkbox-hidden"
