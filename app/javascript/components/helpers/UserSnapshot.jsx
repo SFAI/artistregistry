@@ -20,7 +20,7 @@ class UserSnapshot extends React.Component {
           <Touchable onPress={() => this.props.navigate()}>
           <a className={`snapshot-nav ${this.props.color}`}>{this.props.name}</a>
           </Touchable>
-          {this.props.program && <h6 className="ttc">{this.props.program}</h6>}
+          {this.props.program && <h6 className="ttc mb0">{this.props.program}</h6>}
           {this.props.email && <h6 className="truncate">{this.props.email}</h6>}
         </div>
       </div>
