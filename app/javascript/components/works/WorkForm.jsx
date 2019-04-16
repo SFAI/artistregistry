@@ -382,15 +382,17 @@ class WorkForm extends React.Component {
             Save
           </button>
         </div>
-        <div className="mv2">
-          <h5> Remove this work permanently? </h5>
-          <button
-            onClick={() => {if (window.confirm('Are you sure you wish to delete this work?')) this.deleteWork() } }
-            className="button-secondary berry b--berry w4 mv2"
-          >
-            Delete
-          </button>
-        </div>
+        {this.state.work.id && 
+          <div className="mv2">
+            <h5> Remove this work permanently? </h5>
+            <button
+              onClick={() => {if (window.confirm('Are you sure you wish to delete this work?')) this.deleteWork() } }
+              className="button-secondary berry b--berry w4 mv2"
+            >
+              Delete
+            </button>
+          </div>
+        }
       </div>
     )
   }
