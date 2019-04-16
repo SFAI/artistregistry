@@ -20,7 +20,8 @@ class Works extends React.Component {
       works: [],
       filters: {},
       isLoading: true,
-      pageCount: 0
+      pageCount: 0,
+      filtering: false
     };
   }
 
@@ -43,15 +44,21 @@ class Works extends React.Component {
     });
   };
 
-  getFilteredWorks = () => {
+  getFilteredWorks = (page) => {
     // NOTE: Can't pass empty searchParams string to filtered_works
     // Possible fix by editing routes.fb, but not sure how -B.Y.
     const searchParams = this.filters.getQuery();
     this.setState({ isLoading: true });
 
-    const works_route = searchParams.length
-      ? APIRoutes.works.filtered_works(searchParams)
-      : APIRoutes.works.index(1);
+    let works_route 
+    if (searchParams.length) {
+      works_route = APIRoutes.works.filtered_works(searchParams, page) 
+      this.setState({ filtering: true })
+    } else {
+      works_route = APIRoutes.works.index(1)
+      this.setState({filtering : false })
+
+    }
     Requester.get(
       works_route).then(
         response => {
@@ -64,7 +71,7 @@ class Works extends React.Component {
           this.setState({
             works: works,
             isLoading: false,
-            pageCount: Math.ceil(works.length / perPage)
+            pageCount: Math.ceil(this.props.work_count / perPage)
           });
         },
         response => {
@@ -144,20 +151,24 @@ class Works extends React.Component {
   }
   handlePageClick = data => {
     let selected = data.selected + 1;
-    const works_route = this.props.userType == "admin"
-    ? APIRoutes.works.index(selected)
-    : APIRoutes.works.filtered_artist_hidden(selected)
-    Requester.get(
-      works_route).then(
-        response => {
-          this.setState({
-            works: response,
-          });
-        },
+    if (this.state.filtering) {
+      this.getFilteredWorks(selected)
+    } else {
+        const works_route = this.props.userType == "admin"
+        ? APIRoutes.works.index(selected)
+        : APIRoutes.works.filtered_artist_hidden(selected)
+      Requester.get(
+        works_route).then(
+          response => {
+            this.setState({
+              works: response,
+            });
+          },
         response => {
           console.error(response);
         }
-      );
+        );
+    }
   };
 
   render() {

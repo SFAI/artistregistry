@@ -54,7 +54,7 @@ Rails.application.routes.draw do
     get 'artists/works/:id' => 'artists#works'
     get 'artists/requests/:id' => 'artists#requests'
     get 'buyers/requests/:id' => 'buyers#requests'
-    get 'works/filtered_works/:search_params' => 'works#filtered_works'
+    get 'works/filtered_works/:search_params/:page' => 'works#filtered_works'
     get 'artists/filtered_artists/:search_params' => 'artists#filtered_artists'
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'
