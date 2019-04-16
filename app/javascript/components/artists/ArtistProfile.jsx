@@ -332,7 +332,7 @@ class ArtistProfile extends React.Component {
             </Button>
           }
         </div>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap mb5">
           <div className="col-list-4">
             {works.map(work => {
               if (this.getAvailability(activeFilter).includes(work.availability)) {
