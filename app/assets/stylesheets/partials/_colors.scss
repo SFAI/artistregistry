@@ -18,8 +18,17 @@ $blue                   : #00ADEF;
 $pear                   : #C5CE10;
 $flamingo               : #ED2A7B;
 
+// ARTIST REGISTRY PALETTE
+$grape                  :#6A3950;
+$denim                  :#4F698D;
+$poppy                  :#E4573E;
+$berry                  :#AA3D51;
+$gold                   :#FFCC51;
+$moss                   :#69AB8D;
+
 // https://jameschambers.co/writing/tachyons-custom-colours/
-$sfai-colors: (
+$custom-colors: (
+  // SFAI webpage
   'charcoal': $charcoal,
   'pale-gray': $pale-gray,
   'gray': $gray,
@@ -34,9 +43,16 @@ $sfai-colors: (
   'blue': $blue,
   'pear': $pear,
   'flamingo': $flamingo,
+  // Registry
+  'grape': $grape,
+  'denim': $denim,
+  'poppy': $poppy,
+  'berry': $berry,
+  'gold': $gold,
+  'moss': $moss,
 );
 
-@each $name, $hex in $sfai-colors {
+@each $name, $hex in $custom-colors {
   .#{$name} {
     color: $hex;
     &:visited {
@@ -63,5 +79,14 @@ $sfai-colors: (
   .hover-#{$name}:hover,
   .hover-#{$name}:visited:hover {
     color: $hex
+  }
+
+  input[type="checkbox"][class="checkbox-#{$name}"]:checked:after {
+    background-color: $hex !important;
+  }
+  .li-#{$name} {
+      li.active {
+      background-color: $hex;
+    }
   }
 }

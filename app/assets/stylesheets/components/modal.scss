@@ -7,7 +7,6 @@
   right: auto;
   bottom: auto;
   margin-top: 64px; // clear the header
-  margin-right: -50%;
   transform: translate(-50%, -50%);
   background-color: white;
   outline: none;
@@ -55,4 +54,5 @@
   right: 0px;
   bottom: 0px;
   background-color: rgba($black, 0.5);
+  z-index: 3;
 }

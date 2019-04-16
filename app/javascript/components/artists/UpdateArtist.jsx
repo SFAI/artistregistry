@@ -3,7 +3,7 @@ import React from 'react';
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
 import LoadingOverlay from "../helpers/LoadingOverlay";
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase } from "../../utils/strings";
 
 class UpdateArtist extends React.Component {
   constructor(props) {
@@ -183,12 +183,13 @@ class UpdateArtist extends React.Component {
           />
           <FormError error={this.state.errors.media}/>
           <h5>Description</h5>
-          <input
+          <textarea
             value={this.state.artist.description}
             onChange={this.handleChange}
+            rows={4}
             name="description"
             type="text"
-            className="textinput"
+            className="textarea"
             required
           />
           <FormError error={this.state.errors.description}/>
@@ -217,7 +218,7 @@ class UpdateArtist extends React.Component {
               onClick={this.selectFile}
               className="w4"
               type="button-secondary"
-              color="magenta"
+              color="denim"
             >
               Select File
             </Button>
@@ -237,14 +238,14 @@ class UpdateArtist extends React.Component {
               onClick={() => { window.location = `/artists/${this.state.artist.id}` }}
               className="w4"
               type="button-secondary"
-              color="magenta"
+              color="denim"
             >
               Cancel
             </Button>
             <Button
               onClick={this.handleSubmit}
               type="button-primary"
-              color="magenta"
+              color="denim"
               className="w4 ml2"
             >
               Save

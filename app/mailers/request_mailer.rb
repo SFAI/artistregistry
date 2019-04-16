@@ -1,4 +1,4 @@
-class NotificationMailer < ApplicationMailer
+class RequestMailer < ApplicationMailer
   def new_request_email
     @artist = params[:artist]
     @buyer = params[:buyer]
@@ -18,5 +18,12 @@ class NotificationMailer < ApplicationMailer
     @buyer = params[:buyer]
     @work = params[:work]
     mail(to: @buyer.email, subject: 'Request Completed')
+  end
+
+  def request_deleted_email
+    @artist = params[:artist]
+    @buyer = params[:buyer]
+    @title = params[:title]
+    mail(to: @buyer.email, subject: 'Request Deleted')
   end
 end

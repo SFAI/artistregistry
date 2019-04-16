@@ -31,6 +31,10 @@ input[type="checkbox"] {
   align-items: center;
 }
 
+.filter-item {
+  width: 146px;
+}
+
 .checkbox-container {
   margin-top: 8px;
 }
@@ -76,6 +80,7 @@ input[type="checkbox"] {
     background-color: rgba($white, 0.3);
   }
 }
+
 
 .dropzone {
   height: 300px;

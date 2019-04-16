@@ -1,7 +1,12 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import Touchable from 'rc-touchable';
-import { convertSnakeCase } from "../../utils/snake_case";
+import { convertSnakeCase, pluralize } from "../../utils/strings";
+
+/**
+ * @prop artist: artist for this panel
+ * @prop userType: { "artist", "buyer", "admin" }
+ */
 
 class ArtistColumnPanel extends React.Component {
   constructor(props) {
@@ -18,21 +23,38 @@ class ArtistColumnPanel extends React.Component {
   }
 
   render() {
-    let artist = this.props.artist;
+    const { userType, artist } = this.props;
+    // let artist = this.props.artist;
     const featured_work = artist.works.find(work => work.id === artist.featured_work_id);
+    const non_hidden_works = artist.works.filter(work => work.hidden === false);
+    const hidden_works = artist.works.filter(work => work.hidden === true);
     return (
       <div className="mb3 pa3 w-100 col-item bg-white relative" key={artist.id}>
         <div className="item-overlay">
           {this.props.children}
         </div>
+        <div>
+          {featured_work &&
+            <Touchable onPress={() => this.navigateToArtist(artist.id)}>
+              {<img src={featured_work.featured_image.url} className="mb3 pointer" />}
+            </Touchable>
+          }
+        </div>
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-          {<img src={featured_work.featured_image.url} className="mb3 pointer" />}
-        </Touchable>
-        <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-          <h3 className="indigo pointer">{artist.name}</h3>
+          <h3 className="denim pointer">{artist.name}</h3>
         </Touchable>
         <h6 className="ttc">{convertSnakeCase(artist.program)}, {artist.year}</h6>
-        <h6 className="i">{artist.works.length} work{artist.works.length > 1 && "s"} available</h6>
+        <h6 className="i">
+          {`${pluralize(non_hidden_works, 'work')} available`}
+        </h6>
+        {userType == "admin" && hidden_works.length > 0 &&
+          <h6 className="i">
+            {pluralize(hidden_works, 'work')} hidden
+          </h6>
+        }
+        {userType == "admin" && artist.hidden &&
+          <h6> HIDDEN!!!!! </h6>
+        }
       </div>
     );
   }

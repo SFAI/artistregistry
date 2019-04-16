@@ -28,3 +28,45 @@
   width: inherit;
   object-fit: cover;
 }
+
+.artist-description {
+  max-height: 18rem;
+}
+
+.artist-description::-webkit-scrollbar-track {
+  background: $snow; 
+}
+
+.artist-description::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  }
+  
+.artist-description::-webkit-scrollbar-thumb {
+  background: $denim;  
+  border-radius: 10px;
+  }
+  
+.artist-description::-webkit-scrollbar-thumb:hover {
+  background: darken($denim, 10%); 
+}
+
+.incomplete-profile {
+  .complete, .incomplete{
+    width: 20px;
+    height: 20px;
+    border: 2px solid $denim;
+  }
+
+  .complete {
+    background-color: $denim;
+
+    &:after {
+      content: url("checkmark.svg");
+    }
+  }
+
+  .incomplete {
+    background: rgba($denim, 0.1);
+  }
+}

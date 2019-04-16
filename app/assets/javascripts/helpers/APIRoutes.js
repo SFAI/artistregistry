@@ -8,7 +8,8 @@ class ApiRoutes {
       delete: (id) => `/api/works/${id}`,
       filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
       categories: `/works/categories`,
-      thumbnail: (id) => `api/works/thumbnail/${id}`
+      thumbnail: (id) => `api/works/thumbnail/${id}`,
+      filtered_artist_hidden: `/api/works/filtered/artist_hidden`,
     }
   }
 
@@ -23,6 +24,8 @@ class ApiRoutes {
       commissions : (id) => `/api/artists/commissions/${id}`,
       filtered_artists: (search_params) => `/api/artists/filtered_artists/${search_params}`,
       categories  : `/api/artists/categories`,
+      lock_user : (id) => `/api/artists/lock_user/${id}`,
+      unlock_user : (id) => `/api/artists/unlock_user/${id}`,
     }
   }
 
@@ -39,7 +42,8 @@ class ApiRoutes {
       show: (id) => `/api/requests/${id}`,
       update: (id) => `/api/requests/${id}`,
       create: `/api/requests`,
-      types: '/requests/types'
+      types: '/requests/types',
+      request_exist: (search_params) => `/api/requests/request_exist/${search_params}`
     }
   }
 

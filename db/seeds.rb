@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # ARTISTS
-# enum program: { art_and_technology: 0, film: 1, history_and_theory: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7 }
+# enum program: { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7, studio_art: 8 }
 
 artist_list = [
   ['Andrew Smith', 'asmith@artists.sfai.edu', 'password', 4, 'Andrew Smith is a painter.', 'digital media', 2009, true ],
@@ -33,7 +33,8 @@ artist_list.each do |n, e, pw, pr, d, m, y, s|
     media: m,
     year: y,
     open_to_commissions: s,
-    terms_and_conditions: true
+    terms_and_conditions: true,
+    hidden: false
   )
   account = Account.create()
   account.user = artist
@@ -113,6 +114,7 @@ works_list.each do |t, mat, med, av, pr, des, im_file, a_id|
     availability: av,
     price: pr,
     description: des,
+    hidden: false
   )
   work.images.attach(
     io: File.open("app/assets/images/#{im_file}"),
@@ -153,3 +155,17 @@ Gates_commission = Commission.create(
 Gates_commission.buyer = Gates
 Gates_commission.artist = Artist.find(1)
 Gates_commission.save!
+
+# Creating an Admin
+Sfai = Admin.create(
+  email: 'admin@sfai.edu',
+  password: 'password',
+  )
+
+account = Account.create()
+account.user = Sfai
+account.save!
+
+Sfai.account = account
+Sfai.skip_confirmation!
+Sfai.save!

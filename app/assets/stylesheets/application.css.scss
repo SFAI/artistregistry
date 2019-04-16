@@ -25,12 +25,12 @@
 
  body {
     background-color: $snow;
+    min-width: 1200px;
  }
 
  .dashboard-container {
-     max-width: 1190px;
+     max-width: 1200px;
      margin: 0px auto;
-     padding-top: 64px;
  }
 
 .mt-auto {
@@ -43,6 +43,10 @@
 
 .mw-400 {
     min-width: 400px;
+}
+
+.col-list-2 {
+  column-count: 2;
 }
 
 .col-list-3 {

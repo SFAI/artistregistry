@@ -3,28 +3,31 @@
 	$sub-nav-height: 36px;
 	$border-stripe-height: 8px;
 	$header-item-width: 120px;
-
-	background: $charcoal;
-	position: fixed;
+	position: relative;
+	color: $text;
+	background: $white;
 	top: 0;
 	width: 100%;
 	z-index: 10;
 	display: flex;
 	height: $nav-height;
 
-	.img {
-		height: $nav-height;
-		margin-left: 48px;
+	.header-logo {
+		height: 3rem;
+		margin-left: 3rem;
+		padding: .5rem 0rem;
 	}
 
-	.header-bar {
+	.header-title {
+		@extend .pa3;
+		@extend .f3;
+		@extend .w5;
+		color: $text;
+		font-weight: normal;
+	}
+
+	.header-bar, .subnav-header-bar {
 		height: $border-stripe-height;
-	}
-
-	.subnav-header-bar {
-		@extend .header-bar;
-		transition: opacity 0.9s ease;
-		opacity: 0;
 	}
 
 	.flex-start {
@@ -34,14 +37,8 @@
 	}
 
 	a {
-		color: inherit;
-		display: inline-block;
-		text-decoration: none;
-		font-weight: normal;
-
-		&:hover {
-			text-decoration: underline;
-		}
+		position: relative;
+		z-index: 3;
 	}
 
 	.container {
@@ -49,6 +46,7 @@
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
+		min-width: 1200px;
 	}
 
 	.header-links {
@@ -62,17 +60,34 @@
 		display: flex;
 		flex-direction: column;
 		height: $nav-height;
-		border-right: 1px solid $gray;
+		border-right: 1px solid $pale-gray;
 		transition: background-color 0.2s ease;
-		background-color: rgba($white, 0);
+		background-color: $white;
+		position: relative;
+		z-index: 1;
 
 		&:last-child {
 			border-right: 0px;
 		}
 
+		&:after {
+			content: "";
+		    position: absolute;
+		    width: 100%;
+		    height: $border-stripe-height;
+		    top: 0;
+		    transition: height 0.2s ease-in-out;
+		    cursor: pointer;
+		    z-index: -1;
+		}
+
+		&:hover:after {
+			height: 100%;
+		}
+
 		.header-link-item {
 			padding: 4px 8px;
-			color: $white;
+			color: $text;
 		}
 
 		a {
@@ -81,57 +96,82 @@
 		}
   }
 
-	#about:hover {
-		background-color: $pear;
+	#about:after {
+		background-color: $gold;
 	}
 
-	#artists:hover {
-		background-color: $indigo;
+	#artists:after {
+		background-color: $denim;
 	}
 
-	#artwork:hover {
-		background-color: $magenta;
+	#artwork:after {
+		background-color: $berry;
+	}
+
+	#login:after {
+		background-color: $moss;
 	}
 
 	.dropdown {
 		width: $header-item-width;
+		height: 0;
+		z-index: 2;
+		height: $nav-height;
+
+		.header-item {
+			border-right: 0px;
+		}
 
 		&:hover {
 			.header-item + .dropdown-container {
 				display: flex;
 				flex-direction: column;
-
-				.subnav-header-bar {
-					opacity: 1;
-				}
+				background-color: $white;
+				visibility: visible;
 
 				.dropdown-content {
 					justify-content: center;
 					align-items: flex-end;
-					background-color: $white;
-
-					.dropdown-link-item {
-						padding: 8px 12px;
-						height: $sub-nav-height;
-						background-color: $charcoal;
-						width: 100%;
-
-						a {
-							@extend .f7;
-							text-transform: uppercase;
-							color: $white;
-						}
-					}
+					padding-top: $border-stripe-height;
+					box-shadow: 0px 5px 5px rgba($black, 0.1);
 				}
 			}
 
-			#login {
-				background-color: $ochre;
+			.dropdown-container {
+				transform: translateY(0);
+			}
+
+			.header-item:after {
+				height: calc(#{$nav-height} + #{$border-stripe-height});
+			}
+		}
+
+		.dropdown-link-item {
+			padding: 8px 12px;
+			height: $sub-nav-height;
+			background-color: $white;
+			width: 100%;
+			
+			a {
+				@extend .f7;
+				display: inline-block;
+				font-weight: normal;
+				text-transform: uppercase;
+				color: $text;
+				text-decoration: none;
+				&:hover {
+					text-decoration: underline;
+				}
 			}
 		}
 	}
 
 	.dropdown-container {
-		display: none;
+		transform: translateY(-100%);
+		transition: transform 0.25s ease-in-out;
+
+		.dropdown-link-item {
+			background-color: $white;
+		}
 	}
 }

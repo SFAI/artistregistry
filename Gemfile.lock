@@ -165,6 +165,8 @@ GEM
     pg (1.1.4)
     public_suffix (3.0.3)
     puma (3.12.0)
+    pundit (2.0.0)
+      activesupport (>= 3.0.0)
     rack (2.0.6)
     rack-proxy (0.6.5)
       rack
@@ -198,6 +200,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    rb-readline (0.5.5)
     react-rails (2.4.7)
       babel-transpiler (>= 0.7.0)
       connection_pool
@@ -291,7 +294,9 @@ DEPENDENCIES
   paperclip (~> 6.0.0)
   pg
   puma (~> 3.11)
+  pundit
   rails (~> 5.2.1)
+  rb-readline
   react-rails
   sass-rails (~> 5.0)
   selenium-webdriver

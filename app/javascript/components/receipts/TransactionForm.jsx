@@ -64,6 +64,27 @@ class TransactionForm extends React.Component {
     return errors;
   }
 
+  updateWork = (work_id) => {
+    const trasactionType = this.state.receipt.transaction_type
+    let newAvailability = "sold"
+    if (trasactionType == 'rental') {
+      newAvailability = "rented"
+    }
+    let formData = new FormData();
+    formData.append(`work[availability]`, newAvailability);
+    fetch(APIRoutes.works.update(work_id), {
+      method: 'PUT',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location.href = '/requests';
+      })
+    }
+
+
   handleSubmit = (event) => {
     const receipts_route = this.props.route;
     const method = this.props.method;
@@ -92,7 +113,7 @@ class TransactionForm extends React.Component {
       this.setState({ updatingTransaction: true });
       Requester.post(receipts_route, payload).then(
         response => {
-          window.location.href = '/requests';
+          this.updateWork(this.props.work.id)
         },
         error => {
           console.error(error);
@@ -202,7 +223,7 @@ class TransactionForm extends React.Component {
             onChange={this.handleChange}
             className="textarea"
           />
-          <Button type="button-primary" className="w4" color="ochre" onClick={this.handleSubmit}>
+          <Button type="button-primary" className="w4" color="moss" onClick={this.handleSubmit}>
             Record
           </Button>
         </div>

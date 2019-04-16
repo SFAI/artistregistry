@@ -4,8 +4,9 @@ import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
 import StyledModal from "../helpers/StyledModal";
 import TransactionForm from "../receipts/TransactionForm";
-import WorkFixedPanel from "../works/WorkFixedPanel";
 import { convertToCurrency } from "../../utils/currency";
+import classNames from 'classnames/bind';
+import Touchable from 'rc-touchable';
 
 class Receipt extends React.Component {
   constructor(props) {
@@ -16,31 +17,8 @@ class Receipt extends React.Component {
     };
   }
 
-  getAttr = (request) => {
-    let attr = {
-      "Price": "$" + convertToCurrency(request.receipt.price),
-      "Purchase Date": new Date(request.receipt.purchase_date).toLocaleDateString(),
-      "Transaction Type": request.receipt.transaction_type,
-      "Description": request.receipt.comment
-    };
-
-    if (request.receipt.transaction_type === "rental") {
-      attr["Start Date"] = new Date(request.receipt.start_date).toLocaleDateString();
-      attr["End Date"] = new Date(request.receipt.end_date).toLocaleDateString();
-    }
-
-    return Object.keys(attr).map((key, i) => {
-      return (
-        <div className="attr" key={i}>
-          <div className="key mr3">
-            <h5>{key}</h5>
-          </div>
-          <div className="value">
-            <h6 key={i}>{attr[key]}</h6>
-          </div>
-        </div>
-      );
-    });
+  navigateToWork = (id) => {
+    window.location = `works/${id}`;
   }
 
   renderEditReceipt() {
@@ -49,9 +27,8 @@ class Receipt extends React.Component {
     return (
         <div className = "w100">
           <StyledModal
-            title="EDIT"
-            color="ochre"
-            buttonType="hover-button"
+            title="Edit receipt"
+            buttonType=""
           >
             <TransactionForm
               artist={this.props.artist}
@@ -66,42 +43,89 @@ class Receipt extends React.Component {
       )
   }
 
+  renderStatus() {
+    if (!this.state.request.open) {
+      if (this.state.request.receipt) {
+        const purchaseType = this.state.request.receipt.transaction_type == "purchase" ?
+          "sale" : "rental";
+        return (
+          <p className="dark-green">
+            Confirmed {purchaseType} on {new Date(this.state.request.receipt.purchase_date).toLocaleDateString()}
+          </p>
+        )
+      } else {
+        return (
+          <p className="gray">Closed on {new Date(this.state.request.updated_at).toLocaleDateString()}</p>
+        )
+      }
+    } else {
+      return (
+        <p className="dark-gray">Pending {this.state.request.types}</p>
+      )
+    }
+  }
+
   render() {
-    const request = this.state.request;
-    const id = request.id;
-    const thumbnail_url = request.work.thumbnail ? request.work.thumbnail : "https://cdn0.iconfinder.com/data/icons/typicons-2/24/image-128.png";
-    const closed_timestamps = new Date(request.updated_at).toLocaleDateString();
+    const isRental = this.state.request.receipt.transaction_type == "rental";
+
+    const startDate = isRental ? 
+      new Date(this.state.request.receipt.start_date).toLocaleDateString() : "";
+    const endDate = isRental ? 
+      new Date(this.state.request.receipt.end_date).toLocaleDateString() : "";
 
     return (
-      <div key={request.id} className="request bg-white mb3">
-        <div className="fl w-25">
-          <WorkFixedPanel work={request.work}/>
+      <div key={this.state.request.id} className="bg-white mb3">
+        <div className="flex justify-between w-100 items-center bb b--light-gray bt-0 bl-0 br-0">
+          { this.props.artist ? 
+            (<BuyerSnapshot buyer={this.state.request.buyer} color="moss"/>) : 
+            (<ArtistSnapshot artist={this.state.request.artist} color="moss"/>)
+          }
+          <div className="pa3 flex-grow-1">
+            <h5>{isRental ? "Rental Start" : ""}</h5>
+            <p>{startDate}</p>
+          </div>
+          <div className="pa3 flex-grow-1">
+            <h5>{isRental ? "Rental End" : ""}</h5>
+            <p>{endDate}</p>
+          </div>
+          <div className="pa3">
+            <h5>Price</h5>
+            <p>{"$" + convertToCurrency(this.state.request.receipt.price)}</p>
+          </div>
+          <div className="pa3">
+            <h5>Date Placed</h5>
+            <p>{new Date(this.state.request.created_at).toLocaleDateString()}</p>
+          </div>
+          <div className={classNames("relative", "mh3", {"requests-dropdown-selected" : this.state.dropDownVisible})}>
+            <button 
+              onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
+              className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
+            </button>
+            <ul className="request-dropdown ml3 absolute nowrap z-3">
+              <li>{this.renderEditReceipt()}</li>
+              <li>Block user</li>
+            </ul>
+          </div>
         </div>
-        <div className="fl w-75 pa3 request-wrapper">
-          <div className="request-container w-100">
-            {
-              this.props.artist ? (
-                <div className="request-action">
-                  <BuyerSnapshot buyer={this.state.request.buyer} />
-                  <div className = "w5">
-                    <p className = "closed-request-button pa3"> You completed this request on {closed_timestamps} </p>
-                  </div>
+
+        <div className="ttu b mt3 ml3 f6">
+          { this.renderStatus() }
+        </div>
+        <div className="flex justify-between items-start pr5 pa3">
+          <Touchable onPress={() => this.navigateToWork(this.state.request.work.id)}>
+            <div className="flex pointer">
+                <div className="w4 pb6 relative mr3">
+                  <img className="work-image fit-cover w-100 h-100 pointer absolute" src={this.state.request.work.featured_image.url} />
                 </div>
-              ) : (
-                  <div className="request-action">
-                    <ArtistSnapshot artist={this.state.request.artist} />
-                  <div className = "closed-request-button pa3 w5">
-                    <p>{request.artist.name} completed this request on {closed_timestamps} </p>
-                  </div>
-                </div>
-              )
-            }
-            <div className="attr-container pa3 mt2 relative">
-              <div className="z-1 absolute overlay-button">
-                {this.renderEditReceipt()}
+              <div>
+                <h5>{this.state.request.work.title}</h5>
+                <p>{this.state.request.work.media}</p>
               </div>
-              {this.getAttr(request)}
             </div>
+          </Touchable>
+          <div className="w-60 gray self-stretch">
+            <p>{this.state.request.message}</p>
+            {this.state.request.receipt.comment ? (<p className="i mt3">Receipt notes: {this.state.request.receipt.comment}</p>) : null}
           </div>
         </div>
       </div>

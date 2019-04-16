@@ -14,6 +14,7 @@ class CreateWork extends React.Component {
         availability: "active",
         attached_images_urls: [],
         description: '',
+        links: '',
         featured_image: '',
         artist_id: this.props.artist.id
       },

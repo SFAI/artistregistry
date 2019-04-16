@@ -1,0 +1,21 @@
+.artwork-description {
+    max-height: 20rem;
+}
+
+.artwork-description::-webkit-scrollbar-track {
+    background: $snow; 
+}
+
+.artwork-description::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+    
+.artwork-description::-webkit-scrollbar-thumb {
+    background: $berry;  
+    border-radius: 10px;
+}
+
+.artwork-description::-webkit-scrollbar-thumb:hover {
+    background: darken($berry, 10%);   
+}

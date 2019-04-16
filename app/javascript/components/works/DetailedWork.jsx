@@ -45,14 +45,7 @@ class DetailedWork extends React.Component {
       );
     }
 
-    const { artist, artist_id, id, availability, title, media, material, description } = this.state.work
-    const request_form = this.props.blocked ? null : (
-        <RequestForm
-            buyer={this.props.buyer}
-            artist_id={artist_id}
-            work_id={id}
-            work_status={availability}
-          /> );
+    const { artist, artist_id, id, availability, links, title, media, material, description } = this.state.work
     return (
       <div className="pt4">
         <div className="fl w-70">
@@ -60,7 +53,7 @@ class DetailedWork extends React.Component {
         </div>
         <div className="fl w-30 pl3">
           <div className="bg-white overflow-hidden">
-            <ArtistSnapshot artist={artist} />
+            <ArtistSnapshot artist={artist} color="berry"/>
           </div>
           <div className="bg-white pa3 mv3 relative">
             <h2>{title}</h2>
@@ -75,8 +68,17 @@ class DetailedWork extends React.Component {
             <p className="mb2">{media}</p>
             <h4>Material</h4>
             <p className="mb2">{material}</p>
+            {
+              links &&
+              <div>
+                <h4>Links</h4>
+                <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {links} </Linkify></p>
+              </div>
+            }
             <h4>Description</h4>
-            <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
+            <div className="pr2 artwork-description overflow-y-auto">
+              <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
+            </div>
           </div>
           {request_form}
         </div>

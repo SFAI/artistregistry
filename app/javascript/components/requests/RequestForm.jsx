@@ -11,19 +11,21 @@ class RequestForm extends React.Component {
       available: this.props.work_status === "active" ? true : false,
       request: {
         message: "",
-        types: 0
+        types: 'sale'
       },
       request_types: {},
       errors: {
         message: "",
-        login: ""
+        exist: ""
       },
+      exist: false,
       updatingRequest: false,
       componentDidMount: false
     }
   }
 
   componentDidMount = () => {
+    this.checkExist('sale')
     const requests_types_route = APIRoutes.requests.types;
     Requester.get(requests_types_route).then((response) => {
       this.setState({ request_types: response, componentDidMount: true });
@@ -38,6 +40,9 @@ class RequestForm extends React.Component {
     const value = event.target.value;
     request[name] = value;
     this.setState({ request: request });
+    if (event.target.name == 'types') {
+      this.checkExist(value)
+    }
   }
 
   handleSubmit = () => {
@@ -73,18 +78,43 @@ class RequestForm extends React.Component {
   checkErrors() {
     let errors = {
       message: "",
-      login: ""
+      exist: ""
     }
 
     if (!this.state.request.message) {
       errors["message"] = "This field cannot be empty."
     }
-    if (!this.props.buyer) {
-      errors["login"] = "You must be logged in to request a work."
+    if (this.state.exist) {
+      errors["exist"] = "You have already made a request under this request type."
     }
-
     return errors;
   }
+
+  checkExist = (request_type) => {
+    const { buyer, artist_id, work_id } = this.props;
+    if (buyer == null) {
+      return
+    } else {
+      let stringifiedSearchParams = [
+        `buyer_id=${buyer.id}`,
+        `artist_id=${artist_id}`,
+        `work_id=${work_id}`,
+        `types=${request_type}`
+      ].join("&");
+
+      let request_route = APIRoutes.requests.request_exist(stringifiedSearchParams)
+      Requester.get(request_route).then(
+          response => {
+            if (response.length != 0) {
+              this.setState({ exist: true })
+            } else {
+              this.setState({ exist: false })
+            }
+          },
+            response => { console.error(response); }
+        );
+      }
+    }
 
   render() {
     if (!this.state.componentDidMount) {
@@ -96,12 +126,28 @@ class RequestForm extends React.Component {
       return (
         <div className="mw6">
           <Panel
-            color="magenta"
+            color="berry"
             title="Request Artwork"
           >
             <div className="pa3">
-              <h2 className="magenta">Sorry!</h2>
+              <h2 className="berry">Sorry!</h2>
               <h6>This work has been {this.props.work_status}.</h6>
+            </div>
+          </Panel>
+        </div>
+      );
+    }
+    if (!this.props.buyer) {
+      return (
+        <div className="mw6">
+          <Panel
+            color="berry"
+            title="Request Artwork"
+          >
+            <div className="pa3">
+              <p className="mb4"> Log in to your account to request artwork.</p>
+              <a className="pointer berry mb1" href="../artists/sign_in">Log in (Artist) »</a>
+              <a className="pointer berry" href="../buyers/sign_in">Log in (Patron) »</a>
             </div>
           </Panel>
         </div>
@@ -110,7 +156,7 @@ class RequestForm extends React.Component {
     return (
       <div className="w-100">
         <Panel
-          color="magenta"
+          color="berry"
           title="Request Artwork"
         >
         {this.state.updatingRequest ? <LoadingOverlay /> : null}
@@ -137,8 +183,8 @@ class RequestForm extends React.Component {
             className="textarea"
           />
           <FormError error={this.state.errors["message"]} />
-          <FormError error={this.state.errors["login"]} />
-          <button onClick={this.handleSubmit} className="button-primary bg-magenta w4 mt2">
+          <FormError error={this.state.errors["exist"]} />
+          <button onClick={this.handleSubmit} className="button-primary bg-berry w4 mt2">
             Submit
           </button>
         </Panel>

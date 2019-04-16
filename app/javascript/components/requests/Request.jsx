@@ -4,7 +4,9 @@ import StyledModal from "../helpers/StyledModal";
 import TransactionForm from "../receipts/TransactionForm";
 import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
-import WorkFixedPanel from "../works/WorkFixedPanel";
+import { convertToCurrency } from "../../utils/currency";
+import classNames from 'classnames/bind';
+import Touchable from 'rc-touchable';
 
 class Request extends React.Component {
   constructor(props) {
@@ -20,7 +22,8 @@ class Request extends React.Component {
         price: '',
         comment: '',
         request_id: this.props.request.id
-      }
+      },
+      dropDownVisible: false
     };
   }
 
@@ -79,79 +82,99 @@ class Request extends React.Component {
         </div>
       );
     });
+
+  navigateToWork = (id) => {
+    window.location = `works/${id}`;
   }
 
-  renderRequestButtons() {
-    const closed_timestamps = new Date(this.state.request.updated_at).toLocaleDateString();
+  renderStatus() {
     if (!this.state.request.open) {
+      if (this.state.request.receipt) {
+        return (
+          <p className="green">Completed on {this.state.request.receipt.purchase_date}</p>
+        )
+      } else {
+        return (
+          <p className="gray">Closed on {new Date(this.state.request.updated_at).toLocaleDateString()}</p>
+        )
+      }
+    } else {
       return (
-        <div className = "closed-request-button pa3 w5"> You archived this request on {closed_timestamps} </div>
-      );
+        <p className="dark-gray">Pending {this.state.request.types}</p>
+      )
     }
-    let id = this.state.request.id;
-    const empty_receipt = this.state.receipt;
+  }
+
+  renderDropdown(id) {
     return (
-      <div className="request-buttons">
-        <div className="w4">
-          <button type="button" className="button-secondary b--charcoal w-100" value={id} onClick={() => this.closeRequest(id)}>
-            ARCHIVE
-          </button>
-        </div>
-        <div className="w4">
-          <button type="button" className="button-secondary b--charcoal w-100" onClick={() => this.blockUser()}>
-            BLOCK
-          </button>
-        </div>
-        <div className="ml3 w4">
-          <StyledModal
-            title="COMPLETE"
-            buttonType="button-primary"
-          >
-            <TransactionForm
-              artist={this.props.artist}
-              request_id={id}
-              receipt={empty_receipt}
-              route={APIRoutes.receipts.create}
-              method="POST"
-              work={this.state.request.work}
-            />
-          </StyledModal>
-        </div>
-      </div>
-    )
+      <div className={classNames("relative", "mh3", {"requests-dropdown-selected" : this.state.dropDownVisible})}>
+        <button 
+          onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
+          className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
+        </button>
+        <ul className="request-dropdown ml3 absolute nowrap z-3">
+          <li value={id} onClick={() => this.closeRequest(id)}>Archive</li>
+          <li>
+            <StyledModal
+              title="Complete"
+              buttonType=""
+            >
+              <TransactionForm
+                artist={this.props.artist}
+                request_id={id}
+                receipt={this.state.receipt}
+                route={APIRoutes.receipts.create}
+                method="POST"
+                work={this.state.request.work}
+              />
+            </StyledModal>
+          </li>
+          <li>Delete</li>
+          <li>Block user</li>
+        </ul>
+      </div>);
   }
 
   render() {
-    const request = this.state.request;
-    const id = request.id;
-    const thumbnail_url = request.work.thumbnail ? request.work.thumbnail : "https://cdn0.iconfinder.com/data/icons/typicons-2/24/image-128.png";
-    const closed_timestamps = new Date(request.updated_at).toLocaleDateString();
-
     return (
-      <div key={request.id} className="request bg-white mb3">
-        <div className="fl w-25">
-          <WorkFixedPanel work={request.work} />
+      <div key={this.state.request.id} className="bg-white mb3">
+        <div className="flex justify-between w-100 items-center bb b--light-gray bt-0 bl-0 br-0">
+          { this.props.artist ? 
+            (<BuyerSnapshot buyer={this.state.request.buyer} color="moss"/>) : 
+            (<ArtistSnapshot artist={this.state.request.artist} color="moss"/>)
+          }
+          <div className="pa3 flex-grow-1">
+          </div>
+          <div className="pa3 flex-grow-1">
+          </div>
+          <div className="pa3">
+            <h5>Price</h5>
+            <p>{"$" + convertToCurrency(this.state.request.work.price)}</p>
+          </div>
+          <div className="pa3">
+            <h5>Date Placed</h5>
+            <p>{new Date(this.state.request.created_at).toLocaleDateString()}</p>
+          </div>
+          {this.renderDropdown(this.state.request.id)}
         </div>
-        <div className="fl w-75 pa3 request-wrapper">
-          <div className="request-container w-100">
-            {
-              this.props.artist ? (
-                <div className="request-action">
-                  <BuyerSnapshot buyer={this.state.request.buyer} />
-                  {this.renderRequestButtons()}
-                </div>
-              ) : (
-                  <div className="request-action">
-                    <ArtistSnapshot artist={this.state.request.artist} />
-                    <div className="closed-request-button pa4 w5">
-                      <p> You requested this work on {closed_timestamps} </p>
-                    </div>
-                  </div>
-                )
-            }
-            <div className="attr-container pa3 mt2">
-              {this.getAttr(request)}
+
+        <div className="ttu b mt3 ml3 f6">
+          {this.renderStatus()}
+        </div>
+        <div className="flex justify-between items-start pr5 pa3">
+          <Touchable onPress={() => this.navigateToWork(this.state.request.work.id)}>
+            <div className="flex pointer">
+              <div className="w4 pb6 relative mr3">
+                <img className="work-image fit-cover w-100 h-100 absolute" src={this.state.request.work.featured_image.url} />
+              </div>
+              <div>
+                <h5>{this.state.request.work.title}</h5>
+                <p>{this.state.request.work.media}</p>
+              </div>
             </div>
+          </Touchable>
+          <div className="w-60 gray">
+            <p>{this.state.request.message}</p>
           </div>
         </div>
       </div>

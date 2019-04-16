@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
 
+  devise_for :admins, controllers: { registrations: 'admins/registrations' }, path_names: { sign_up: '' }
   devise_for :artists, controllers: { registrations: 'artists/registrations' }
   devise_for :buyers, controllers: { registrations: 'buyers/registrations' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'works#index'
 
+  get '/artists/confirm_email', to: 'artists#confirm_email', as: 'artists_confirm_email'
   get '/artists/:id' => 'artists#show', as: :artistid
   get '/artists/', to: 'artists#all_artists'
   get '/artists/:id/update' => 'artists#update', as: "update_artist"
+  # Add route to email confirmation page
 
   get '/receipts/types' => 'receipts#get_receipt_type_enums'
 
@@ -20,6 +23,7 @@ Rails.application.routes.draw do
   get '/requests' => 'requests#home'
   get '/requests/types' => 'requests#get_type_enum'
 
+  get '/buyers/confirm_email', to: 'buyers#confirm_email', as: 'buyers_confirm_email'
   get '/buyers/:id' => 'buyers#show', as: :buyerid
   get '/buyers/:id/update' => 'buyers#update', as: "update_buyer"
 
@@ -51,10 +55,13 @@ Rails.application.routes.draw do
     get 'buyers/requests/:id' => 'buyers#requests'
     get 'works/filtered_works/:search_params' => 'works#filtered_works'
     get 'artists/filtered_artists/:search_params' => 'artists#filtered_artists'
-    get 'receipts/artist/:id' => 'artists#receipts'
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'
     post 'blocks/block_user' => 'blocks#block_user', as: :block_user
     post 'blocks/unblock_user' => 'blocks#unblock_user', as: :unblock_user
+    get 'requests/request_exist/:search_params' => 'requests#request_exist'
+    put 'artists/lock_user/:id' => 'artists#lock_user'
+    put 'artists/unlock_user/:id' => 'artists#unlock_user'
+    get 'works/filtered/artist_hidden' => 'works#filtered_artist_hidden'
   end
 end

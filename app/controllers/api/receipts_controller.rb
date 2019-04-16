@@ -5,12 +5,14 @@ class Api::ReceiptsController < ApplicationController
 
   def create
     receipt = Receipt.new(receipt_params)
+    authorize receipt
+
     request = receipt.request
     if receipt.save!
       receipt.request.open = false
       if receipt.request.save!
         flash[:success] = "Transaction recorded successfully!"
-        NotificationMailer.with(buyer: request.buyer, artist: request.artist, work: request.work).request_completed_email.deliver_later
+        RequestMailer.with(buyer: request.buyer, artist: request.artist, work: request.work).request_completed_email.deliver_later
         return render json: {"message": 'Transaction recorded successfully!'}
       end
     else
@@ -21,6 +23,8 @@ class Api::ReceiptsController < ApplicationController
 
   def update
     receipt = Receipt.find(params[:id])
+    authorize receipt
+    
     saved = receipt.update(receipt_params)
     if saved
       flash[:success] = "Receipt updated successfully!"
