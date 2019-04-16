@@ -97,7 +97,6 @@ class Api::WorksController < ApplicationController
   end
 
   def index
-    # works = Work.all
     @work_count = Work.count
     works = Work.page(params[:page])
     render json: works,
