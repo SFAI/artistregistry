@@ -30,6 +30,7 @@ class Works extends React.Component {
     const works_route = this.props.userType == "admin"
       ? APIRoutes.works.index(1)
       : APIRoutes.works.filtered_artist_hidden(1)
+    console.log(works_route)
     const categories_route = APIRoutes.works.categories;
     Promise.all([
       Requester.get(works_route),
@@ -63,11 +64,10 @@ class Works extends React.Component {
     Requester.get(
       works_route).then(
         response => {
-          let works
-          if (this.props.userType == "admin") {
-            works = response
-          } else {
-            works = response.filter(work => work.hidden == false)
+          console.log(response.keys)
+          let works = response.filtered_works
+          if (this.props.userType != "admin") {
+            works = response.filtered_works.filter(work => work.hidden == false)
           }
           this.setState({
             works: works,
@@ -175,7 +175,8 @@ class Works extends React.Component {
   };
 
   render() {
-    const { isLoading, pageCount, filters, works, workStartIndex, workEndIndex } = this.state;
+    const { isLoading, pageCount, filters, works } = this.state;
+    console.log(works)
     return (
       <div className="pt4">
         {isLoading ? <LoadingOverlay itemType="artwork" fullPage={true} /> : null}

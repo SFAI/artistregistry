@@ -107,8 +107,11 @@ class Api::WorksController < ApplicationController
   def filtered_works
     parsed_query = CGI.parse(params[:search_params])
     filtered_works = params[:search_params] == "" ?  Work.all.page(params[:page]) : Work.where(parsed_query).page(params[:page])
-    render json: filtered_works,
-      each_serializer: WorkSerializer
+    work_count = params[:search_params] == "" ?  Work.count : Work.where(parsed_query).count
+    render json: {
+      filtered_works: ActiveModel::Serializer.new(filtered_works, each_serializer: WorkSerializer),
+      work_count: work_count
+    }
   end
 
   def filtered_artist_hidden
