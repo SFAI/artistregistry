@@ -248,7 +248,6 @@ class WorkForm extends React.Component {
     }).catch((data) => {
       console.error(data);
     });
-  }
     
   toggleHidden = () => {
     let new_work = this.state.work
