@@ -67,7 +67,8 @@ class ApiRoutes {
   get blocks() {
     return {
       block_user: `/api/blocks/block_user`,
-      unblock_user: `/api/blocks/unblock_user`
+      unblock_user: `/api/blocks/unblock_user`,
+      is_blocking: (search_params) => `/api/blocks/is_blocking/${search_params}`
     }
   }
 

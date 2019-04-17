@@ -23,7 +23,8 @@ class Request extends React.Component {
         comment: '',
         request_id: this.props.request.id
       },
-      dropDownVisible: false
+      dropDownVisible: false,
+      isBlocking: false
     };
   }
 
@@ -37,19 +38,53 @@ class Request extends React.Component {
   blockUser = () => {
     const payload = {
       blocker_id: this.props.artist.account_id,
-      blocked_id: this.state.request.buyer.id
+      blocked_id: this.state.request.buyer.account_id
     }
     const block_route = APIRoutes.blocks.block_user;
 
     Requester.post(
       block_route, payload).then(
         response => {
-          console.log("it worked");
+          this.setState({ isBlocking: true });
         },
         response => {
           console.error(response);
         }
       );
+  }
+
+  unblockUser = () => {
+    const payload = {
+      blocker_id: this.props.artist.account_id,
+      blocked_id: this.state.request.buyer.account_id
+    }
+    const unblock_route = APIRoutes.blocks.unblock_user;
+
+    Requester.post(
+      unblock_route, payload).then(
+        response => {
+          this.setState({ isBlocking: false });
+        },
+        response => {
+          console.error(response);
+        }
+      );
+  }
+
+  isBlocking = () => {
+    const payload = `blocker_id=${this.props.artist.account_id}` +
+      `&blocked_id=${this.state.request.buyer.account_id}`;
+
+    const isblocking_route = APIRoutes.blocks.is_blocking(payload);
+
+    Requester.get(isblocking_route).then(
+      response => {
+        this.setState({ isBlocking: true });
+      },
+      response => {
+        console.error(response);
+      }
+    );
   }
 
   getRequestStatus = (request) => {
@@ -82,6 +117,7 @@ class Request extends React.Component {
         </div>
       );
     });
+  }
 
   navigateToWork = (id) => {
     window.location = `works/${id}`;
@@ -130,7 +166,11 @@ class Request extends React.Component {
             </StyledModal>
           </li>
           <li>Delete</li>
-          <li>Block user</li>
+          { 
+            this.isBlocking() ?
+              <li value={id} onClick={this.blockUser}>Unblock user</li> : 
+              <li value={id} onClick={this.unblockUser}>Block user</li>
+          }
         </ul>
       </div>);
   }

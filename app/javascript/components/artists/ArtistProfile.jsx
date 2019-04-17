@@ -332,7 +332,7 @@ class ArtistProfile extends React.Component {
             </Button>
           }
         </div>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap mb4">
           <div className="col-list-4">
             {works.map(work => {
               if (this.getAvailability(activeFilter).includes(work.availability)) {
@@ -359,8 +359,8 @@ class ArtistProfile extends React.Component {
           </div>
         </div>
         {
-          !canEditProfile &&
-          <div className="flex flex-row items-stretch mb4 mt4">
+          !canEditProfile && !this.props.blocked && 
+          <div className="flex flex-row items-stretch mb4">
             <div className="w-50 pr2 dib flex flex-row items-stretch">
               <div className="bg-charcoal pa3">
                 <h2 className="white">Guidelines for contacting artists</h2>

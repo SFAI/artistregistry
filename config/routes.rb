@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     get 'artists/commissions/:id' => 'artists#commissions'
     post 'blocks/block_user' => 'blocks#block_user', as: :block_user
     post 'blocks/unblock_user' => 'blocks#unblock_user', as: :unblock_user
+    get 'blocks/is_blocking/:search_params' => 'blocks#is_blocking', as: :is_blocking
     get 'requests/request_exist/:search_params' => 'requests#request_exist'
     put 'artists/lock_user/:id' => 'artists#lock_user'
     put 'artists/unlock_user/:id' => 'artists#unlock_user'
