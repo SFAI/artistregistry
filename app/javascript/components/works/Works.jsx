@@ -21,6 +21,7 @@ class Works extends React.Component {
       filters: {},
       isLoading: true,
       pageCount: 0,
+      currentPage: 0,
       filtering: false
     };
   }
@@ -71,7 +72,8 @@ class Works extends React.Component {
           this.setState({
             works: works,
             isLoading: false,
-            pageCount: Math.ceil(this.props.work_count / perPage)
+            pageCount: Math.ceil(this.props.work_count / perPage),
+            currentPage: 0
           });
         },
         response => {
@@ -162,6 +164,7 @@ class Works extends React.Component {
           response => {
             this.setState({
               works: response,
+              currentPage: data.selected
             });
           },
         response => {
@@ -199,6 +202,7 @@ class Works extends React.Component {
               onPageChange={this.handlePageClick}
               activeClassName={'active'}
               disabledClassName={'hidden'}
+              forcePage={this.state.currentPage}
               />
             </nav>
           </div>
