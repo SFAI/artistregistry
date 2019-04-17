@@ -56,18 +56,14 @@
 
 .overlay-sold::after, .overlay-rented::after {
   position: absolute;
-  top: 0;
   width: 100%;
   height: 100%;
-  background-color:rgba(190,190,190, 0.8);
+  background-color: rgba($gray, 0.6);
   cursor: pointer;
   z-index: 1;
   color: white;
   font-weight: 600;
-  text-align: center;
   font-size: 20px;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,4 +75,27 @@
 
 .overlay-rented::after {
   content: "RENTED";
+}
+
+.overlay-hidden-work::after,
+.overlay-hidden-artist::after {
+  position: absolute;
+  right: 1rem;
+  top: 2rem;
+  width: 6rem;
+  height: 2rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  content: "Hidden";
+  color: white;
+}
+
+.overlay-hidden-work::after {
+  background: rgba($berry, 0.8);
+}
+
+.overlay-hidden-artist::after {
+  background: rgba($denim, 0.8);
 }

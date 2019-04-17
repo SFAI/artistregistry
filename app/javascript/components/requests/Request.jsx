@@ -34,6 +34,15 @@ class Request extends React.Component {
     });
   }
 
+  deleteRequest = (id) => {
+    if (confirm('Are you sure you would like to delete this request?')) {
+      const delete_request_route = APIRoutes.requests.delete(id);
+      Requester.update(delete_request_route, { deleted: true}).then((response) => {
+        this.props.onChange();
+      })
+    }
+  }
+
   navigateToWork = (id) => {
     window.location = `works/${id}`;
   }
@@ -80,7 +89,7 @@ class Request extends React.Component {
               />
             </StyledModal>
           </li>
-          <li>Delete</li>
+          <li value={id} onClick={() => this.deleteRequest(id)}>Delete</li>
           <li>Block user</li>
         </ul>
       </div>);

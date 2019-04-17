@@ -1,5 +1,5 @@
 class CommissionSerializer < ActiveModel::Serializer
-  attributes :id, :comment, :types, :artist, :buyer, :created_at
+  attributes :id, :comment, :types, :artist, :buyer, :created_at, :deleted
 
   belongs_to :buyer
   belongs_to :artist

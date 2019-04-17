@@ -41,6 +41,7 @@ class ApiRoutes {
     return {
       show: (id) => `/api/requests/${id}`,
       update: (id) => `/api/requests/${id}`,
+      delete: (id) => `/api/requests/delete/${id}`,
       create: `/api/requests`,
       types: '/requests/types',
       request_exist: (search_params) => `/api/requests/request_exist/${search_params}`
@@ -51,6 +52,7 @@ class ApiRoutes {
     return {
       create: `/api/commissions`,
       types: `/commissions/types`,
+      update: (id) => `/api/commissions/${id}`,
     }
   }
 
