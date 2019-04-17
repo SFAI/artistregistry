@@ -37,10 +37,10 @@ class Works extends React.Component {
     ]).then(response => {
       const [works_response, filters_response] = response;
       this.setState({
-        works: works_response,
+        works: works_response.works,
         filters: filters_response,
         isLoading: false,
-        pageCount: Math.ceil(this.props.work_count / perPage)
+        pageCount: Math.ceil(works_response.work_count / perPage)
       });
     });
   };
@@ -63,9 +63,9 @@ class Works extends React.Component {
     Requester.get(
       works_route).then(
         response => {
-          let works = response.filtered_works
+          let works = response.works
           if (this.props.userType != "admin") {
-            works = response.filtered_works.filter(work => work.hidden == false)
+            works = response.works.filter(work => work.hidden == false)
           }
           this.setState({
             works: works,
@@ -161,7 +161,7 @@ class Works extends React.Component {
         works_route).then(
           response => {
             this.setState({
-              works: response,
+              works: response.works,
               currentPage: data.selected
             });
           },

@@ -97,29 +97,31 @@ class Api::WorksController < ApplicationController
   end
 
   def index
-    # works = Work.all
-    @work_count = Work.count
+    work_count = Work.count
     works = Work.page(params[:page])
-    render json: works,
-      each_serializer: WorkSerializer
+    render json: {
+      works: ActiveModel::Serializer::CollectionSerializer.new(works, each_serializer: WorkSerializer),
+      work_count: work_count
+    }
   end
 
   def filtered_works
     parsed_query = CGI.parse(params[:search_params])
     filtered_works = params[:search_params] == "" ?  Work.all.page(params[:page]) : Work.where(parsed_query).page(params[:page])
     work_count = params[:search_params] == "" ?  Work.count : Work.where(parsed_query).count
-    puts(filtered_works)
     render json: {
-      filtered_works: ActiveModel::Serializer::CollectionSerializer.new(filtered_works, each_serializer: WorkSerializer),
+      works: ActiveModel::Serializer::CollectionSerializer.new(filtered_works, each_serializer: WorkSerializer),
       work_count: work_count
     }
   end
 
   def filtered_artist_hidden
     filtered_works = Work.joins(:artist).where("artists.hidden" => false, "works.hidden" => false).page(params[:page])
-    @work_count = filtered_works.length
-    render json: filtered_works,
-      each_serializer: WorkSerializer
+    work_count =  Work.joins(:artist).where("artists.hidden" => false, "works.hidden" => false).count
+    render json: {
+      works: ActiveModel::Serializer::CollectionSerializer.new(filtered_works, each_serializer: WorkSerializer),
+      work_count: work_count
+    }
   end
 
   def thumbnail
