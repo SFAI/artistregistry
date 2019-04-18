@@ -15,6 +15,7 @@ class WorksController < ApplicationController
   def show
     @work_id = params[:id]
     @work = Work.find(@work_id)
+    @artist = Artist.find(@work.artist_id)
   end
 
   def new

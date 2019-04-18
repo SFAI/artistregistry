@@ -7,6 +7,7 @@ import Linkify from 'react-linkify';
 import Button from "../helpers/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import Unauthorized from "../helpers/Unauthorized";
 
 class DetailedWork extends React.Component {
   constructor(props) {
@@ -39,6 +40,14 @@ class DetailedWork extends React.Component {
   }
 
   render() {
+    if (this.props.user_type != "admin" && (this.props.artist.hidden || this.props.work.hidden)) {
+      if (this.props.user == null || (this.props.user.account_id != this.props.artist.account_id)) {
+        return (
+          <Unauthorized>
+          </Unauthorized>
+        )
+      }
+    }
     if (!this.state.componentDidMount) {
       return (
         <div />
