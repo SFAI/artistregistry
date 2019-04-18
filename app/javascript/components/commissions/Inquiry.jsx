@@ -70,6 +70,14 @@ class Inquiry extends React.Component {
         this.setState({ isBlocking: response });
       }
     );
+
+  deleteInquiry = (id) => {
+  	if (confirm('Are you sure you would like to delete this inquiry?')) {
+	  	const delete_inquiry_route = APIRoutes.commissions.update(id);
+    	Requester.update(delete_inquiry_route, { deleted: true }).then((response) => {
+    		this.props.onChange();
+    	})
+  	}
   }
   
   render() {
@@ -100,13 +108,16 @@ class Inquiry extends React.Component {
 		        	className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
 		        </button>
 		        <ul className="request-dropdown ml3 absolute nowrap z-3">
-			  			<li>Archive</li>
-			  			<li>Delete inquiry</li>
+			  			<li 
+			  				value={commission.id}
+			  				onClick={() => this.deleteInquiry(commission.id)}>
+			  				Delete inquiry
+			  			</li>
 			  			{ 
-				        	this.state.isBlocking ?
-				        		<li value={commission.id} onClick={this.unblockUser}>Unblock user</li> : 
-				        		<li value={commission.id} onClick={this.blockUser}>Block user</li>
-				        }
+                this.state.isBlocking ?
+                  <li value={commission.id} onClick={this.unblockUser}>Unblock user</li> : 
+                  <li value={commission.id} onClick={this.blockUser}>Block user</li>
+              }
 			  		</ul>
 			  	</div>
 	      </div>

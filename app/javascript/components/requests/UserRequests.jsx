@@ -84,6 +84,7 @@ class UserRequests extends React.Component {
       }
       Requester.get(requests_route).then(
         response => {
+          response = response.filter(request => !request.deleted);
           this.setState({ inbox: response, display: [...Array(response.length).keys()] });
         },
         error => {

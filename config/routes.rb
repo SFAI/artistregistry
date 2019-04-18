@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     post 'blocks/unblock_user' => 'blocks#unblock_user', as: :unblock_user
     get 'blocks/is_blocking/:search_params' => 'blocks#is_blocking', as: :is_blocking
     get 'requests/request_exist/:search_params' => 'requests#request_exist'
+    put 'requests/delete/:id' => 'requests#delete'
     put 'artists/lock_user/:id' => 'artists#lock_user'
     put 'artists/unlock_user/:id' => 'artists#unlock_user'
     get 'works/filtered/artist_hidden' => 'works#filtered_artist_hidden'

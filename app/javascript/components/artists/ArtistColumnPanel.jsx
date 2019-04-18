@@ -1,6 +1,7 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import Touchable from 'rc-touchable';
+import classNames from "classnames";
 import { convertSnakeCase, pluralize } from "../../utils/strings";
 
 /**
@@ -29,7 +30,13 @@ class ArtistColumnPanel extends React.Component {
     const non_hidden_works = artist.works.filter(work => work.hidden === false);
     const hidden_works = artist.works.filter(work => work.hidden === true);
     return (
-      <div className="mb3 pa3 w-100 col-item bg-white relative" key={artist.id}>
+      <div
+        className={
+          classNames("mb3 pa3 w-100 col-item bg-white relative", {
+            "overlay-hidden-artist": artist.hidden
+          })}
+        key={artist.id}
+      >
         <div className="item-overlay">
           {this.props.children}
         </div>
@@ -51,9 +58,6 @@ class ArtistColumnPanel extends React.Component {
           <h6 className="i">
             {pluralize(hidden_works, 'work')} hidden
           </h6>
-        }
-        {userType == "admin" && artist.hidden &&
-          <h6> HIDDEN!!!!! </h6>
         }
       </div>
     );

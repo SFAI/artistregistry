@@ -248,10 +248,11 @@ class WorkForm extends React.Component {
     }).catch((data) => {
       console.error(data);
     });
+  }
     
-  toggleHidden = () => {
+  toggleHidden = (event) => {
     let new_work = this.state.work
-    new_work.hidden = !this.state.work.hidden
+    new_work.hidden = event.target.checked
     this.setState({ work: new_work })
   }
 
@@ -311,7 +312,9 @@ class WorkForm extends React.Component {
         <div className="flex items-center mv2">
           <h5 className="mr2 mb0">Hidden</h5>
           <input
-            onClick={() => this.toggleHidden()}
+            onChange={this.toggleHidden}
+            value={this.state.work.hidden}
+            name="hidden"
             type="checkbox"
             checked={this.state.work.hidden}
             id="checkbox-hidden"
@@ -379,15 +382,17 @@ class WorkForm extends React.Component {
             Save
           </button>
         </div>
-        <div className="mv2">
-          <h5> Remove this work permanently? </h5>
-          <button
-            onClick={() => {if (window.confirm('Are you sure you wish to delete this work?')) this.deleteWork() } }
-            className="button-secondary berry b--berry w4 mv2"
-          >
-            Delete
-          </button>
-        </div>
+        {this.state.work.id && 
+          <div className="mv2">
+            <h5> Remove this work permanently? </h5>
+            <button
+              onClick={() => {if (window.confirm('Are you sure you wish to delete this work?')) this.deleteWork() } }
+              className="button-secondary berry b--berry w4 mv2"
+            >
+              Delete
+            </button>
+          </div>
+        }
       </div>
     )
   }
