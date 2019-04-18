@@ -74,14 +74,20 @@ class Inquiry extends React.Component {
   
   render() {
   	const commission = this.props.commission;
+    const buyerAndComment = this.state.isBlocking ? 
+      <div className="flex items-center flex-grow-1 pa3 i">This message is hidden due to blocked user.</div> : (
+      <div className="flex">
+        <div className="request-action">
+          <BuyerSnapshot buyer={commission.buyer} />
+        </div>
+        <div className="pa3 flex-grow-1 gray">{commission.comment}</div>
+      </div>
+      );
 
   	return (
 	  	<div key={commission.id} className="request ph3 bg-white">
 	      <div className="request-container w-100 flex justify-between pv3 bb b--light-gray bt-0 bl-0 br-0">
-	        <div className="request-action">
-	          <BuyerSnapshot buyer={commission.buyer} />
-	        </div>
-	        <div className="pa3 flex-grow-1 gray">{commission.comment}</div>
+	        { buyerAndComment }
 	        <div className="pa3 w-20 flex-shrink-0">
 	          <div>{new Date(commission.created_at).toLocaleDateString()}</div>
 	          <div>
