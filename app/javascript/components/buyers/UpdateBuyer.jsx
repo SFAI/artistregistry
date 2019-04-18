@@ -117,11 +117,10 @@ class UpdateBuyer extends React.Component {
   }
 
   render() {
-    if (!this.props.currentUser) {
+    if (this.props.currentUser != this.props.buyerId) {
       return (
-        // <h1>NO</h1>
         <Unauthorized>
-          
+
         </Unauthorized>
       )
     }
