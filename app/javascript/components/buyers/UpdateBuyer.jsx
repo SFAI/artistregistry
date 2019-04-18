@@ -3,6 +3,8 @@ import React from 'react';
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
 import LoadingOverlay from "../helpers/LoadingOverlay";
+import ConfirmEmail from "../helpers/ConfirmEmail";
+import Unauthorized from "../helpers/Unauthorized";
 
 class UpdateBuyer extends React.Component {
   constructor(props) {
@@ -115,6 +117,14 @@ class UpdateBuyer extends React.Component {
   }
 
   render() {
+    if (!this.props.currentUser) {
+      return (
+        // <h1>NO</h1>
+        <Unauthorized>
+          
+        </Unauthorized>
+      )
+    }
     if (!this.state.componentDidMount) {
       return (
         <LoadingOverlay itemType="information" fullPage={true} />
