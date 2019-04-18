@@ -7,8 +7,69 @@ class Inquiry extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
-    	dropDownVisible: false
+    	dropDownVisible: false,
+    	isBlocking: false
     };
+  }
+
+  componentDidMount = () => {
+    this.isBlocking();
+  }
+
+  closeRequest = (id) => {
+    const update_request_route = APIRoutes.requests.update(id);
+    Requester.update(update_request_route, { open: false }).then((response) => {
+      this.props.onChange();
+    });
+  }
+
+  blockUser = () => {
+    const payload = {
+    	blocker_id: this.props.commission.artist.account_id,
+        blocked_id: this.props.commission.buyer.account_id
+    };
+    const block_route = APIRoutes.blocks.block_user;
+
+    Requester.post(
+      block_route, payload).then(
+        response => {
+          window.location.href = '/commissions'
+        },
+        response => {
+          console.error(response);
+        }
+      );
+  }
+
+  unblockUser = () => {
+    const payload = {
+    	blocker_id: this.props.commission.artist.account_id,
+        blocked_id: this.props.commission.buyer.account_id
+    };
+    const unblock_route = APIRoutes.blocks.unblock_user;
+
+    Requester.post(
+      unblock_route, payload).then(
+        response => {
+          window.location.href = '/commissions'
+        },
+        response => {
+          console.error(response);
+        }
+      );
+  }
+
+  isBlocking = () => {
+    const payload = `blocker_id=${this.props.commission.artist.account_id}` +
+      `&blocked_id=${this.props.commission.buyer.account_id}`;
+
+    const isblocking_route = APIRoutes.blocks.is_blocking(payload);
+
+    Requester.get(isblocking_route).then(
+      response => {
+        this.setState({ isBlocking: response });
+      }
+    );
   }
   
   render() {
@@ -35,7 +96,11 @@ class Inquiry extends React.Component {
 		        <ul className="request-dropdown ml3 absolute nowrap z-3">
 			  			<li>Archive</li>
 			  			<li>Delete inquiry</li>
-			  			<li>Block user</li>
+			  			{ 
+				        	this.state.isBlocking ?
+				        		<li value={commission.id} onClick={this.unblockUser}>Unblock user</li> : 
+				        		<li value={commission.id} onClick={this.blockUser}>Block user</li>
+				        }
 			  		</ul>
 			  	</div>
 	      </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_14_031659) do
+ActiveRecord::Schema.define(version: 2019_04_05_082136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,7 +125,6 @@ ActiveRecord::Schema.define(version: 2019_04_14_031659) do
     t.bigint "artist_id"
     t.bigint "buyer_id"
     t.integer "types"
-    t.boolean "deleted"
     t.index ["artist_id"], name: "index_commissions_on_artist_id"
     t.index ["buyer_id"], name: "index_commissions_on_buyer_id"
   end
@@ -153,7 +152,6 @@ ActiveRecord::Schema.define(version: 2019_04_14_031659) do
     t.datetime "updated_at", null: false
     t.bigint "receipt_id"
     t.integer "types"
-    t.boolean "deleted"
     t.index ["artist_id"], name: "index_requests_on_artist_id"
     t.index ["buyer_id"], name: "index_requests_on_buyer_id"
     t.index ["receipt_id"], name: "index_requests_on_receipt_id"

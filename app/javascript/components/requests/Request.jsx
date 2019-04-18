@@ -28,6 +28,10 @@ class Request extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    this.isBlocking();
+  }
+
   closeRequest = (id) => {
     const update_request_route = APIRoutes.requests.update(id);
     Requester.update(update_request_route, { open: false }).then((response) => {
@@ -36,16 +40,20 @@ class Request extends React.Component {
   }
 
   blockUser = () => {
-    const payload = {
-      blocker_id: this.props.artist.account_id,
-      blocked_id: this.state.request.buyer.account_id
-    }
+    const payload = this.props.artist ? 
+      {
+        blocker_id: this.state.request.artist.account_id,
+        blocked_id: this.state.request.buyer.account_id
+      } : {
+        blocker_id: this.state.request.buyer.account_id,
+        blocked_id: this.state.request.artist.account_id
+      };
     const block_route = APIRoutes.blocks.block_user;
 
     Requester.post(
       block_route, payload).then(
         response => {
-          this.setState({ isBlocking: true });
+          window.location.href = '/requests'
         },
         response => {
           console.error(response);
@@ -54,16 +62,20 @@ class Request extends React.Component {
   }
 
   unblockUser = () => {
-    const payload = {
-      blocker_id: this.props.artist.account_id,
-      blocked_id: this.state.request.buyer.account_id
-    }
+    const payload = this.props.artist ? 
+      {
+        blocker_id: this.state.request.artist.account_id,
+        blocked_id: this.state.request.buyer.account_id
+      } : {
+        blocker_id: this.state.request.buyer.account_id,
+        blocked_id: this.state.request.artist.account_id
+      };
     const unblock_route = APIRoutes.blocks.unblock_user;
 
     Requester.post(
       unblock_route, payload).then(
         response => {
-          this.setState({ isBlocking: false });
+          window.location.href = '/requests'
         },
         response => {
           console.error(response);
@@ -72,17 +84,19 @@ class Request extends React.Component {
   }
 
   isBlocking = () => {
-    const payload = `blocker_id=${this.props.artist.account_id}` +
-      `&blocked_id=${this.state.request.buyer.account_id}`;
+    const blocker = this.props.artist ? 
+      this.state.request.artist.account_id : this.state.request.buyer.account_id;
+    const blocked = this.props.artist ?
+      this.state.request.buyer.account_id : this.state.request.artist.account_id;
+
+    const payload = `blocker_id=${blocker}` +
+      `&blocked_id=${blocked}`;
 
     const isblocking_route = APIRoutes.blocks.is_blocking(payload);
 
     Requester.get(isblocking_route).then(
       response => {
-        this.setState({ isBlocking: true });
-      },
-      response => {
-        console.error(response);
+        this.setState({ isBlocking: response });
       }
     );
   }
@@ -167,9 +181,9 @@ class Request extends React.Component {
           </li>
           <li>Delete</li>
           { 
-            this.isBlocking() ?
-              <li value={id} onClick={this.blockUser}>Unblock user</li> : 
-              <li value={id} onClick={this.unblockUser}>Block user</li>
+            this.state.isBlocking ?
+              <li value={id} onClick={this.unblockUser}>Unblock user</li> : 
+              <li value={id} onClick={this.blockUser}>Block user</li>
           }
         </ul>
       </div>);
