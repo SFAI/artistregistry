@@ -67,9 +67,8 @@ class Request extends React.Component {
 
   renderDropdown(id) {
     return (
-      <div className={classNames("relative", "mh3", {"requests-dropdown-selected" : this.state.dropDownVisible})}>
-        <button 
-          onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
+      <div className="relative mh3">
+        <button
           className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
         </button>
         <ul className="request-dropdown ml3 absolute nowrap z-3">
