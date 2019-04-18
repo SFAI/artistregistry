@@ -133,7 +133,6 @@ class UpdateArtist extends React.Component {
     if (!this.props.current_user || this.props.current_user.account_id != this.props.artist_account_id) {
       return (
         <Unauthorized>
-
         </Unauthorized>
       )
     }
