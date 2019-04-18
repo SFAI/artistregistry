@@ -40,8 +40,9 @@ class DetailedWork extends React.Component {
   }
 
   render() {
-    if (this.props.user_type != "admin" && (this.props.artist.hidden || this.props.work.hidden)) {
-      if (this.props.user == null || (this.props.user.account_id != this.props.artist.account_id)) {
+    const { work_id, buyer, artist_prop, work, user, user_type } = this.props
+    if (user_type != "admin" && (artist_prop.hidden || work.hidden)) {
+      if (user == null || (user.account_id != artist_prop.account_id)) {
         return (
           <Unauthorized>
           </Unauthorized>
