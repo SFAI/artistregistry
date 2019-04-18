@@ -4,11 +4,11 @@ import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import { convertSnakeCase } from "../../utils/strings";
+import Unauthorized from "../helpers/Unauthorized";
 
 class UpdateArtist extends React.Component {
   constructor(props) {
     super(props);
-    const { artist_id } = this.props.artist_id;
     this.state = {
       artist: {},
       works: [],
@@ -130,6 +130,13 @@ class UpdateArtist extends React.Component {
   }
 
   render() {
+    if (!this.props.current_user || this.props.current_user.account_id != this.props.artist_account_id) {
+      return (
+        <Unauthorized>
+
+        </Unauthorized>
+      )
+    }
     if (this.state.apiFetchError) {
       return (
         <div className="mw6 center pt4">

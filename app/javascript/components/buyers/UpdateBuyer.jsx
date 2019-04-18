@@ -10,7 +10,6 @@ class UpdateBuyer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      buyerId: this.props.buyerId,
       buyer: {},
       avatar: null,
       componentDidMount: false,
@@ -23,7 +22,7 @@ class UpdateBuyer extends React.Component {
   }
 
   componentDidMount() {
-    const buyerRoute = APIRoutes.buyers.show(this.state.buyerId);
+    const buyerRoute = APIRoutes.buyers.show(this.props.buyer_id);
     Requester.get(buyerRoute).then(
       response => {
         this.setState({ buyer: response, componentDidMount: true });
@@ -117,7 +116,7 @@ class UpdateBuyer extends React.Component {
   }
 
   render() {
-    if (!this.props.currentUser || this.props.currentUser.id != this.props.buyerId) {
+    if (!this.props.current_user || this.props.current_user.account_id != this.props.buyer_account_id) {
       return (
         <Unauthorized>
 

@@ -167,5 +167,6 @@ account.user = Sfai
 account.save!
 
 Sfai.account = account
+Sfai.account_id = account.id
 Sfai.skip_confirmation!
 Sfai.save!
