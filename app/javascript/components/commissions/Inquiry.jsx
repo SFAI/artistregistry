@@ -82,8 +82,10 @@ class Inquiry extends React.Component {
   }
   
   render() {
-  	const commission = this.props.commission;
-    const buyerAndComment = this.state.isBlocking ? 
+    const { isBlocking, dropDownVisible } = this.state;
+    const { commission } = this.props;
+
+    const buyerAndComment = isBlocking ? 
       <div className="flex items-center flex-grow-1 pa3 i">This message is hidden due to blocked user.</div> : (
       <div className="flex">
         <div className="request-action">
@@ -103,22 +105,20 @@ class Inquiry extends React.Component {
 	            {commission.types.charAt(0).toUpperCase() + commission.types.slice(1)}
 	          </div>
 	        </div>
-	        <div className={classNames("relative", {"requests-dropdown-selected" : this.state.dropDownVisible})}>
+	        <div className={classNames("relative", {"requests-dropdown-selected" : dropDownVisible})}>
 		        <button 
-		        	onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
+		        	onClick={() => this.setState({ dropDownVisible: !dropDownVisible })}
 		        	className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
 		        </button>
 		        <ul className="request-dropdown ml3 absolute nowrap z-3">
 			  			<li 
-			  				value={commission.id}
 			  				onClick={() => this.deleteInquiry(commission.id)}>
 			  				Delete inquiry
 			  			</li>
-			  			{ 
-                this.state.isBlocking ?
-                  <li value={commission.id} onClick={this.unblockUser}>Unblock user</li> : 
-                  <li value={commission.id} onClick={this.blockUser}>Block user</li>
-              }
+              <li
+                onClick={isBlocking ? this.unblockUser : this.blockUser}>
+                {isBlocking ? "Unblock user" : "Block user"}
+              </li>
 			  		</ul>
 			  	</div>
 	      </div>
