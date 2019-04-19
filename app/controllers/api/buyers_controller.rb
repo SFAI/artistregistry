@@ -42,8 +42,7 @@ class Api::BuyersController < ApplicationController
     params.require(:buyer).permit(:name,
                                  :email,
                                  :phone_number,
-                                 :avatar,
-                                 :hidden
+                                 :avatar
                                 )
   end
 
