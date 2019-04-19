@@ -28,11 +28,22 @@ class Api::BuyersController < ApplicationController
     end
   end
 
+  def lock_user
+    user = Buyer.find(params[:id])
+    user.lock_access!
+  end
+
+  def unlock_user
+    user = Buyer.find(params[:id])
+    user.unlock_access!
+  end
+
   def buyer_params
     params.require(:buyer).permit(:name,
                                  :email,
                                  :phone_number,
-                                 :avatar
+                                 :avatar,
+                                 :hidden
                                 )
   end
 

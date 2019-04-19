@@ -31,11 +31,40 @@ class BuyerProfile extends React.Component {
     });
   }
 
-  render() {
+  lockBuyer = () => {
+    fetch(APIRoutes.buyers.lock_user(this.props.buyer.id), {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/buyers/` + this.props.buyer.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
 
+  unlockBuyer = () => {
+    fetch(APIRoutes.buyers.unlock_user(this.props.buyer.id), {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/buyers/` + this.props.buyer.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+
+  render() {
     const { componentDidMount, activeFilter, buyer, canEditProfile } = this.state;
     const { name, email, phone_number } = buyer;
-
+    const { user, userType } = this.props;
+    
     if (!componentDidMount) {
       return (
         <div>
@@ -78,6 +107,18 @@ class BuyerProfile extends React.Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className="mt5 mb3 row-head">
+          {userType == "admin" && (
+            <Button
+              type="button-primary"
+              className="w4"
+              color="black"
+              onClick={this.lockBuyer}
+            >
+              {"LOCK"}
+            </Button>
+          )}
         </div>
         </div>
     );
