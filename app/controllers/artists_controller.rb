@@ -5,6 +5,17 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
+    artist_account_id = @artist.account.id
+    user_account_id = @current_user.account.id
+
+    @blocked = (
+      Block.where(
+        blocker_id: artist_account_id,
+        blocked_id: user_account_id).exists? ||
+      Block.where(
+        blocked_id: artist_account_id,
+        blocker_id: user_account_id).exists?
+      )
   end
 
   def update
