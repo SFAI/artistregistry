@@ -60,7 +60,8 @@ class Inquiry extends React.Component {
   }
 
   isBlocking = () => {
-    const payload = `blocker_id=${this.props.commission.artist.account_id}` +
+    const payload =
+      `blocker_id=${this.props.commission.artist.account_id}` +
       `&blocked_id=${this.props.commission.buyer.account_id}`;
 
     const isblocking_route = APIRoutes.blocks.is_blocking(payload);
@@ -68,8 +69,8 @@ class Inquiry extends React.Component {
     Requester.get(isblocking_route).then(
       response => {
         this.setState({ isBlocking: response });
-      }
-    );
+    });
+  }
 
   deleteInquiry = (id) => {
   	if (confirm('Are you sure you would like to delete this inquiry?')) {
@@ -124,6 +125,6 @@ class Inquiry extends React.Component {
 	    </div>
 	   )
   }
-}
+} 
 
 export default Inquiry;
