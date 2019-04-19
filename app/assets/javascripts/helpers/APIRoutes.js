@@ -34,8 +34,8 @@ class ApiRoutes {
       show        : (id) => `/api/buyers/${id}`,
       update      : (id) => `/api/buyers/${id}`,
       requests    : (id) => `/api/buyers/requests/${id}`,
-      lock_user : (id) => `/api/artists/lock_user/${id}`,
-      unlock_user : (id) => `/api/artists/unlock_user/${id}`,
+      lock_user : (id) => `/api/buyers/lock_user/${id}`,
+      unlock_user : (id) => `/api/buyers/unlock_user/${id}`,
     };
   }
 

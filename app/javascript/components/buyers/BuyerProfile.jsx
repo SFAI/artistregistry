@@ -114,9 +114,9 @@ class BuyerProfile extends React.Component {
               type="button-primary"
               className="w4"
               color="black"
-              onClick={this.lockBuyer}
+              onClick={buyer.locked_at ? this.unlockBuyer : this.lockBuyer}
             >
-              {"LOCK"}
+              {buyer.locked_at ? "UNLOCK" : "LOCK"}
             </Button>
           )}
         </div>
