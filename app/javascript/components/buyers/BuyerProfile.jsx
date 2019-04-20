@@ -77,8 +77,17 @@ class BuyerProfile extends React.Component {
       <div className="center mw8">
         <div className="flex justify-between items-center">
           <h1>{name}</h1>
-          {
-            this.state.canEditProfile &&
+          {userType == "admin" && 
+            <Button
+              onClick={buyer.locked_at ? this.unlockBuyer : this.lockBuyer}
+              type="button-primary"
+              color="moss"
+              className="w4"
+            >
+              {buyer.locked_at ? "UNLOCK" : "LOCK"}
+            </Button>
+          }
+          {this.state.canEditProfile &&
             <Button
               onClick={()=>{window.location = `/buyers/${this.props.buyer.id}/update`}}
               type="button-primary"
@@ -108,19 +117,7 @@ class BuyerProfile extends React.Component {
             </div>
           </div>
         </div>
-        <div className="mt5 mb3 row-head">
-          {userType == "admin" && (
-            <Button
-              type="button-primary"
-              className="w4"
-              color="black"
-              onClick={buyer.locked_at ? this.unlockBuyer : this.lockBuyer}
-            >
-              {buyer.locked_at ? "UNLOCK" : "LOCK"}
-            </Button>
-          )}
-        </div>
-        </div>
+      </div>
     );
   }
 }
