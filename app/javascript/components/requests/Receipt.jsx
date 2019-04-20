@@ -97,9 +97,7 @@ class Receipt extends React.Component {
             <p>{new Date(this.state.request.created_at).toLocaleDateString()}</p>
           </div>
           <div className="relative mh3">
-            <button 
-              className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
-            </button>
+            <button className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0"/>
             <ul className="request-dropdown ml3 absolute nowrap z-3">
               <li>{this.renderEditReceipt()}</li>
               <li>Block user</li>
