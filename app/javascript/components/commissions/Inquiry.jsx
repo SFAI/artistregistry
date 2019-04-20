@@ -105,11 +105,8 @@ class Inquiry extends React.Component {
 	            {commission.types.charAt(0).toUpperCase() + commission.types.slice(1)}
 	          </div>
 	        </div>
-	        <div className={classNames("relative", {"requests-dropdown-selected" : dropDownVisible})}>
-		        <button 
-		        	onClick={() => this.setState({ dropDownVisible: !dropDownVisible })}
-		        	className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
-		        </button>
+	        <div className="relative">
+		        <button className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0"/>
 		        <ul className="request-dropdown ml3 absolute nowrap z-3">
 			  			<li 
 			  				onClick={() => this.deleteInquiry(commission.id)}>
