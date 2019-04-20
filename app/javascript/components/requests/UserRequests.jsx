@@ -15,7 +15,9 @@ class UserRequests extends React.Component {
       state: 0,
       componentDidMount: false,
     };
-    this.toggleState = ["Requests", "Pending", "Complete", "Archive"];
+    this.toggleState = this.props.artist 
+      ? ["All Requests", "Pending", "Complete", "Archive"] 
+      : ["All Requests", "Pending", "Complete"];
   }
 
   renderToggle() {
@@ -36,7 +38,7 @@ class UserRequests extends React.Component {
   display = (i) => {
     let display = []
     switch (this.toggleState[parseInt(i)]) {
-      case "Requests":
+      case "All Requests":
         this.state.inbox.map((request, i) => {
           display.push(i);
         });

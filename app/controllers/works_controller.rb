@@ -16,6 +16,17 @@ class WorksController < ApplicationController
     @work_id = params[:id]
     @work = Work.find(@work_id)
     @artist = Artist.find(@work.artist_id)
+
+    artist_account_id = @work.artist.account_id
+    user_account_id = @current_user.account_id
+
+    @blocked = (
+      Block.where(
+        blocker_id: artist_account_id,
+        blocked_id: user_account_id).exists? ||
+      Block.where(
+        blocked_id: user_account_id,
+        blocker_id: account_account_id).exists?)
   end
 
   def new

@@ -87,12 +87,14 @@ class DetailedWork extends React.Component {
               <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
             </div>
           </div>
-          <RequestForm
-            buyer={this.props.buyer}
-            artist_id={artist_id}
-            work_id={id}
-            work_status={availability}
-          />
+          {!this.props.blocked && 
+            <RequestForm
+              buyer={this.props.buyer}
+              artist_id={artist_id}
+              work_id={id}
+              work_status={availability}
+            />
+        }
         </div>
       </div>
     );
