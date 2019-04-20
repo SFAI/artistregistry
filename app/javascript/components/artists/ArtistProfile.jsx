@@ -359,8 +359,8 @@ class ArtistProfile extends React.Component {
           </div>
         </div>
         {
-          !canEditProfile &&
-          <div className="flex flex-row items-stretch mb4 mt4">
+          !canEditProfile && !this.props.blocked && 
+          <div className="flex flex-row items-stretch mb4">
             <div className="w-50 pr2 dib flex flex-row items-stretch">
               <div className="bg-charcoal pa3">
                 <h2 className="white">Guidelines for contacting artists</h2>
