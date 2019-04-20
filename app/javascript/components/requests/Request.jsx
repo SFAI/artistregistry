@@ -22,8 +22,7 @@ class Request extends React.Component {
         price: '',
         comment: '',
         request_id: this.props.request.id
-      },
-      dropDownVisible: false
+      }
     };
   }
 
