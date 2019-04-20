@@ -2,36 +2,36 @@
   <% if current_buyer || current_admin %>
     <h2> You are already logged in as a user. Please log out first to continue! </h2>
   <% else %>
-    <div class="container">
-      <h1>Welcome back</h1>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <%= devise_error_messages! %>
-          <% flash.each do |key, value| %>
-            <div class="flash <%= key %>"><%= value %></div>
-          <% end %>
+  <div class="container">
+    <h1>Welcome back</h1>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+        <% flash.each do |key, value| %>
+          <div class="flash <%= key %>"><%= value %></div>
+        <% end %>
 
-        <div class="mb3">
-          <%= f.label :email %>
-          <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email" %>
-          <p class="texthelp"> sfai.edu or artists.sfai.edu email required </p>
+      <div class="mb3">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "textinput w-100", autofocus: true, autocomplete: "email" %>
+        <p class="texthelp"> sfai.edu or artists.sfai.edu email required </p>
+      </div>
+
+      <div class="mb3">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "textinput w-100", autocomplete: "current-password" %>
+      </div>
+
+      <% if devise_mapping.rememberable? -%>
+        <div class="mb4">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
         </div>
+      <% end -%>
 
-        <div class="mb3">
-            <%= f.label :password %>
-            <%= f.password_field :password, class: "textinput w-100", autocomplete: "current-password" %>
-        </div>
-
-        <% if devise_mapping.rememberable? -%>
-          <div class="mb4">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-          </div>
-        <% end -%>
-
-        <div class="flex justify-between">
-          <%= render "artists/shared/links" %>
-          <%= f.submit "Log in", class: "button-primary bg-moss w4" %>
-        </div>
-      <% end %>
+      <div class="flex justify-between">
+        <%= render "artists/shared/links" %>
+        <%= f.submit "Log in", class: "button-primary bg-moss w4" %>
+      </div>
+    <% end %>
     <% end %>
 </div>
