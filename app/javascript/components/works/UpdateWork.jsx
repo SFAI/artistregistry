@@ -31,8 +31,7 @@ class UpdateWork extends React.Component {
     const { work_id, artist_account_id, current_user } = this.props
     if (!current_user || current_user.account_id != artist_account_id) {
       return (
-        <Unauthorized>
-        </Unauthorized>
+        <Unauthorized/>
       )
     }
     if (!this.state.componentDidMount) {
