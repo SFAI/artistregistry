@@ -103,7 +103,6 @@ class Receipt extends React.Component {
             </button>
             <ul className="request-dropdown ml3 absolute nowrap z-3">
               <li>{this.renderEditReceipt()}</li>
-              <li>Block user</li>
             </ul>
           </div>
         </div>
