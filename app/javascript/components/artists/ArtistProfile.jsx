@@ -8,6 +8,8 @@ import { faEdit, faTrash, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-
 import Button from "../helpers/Button";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import { convertSnakeCase } from "../../utils/strings";
+import Unauthorized from "../helpers/Unauthorized";
+
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 /**
 * @prop user: user currently logged in
@@ -260,9 +262,12 @@ class ArtistProfile extends React.Component {
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, media, description } = artist;
-    const { user, userType } = this.props;
-
-
+    const { artist: artist_prop, user, userType } = this.props;
+    if (artist.hidden && (user == null || (user.account_id != artist_prop.account_id && userType != "admin"))) {
+      return (
+        <Unauthorized/>
+      )
+    }
     if (!componentDidMount) {
       return (
         <LoadingOverlay fullPage={true} itemType="Artist"></LoadingOverlay>
