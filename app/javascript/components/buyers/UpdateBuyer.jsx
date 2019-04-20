@@ -168,7 +168,7 @@ class UpdateBuyer extends React.Component {
               onClick={this.selectFile}
               className="w4"
               type="button-secondary"
-              color="berry"
+              color="moss"
             >
               Select File
             </Button>
@@ -187,7 +187,7 @@ class UpdateBuyer extends React.Component {
             <Button
               onClick={() => {window.location = `/buyers/${this.state.buyer.id}`}}
               type="button-secondary"
-              color="berry"
+              color="moss"
               className="w4"
             >
               Cancel
@@ -195,7 +195,7 @@ class UpdateBuyer extends React.Component {
             <Button
               onClick={this.handleSubmit}
               type="button-primary"
-              color="berry"
+              color="moss"
               className="w4 ml2"
             >
               Submit
