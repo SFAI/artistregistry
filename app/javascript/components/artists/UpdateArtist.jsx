@@ -3,7 +3,7 @@ import React from 'react';
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
 import LoadingOverlay from "../helpers/LoadingOverlay";
-import { convertSnakeCase } from "../../utils/strings";
+import { convertSnakeCase, splitCommaSeparatedArray } from "../../utils/strings";
 
 class UpdateArtist extends React.Component {
   constructor(props) {
@@ -45,6 +45,7 @@ class UpdateArtist extends React.Component {
           categories: categories_response,
           componentDidMount: true
         });
+        this.state.artist['program'] = splitCommaSeparatedArray(this.state.artist['program']);
       },
       error => {
         console.error(error);
@@ -65,16 +66,12 @@ class UpdateArtist extends React.Component {
 
   toggleCheckbox = (item) => {
     const prevPrograms = this.state.artist.program;
-    console.log("Previous programs:", prevPrograms);
-
     let newPrograms;
     if (prevPrograms && prevPrograms.includes(item)) {
       newPrograms = prevPrograms.filter(value => value !== item);
     } else {
       newPrograms = prevPrograms ? [...prevPrograms, item] : [item];
     }
-
-    console.log("New programs:", newPrograms);
 
     const artist = this.state.artist;
     artist['program'] = newPrograms;
@@ -125,28 +122,11 @@ class UpdateArtist extends React.Component {
       event.preventDefault();
       let formData = new FormData();
       const formKeys = ['name', 'degree', 'media', 'description', 'featured_work_id'];
-      console.log("State:", this.state.artist['program']);
       formKeys.forEach(key => {
         formData.append(`artist[${key}]`, this.state.artist[key]);
       });
 
-      // for (var i = 0; i < this.state.artist['program'].length; i++) {
-      //   this.state.artist['program'][i] = JSON.stringify(this.state.artist['program'][i]);
-      // }
-
-      const lst = JSON.stringify(this.state.artist['program']);
-
-      console.log("Testing json stringify on indiv", lst);
-
-      const lst_decoded = JSON.parse(lst);
-      console.log("Testing json stringify on lst", lst_decoded);
-      console.log("Testing json stringify on normal array", this.state.artist['program']);
-      // for (var i = 0; i < this.state.artist['program'].length; i++) {
       formData.append(`artist[program][]`, this.state.artist['program']);
-      console.log("Program item", this.state.artist['program']);
-      // }
-
-      // formData.append(`artist[program]`, JSON.stringify(this.state.artist['program']));
 
       const { avatar } = this.state;
       if (avatar) {
@@ -165,8 +145,6 @@ class UpdateArtist extends React.Component {
       }).catch((data) => {
         console.error(data);
       });
-
-      console.log("End of handle submit in update artist", this.state.artist['program']);
     }
   }
 
@@ -207,7 +185,6 @@ class UpdateArtist extends React.Component {
             className="input-dropdown ttu"
             required
           >
-          <option>NONE</option>
             {
               Object.keys(this.state.categories.degree).map((obj, i) => {
                 return <option key={i} value={obj}>{convertSnakeCase(obj)}</option>
@@ -217,7 +194,8 @@ class UpdateArtist extends React.Component {
           <h5>Program</h5>
 
           <div className="checkbox-container">
-                  {Object.keys({"Art and Technology": 0, "Film": 1, "History and Theory": 2}).map(item => (
+                  {Object.keys({"Art and Technology": 0, "Film": 1, "History and Theory of Contemporary Art": 2,
+                    "New Genres": 3, "Painting": 4, "Photography": 5, "Printmaking": 6, "Sculpture": 7, "Studio Art": 8}).map(item => (
                     <div className="mb2 checkbox-item" key={item}>
                       <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
                         <input
@@ -228,7 +206,6 @@ class UpdateArtist extends React.Component {
                           id={`checkbox-${item}`}
                           name="program"
                           checked={(this.state.artist['program'].includes(item)) ? true : false}
-                          // className={`checkbox-${color}`}
                         />
                         <span className="filter-item">
                           {item}
@@ -237,20 +214,6 @@ class UpdateArtist extends React.Component {
                     </div>
                   ))}
                 </div>
-
-          {/* <select
-            value={this.state.artist.program}
-            onChange={this.handleChange}
-            name="program"
-            className="input-dropdown ttc"
-            required
-          >
-            {
-              Object.keys(this.state.categories.program).map((obj, i) => {
-                return <option key={i} value={obj}>{convertSnakeCase(obj)}</option>
-              })
-            }
-          </select> */}
           <h5>Media</h5>
           <input
             value={this.state.artist.media}

@@ -6,7 +6,7 @@ import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
-import { convertSnakeCase } from "../../utils/strings";
+import { convertSnakeCase, addSpaceAfterCommas } from "../../utils/strings";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 /**
 * @prop user: user currently logged in
@@ -229,9 +229,9 @@ class ArtistProfile extends React.Component {
             </div>
             <div className="info">
               <h5 className="ttu">Degree</h5>
-              <p className="ttu"> {degree ? degree : "NONE"} </p>
+              <p className="ttu"> {degree ? degree : 0} </p>
               <h5 className="ttu mt2">Program</h5>
-              <p className="ttc"> {console.log(this.state.artist['program']), program} </p>
+              <p className="ttc"> {addSpaceAfterCommas(program)} </p>
               <h5 className="ttu mt2">Media</h5>
               <p> {media} </p>
             </div>
