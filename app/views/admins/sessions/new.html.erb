@@ -1,7 +1,12 @@
 <div class="loginPage">
   <% if current_buyer || current_artist %>
-    <h2> You are already logged in as a user. Please log out first to continue! </h2>
-  <% else %>
+    <div class="center mw6">
+      <h1>Page not available</h1>
+      <div class="mv4 bg-white pa4">
+        <h2>User logged in</h2>
+        <p>You are already logged in as a user. Please log out first to switch to an Admin account.</p>
+      </div>
+    </div>  <% else %>
   <div class="container">
     <h1>Welcome back</h1>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
