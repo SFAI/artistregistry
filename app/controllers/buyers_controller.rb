@@ -9,6 +9,7 @@ class BuyersController < ApplicationController
 
   def update
     @buyer_id = params[:id]
+    @buyer_account_id = Buyer.find(params[:id]).account_id
   end
 
   def generate_new_password_email

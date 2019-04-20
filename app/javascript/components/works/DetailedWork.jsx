@@ -7,6 +7,7 @@ import Linkify from 'react-linkify';
 import Button from "../helpers/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import Unauthorized from "../helpers/Unauthorized";
 
 class DetailedWork extends React.Component {
   constructor(props) {
@@ -39,6 +40,12 @@ class DetailedWork extends React.Component {
   }
 
   render() {
+    const { artist_prop, work, user, user_type } = this.props
+    if ((artist_prop.hidden || work.hidden) && (user == null || (user.account_id != artist_prop.account_id && user_type != "admin"))) {
+      return (
+        <Unauthorized/>
+      )
+    }
     if (!this.state.componentDidMount) {
       return (
         <div />
@@ -80,12 +87,14 @@ class DetailedWork extends React.Component {
               <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
             </div>
           </div>
-          <RequestForm
-            buyer={this.props.buyer}
-            artist_id={artist_id}
-            work_id={id}
-            work_status={availability}
-          />
+          {!this.props.blocked && 
+            <RequestForm
+              buyer={this.props.buyer}
+              artist_id={artist_id}
+              work_id={id}
+              work_status={availability}
+            />
+        }
         </div>
       </div>
     );

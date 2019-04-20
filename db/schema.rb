@@ -88,6 +88,14 @@ ActiveRecord::Schema.define(version: 2019_04_14_031659) do
     t.index ["reset_password_token"], name: "index_artists_on_reset_password_token", unique: true
   end
 
+  create_table "blocks", force: :cascade do |t|
+    t.integer "blocker_id", null: false
+    t.integer "blocked_id", null: false
+    t.index ["blocked_id", "blocker_id"], name: "index_blocks_on_blocked_id_and_blocker_id", unique: true
+    t.index ["blocked_id"], name: "index_blocks_on_blocked_id"
+    t.index ["blocker_id"], name: "index_blocks_on_blocker_id"
+  end
+
   create_table "buyers", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
