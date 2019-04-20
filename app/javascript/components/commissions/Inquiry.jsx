@@ -7,7 +7,6 @@ class Inquiry extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
-    	dropDownVisible: false,
     	isBlocking: false
     };
   }
@@ -82,7 +81,7 @@ class Inquiry extends React.Component {
   }
   
   render() {
-    const { isBlocking, dropDownVisible } = this.state;
+    const { isBlocking } = this.state;
     const { commission } = this.props;
 
     const buyerAndComment = isBlocking ? 

@@ -167,12 +167,14 @@ class Request extends React.Component {
   }
 
   renderDropdown(id) {
-    const { dropDownVisible, receipt, request, isBlocking } = this.state;
+    const { receipt, request, isBlocking } = this.state;
     return (
       <div className="relative mh3">
         <button className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0"/>
         <ul className="request-dropdown ml3 absolute nowrap z-3">
-          <li onClick={() => this.closeRequest(id)}>Archive</li>
+          {this.props.artist &&
+            <li onClick={() => this.closeRequest(id)}>Archive</li>
+          }
           <li>
             <StyledModal
               title="Complete"
