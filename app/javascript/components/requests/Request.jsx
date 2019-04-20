@@ -175,21 +175,23 @@ class Request extends React.Component {
           {this.props.artist &&
             <li onClick={() => this.closeRequest(id)}>Archive</li>
           }
-          <li>
-            <StyledModal
-              title="Complete"
-              buttonType=""
-            >
-              <TransactionForm
-                artist={this.props.artist}
-                request_id={id}
-                receipt={receipt}
-                route={APIRoutes.receipts.create}
-                method="POST"
-                work={request.work}
-              />
-            </StyledModal>
-          </li>
+          {this.props.artist &&
+            <li>
+              <StyledModal
+                title="Complete"
+                buttonType=""
+              >
+                <TransactionForm
+                  artist={this.props.artist}
+                  request_id={id}
+                  receipt={receipt}
+                  route={APIRoutes.receipts.create}
+                  method="POST"
+                  work={request.work}
+                />
+              </StyledModal>
+            </li>
+          }
           <li onClick={() => this.deleteRequest(id)}>Delete</li>
           <li
             onClick={isBlocking ? this.unblockUser : this.blockUser}>
