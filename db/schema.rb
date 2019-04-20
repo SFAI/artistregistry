@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_15_182531) do
+ActiveRecord::Schema.define(version: 2019_04_19_002135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 2019_04_15_182531) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "program"
+    t.string "program", default: [], array: true
     t.integer "degree"
     t.string "name"
     t.boolean "open_to_commissions"
@@ -83,7 +83,6 @@ ActiveRecord::Schema.define(version: 2019_04_15_182531) do
     t.bigint "account_id"
     t.datetime "locked_at"
     t.boolean "hidden"
-    t.integer "degree"
     t.index ["account_id"], name: "index_artists_on_account_id"
     t.index ["confirmation_token"], name: "index_artists_on_confirmation_token", unique: true
     t.index ["email"], name: "index_artists_on_email", unique: true

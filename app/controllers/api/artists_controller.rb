@@ -3,8 +3,7 @@ class Api::ArtistsController < ApplicationController
 
   def get_artist_category_enums
     # return enums for filtering
-    categories = {
-      program: Artist.programs,
+    categories = { 
       degree: Artist.degrees
     }
     render json: categories
@@ -30,6 +29,7 @@ class Api::ArtistsController < ApplicationController
   def update
     artist_attr = artist_params
     avatar_attr = artist_attr.delete("avatar")
+
     @artist = Artist.find(params[:id])
     authorize @artist
     
@@ -87,13 +87,13 @@ class Api::ArtistsController < ApplicationController
 
   def artist_params
     params.require(:artist).permit(:name,
-                                 :program,
                                  :degree,
                                  :media,
                                  :description,
                                  :avatar,
                                  :featured_work_id,
-                                 :hidden
+                                 :hidden,
+                                 :program => []
                                 )
   end
 end

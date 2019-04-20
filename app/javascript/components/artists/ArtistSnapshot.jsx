@@ -20,7 +20,7 @@ class ArtistSnapshot extends React.Component {
         name={name}
         avatarSrc={avatar.url || ""}
         navigate={this.navigateToArtist}
-        program={convertSnakeCase(program)}
+        program={program}
         degree={degree}
         color={this.props.color}
       >

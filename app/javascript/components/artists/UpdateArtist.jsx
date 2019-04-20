@@ -64,17 +64,20 @@ class UpdateArtist extends React.Component {
   }
 
   toggleCheckbox = (item) => {
-    // const prevPrograms = this.state.artist.program;
+    const prevPrograms = this.state.artist.program;
+    console.log("Previous programs:", prevPrograms);
 
-    // let newFilterParams;
-    // if (prevSearchParams && prevSearchParams.includes(item)) {
-    //   newFilterParams = prevSearchParams.filter(value => value !== item);
-    // } else {
-    //   newFilterParams = prevSearchParams ? [...prevSearchParams, item] : [item];
-    // }
+    let newPrograms;
+    if (prevPrograms && prevPrograms.includes(item)) {
+      newPrograms = prevPrograms.filter(value => value !== item);
+    } else {
+      newPrograms = prevPrograms ? [...prevPrograms, item] : [item];
+    }
+
+    console.log("New programs:", newPrograms);
 
     const artist = this.state.artist;
-    artist['program'] = item;
+    artist['program'] = newPrograms;
     this.setState({
       artist: artist
     });
@@ -121,10 +124,29 @@ class UpdateArtist extends React.Component {
       this.setState({ updatingArtist: true })
       event.preventDefault();
       let formData = new FormData();
-      const formKeys = ['name', 'program', 'degree', 'media', 'description', 'featured_work_id'];
+      const formKeys = ['name', 'degree', 'media', 'description', 'featured_work_id'];
+      console.log("State:", this.state.artist['program']);
       formKeys.forEach(key => {
         formData.append(`artist[${key}]`, this.state.artist[key]);
       });
+
+      // for (var i = 0; i < this.state.artist['program'].length; i++) {
+      //   this.state.artist['program'][i] = JSON.stringify(this.state.artist['program'][i]);
+      // }
+
+      const lst = JSON.stringify(this.state.artist['program']);
+
+      console.log("Testing json stringify on indiv", lst);
+
+      const lst_decoded = JSON.parse(lst);
+      console.log("Testing json stringify on lst", lst_decoded);
+      console.log("Testing json stringify on normal array", this.state.artist['program']);
+      // for (var i = 0; i < this.state.artist['program'].length; i++) {
+      formData.append(`artist[program][]`, this.state.artist['program']);
+      console.log("Program item", this.state.artist['program']);
+      // }
+
+      // formData.append(`artist[program]`, JSON.stringify(this.state.artist['program']));
 
       const { avatar } = this.state;
       if (avatar) {
@@ -143,6 +165,8 @@ class UpdateArtist extends React.Component {
       }).catch((data) => {
         console.error(data);
       });
+
+      console.log("End of handle submit in update artist", this.state.artist['program']);
     }
   }
 
@@ -183,6 +207,7 @@ class UpdateArtist extends React.Component {
             className="input-dropdown ttu"
             required
           >
+          <option>NONE</option>
             {
               Object.keys(this.state.categories.degree).map((obj, i) => {
                 return <option key={i} value={obj}>{convertSnakeCase(obj)}</option>
@@ -192,20 +217,21 @@ class UpdateArtist extends React.Component {
           <h5>Program</h5>
 
           <div className="checkbox-container">
-                  {Object.keys(this.state.categories.program).map(item => (
+                  {Object.keys({"Art and Technology": 0, "Film": 1, "History and Theory": 2}).map(item => (
                     <div className="mb2 checkbox-item" key={item}>
                       <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
                         <input
-                          onClick={() => this.toggleCheckbox(item)}
+                          onChange={() => this.toggleCheckbox(item)}
                           type="checkbox"
                           className="checkbox"
                           value={item}
                           id={`checkbox-${item}`}
                           name="program"
+                          checked={(this.state.artist['program'].includes(item)) ? true : false}
                           // className={`checkbox-${color}`}
                         />
                         <span className="filter-item">
-                          {convertSnakeCase(item)}
+                          {item}
                         </span>
                       </label>
                     </div>

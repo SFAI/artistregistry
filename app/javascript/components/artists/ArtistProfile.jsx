@@ -229,9 +229,9 @@ class ArtistProfile extends React.Component {
             </div>
             <div className="info">
               <h5 className="ttu">Degree</h5>
-              <p className="ttu"> {degree} </p>
+              <p className="ttu"> {degree ? degree : "NONE"} </p>
               <h5 className="ttu mt2">Program</h5>
-              <p className="ttc"> {convertSnakeCase(program)} </p>
+              <p className="ttc"> {console.log(this.state.artist['program']), program} </p>
               <h5 className="ttu mt2">Media</h5>
               <p> {media} </p>
             </div>

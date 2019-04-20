@@ -10,7 +10,7 @@
 # enum program: { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7, studio_art: 8 }
 
 artist_list = [
-  ['Andrew Smith', 'asmith@artists.sfai.edu', 'password', 4, 'Andrew Smith is a painter.', 'digital media', 2009, true ],
+  ['Andrew Smith', 'asmith@artists.sfai.edu', 'password', [1], 'Andrew Smith is a painter.', 'digital media', 2009, true ],
   ['Benjamin Evans', 'bevans@artists.sfai.edu', 'password', 0, 'Benjamin Evans is a Art and Technology student.', 'film', 2019, true ],
   ['Christine Ford', 'cford@artists.sfai.edu', 'password', 1, 'Christine Ford is a film student.', 'video, photography', 2020, true ],
   ['Danielle Alexander', 'dalexander@artists.sfai.edu', 'password', 2, 'Danielle Alexander is a History and Theory student.', 'drawing, painting', 2011, true ],
@@ -28,7 +28,7 @@ artist_list.each do |n, e, pw, pr, d, m, y, s|
     name: n,
     email: e,
     password: pw,
-    program: pr,
+    # program: pr,
     description: d,
     media: m,
     year: y,
@@ -36,6 +36,7 @@ artist_list.each do |n, e, pw, pr, d, m, y, s|
     terms_and_conditions: true,
     hidden: false
   )
+  artist.update_attributes program: []
   account = Account.create()
   account.user = artist
   account.save!
