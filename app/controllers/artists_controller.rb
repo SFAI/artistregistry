@@ -14,7 +14,7 @@ class ArtistsController < ApplicationController
         blocked_id: user_account_id).exists? ||
       Block.where(
         blocked_id: user_account_id,
-        blocker_id: account_account_id).exists?
+        blocker_id: artist_account_id).exists?
       )
   end
 
