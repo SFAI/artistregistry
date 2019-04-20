@@ -130,11 +130,10 @@ class UpdateArtist extends React.Component {
   }
 
   render() {
-    const {artist_id, artist_account_id, current_user} = this.props
+    const { artist_account_id, current_user } = this.props
     if (!current_user || current_user.account_id != artist_account_id) {
       return (
-        <Unauthorized>
-        </Unauthorized>
+        <Unauthorized/>
       )
     }
     if (this.state.apiFetchError) {

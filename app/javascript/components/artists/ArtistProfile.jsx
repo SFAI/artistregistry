@@ -262,15 +262,11 @@ class ArtistProfile extends React.Component {
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, media, description } = artist;
-    const { user, userType } = this.props;
-
-    if (userType != "admin" && (artist.hidden)) {
-      if (user == null || (user.account_id != artist.account_id)) {
-        return (
-          <Unauthorized>
-          </Unauthorized>
-        )
-      }
+    const { artist: artist_prop, user, userType } = this.props;
+    if (artist.hidden && (user == null || (user.account_id != artist_prop.account_id && userType != "admin"))) {
+      return (
+        <Unauthorized/>
+      )
     }
     if (!componentDidMount) {
       return (

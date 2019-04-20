@@ -119,8 +119,7 @@ class UpdateBuyer extends React.Component {
     const {buyer_id, buyer_account_id, current_user} = this.props
     if (!current_user || current_user.account_id != buyer_account_id) {
       return (
-        <Unauthorized>
-        </Unauthorized>
+        <Unauthorized/>
       )
     }
     if (!this.state.componentDidMount) {
