@@ -31,11 +31,40 @@ class BuyerProfile extends React.Component {
     });
   }
 
-  render() {
+  lockBuyer = () => {
+    fetch(APIRoutes.buyers.lock_user(this.props.buyer.id), {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/buyers/` + this.props.buyer.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
 
+  unlockBuyer = () => {
+    fetch(APIRoutes.buyers.unlock_user(this.props.buyer.id), {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: {
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
+      }
+    }).then((data) => {
+      window.location = `/buyers/` + this.props.buyer.id;
+    }).catch((data) => {
+      console.error(data);
+    });
+  }
+
+
+  render() {
     const { componentDidMount, activeFilter, buyer, canEditProfile } = this.state;
     const { name, email, phone_number } = buyer;
-
+    const { user, userType } = this.props;
+    
     if (!componentDidMount) {
       return (
         <div>
@@ -48,8 +77,17 @@ class BuyerProfile extends React.Component {
       <div className="center mw8">
         <div className="flex justify-between items-center">
           <h1>{name}</h1>
-          {
-            this.state.canEditProfile &&
+          {userType == "admin" && 
+            <Button
+              onClick={buyer.locked_at ? this.unlockBuyer : this.lockBuyer}
+              type="button-primary"
+              color="moss"
+              className="w4"
+            >
+              {buyer.locked_at ? "UNLOCK" : "LOCK"}
+            </Button>
+          }
+          {this.state.canEditProfile &&
             <Button
               onClick={()=>{window.location = `/buyers/${this.props.buyer.id}/update`}}
               type="button-primary"
@@ -79,7 +117,7 @@ class BuyerProfile extends React.Component {
             </div>
           </div>
         </div>
-        </div>
+      </div>
     );
   }
 }
