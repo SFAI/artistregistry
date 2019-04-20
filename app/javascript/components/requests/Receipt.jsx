@@ -96,14 +96,10 @@ class Receipt extends React.Component {
             <h5>Date Placed</h5>
             <p>{new Date(this.state.request.created_at).toLocaleDateString()}</p>
           </div>
-          <div className={classNames("relative", "mh3", {"requests-dropdown-selected" : this.state.dropDownVisible})}>
-            <button 
-              onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
-              className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
-            </button>
+          <div className="relative mh3">
+            <button className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0"/>
             <ul className="request-dropdown ml3 absolute nowrap z-3">
               <li>{this.renderEditReceipt()}</li>
-              <li>Block user</li>
             </ul>
           </div>
         </div>

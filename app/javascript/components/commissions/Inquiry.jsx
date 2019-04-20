@@ -7,7 +7,6 @@ class Inquiry extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
-    	dropDownVisible: false,
     	isBlocking: false
     };
   }
@@ -60,7 +59,8 @@ class Inquiry extends React.Component {
   }
 
   isBlocking = () => {
-    const payload = `blocker_id=${this.props.commission.artist.account_id}` +
+    const payload =
+      `blocker_id=${this.props.commission.artist.account_id}` +
       `&blocked_id=${this.props.commission.buyer.account_id}`;
 
     const isblocking_route = APIRoutes.blocks.is_blocking(payload);
@@ -68,8 +68,8 @@ class Inquiry extends React.Component {
     Requester.get(isblocking_route).then(
       response => {
         this.setState({ isBlocking: response });
-      }
-    );
+    });
+  }
 
   deleteInquiry = (id) => {
   	if (confirm('Are you sure you would like to delete this inquiry?')) {
@@ -81,8 +81,10 @@ class Inquiry extends React.Component {
   }
   
   render() {
-  	const commission = this.props.commission;
-    const buyerAndComment = this.state.isBlocking ? 
+    const { isBlocking } = this.state;
+    const { commission } = this.props;
+
+    const buyerAndComment = isBlocking ? 
       <div className="flex items-center flex-grow-1 pa3 i">This message is hidden due to blocked user.</div> : (
       <div className="flex">
         <div className="request-action">
@@ -102,28 +104,23 @@ class Inquiry extends React.Component {
 	            {commission.types.charAt(0).toUpperCase() + commission.types.slice(1)}
 	          </div>
 	        </div>
-	        <div className={classNames("relative", {"requests-dropdown-selected" : this.state.dropDownVisible})}>
-		        <button 
-		        	onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
-		        	className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
-		        </button>
+	        <div className="relative">
+		        <button className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0"/>
 		        <ul className="request-dropdown ml3 absolute nowrap z-3">
 			  			<li 
-			  				value={commission.id}
 			  				onClick={() => this.deleteInquiry(commission.id)}>
 			  				Delete inquiry
 			  			</li>
-			  			{ 
-                this.state.isBlocking ?
-                  <li value={commission.id} onClick={this.unblockUser}>Unblock user</li> : 
-                  <li value={commission.id} onClick={this.blockUser}>Block user</li>
-              }
+              <li
+                onClick={isBlocking ? this.unblockUser : this.blockUser}>
+                {isBlocking ? "Unblock user" : "Block user"}
+              </li>
 			  		</ul>
 			  	</div>
 	      </div>
 	    </div>
 	   )
   }
-}
+} 
 
 export default Inquiry;
