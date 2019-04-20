@@ -22,9 +22,7 @@ class Request extends React.Component {
         price: '',
         comment: '',
         request_id: this.props.request.id
-      },
-      dropDownVisible: false,
-      isBlocking: false
+      }
     };
   }
 
@@ -166,11 +164,8 @@ class Request extends React.Component {
 
   renderDropdown(id) {
     return (
-      <div className={classNames("relative", "mh3", {"requests-dropdown-selected" : this.state.dropDownVisible})}>
-        <button 
-          onClick={() => this.setState({ dropDownVisible: !this.state.dropDownVisible })}
-          className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0">
-        </button>
+      <div className="relative mh3">
+        <button className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0"/>
         <ul className="request-dropdown ml3 absolute nowrap z-3">
           <li value={id} onClick={() => this.closeRequest(id)}>Archive</li>
           <li>
