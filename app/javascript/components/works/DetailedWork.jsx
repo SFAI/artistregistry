@@ -1,13 +1,15 @@
 import PropTypes from "prop-types";
 import React from "react";
 import RequestForm from '../requests/RequestForm';
+import StyledModal from "../helpers/StyledModal";
+import FlagForm from "../works/FlagForm";
 import WorkToggle from "./WorkToggle";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
 import Linkify from 'react-linkify';
 import Button from "../helpers/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import Unauthorized from "../helpers/Unauthorized";
+import { faEdit, faFlag } from "@fortawesome/free-solid-svg-icons";
 
 class DetailedWork extends React.Component {
   constructor(props) {
@@ -23,8 +25,8 @@ class DetailedWork extends React.Component {
     const route = APIRoutes.works.show(this.props.work_id);
     Requester.get(route).then(
       response => {
-        this.setState({ 
-          work: response, 
+        this.setState({
+          work: response,
           canEditArtwork: this.props.user_type === "artist" && this.props.user && this.props.user.id === this.props.work.artist_id,
           componentDidMount: true
         });
@@ -71,6 +73,16 @@ class DetailedWork extends React.Component {
                 <h4 className="ml2 white">Edit</h4>
               </Button>
             }
+            <StyledModal
+              title="Flag"
+              buttonType=""
+            >
+              <FlagForm
+                artist={this.props.artist}
+                user={this.props.user}
+                work={this.state.work}
+              />
+            </StyledModal>
             <h4>Media</h4>
             <p className="mb2">{media}</p>
             <h4>Material</h4>
@@ -87,7 +99,7 @@ class DetailedWork extends React.Component {
               <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
             </div>
           </div>
-          {!this.props.blocked && 
+          {!this.props.blocked &&
             <RequestForm
               buyer={this.props.buyer}
               artist_id={artist_id}

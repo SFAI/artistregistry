@@ -67,5 +67,6 @@ Rails.application.routes.draw do
     get 'works/filtered/artist_hidden' => 'works#filtered_artist_hidden'
     put 'buyers/lock_user/:id' => 'buyers#lock_user'
     put 'buyers/unlock_user/:id' => 'buyers#unlock_user'
+    put 'works/flag/:id' => 'works#flag'
   end
 end
