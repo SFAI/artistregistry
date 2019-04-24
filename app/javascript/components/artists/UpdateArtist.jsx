@@ -39,13 +39,13 @@ class UpdateArtist extends React.Component {
     ]).then(
       response => {
         const [artist_response, works_response, categories_response] = response;
+        artist_response['program'] = splitCommaSeparatedArray(artist_response['program']).sort();
         this.setState({
           artist: artist_response,
           works: works_response,
           categories: categories_response,
           componentDidMount: true
         });
-        this.state.artist['program'] = splitCommaSeparatedArray(this.state.artist['program']);
       },
       error => {
         console.error(error);
@@ -127,7 +127,6 @@ class UpdateArtist extends React.Component {
       });
 
       formData.append(`artist[program][]`, this.state.artist['program']);
-
       const { avatar } = this.state;
       if (avatar) {
         formData.append('artist[avatar]', avatar, avatar.name);
@@ -194,21 +193,20 @@ class UpdateArtist extends React.Component {
           <h5>Program</h5>
 
           <div className="checkbox-container">
-                  {Object.keys({"Art and Technology": 0, "Film": 1, "History and Theory of Contemporary Art": 2,
-                    "New Genres": 3, "Painting": 4, "Photography": 5, "Printmaking": 6, "Sculpture": 7, "Studio Art": 8}).map(item => (
+                  {Object.keys(this.state.categories.program).map(item => (
                     <div className="mb2 checkbox-item" key={item}>
                       <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
                         <input
                           onChange={() => this.toggleCheckbox(item)}
                           type="checkbox"
                           className="checkbox"
-                          value={item}
+                          value={convertSnakeCase(item)}
                           id={`checkbox-${item}`}
                           name="program"
                           checked={(this.state.artist['program'].includes(item)) ? true : false}
                         />
                         <span className="filter-item">
-                          {item}
+                          {convertSnakeCase(item)}
                         </span>
                       </label>
                     </div>

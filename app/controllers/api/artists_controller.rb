@@ -3,7 +3,8 @@ class Api::ArtistsController < ApplicationController
 
   def get_artist_category_enums
     # return enums for filtering
-    categories = { 
+    categories = {
+      program: Artist.programs, 
       degree: Artist.degrees
     }
     render json: categories

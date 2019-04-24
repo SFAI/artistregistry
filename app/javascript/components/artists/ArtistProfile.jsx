@@ -6,7 +6,7 @@ import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
-import { convertSnakeCase, addSpaceAfterCommas } from "../../utils/strings";
+import { convertSnakeCase, splitCommaSeparatedArray } from "../../utils/strings";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 /**
 * @prop user: user currently logged in
@@ -44,6 +44,7 @@ class ArtistProfile extends React.Component {
         } else {
           works_response_filtered = works_response.filter(work => work.hidden == false)
         }
+      artist_response['program'] = splitCommaSeparatedArray(artist_response['program']).sort();
       this.setState({
         works: works_response_filtered,
         artist: artist_response,
@@ -51,6 +52,14 @@ class ArtistProfile extends React.Component {
         componentDidMount: true
       });
     });
+  }
+
+  reformatPrograms = (p) => {
+    var programs = this.state.artist.program;
+    for (var i = 0; i < programs.length; i++) {
+      programs[i] = convertSnakeCase(programs[i]);
+    }
+    return programs.join(", ")
   }
 
   getAvailability = (activeFilter) => {
@@ -231,7 +240,7 @@ class ArtistProfile extends React.Component {
               <h5 className="ttu">Degree</h5>
               <p className="ttu"> {degree ? degree : 0} </p>
               <h5 className="ttu mt2">Program</h5>
-              <p className="ttc"> {addSpaceAfterCommas(program)} </p>
+              <p className="ttc"> {this.reformatPrograms(program)} </p>
               <h5 className="ttu mt2">Media</h5>
               <p> {media} </p>
             </div>

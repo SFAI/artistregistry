@@ -3,6 +3,8 @@ class Artist < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :email, :presence => true, :email => true
+  validate :verify_programs
+
   devise :confirmable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :lockable
   has_one :account, as: :user
@@ -17,6 +19,23 @@ class Artist < ApplicationRecord
   # validates :name, presence: true, uniqueness: true
 
 
+
+
   # enum program: { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7, studio_art: 8}
   enum degree: {bfa: 0, mfa: 1}
+
+  def self.programs
+    return { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7, studio_art: 8}
+  end
+
+  private
+
+  def verify_programs
+    string_keys = Artist.programs.map{|key, v| [key.to_s, v] }.to_h
+    program[0].split(",").each_with_index do |i, ind|
+      if not string_keys.keys.include?(i)
+        errors.add(:program, "program is not valid")
+      end
+    end
+  end
 end
