@@ -97,6 +97,7 @@ class DetailedWork extends React.Component {
               work_status={availability}
             />
           }
+          {(this.props.user !== null) && 
           <div className="flex mt3 items-center justify-between">
             <p className="pl3 gray">Violating our Terms of Use?</p>
             <StyledModal
@@ -111,6 +112,7 @@ class DetailedWork extends React.Component {
               />
             </StyledModal>
           </div>
+          }
         </div>
       </div>
     );
