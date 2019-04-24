@@ -32,9 +32,11 @@ class Artist < ApplicationRecord
 
   def verify_programs
     string_keys = Artist.programs.map{|key, v| [key.to_s, v] }.to_h
-    program[0].split(",").each_with_index do |i, ind|
-      if not string_keys.keys.include?(i)
-        errors.add(:program, "program is not valid")
+    if program.length == 1
+      program[0].split(",").each_with_index do |i, ind|
+        if not string_keys.keys.include?(i)
+          errors.add(:program, "program is not valid")
+        end
       end
     end
   end

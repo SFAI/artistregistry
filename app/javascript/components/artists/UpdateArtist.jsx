@@ -125,7 +125,6 @@ class UpdateArtist extends React.Component {
       formKeys.forEach(key => {
         formData.append(`artist[${key}]`, this.state.artist[key]);
       });
-
       formData.append(`artist[program][]`, this.state.artist['program']);
       const { avatar } = this.state;
       if (avatar) {
