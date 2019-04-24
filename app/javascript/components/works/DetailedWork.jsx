@@ -73,16 +73,6 @@ class DetailedWork extends React.Component {
                 <h4 className="ml2 white">Edit</h4>
               </Button>
             }
-            <StyledModal
-              title="Flag"
-              buttonType=""
-            >
-              <FlagForm
-                artist={this.props.artist}
-                user={this.props.user}
-                work={this.state.work}
-              />
-            </StyledModal>
             <h4>Media</h4>
             <p className="mb2">{media}</p>
             <h4>Material</h4>
@@ -106,7 +96,21 @@ class DetailedWork extends React.Component {
               work_id={id}
               work_status={availability}
             />
-        }
+          }
+          <div className="flex mt3 items-center justify-between">
+            <p className="pl3 gray">Violating our Terms of Use?</p>
+            <StyledModal
+              title="Flag"
+              buttonType="button-tertiary"
+              color="berry"
+            >
+              <FlagForm
+                artist={this.props.artist}
+                user={this.props.user}
+                work={this.state.work}
+              />
+            </StyledModal>
+          </div>
         </div>
       </div>
     );

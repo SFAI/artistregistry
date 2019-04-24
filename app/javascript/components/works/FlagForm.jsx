@@ -84,7 +84,7 @@ class FlagForm extends React.Component {
           <WorkFixedPanel work={this.props.work}/>
         </div>
         <div className="fl w-70 pl3">
-          <h5>Tell us why this work should be flagged.</h5>
+          <p>Tell us why this work should be flagged.</p>
           <textarea
             type="TEXT"
             name="comment"
@@ -95,8 +95,9 @@ class FlagForm extends React.Component {
             className="textarea"
           />
           <FormError error={this.state.errors["text"]}/>
-          <Button type="button-primary" className="w4" color="moss" onClick={this.handleSubmit}>
-            Flag
+          <p className="gray mb4">This message will be sent to SFAI for review.</p>
+          <Button type="button-primary" className="w4" color="berry" onClick={this.handleSubmit}>
+            Submit
           </Button>
         </div>
       </div>
