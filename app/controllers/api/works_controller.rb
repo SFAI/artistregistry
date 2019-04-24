@@ -136,6 +136,12 @@ class Api::WorksController < ApplicationController
     end
   end
 
+  def flag
+    hashed_params = params.to_unsafe_h
+    work = Work.find(hashed_params[:id])
+    WorkMailer.with(user: hashed_params[:user], work: work, text: hashed_params[:text]).work_flagged.deliver_later
+  end
+
   private
     def is_available?(work, curr_status)
       requests = Request.where(work_id: work.id)

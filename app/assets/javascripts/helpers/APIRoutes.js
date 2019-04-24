@@ -10,6 +10,7 @@ class ApiRoutes {
       categories: `/works/categories`,
       thumbnail: (id) => `api/works/thumbnail/${id}`,
       filtered_artist_hidden: `/api/works/filtered/artist_hidden`,
+      flag: (id) => `/api/works/flag/${id}`,
     }
   }
 
