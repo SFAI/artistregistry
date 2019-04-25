@@ -7,7 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 
-/** @prop userType: { "artist", "buyer", "admin" }, work_count, per_page
+/**
+ * @prop userType: { "artist", "buyer", "admin"}
+ * @prop work_count: total number of works from response
+ * @prpo per_page: number of works to display on each page
 */
 import ReactPaginate from 'react-paginate'
 
