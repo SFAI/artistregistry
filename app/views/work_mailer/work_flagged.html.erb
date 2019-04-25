@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Work Flagged</h1>
+    <p>
+      <%= @work.title %> has been flagged by <%= @user[:name] %> (<%= @user[:email] %>).
+    </p>
+    <p> <strong>Comments:</strong> <%= @text %>
+
+  </body>
+</html>

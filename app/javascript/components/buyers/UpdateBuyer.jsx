@@ -3,12 +3,13 @@ import React from 'react';
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
 import LoadingOverlay from "../helpers/LoadingOverlay";
+import ConfirmEmail from "../helpers/ConfirmEmail";
+import Unauthorized from "../helpers/Unauthorized";
 
 class UpdateBuyer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      buyerId: this.props.buyerId,
       buyer: {},
       avatar: null,
       componentDidMount: false,
@@ -21,7 +22,7 @@ class UpdateBuyer extends React.Component {
   }
 
   componentDidMount() {
-    const buyerRoute = APIRoutes.buyers.show(this.state.buyerId);
+    const buyerRoute = APIRoutes.buyers.show(this.props.buyer_id);
     Requester.get(buyerRoute).then(
       response => {
         this.setState({ buyer: response, componentDidMount: true });
@@ -115,6 +116,12 @@ class UpdateBuyer extends React.Component {
   }
 
   render() {
+    const {buyer_id, buyer_account_id, current_user} = this.props
+    if (!current_user || current_user.account_id != buyer_account_id) {
+      return (
+        <Unauthorized/>
+      )
+    }
     if (!this.state.componentDidMount) {
       return (
         <LoadingOverlay itemType="information" fullPage={true} />
@@ -160,7 +167,7 @@ class UpdateBuyer extends React.Component {
               onClick={this.selectFile}
               className="w4"
               type="button-secondary"
-              color="berry"
+              color="moss"
             >
               Select File
             </Button>
@@ -179,7 +186,7 @@ class UpdateBuyer extends React.Component {
             <Button
               onClick={() => {window.location = `/buyers/${this.state.buyer.id}`}}
               type="button-secondary"
-              color="berry"
+              color="moss"
               className="w4"
             >
               Cancel
@@ -187,7 +194,7 @@ class UpdateBuyer extends React.Component {
             <Button
               onClick={this.handleSubmit}
               type="button-primary"
-              color="berry"
+              color="moss"
               className="w4 ml2"
             >
               Submit

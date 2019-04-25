@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 import { convertSnakeCase, splitCommaSeparatedArray } from "../../utils/strings";
+import LoadingOverlay from "../helpers/LoadingOverlay";
+import Unauthorized from "../helpers/Unauthorized";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 /**
 * @prop user: user currently logged in
@@ -21,6 +23,7 @@ class ArtistProfile extends React.Component {
       artist: [],
       activeFilter: 'All works',
       canEditProfile: false,
+      showIncompleteBanner: true,
       componentDidMount: false,
     }
   }
@@ -131,6 +134,64 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  renderIncompleteProfileBanner = () => {
+    const artist = this.state.artist;
+    const completionStatus = {
+      "Name": Boolean(artist.name),
+      "Description": Boolean(artist.description),
+      "Featured work": Boolean(artist.featured_work_id),
+      "Media": Boolean(artist.media),
+      "Program": Boolean(artist.program),
+      "Year": Boolean(artist.year)
+    }
+
+    const sortedKeys = Object.keys(completionStatus).sort((x, y) => {
+      return (completionStatus[x] === completionStatus[y]) ? 0 : (
+        completionStatus[x] ? -1 : 1);
+    });
+
+    let numCompleted = 0;
+    for (let i = 0; i < sortedKeys.length; i++) {
+      if (completionStatus[sortedKeys[i]]) { numCompleted++ }
+    }
+
+    if (numCompleted == sortedKeys.length) {
+      return null;
+    }
+
+    return (
+      <div className="incomplete-profile mv3 bg-white pa4 flex justify-between items-center">
+        <div>
+          <h2>Your profile is {Math.floor(numCompleted / sortedKeys.length * 100)}% complete</h2>
+          <p>Fill in the remaining information to complete your profile.</p>
+          <div className="flex mt4">
+            <Button type="button-primary" className="w4 mr2" color="denim" onClick={this.navigateToEdit}>
+            Edit Profile
+            </Button>
+            <Button type="button-tertiary" className="w4" color="denim" onClick={
+              () => this.setState({showIncompleteBanner: false})}>Dismiss</Button>
+          </div>
+        </div>
+        <div className="flex flex-wrap w-50 mv3">
+        {
+          sortedKeys.map((field, i) => {
+            const isComplete = completionStatus[field];
+            return (
+              <div className="w-30 mv3" key={i}>
+                <div className="flex items-center">
+                  <div className={"flex justify-center items-center br-100 mr2 " + 
+                    (isComplete ? "complete" : "incomplete")}></div>
+                  <div>{field}</div>
+                </div>
+              </div>
+            );
+          })
+        }
+        </div>
+      </div>
+    )
+  }
+
   hideWork = (work_id) => {
     this.updateFeatured(work_id)
     let formData = new FormData();
@@ -209,27 +270,24 @@ class ArtistProfile extends React.Component {
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, degree, media, description } = artist;
-    const { user, userType } = this.props;
-
-
+    const { artist: artist_prop, user, userType } = this.props;
+    if (artist.hidden && (user == null || (user.account_id != artist_prop.account_id && userType != "admin"))) {
+      return (
+        <Unauthorized/>
+      )
+    }
     if (!componentDidMount) {
       return (
-        <div>
-          <p>Loading</p>
-        </div>
+        <LoadingOverlay fullPage={true} itemType="Artist"></LoadingOverlay>
       );
     }
 
     const featured_work = works.find(work => work.id === artist.featured_work_id);
     return (
       <div>
+        { canEditProfile && this.state.showIncompleteBanner && this.renderIncompleteProfileBanner() }
         <div className="row-head flex">
           <h1> {name} </h1>
-          {canEditProfile &&
-            <Button type="button-primary" className="w4" color="denim" onClick={this.navigateToEdit}>
-              Edit Profile
-            </Button>
-          }
         </div>
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
@@ -248,7 +306,14 @@ class ArtistProfile extends React.Component {
           <div className="w-50-l mw-400 flex relative mh3">
             <img className="fit-cover h-100" src={featured_work ? featured_work.featured_image.url : sfai_wallpaper} />
           </div>
-          <div className="w-30-l mw-400 pa3 bg-white">
+          <div className="w-30-l mw-400 pa3 bg-white relative">
+            {
+              canEditProfile &&
+              <Button type="hover-button" className="ma2 absolute top-0 right-0" color="denim" onClick={this.navigateToEdit}>
+                <FontAwesomeIcon className="white" icon={faEdit} />
+                <h4 className="ml2 white">Edit</h4>
+              </Button>
+            }
             <h2>About the artist</h2>
             <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
               <p> {description}</p>
@@ -282,7 +347,7 @@ class ArtistProfile extends React.Component {
             </Button>
           }
         </div>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap mb5">
           <div className="col-list-4">
             {works.map(work => {
               if (this.getAvailability(activeFilter).includes(work.availability)) {
@@ -294,12 +359,6 @@ class ArtistProfile extends React.Component {
                         <Button type="hover-button"  className="mr2" onClick={() => this.updateWork(work.id)}>
                           <FontAwesomeIcon className="white" icon={faEdit} />
                           <h4 className="ml2 white">Edit</h4>
-                        </Button>
-                      }
-                      {(canEditProfile && work.availability == 'active') &&
-                        <Button type="hover-button" className="mr2" onClick={() => this.deleteWork(work.id)}>
-                          <FontAwesomeIcon className="white" icon={faTrash} />
-                          <h4 className="ml2 white">Delete</h4>
                         </Button>
                       }
                       <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
@@ -315,8 +374,8 @@ class ArtistProfile extends React.Component {
           </div>
         </div>
         {
-          !canEditProfile &&
-          <div className="flex flex-row items-stretch mb4 mt4">
+          !canEditProfile && !this.props.blocked && 
+          <div className="flex flex-row items-stretch mb4">
             <div className="w-50 pr2 dib flex flex-row items-stretch">
               <div className="bg-charcoal pa3">
                 <h2 className="white">Guidelines for contacting artists</h2>

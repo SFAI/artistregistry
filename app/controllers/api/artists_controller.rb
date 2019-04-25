@@ -64,7 +64,7 @@ class Api::ArtistsController < ApplicationController
 
   def requests
     artist = Artist.find(params[:id])
-    requests = artist.requests
+    requests = artist.requests.sort_by { |req| req.open ? 0 : 1 }
     render json: requests,
         each_serializer: RequestSerializer
   end

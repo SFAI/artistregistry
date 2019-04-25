@@ -18,7 +18,7 @@ input[type="checkbox"] {
   }
 
   &:checked:after {
-    content: url("checkmark.svg");
+    content: url("/images/checkmark.svg");
     width: 16px;
     height: 20px;
     padding: -5px;
@@ -80,6 +80,7 @@ input[type="checkbox"] {
     background-color: rgba($white, 0.3);
   }
 }
+
 
 .dropzone {
   height: 300px;

@@ -50,3 +50,23 @@
 .artist-profile-scroll::-webkit-scrollbar-thumb:hover {
   background: darken($denim, 10%); 
 }
+
+.incomplete-profile {
+  .complete, .incomplete{
+    width: 20px;
+    height: 20px;
+    border: 2px solid $denim;
+  }
+
+  .complete {
+    background-color: $denim;
+
+    &:after {
+      content: url("/images/checkmark.svg");
+    }
+  }
+
+  .incomplete {
+    background: rgba($denim, 0.1);
+  }
+}

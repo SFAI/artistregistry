@@ -19,6 +19,11 @@ class Api::CommissionsController < ApplicationController
   end
 
   def update
+    # Used to "delete" a commission
+    commission = Commission.find(params[:id])
+    commission = commission.update!(commission_params)
+
+    render json: {status: 200, message: 'Commission successfully deleted!'}
   end
 
   def destroy
@@ -31,7 +36,8 @@ class Api::CommissionsController < ApplicationController
         :buyer_id,
         :artist_id,
         :comment,
-        :types
+        :types,
+        :deleted
       )
     end
 end

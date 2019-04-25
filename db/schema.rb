@@ -89,6 +89,14 @@ ActiveRecord::Schema.define(version: 2019_04_24_090607) do
     t.index ["reset_password_token"], name: "index_artists_on_reset_password_token", unique: true
   end
 
+  create_table "blocks", force: :cascade do |t|
+    t.integer "blocker_id", null: false
+    t.integer "blocked_id", null: false
+    t.index ["blocked_id", "blocker_id"], name: "index_blocks_on_blocked_id_and_blocker_id", unique: true
+    t.index ["blocked_id"], name: "index_blocks_on_blocked_id"
+    t.index ["blocker_id"], name: "index_blocks_on_blocker_id"
+  end
+
   create_table "buyers", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -118,6 +126,7 @@ ActiveRecord::Schema.define(version: 2019_04_24_090607) do
     t.bigint "artist_id"
     t.bigint "buyer_id"
     t.integer "types"
+    t.boolean "deleted"
     t.index ["artist_id"], name: "index_commissions_on_artist_id"
     t.index ["buyer_id"], name: "index_commissions_on_buyer_id"
   end
@@ -145,6 +154,7 @@ ActiveRecord::Schema.define(version: 2019_04_24_090607) do
     t.datetime "updated_at", null: false
     t.bigint "receipt_id"
     t.integer "types"
+    t.boolean "deleted"
     t.index ["artist_id"], name: "index_requests_on_artist_id"
     t.index ["buyer_id"], name: "index_requests_on_buyer_id"
     t.index ["receipt_id"], name: "index_requests_on_receipt_id"

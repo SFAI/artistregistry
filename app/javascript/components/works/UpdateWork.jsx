@@ -2,6 +2,7 @@ import PropTypes from "prop-types"
 import React from 'react';
 import WorkForm from "./WorkForm";
 import LoadingOverlay from "../helpers/LoadingOverlay";
+import Unauthorized from "../helpers/Unauthorized";
 
 class UpdateWork extends React.Component {
   constructor(props) {
@@ -27,6 +28,12 @@ class UpdateWork extends React.Component {
   }
 
   render() {
+    const { work_id, artist_account_id, current_user } = this.props
+    if (!current_user || current_user.account_id != artist_account_id) {
+      return (
+        <Unauthorized/>
+      )
+    }
     if (!this.state.componentDidMount) {
       return <LoadingOverlay fullPage={true} />;
     }

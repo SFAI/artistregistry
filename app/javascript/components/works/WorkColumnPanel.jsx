@@ -1,6 +1,7 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import Touchable from 'rc-touchable';
+import classNames from "classnames";
 
 class WorkColumnPanel extends React.Component {
   constructor(props) {
@@ -19,21 +20,27 @@ class WorkColumnPanel extends React.Component {
   render() {
     let work = this.props.work;
     return (
-        <div className="mb3 pa3 w-100 col-item bg-white relative" key={work.id}>
-          <div className="item-overlay">
-            {this.props.children}
+      <div 
+        className={
+          classNames("mb3 pa3 w-100 col-item bg-white relative", {
+            "overlay-hidden-work": work.hidden
+          })}
+        key={work.id}
+      >
+        <div className="item-overlay">
+          {this.props.children}
+        </div>
+        <Touchable onPress={() => this.navigateToWork(work.id)}>
+          <div
+            className={classNames("relative flex items-center mb3", {
+              [`overlay-${work.availability}`]:
+                work.availability == "sold" || work.availability == "rented"
+            })}>
+            {work.featured_image && (
+              <img src={work.featured_image.url} className="pointer" />
+            )}
           </div>
-          <div className={(work.availability == "sold" || work.availability == "rented") ? "relative ib mb3 overlay-" + `${work.availability}`: "mb3"}>
-            {work.featured_image &&
-              <Touchable onPress={() => this.navigateToWork(work.id)}>
-                {
-                  <div className="relative ib flex items-center">
-                    <img src={work.featured_image.url} className="pointer" />
-                  </div>
-                }
-              </Touchable>
-            }
-          </div>
+        </Touchable>
         <Touchable onPress={() => this.navigateToWork(work.id)}>
           <h3 className="pointer">{work.title}</h3>
         </Touchable>
@@ -43,9 +50,6 @@ class WorkColumnPanel extends React.Component {
           </Touchable>
         }
         <h6>{work.material}</h6>
-        {work.hidden &&
-          <h6> HIDDEN!!!!! </h6>
-        }
     </div>
     );
   }

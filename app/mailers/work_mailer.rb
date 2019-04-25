@@ -6,4 +6,11 @@ class WorkMailer < ApplicationMailer
     @curr_status = params[:curr_status]
     mail(to: @buyer.email, subject: 'Requested Work Status Changed')
   end
+
+  def work_flagged
+    @user = params[:user]
+    @work = params[:work]
+    @text = params[:text]
+    mail(to: "sfai-noreply@calblueprint.org", subject: 'Work Flagged')
+  end
 end
