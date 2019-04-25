@@ -15,15 +15,24 @@ class Api::ArtistsController < ApplicationController
   end
 
   def index
-    artists = Artist.all
-    render json: artists
+    artists = Artist.page(params[:page])
+    render json: {
+      artists: ActiveModel::Serializer::CollectionSerializer.new(artists, each_serializer: ArtistSerializer),
+      artist_count: Artist.count,
+      per_page: Artist.default_per_page
+    }
   end
 
   def filtered_artists
     parsed_query = CGI.parse(params[:search_params])
-    filtered_artists = params[:search_params] == "" ?  Artist.all : Artist.where(parsed_query)
-    render json: filtered_artists,
-      each_serializer: ArtistSerializer
+    filtered_artists = Artist.where(parsed_query)
+    filtered_artists_page = params[:search_params] == "" ?  Artist.all.page(params[:page]) : filtered_artists.page(params[:page])
+    artist_count = params[:search_params] == "" ?  Artist.count : filtered_artists.count
+    render json: {
+      artists: ActiveModel::Serializer::CollectionSerializer.new(filtered_artists_page, each_serializer: ArtistSerializer),
+      artist_count: filtered_artists.count,
+      per_page: Artist.default_per_page
+    }
   end
 
   def update
@@ -91,7 +100,8 @@ class Api::ArtistsController < ApplicationController
                                  :description,
                                  :avatar,
                                  :featured_work_id,
-                                 :hidden
+                                 :hidden,
+                                 :page
                                 )
   end
 end

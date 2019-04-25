@@ -45,16 +45,17 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     get 'artists/categories' => 'artists#get_artist_category_enums'
     resources :works, :only => [:index, :show, :create, :update, :destroy]
-    resources :artists, :only => [:index, :show, :create, :update, :destroy]
+    resources :artists, :only => [:show, :create, :update, :destroy]
     resources :requests, :only => [:show, :create, :update]
     resources :commissions, :only => [:show, :create, :update, :destroy]
     resources :receipts, :only => [:show, :create, :update, :destroy]
     resources :buyers, :only => [:show, :update]
     get 'artists/works/:id' => 'artists#works'
+    get 'artists/page/:page' => 'artists#index'
     get 'artists/requests/:id' => 'artists#requests'
     get 'buyers/requests/:id' => 'buyers#requests'
     get 'works/filtered_works/:search_params' => 'works#filtered_works'
-    get 'artists/filtered_artists/:search_params' => 'artists#filtered_artists'
+    get 'artists/filtered_artists/:search_params/:page' => 'artists#filtered_artists'
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'
     post 'blocks/block_user' => 'blocks#block_user', as: :block_user
