@@ -51,15 +51,8 @@ class Works extends React.Component {
     const searchParams = this.filters.getQuery();
     this.setState({ isLoading: true });
 
-    let works_route 
-    if (searchParams.length) {
-      works_route = APIRoutes.works.filtered_works(searchParams, page) 
-      this.setState({ filtering: true })
-    } else {
-      works_route = APIRoutes.works.index(1)
-      this.setState({filtering : false })
+    const works_route = searchParams.length ? APIRoutes.works.filtered_works(searchParams, page) : APIRoutes.works.index(1)
 
-    }
     Requester.get(
       works_route).then(
         response => {
@@ -71,7 +64,8 @@ class Works extends React.Component {
             works: works,
             isLoading: false,
             pageCount: Math.ceil(response.work_count / perPage),
-            currentPage: 0
+            currentPage: 0,
+            filtering: searchParams.length ? true : false
           });
         },
         response => {
