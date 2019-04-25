@@ -24,8 +24,13 @@ class Api::ArtistsController < ApplicationController
   end
 
   def filtered_artists
+    puts("HELLO")
     parsed_query = CGI.parse(params[:search_params])
     filtered_artists = Artist.where(parsed_query)
+    if !current_admin
+      filtered_artists = filtered_artists.select {|artist| (artist.works.select {|work| work.hidden == false }).length > 0 }
+    end
+    puts(filtered_artists)
     filtered_artists_page = params[:search_params] == "" ?  Artist.all.page(params[:page]) : filtered_artists.page(params[:page])
     artist_count = params[:search_params] == "" ?  Artist.count : filtered_artists.count
     render json: {
