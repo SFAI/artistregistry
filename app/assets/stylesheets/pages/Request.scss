@@ -1,22 +1,3 @@
-.request-wrapper {
-  display: flex;
-  justify-content: center;
-
-  .request-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    .request-action {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-  }
-}
-
 .request-ellipsis {
   height: 32px;
   transition: background-color 0.2s;

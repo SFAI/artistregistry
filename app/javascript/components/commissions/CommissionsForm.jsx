@@ -115,7 +115,7 @@ class CommissionsForm extends React.Component {
           name="types"
           value={this.state.commission.types}
           onChange={this.handleChange}
-          className="w-100 select mt2"
+          className="w-100 select mt2 ttc"
         >
           {  Object.keys(this.state.commissions_types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
         </select>
