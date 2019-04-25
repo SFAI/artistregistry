@@ -100,7 +100,8 @@ class Api::WorksController < ApplicationController
     works = Work.page(params[:page])
     render json: {
       works: ActiveModel::Serializer::CollectionSerializer.new(works, each_serializer: WorkSerializer),
-      work_count: Work.count
+      work_count: Work.count,
+      per_page: Work.default_per_page
     }
   end
 
@@ -111,7 +112,8 @@ class Api::WorksController < ApplicationController
     work_count = params[:search_params] == "" ?  Work.count : filtered_works.count
     render json: {
       works: ActiveModel::Serializer::CollectionSerializer.new(filtered_works_page, each_serializer: WorkSerializer),
-      work_count: work_count
+      work_count: work_count,
+      per_page: Work.default_per_page
     }
   end
 
@@ -120,7 +122,8 @@ class Api::WorksController < ApplicationController
     filtered_works_page = filtered_works.page(params[:page])
     render json: {
       works: ActiveModel::Serializer::CollectionSerializer.new(filtered_works_page, each_serializer: WorkSerializer),
-      work_count: filtered_works.count
+      work_count: filtered_works.count,
+      per_page: Work.default_per_page
     }
   end
 
