@@ -51,7 +51,16 @@ class Works extends React.Component {
     const searchParams = this.filters.getQuery();
     this.setState({ isLoading: true });
 
-    const works_route = searchParams.length ? APIRoutes.works.filtered_works(searchParams, page) : APIRoutes.works.index(1)
+    let works_route
+    if (searchParams.length) {
+      works_route = APIRoutes.works.filtered_works(searchParams, page)
+    } else {
+      if (this.props.userType == "admin") {
+        works_route = APIRoutes.works.index(1)
+      } else {
+        works_route = APIRoutes.works.filtered_artist_hidden(1)
+      }
+    }
 
     Requester.get(
       works_route).then(
