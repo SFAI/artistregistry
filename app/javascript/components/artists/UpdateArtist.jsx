@@ -53,10 +53,6 @@ class UpdateArtist extends React.Component {
     );
   }
 
-  selectFile = () => {
-    this.avatar.click();
-  }
-
   handleChange = (event) => {
     const artist = this.state.artist;
     artist[event.target.name] = event.target.value;
@@ -164,7 +160,7 @@ class UpdateArtist extends React.Component {
             required
           />
           <FormError error={this.state.errors.name}/>
-          <h5>Program</h5>
+          <h5 className="mt3">Program</h5>
           <select
             value={this.state.artist.program}
             onChange={this.handleChange}
@@ -178,7 +174,7 @@ class UpdateArtist extends React.Component {
               })
             }
           </select>
-          <h5>Media</h5>
+          <h5 className="mt3">Media</h5>
           <input
             value={this.state.artist.media}
             onChange={this.handleChange}
@@ -188,7 +184,7 @@ class UpdateArtist extends React.Component {
             required
           />
           <FormError error={this.state.errors.media}/>
-          <h5>Description</h5>
+          <h5 className="mt3">Description</h5>
           <textarea
             value={this.state.artist.description}
             onChange={this.handleChange}
@@ -199,7 +195,7 @@ class UpdateArtist extends React.Component {
             required
           />
           <FormError error={this.state.errors.description}/>
-          <h5>Featured Work</h5>
+          <h5 className="mt3">Featured Work</h5>
           <select
             onChange={this.handleChange}
             value={this.state.artist.featured_work_id}
@@ -211,33 +207,22 @@ class UpdateArtist extends React.Component {
               })
             }
           </select>
-          <h5>Profile Photo</h5>
-          <div className="avatar-sel">
-            <input
-              name="avatar"
-              id="avatar"
-              type="file"
-              ref={(node) => this.avatar = node}
-              onChange={this.setFile}
-            />
-            <Button
-              onClick={this.selectFile}
-              className="w4"
-              type="button-secondary"
-              color="denim"
-            >
-              Select File
-            </Button>
-            <h5 className="ml2">
-              {
-                this.state.avatar ? (
-                  this.state.avatar.name
-                ) : (
-                  this.state.artist.avatar &&
-                  this.state.artist.avatar.name
-                )
-              }
-            </h5>
+          <h5 className="mt3">Profile Photo</h5>
+          <div className="flex items-center mv2">
+            <label className="w4 denim b--denim button-secondary tc" htmlFor="avatar">
+              Choose File
+              <input
+                name="avatar"
+                id="avatar"
+                type="file"
+                ref={(node) => this.avatar = node}
+                onChange={this.setFile}/>
+            </label>
+            <p className="ml2 truncate">
+              {this.state.avatar
+                ? this.state.avatar.name
+                : this.state.artist.avatar && this.state.artist.avatar.name}
+            </p>
           </div>
           <div className="submit-container mt3">
             <Button

@@ -48,10 +48,6 @@ class UpdateBuyer extends React.Component {
     this.setState({ avatar: files[0] });
   }
 
-  selectFile = () => {
-    this.avatar.click();
-  }
-
   checkErrors = () => {
     let errors = {
       name: "",
