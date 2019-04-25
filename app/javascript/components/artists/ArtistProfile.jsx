@@ -4,7 +4,7 @@ import classNames from "classnames";
 import CommissionsForm from "../commissions/CommissionsForm";
 import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEyeSlash, faEye, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import { convertSnakeCase } from "../../utils/strings";
@@ -323,9 +323,10 @@ class ArtistProfile extends React.Component {
         </div>
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
-            <div className="h4 w4 br-100 mb4 bg-gray self-center">
-              <img className="br-100 avatar-img" src={artist.avatar.url} />
-            </div>
+            {artist.avatar.url
+              ? <img className="br-100 h4 w4 mb4 self-center" src={artist.avatar.url} />
+              : <FontAwesomeIcon icon={faUserCircle} size="8x" className="gray mb4 self-center"/>
+            }
             <div className="info">
               <h5 className="ttu">Program</h5>
               <p className="ttc"> {convertSnakeCase(program)} </p>

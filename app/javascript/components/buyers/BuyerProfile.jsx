@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Button from "../helpers/Button"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faEyeSlash, faEye, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 /**
 * @prop buyer: buyer associated with profile
@@ -98,10 +100,11 @@ class BuyerProfile extends React.Component {
             </Button>
           }
         </div>
-        <div className="bg-white w-100 flex items-center pa3">
-          <div className="h4 w4 br-100 bg-gray ma4">
-            <img className="br-100 avatar-img" src={buyer.avatar.url} />
-          </div>
+        <div className="bg-white w-100 flex items-center pa4">
+          {buyer.avatar.url
+            ? <img className="br-100 h4 w4 mr4 fit-cover" src={buyer.avatar.url} />
+            : <FontAwesomeIcon icon={faUserCircle} size="8x" className="gray mr4"/>
+          }
           <div>
             <div className="flex mb2">
               <p className="w4 b">Name</p>
