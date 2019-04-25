@@ -259,6 +259,46 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  renderFilteredWorks = () => {
+    const { works, activeFilter, canEditProfile } = this.state;
+    const filteredWorks = works.filter(work => this.getAvailability(activeFilter).includes(work.availability));
+    if (filteredWorks.length === 0) {
+      return (
+        <div>
+          <p className="tc">
+            No works matching the selected filters.
+          </p>
+        </div>
+      );
+    }
+    return (
+      <div className="col-list-4">
+        {filteredWorks.map(work => {
+          return (
+            <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
+              {canEditProfile &&
+                <div className="work-action-wrapper mb2">
+                  <Button type="hover-button" className="mr2" onClick={() => this.updateWork(work.id)}>
+                    <FontAwesomeIcon className="white" icon={faEdit} />
+                    <h4 className="ml2 white">Edit</h4>
+                  </Button>
+                </div>
+              }
+              {this.props.userType == "admin" &&
+                <div className="work-action-wrapper mb2">
+                  <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
+                    <FontAwesomeIcon className="white" icon={work.hidden ? faEye : faEyeSlash} />
+                    <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
+                  </Button>
+                </div>
+              }
+            </WorkColumnPanel>
+          );
+        })}
+      </div>
+    );
+  }
+
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, media, description } = artist;
@@ -297,8 +337,7 @@ class ArtistProfile extends React.Component {
             <img className="fit-cover h-100" src={featured_work ? featured_work.featured_image.url : sfai_wallpaper} />
           </div>
           <div className="w-30-l mw-400 pa3 bg-white relative">
-            {
-              canEditProfile &&
+            {canEditProfile &&
               <Button type="hover-button" className="ma2 absolute top-0 right-0" color="denim" onClick={this.navigateToEdit}>
                 <FontAwesomeIcon className="white" icon={faEdit} />
                 <h4 className="ml2 white">Edit</h4>
@@ -338,30 +377,7 @@ class ArtistProfile extends React.Component {
           }
         </div>
         <div className="flex flex-wrap mb5">
-          <div className="col-list-4">
-            {works.map(work => {
-              if (this.getAvailability(activeFilter).includes(work.availability)) {
-              return (
-                <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
-                  {(userType == "admin" || canEditProfile) &&
-                    <div className="work-action-wrapper mb2">
-                      {canEditProfile &&
-                        <Button type="hover-button"  className="mr2" onClick={() => this.updateWork(work.id)}>
-                          <FontAwesomeIcon className="white" icon={faEdit} />
-                          <h4 className="ml2 white">Edit</h4>
-                        </Button>
-                      }
-                      <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
-                        <FontAwesomeIcon className="white" icon={work.hidden ? faEye : faEyeSlash} />
-                        <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
-                      </Button>
-                    </div>
-                  }
-              </WorkColumnPanel>
-              )
-            }
-            })}
-          </div>
+          {this.renderFilteredWorks()}
         </div>
         {
           !canEditProfile && !this.props.blocked && 
