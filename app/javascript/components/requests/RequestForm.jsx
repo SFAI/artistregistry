@@ -4,11 +4,18 @@ import Panel from '../helpers/Panel';
 import FormError from '../helpers/FormError';
 import LoadingOverlay from '../helpers/LoadingOverlay';
 
+/**
+ * @prop buyer: Logged-in buyer account information
+ * @prop artistId: Artist ID related to the work for this form
+ * @prop workId: Work ID related to this form
+ * @prop workStatus: {sold, rented, available}
+ */
+
 class RequestForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      available: this.props.work_status === "active" ? true : false,
+      available: this.props.workStatus === "active" ? true : false,
       request: {
         message: "",
         types: 'sale'
@@ -23,6 +30,13 @@ class RequestForm extends React.Component {
       componentDidMount: false
     }
   }
+
+   static propTypes = {
+     buyer: PropTypes.object,
+     artistId: PropTypes.number.isRequired,
+     workId: PropTypes.number.isRequired,
+     workStatus: PropTypes.string.isRequired,
+   }
 
   componentDidMount = () => {
     this.checkExist('sale')
@@ -62,11 +76,11 @@ class RequestForm extends React.Component {
       const requests_route = APIRoutes.requests.create;
       let payload = this.state.request;
       payload["buyer_id"] = this.props.buyer.id;
-      payload["artist_id"] = this.props.artist_id;
-      payload["work_id"] = this.props.work_id;
+      payload["artist_id"] = this.props.artistId;
+      payload["work_id"] = this.props.workId;
       Requester.post(requests_route, payload).then(
         response => {
-          window.location.href = '/works/' + this.props.work_id
+          window.location.href = '/works/' + this.props.workId
         },
         error => {
           console.error(error);
@@ -91,14 +105,14 @@ class RequestForm extends React.Component {
   }
 
   checkExist = (request_type) => {
-    const { buyer, artist_id, work_id } = this.props;
+    const { buyer, artistId, workId } = this.props;
     if (buyer == null) {
       return
     } else {
       let stringifiedSearchParams = [
         `buyer_id=${buyer.id}`,
-        `artist_id=${artist_id}`,
-        `work_id=${work_id}`,
+        `artist_id=${artistId}`,
+        `work_id=${workId}`,
         `types=${request_type}`
       ].join("&");
 
@@ -114,7 +128,7 @@ class RequestForm extends React.Component {
             response => { console.error(response); }
         );
       }
-    }
+  }
 
   render() {
     if (!this.state.componentDidMount) {
@@ -131,13 +145,13 @@ class RequestForm extends React.Component {
           >
             <div className="pa3">
               <h2 className="berry">Sorry!</h2>
-              <h6>This work has been {this.props.work_status}.</h6>
+              <h6>This work has been {this.props.workStatus}.</h6>
             </div>
           </Panel>
         </div>
       );
     }
-    if (!this.props.buyer) {
+    if (!this.props.user) {
       return (
         <div className="mw6">
           <Panel
@@ -146,7 +160,6 @@ class RequestForm extends React.Component {
           >
             <div className="pa3">
               <p className="mb4"> Log in to your account to request artwork.</p>
-              <a className="pointer berry mb1" href="../artists/sign_in">Log in (Artist) »</a>
               <a className="pointer berry" href="../buyers/sign_in">Log in (Patron) »</a>
             </div>
           </Panel>
