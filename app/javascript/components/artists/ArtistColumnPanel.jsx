@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import Touchable from 'rc-touchable';
-import { convertSnakeCase, pluralize } from "../../utils/strings";
+import { convertSnakeCase, splitCommaSeparatedArray, pluralize } from "../../utils/strings";
 
 /**
  * @prop artist: artist for this panel
@@ -20,6 +20,15 @@ class ArtistColumnPanel extends React.Component {
 
   navigateToArtist = (id) => {
     window.location = `/artists/${id}`;
+  }
+
+  reformatPrograms = (p) => {
+    var programs = p;
+    programs = splitCommaSeparatedArray(p).sort();
+    for (var i = 0; i < programs.length; i++) {
+      programs[i] = convertSnakeCase(programs[i]);
+    }
+    return programs.join(", ")
   }
 
   render() {
@@ -43,7 +52,7 @@ class ArtistColumnPanel extends React.Component {
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
           <h3 className="denim pointer">{artist.name}</h3>
         </Touchable>
-        <h6 className="ttc">{convertSnakeCase(artist.program)}, {artist.year}</h6>
+        <h6 className="ttc">{this.reformatPrograms(artist.program)} {(artist.program.length > 0) && "—"} {artist.year}</h6>
         <h6 className="i">
           {`${pluralize(non_hidden_works, 'work')} available`}
         </h6>

@@ -192,25 +192,25 @@ class UpdateArtist extends React.Component {
           <h5>Program</h5>
 
           <div className="checkbox-container">
-                  {Object.keys(this.state.categories.program).map(item => (
-                    <div className="mb2 checkbox-item" key={item}>
-                      <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
-                        <input
-                          onChange={() => this.toggleCheckbox(item)}
-                          type="checkbox"
-                          className="checkbox"
-                          value={convertSnakeCase(item)}
-                          id={`checkbox-${item}`}
-                          name="program"
-                          checked={(this.state.artist['program'].includes(item)) ? true : false}
-                        />
-                        <span className="filter-item">
-                          {convertSnakeCase(item)}
-                        </span>
-                      </label>
-                    </div>
-                  ))}
-                </div>
+            {Object.keys(this.state.categories.program).map(item => (
+              <div className="mb2 checkbox-item" key={item}>
+                <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
+                  <input
+                    onChange={() => this.toggleCheckbox(item)}
+                    type="checkbox"
+                    className="checkbox-denim"
+                    value={convertSnakeCase(item)}
+                    id={`checkbox-${item}`}
+                    name="program"
+                    checked={(this.state.artist['program'].includes(item)) ? true : false}
+                  />
+                  <span>
+                    {convertSnakeCase(item)}
+                  </span>
+                </label>
+              </div>
+            ))}
+          </div>
           <h5>Media</h5>
           <input
             value={this.state.artist.media}

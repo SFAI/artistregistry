@@ -55,7 +55,7 @@ class ArtistProfile extends React.Component {
   }
 
   reformatPrograms = (p) => {
-    var programs = this.state.artist.program;
+    var programs = p;
     for (var i = 0; i < programs.length; i++) {
       programs[i] = convertSnakeCase(programs[i]);
     }
