@@ -151,7 +151,7 @@ class RequestForm extends React.Component {
         </div>
       );
     }
-    if (!this.props.user) {
+    if (!this.props.buyer) {
       return (
         <div className="mw6">
           <Panel
