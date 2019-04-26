@@ -1,6 +1,7 @@
 <% if flash.present? %>
   <div id='flash'>
    <script>
+     toastr.options.positionClass = 'toast-bottom-left';
      <% if flash[:success] %>
        var $toastContent = $('<span><%= flash[:success] %></span>');
        toastr.success($toastContent)
