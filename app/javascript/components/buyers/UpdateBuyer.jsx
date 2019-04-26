@@ -140,7 +140,7 @@ class UpdateBuyer extends React.Component {
             required
           />
           <FormError error={this.state.errors.name}/>
-          <h5 className="mt3">Phone Number</h5>
+          <h5>Phone Number</h5>
           <input
             value={this.state.buyer.phone_number}
             onChange={this.handleChange}
@@ -150,7 +150,7 @@ class UpdateBuyer extends React.Component {
             placeholder="123-456-7890"
           />
           <FormError error={this.state.errors.phone_number}/>
-          <h5 className="mt3">Profile Photo</h5>
+          <h5>Profile Photo</h5>
           <div className="flex items-center mv2">
             <label className="w4 moss b--moss button-secondary tc" htmlFor="avatar">
               Choose File

@@ -330,7 +330,7 @@ class ArtistProfile extends React.Component {
             <div className="info">
               <h5 className="ttu">Program</h5>
               <p className="ttc"> {convertSnakeCase(program)} </p>
-              <h5 className="ttu mt2">Media</h5>
+              <h5 className="ttu">Media</h5>
               <p> {media} </p>
             </div>
           </div>

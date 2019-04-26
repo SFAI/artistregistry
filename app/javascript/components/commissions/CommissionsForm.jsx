@@ -119,7 +119,7 @@ class CommissionsForm extends React.Component {
         >
           {  Object.keys(this.state.commissions_types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
         </select>
-        <h5 className="mt2">Message</h5>
+        <h5>Message</h5>
         <FormError error={this.state.errors["comment"]}/>
         <textarea
           type="TEXT"

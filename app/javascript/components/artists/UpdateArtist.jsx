@@ -160,7 +160,7 @@ class UpdateArtist extends React.Component {
             required
           />
           <FormError error={this.state.errors.name}/>
-          <h5 className="mt3">Program</h5>
+          <h5>Program</h5>
           <select
             value={this.state.artist.program}
             onChange={this.handleChange}
@@ -174,7 +174,7 @@ class UpdateArtist extends React.Component {
               })
             }
           </select>
-          <h5 className="mt3">Media</h5>
+          <h5>Media</h5>
           <input
             value={this.state.artist.media}
             onChange={this.handleChange}
@@ -184,7 +184,7 @@ class UpdateArtist extends React.Component {
             required
           />
           <FormError error={this.state.errors.media}/>
-          <h5 className="mt3">Description</h5>
+          <h5>Description</h5>
           <textarea
             value={this.state.artist.description}
             onChange={this.handleChange}
@@ -195,7 +195,7 @@ class UpdateArtist extends React.Component {
             required
           />
           <FormError error={this.state.errors.description}/>
-          <h5 className="mt3">Featured Work</h5>
+          <h5>Featured Work</h5>
           <select
             onChange={this.handleChange}
             value={this.state.artist.featured_work_id}
@@ -207,7 +207,7 @@ class UpdateArtist extends React.Component {
               })
             }
           </select>
-          <h5 className="mt3">Profile Photo</h5>
+          <h5>Profile Photo</h5>
           <div className="flex items-center mv2">
             <label className="w4 denim b--denim button-secondary tc" htmlFor="avatar">
               Choose File

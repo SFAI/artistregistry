@@ -179,6 +179,7 @@ class Request extends React.Component {
               <StyledModal
                 title="Complete"
                 buttonType=""
+                color="moss"
               >
                 <TransactionForm
                   artist={this.props.artist}

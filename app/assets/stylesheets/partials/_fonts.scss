@@ -44,7 +44,9 @@ h4 {
 h5 {
 	font-weight: 500;
 	font-size: 16px;
-	margin-bottom: 4px;
+	&:not(:first-child) {
+		@extend .mt3;
+	}
 }
 
 h6 {
