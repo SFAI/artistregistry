@@ -10,25 +10,26 @@
 # enum program: { art_and_technology: 0, film: 1, history_and_theory_of_contemporary_art: 2, new_genres: 3, painting: 4, photography: 5, printmaking: 6, sculpture: 7, studio_art: 8 }
 
 artist_list = [
-  ['Andrew Smith', 'asmith@artists.sfai.edu', 'password', [1], 'Andrew Smith is a painter.', 'digital media', 2009, true ],
-  ['Benjamin Evans', 'bevans@artists.sfai.edu', 'password', 0, 'Benjamin Evans is a Art and Technology student.', 'film', 2019, true ],
-  ['Christine Ford', 'cford@artists.sfai.edu', 'password', 1, 'Christine Ford is a film student.', 'video, photography', 2020, true ],
-  ['Danielle Alexander', 'dalexander@artists.sfai.edu', 'password', 2, 'Danielle Alexander is a History and Theory student.', 'drawing, painting', 2011, true ],
-  ['Ethan Blaese', 'eblaese@artists.sfai.edu', 'password', 3, 'Ethan Blaese is a New Genres student.', 'video, photography', 2022, true ],
-  ['Frank Hayes', 'fhayes@artists.sfai.edu', 'password', 4, 'Frank Hayes is a painter.', 'oil paint', 2013, true ],
-  ['George Ruiz', 'gruiz@artists.sfai.edu', 'password', 5, 'George Ruiz is a photographer and filmmaker.', 'film, photography', 2014, true ],
-  ['Helen Price', 'hprice@artists.sfai.edu', 'password', 6, 'Helen Price works with prints and mixed media.', 'prints, watercolor, collage', 2016, true ],
-  ['Isabel Phillips', 'iphillips@artists.sfai.edu', 'password', 7, 'Isabel Phillips is sculpture and installation artist.', 'sculpture, installation', 2015, true ],
-  ['Jessica Ellis', 'jellis@artists.sfai.edu', 'password', 0, 'Jessica Ellis is a Art and Technology student.', 'video, photo, film', 2011, true ],
-  ['Kevin Henderson', 'khenderson@artists.sfai.edu', 'password', 1, 'Kevin Henderson is an aspiring filmmaker.', 'film', 2018, true ]
+  ['Andrew Smith', 'asmith@artists.sfai.edu', 'password', ["art_and_technology", "painting"], 0, 'Andrew Smith is a painter.', 'digital media', 2009, true ],
+  ['Benjamin Evans', 'bevans@artists.sfai.edu', 'password', ["art_and_technology", "film"], 1, 'Benjamin Evans is a Art and Technology student.', 'film', 2019, true ],
+  ['Christine Ford', 'cford@artists.sfai.edu', 'password', ["film", "new_genres"], 0, 'Christine Ford is a film and New Genres student.', 'video, photography', 2020, true ],
+  ['Danielle Alexander', 'dalexander@artists.sfai.edu', 'password', ["history_and_theory_of_contemporary_art", "painting"], 1, 'Danielle Alexander is a History and Theory student.', 'drawing, painting', 2011, true ],
+  ['Ethan Blaese', 'eblaese@artists.sfai.edu', 'password', ["new_genres"], 0, 'Ethan Blaese is a New Genres student.', 'video, photography', 2022, true ],
+  ['Frank Hayes', 'fhayes@artists.sfai.edu', 'password', ["painting", "film", "photography"], 0, 'Frank Hayes is a painter.', 'oil paint', 2013, true ],
+  ['George Ruiz', 'gruiz@artists.sfai.edu', 'password', ["photography", "film"], 1, 'George Ruiz is a photographer and filmmaker.', 'film, photography', 2014, true ],
+  ['Helen Price', 'hprice@artists.sfai.edu', 'password', ["printmaking", "sculpture", "studio_art"], 0, 'Helen Price works with prints and mixed media.', 'prints, watercolor, collage', 2016, true ],
+  ['Isabel Phillips', 'iphillips@artists.sfai.edu', 'password', ["sculpture", "studio_art"], 1, 'Isabel Phillips is sculpture and installation artist.', 'sculpture, installation', 2015, true ],
+  ['Jessica Ellis', 'jellis@artists.sfai.edu', 'password', ["art_and_technology", "film"], 0, 'Jessica Ellis is a Art and Technology student.', 'video, photo, film', 2011, true ],
+  ['Kevin Henderson', 'khenderson@artists.sfai.edu', 'password', ["film"], 0, 'Kevin Henderson is an aspiring filmmaker.', 'film', 2018, true ]
 ]
 
-artist_list.each do |n, e, pw, pr, d, m, y, s|
+artist_list.each do |n, e, pw, pr, deg, d, m, y, s|
   artist = Artist.create(
     name: n,
     email: e,
     password: pw,
-    # program: pr,
+    program: pr,
+    degree: deg,
     description: d,
     media: m,
     year: y,
@@ -36,7 +37,6 @@ artist_list.each do |n, e, pw, pr, d, m, y, s|
     terms_and_conditions: true,
     hidden: false
   )
-  artist.update_attributes program: []
   account = Account.create()
   account.user = artist
   account.save!
