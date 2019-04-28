@@ -25,7 +25,10 @@ class ArtistColumnPanel extends React.Component {
 
   reformatPrograms = (p) => {
     var programs = p;
-    programs = splitCommaSeparatedArray(p).sort();
+    if (programs.length == 0) {
+      return programs;
+    }
+    programs = splitCommaSeparatedArray(programs).sort();
     for (var i = 0; i < programs.length; i++) {
       programs[i] = convertSnakeCase(programs[i]);
     }
@@ -59,7 +62,7 @@ class ArtistColumnPanel extends React.Component {
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
           <h3 className="denim pointer">{artist.name}</h3>
         </Touchable>
-        <h6 className="ttc">{this.reformatPrograms(artist.program)} {(artist.program.length > 0) && "—"} {artist.year}</h6>
+        <h6 className="ttc">{this.reformatPrograms(artist.program)} {(this.reformatPrograms(artist.program).length > 0) && "—"} {artist.year}</h6>
         <h6 className="i">
           {`${pluralize(non_hidden_works, 'work')} available`}
         </h6>

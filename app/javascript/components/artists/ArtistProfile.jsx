@@ -47,7 +47,9 @@ class ArtistProfile extends React.Component {
         } else {
           works_response_filtered = works_response.filter(work => work.hidden == false)
         }
-      artist_response['program'] = splitCommaSeparatedArray(artist_response['program']).sort();
+      let programs = splitCommaSeparatedArray(artist_response['program']).sort();
+      programs = programs.filter(item => item != "");
+      artist_response['program'] = programs;
       this.setState({
         works: works_response_filtered,
         artist: artist_response,
@@ -61,6 +63,9 @@ class ArtistProfile extends React.Component {
     var programs = p;
     for (var i = 0; i < programs.length; i++) {
       programs[i] = convertSnakeCase(programs[i]);
+    }
+    if (programs.length == 0) {
+      return programs;
     }
     return programs.join(", ")
   }
