@@ -6,10 +6,9 @@ import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faEyeSlash, faEye, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
+import { convertSnakeCase, splitCommaSeparatedArray } from "../../utils/strings";
 import LoadingOverlay from "../helpers/LoadingOverlay";
-import { convertSnakeCase } from "../../utils/strings";
 import Unauthorized from "../helpers/Unauthorized";
-
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 /**
 * @prop user: user currently logged in
@@ -48,6 +47,9 @@ class ArtistProfile extends React.Component {
         } else {
           works_response_filtered = works_response.filter(work => work.hidden == false)
         }
+      let programs = splitCommaSeparatedArray(artist_response['program']).sort();
+      programs = programs.filter(item => item != "");
+      artist_response['program'] = programs;
       this.setState({
         works: works_response_filtered,
         artist: artist_response,
@@ -55,6 +57,17 @@ class ArtistProfile extends React.Component {
         componentDidMount: true
       });
     });
+  }
+
+  reformatPrograms = (p) => {
+    var programs = p;
+    for (var i = 0; i < programs.length; i++) {
+      programs[i] = convertSnakeCase(programs[i]);
+    }
+    if (programs.length == 0) {
+      return programs;
+    }
+    return programs.join(", ")
   }
 
   getAvailability = (activeFilter) => {
@@ -301,7 +314,7 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
-    const { name, program, media, description } = artist;
+    const { name, program, degree, media, description } = artist;
     const { artist: artist_prop, user, userType } = this.props;
     if (artist.hidden && (user == null || (user.account_id != artist_prop.account_id && userType != "admin"))) {
       return (
@@ -327,11 +340,13 @@ class ArtistProfile extends React.Component {
               ? <img className="br-100 h4 w4 mb4 self-center" src={artist.avatar.url} />
               : <FontAwesomeIcon icon={faUserCircle} size="8x" className="gray mb4 self-center"/>
             }
-            <div className="info">
+            <div className="info pr3 artist-profile-scroll overflow-y-auto">
               <h5 className="ttu">Program</h5>
-              <p className="ttc"> {convertSnakeCase(program)} </p>
+              <p className="ttc"> {this.reformatPrograms(program)} </p>
               <h5 className="ttu">Media</h5>
               <p> {media} </p>
+              <h5 className="ttu">Degree</h5>
+              <p className="ttu"> {degree} </p>
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
@@ -345,7 +360,7 @@ class ArtistProfile extends React.Component {
               </Button>
             }
             <h2>About the artist</h2>
-            <div className="artist-description pr3 overflow-y-auto">
+            <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
               <p> {description}</p>
             </div>
           </div>

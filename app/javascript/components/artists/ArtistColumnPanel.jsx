@@ -3,8 +3,8 @@ import React from 'react';
 import Touchable from 'rc-touchable';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { convertSnakeCase, splitCommaSeparatedArray, pluralize } from "../../utils/strings";
 import classNames from "classnames";
-import { convertSnakeCase, pluralize } from "../../utils/strings";
 
 /**
  * @prop artist: artist for this panel
@@ -23,6 +23,18 @@ class ArtistColumnPanel extends React.Component {
 
   navigateToArtist = (id) => {
     window.location = `/artists/${id}`;
+  }
+
+  reformatPrograms = (p) => {
+    var programs = p;
+    if (programs.length == 0) {
+      return programs;
+    }
+    programs = splitCommaSeparatedArray(programs).sort();
+    for (var i = 0; i < programs.length; i++) {
+      programs[i] = convertSnakeCase(programs[i]);
+    }
+    return programs.join(", ")
   }
 
   render() {
@@ -55,7 +67,7 @@ class ArtistColumnPanel extends React.Component {
             <div>
               <p className="b denim">{artist.name}</p>
               <p className="ttc">
-                {convertSnakeCase(artist.program)}, {artist.year}
+              {this.reformatPrograms(artist.program)} {(this.reformatPrograms(artist.program).length > 0) && artist.year && "—"} {artist.year}
               </p>
             </div>
           </div>
