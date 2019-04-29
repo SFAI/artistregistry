@@ -66,7 +66,7 @@ class AllArtists extends React.Component {
             artists: artists,
             isLoading: false,
             pageCount: Math.ceil(response.artist_count / response.per_page),
-            currentPage: page,
+            currentPage: page - 1,
             filtering: searchParams.length ? true : false
           });
         },
@@ -120,17 +120,17 @@ class AllArtists extends React.Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
+    let selected = data.selected + 1;
     if (this.state.filtering) {
       this.getFilteredArtists(selected)
     } else {
-      const artists_route = APIRoutes.artists.index(selected + 1)
+      const artists_route = APIRoutes.artists.index(selected)
       Requester.get(
         artists_route).then(
           response => {
             this.setState({
               artists: response.artists,
-              currentPage: selected
+              currentPage: selected - 1
             });
           },
         response => {
@@ -159,7 +159,7 @@ class AllArtists extends React.Component {
             filters={filters}
             color="denim"
           />
-          <button onClick={() => this.getFilteredArtists(0)} className="button-primary bg-denim w-100"> Apply </button>
+          <button onClick={() => this.getFilteredArtists(1)} className="button-primary bg-denim w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
           <div className="flex justify-between items-baseline">
