@@ -159,7 +159,7 @@ class Works extends React.Component {
     return (
       <div className="pt4">
         {isLoading ? <LoadingOverlay itemType="artwork" fullPage={true} /> : null}
-        <div className="fl w-20 pa3 mt5">
+        <div className="fl w-20 pa3 mt5" role="search">
           <Filters
             ref={(node) => { this.filters = node }}
             filters={filters}

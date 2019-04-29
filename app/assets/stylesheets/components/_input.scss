@@ -1,7 +1,6 @@
 input[type="checkbox"] {
   cursor: pointer;
   font-size: 17px;
-  visibility: hidden;
   width: 20px;
   height: 20px;
   margin-right: 8px;
@@ -23,6 +22,10 @@ input[type="checkbox"] {
     height: 20px;
     padding: -5px;
     background-color: $charcoal;
+  }
+
+  &:focus:after {
+    outline: -webkit-focus-ring-color auto 5px;
   }
 }
 
@@ -50,10 +53,6 @@ input[type="checkbox"] {
   cursor: pointer;
   box-sizing: border-box;
   height: 44px;
-
-  &:focus {
-    outline: none;
-  }
 }
 
 .button-primary {

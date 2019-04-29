@@ -37,7 +37,7 @@ class WorkColumnPanel extends React.Component {
                 work.availability == "sold" || work.availability == "rented"
             })}>
             {work.featured_image && (
-              <img src={work.featured_image.url} className="pointer" />
+              <img src={work.featured_image.url} className="pointer" alt={work.title}/>
             )}
           </div>
         </Touchable>

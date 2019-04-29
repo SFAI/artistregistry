@@ -292,7 +292,7 @@ class ArtistProfile extends React.Component {
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
             <div className="h4 w4 br-100 mb4 bg-gray self-center">
-              <img className="br-100 avatar-img" src={artist.avatar.url} />
+              <img className="br-100 avatar-img" src={artist.avatar.url} alt={name} />
             </div>
             <div className="info pr3 artist-profile-scroll overflow-y-auto">
               <h5 className="ttu">Degree</h5>
@@ -304,7 +304,9 @@ class ArtistProfile extends React.Component {
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
-            <img className="fit-cover h-100" src={featured_work ? featured_work.featured_image.url : sfai_wallpaper} />
+            <img className="fit-cover h-100"
+              src={featured_work ? featured_work.featured_image.url : sfai_wallpaper}
+              alt={featured_work ? featured_work.title : ""}/>
           </div>
           <div className="w-30-l mw-400 pa3 bg-white relative">
             {

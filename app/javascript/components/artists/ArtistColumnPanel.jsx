@@ -52,7 +52,7 @@ class ArtistColumnPanel extends React.Component {
         <div>
           {featured_work &&
             <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-              {<img src={featured_work.featured_image.url} className="mb3 pointer" />}
+              {<img src={featured_work.featured_image.url} className="mb3 pointer" alt={artist.name}/>}
             </Touchable>
           }
         </div>
