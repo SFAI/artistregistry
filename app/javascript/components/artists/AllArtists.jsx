@@ -41,9 +41,6 @@ class AllArtists extends React.Component {
       response => {
         const [artists_response, filters_response] = response;
         let artists_response_filtered = artists_response.artists
-        if (this.props.userType != "admin") {
-          artists_response_filtered = artists_response.artists.filter(artist => artist.works.filter(work => work.hidden === false).length > 0)
-        }
         this.setState({
           artists: artists_response_filtered,
           filters: filters_response,
@@ -77,12 +74,7 @@ class AllArtists extends React.Component {
     Requester.get(
       artists_route).then(
         response => {
-          let artists
-          if (this.props.userType == "admin") {
-            artists = response.artists
-          } else {
-            artists = response.artists.filter(artist => artist.works.filter(work => work.hidden === false).length > 0).filter(artist => artist.hidden == false)
-          }
+          const artists = response.artists
           this.setState({
             artists: artists,
             isLoading: false,

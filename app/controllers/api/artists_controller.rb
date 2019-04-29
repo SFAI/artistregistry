@@ -24,18 +24,16 @@ class Api::ArtistsController < ApplicationController
   end
 
   def filtered_artists
-    puts("HELLO")
     parsed_query = CGI.parse(params[:search_params])
     filtered_artists = Artist.where(parsed_query)
     if !current_admin
-      filtered_artists = filtered_artists.select {|artist| (artist.works.select {|work| work.hidden == false }).length > 0 }
+      filtered_artists = filtered_artists.joins(:works).group('artists.id, works.hidden').where("works.hidden=false")
     end
-    puts(filtered_artists)
     filtered_artists_page = params[:search_params] == "" ?  Artist.all.page(params[:page]) : filtered_artists.page(params[:page])
     artist_count = params[:search_params] == "" ?  Artist.count : filtered_artists.count
     render json: {
       artists: ActiveModel::Serializer::CollectionSerializer.new(filtered_artists_page, each_serializer: ArtistSerializer),
-      artist_count: filtered_artists.count,
+      artist_count: filtered_artists.length,
       per_page: Artist.default_per_page
     }
   end
