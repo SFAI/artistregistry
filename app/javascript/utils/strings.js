@@ -28,3 +28,16 @@ export const addSpaceAfterCommas = (arr) => {
     if (typeof arr !== 'object' || arr.length != 1) return;
     return arr[0].split(',').join(', ');
 }
+
+// takes an array of programs, applies convertSnakCase and joins with commas
+export const reformatPrograms = (p) => {
+    var programs = p;
+    if (programs.length == 0) {
+      return programs;
+    }
+    programs = splitCommaSeparatedArray(programs).sort();
+    for (var i = 0; i < programs.length; i++) {
+      programs[i] = convertSnakeCase(programs[i]);
+    }
+    return programs.join(", ")
+  }
