@@ -13,12 +13,13 @@ class BuyerSnapshot extends React.Component {
   }
 
   render() {
+    const { name, avatar, email } = this.props.buyer;
     return (
       <UserSnapshot
-        name={this.props.buyer.name}
-        avatarSrc=""
+        name={name}
+        avatarSrc={avatar.url || ""}
         navigate={this.navigateToBuyer}
-        email={this.props.buyer.email}
+        email={email}
         color={this.props.color}
       >
       </UserSnapshot>

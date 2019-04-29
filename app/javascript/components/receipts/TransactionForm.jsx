@@ -187,7 +187,7 @@ class TransactionForm extends React.Component {
             <input
               type="TEXT"
               name="price"
-              value={convertToCurrency(this.state.receipt.price)}
+              value={this.state.receipt.price}
               onChange = {this.handleChange}
               className="textinput"
             />
@@ -198,7 +198,7 @@ class TransactionForm extends React.Component {
             name="transaction_type"
             value={this.state.receipt.transaction_type}
             onChange={this.handleChange}
-            className="input-dropdown"
+            className="input-dropdown ttc"
           >
             {  Object.keys(this.state.types).map((obj, i) => { return <option key={i}>{obj}</option> }) }
           </select>

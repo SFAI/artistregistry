@@ -5,7 +5,7 @@ import LoadingOverlay from "../helpers/LoadingOverlay";
 import Filters from "../works/Filters";
 import ReactPaginate from 'react-paginate'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 
 /**
