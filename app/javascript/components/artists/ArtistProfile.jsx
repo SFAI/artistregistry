@@ -47,9 +47,11 @@ class ArtistProfile extends React.Component {
         } else {
           works_response_filtered = works_response.filter(work => work.hidden == false)
         }
-      let programs = splitCommaSeparatedArray(artist_response['program']).sort();
-      programs = programs.filter(item => item != "");
-      artist_response['program'] = programs;
+      if (artist_response['program'].length > 0) {
+        let programs = splitCommaSeparatedArray(artist_response['program']).sort();
+        programs = programs.filter(item => item != "");
+        artist_response['program'] = programs;
+      }
       this.setState({
         works: works_response_filtered,
         artist: artist_response,
