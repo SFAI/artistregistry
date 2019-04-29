@@ -29,10 +29,7 @@ class AllArtists extends React.Component {
   }
 
   componentDidMount() {
-    const unhiddenParams = `hidden=false`
-    const artist_route = this.props.userType == "admin"
-      ? APIRoutes.artists.index(1)
-      : APIRoutes.artists.filtered_artists(unhiddenParams, 1)
+    const artist_route = APIRoutes.artists.index(1)
     const categories_route = APIRoutes.artists.categories;
     Promise.all([
       Requester.get(artist_route),
@@ -60,17 +57,7 @@ class AllArtists extends React.Component {
     // Possible fix by editing routes.fb, but not sure how -B.Y.
     const searchParams = this.filters.getQuery();
     this.setState({ isLoading: true });
-
-    let artists_route 
-    if (searchParams.length) {
-      artists_route = APIRoutes.artists.filtered_artists(searchParams, page)
-    } else {
-      if (this.props.userType == "admin") {
-        artists_route = APIRoutes.artists.index(1)
-      } else {
-        artists_route = APIRoutes.artists.filtered_artists(`hidden=false`, 1)
-      }
-    }
+    const artists_route = searchParams.length ? APIRoutes.artists.filtered_artists(searchParams, page) : APIRoutes.artists.index(1)
     Requester.get(
       artists_route).then(
         response => {
@@ -79,7 +66,7 @@ class AllArtists extends React.Component {
             artists: artists,
             isLoading: false,
             pageCount: Math.ceil(response.artist_count / response.per_page),
-            currentPage: 0,
+            currentPage: page,
             filtering: searchParams.length ? true : false
           });
         },
@@ -137,9 +124,7 @@ class AllArtists extends React.Component {
     if (this.state.filtering) {
       this.getFilteredArtists(selected)
     } else {
-      const artists_route = this.props.userType == "admin"
-        ? APIRoutes.artists.index(selected)
-        : APIRoutes.artists.filtered_artists(`hidden=false`, selected)
+      const artists_route = APIRoutes.artists.index(selected)
       Requester.get(
         artists_route).then(
           response => {
@@ -174,7 +159,7 @@ class AllArtists extends React.Component {
             filters={filters}
             color="denim"
           />
-          <button onClick={this.getFilteredArtists} className="button-primary bg-denim w-100"> Apply </button>
+          <button onClick={() => this.getFilteredArtists(0)} className="button-primary bg-denim w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
           <div className="flex justify-between items-baseline">
