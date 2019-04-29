@@ -28,9 +28,7 @@ class Works extends React.Component {
   }
 
   componentDidMount = () => {
-    const works_route = this.props.userType == "admin"
-      ? APIRoutes.works.index(1)
-      : APIRoutes.works.filtered_artist_hidden(1)
+    const works_route = APIRoutes.works.index(1)
     const categories_route = APIRoutes.works.categories;
     Promise.all([
       Requester.get(works_route),
@@ -56,11 +54,7 @@ class Works extends React.Component {
     if (searchParams.length) {
       works_route = APIRoutes.works.filtered_works(searchParams, page)
     } else {
-      if (this.props.userType == "admin") {
         works_route = APIRoutes.works.index(1)
-      } else {
-        works_route = APIRoutes.works.filtered_artist_hidden(1)
-      }
     }
 
     Requester.get(
@@ -158,9 +152,7 @@ class Works extends React.Component {
     if (this.state.filtering) {
       this.getFilteredWorks(selected)
     } else {
-        const works_route = this.props.userType == "admin"
-        ? APIRoutes.works.index(selected)
-        : APIRoutes.works.filtered_artist_hidden(selected)
+        const works_route = APIRoutes.works.index(selected)
       Requester.get(
         works_route).then(
           response => {

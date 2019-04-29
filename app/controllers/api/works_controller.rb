@@ -97,32 +97,25 @@ class Api::WorksController < ApplicationController
   end
 
   def index
-    works = Work.page(params[:page])
+    works = current_admin ?
+      Work.all :
+      Work.joins(:artist).where("artists.hidden" => false, "works.hidden" => false)
+    works_page = works.page(params[:page])
     render json: {
-      works: ActiveModel::Serializer::CollectionSerializer.new(works, each_serializer: WorkSerializer),
-      work_count: Work.count,
+      works: ActiveModel::Serializer::CollectionSerializer.new(works_page, each_serializer: WorkSerializer),
+      work_count: works.count,
       per_page: Work.default_per_page
     }
   end
 
   def filtered_works
     parsed_query = CGI.parse(params[:search_params])
-    filtered_works = Work.where(parsed_query)
-    filtered_works_page = params[:search_params] == "" ?  Work.all.page(params[:page]) : filtered_works.page(params[:page])
+    filtered_works = current_admin ? Work.where(parsed_query) : Work.where(parsed_query).where("hidden=false")
+    filtered_works_page = params[:search_params] == "" ? Work.all.page(params[:page]) : filtered_works.page(params[:page])
     work_count = params[:search_params] == "" ?  Work.count : filtered_works.count
     render json: {
       works: ActiveModel::Serializer::CollectionSerializer.new(filtered_works_page, each_serializer: WorkSerializer),
       work_count: work_count,
-      per_page: Work.default_per_page
-    }
-  end
-
-  def filtered_artist_hidden
-    filtered_works = Work.joins(:artist).where("artists.hidden" => false, "works.hidden" => false)
-    filtered_works_page = filtered_works.page(params[:page])
-    render json: {
-      works: ActiveModel::Serializer::CollectionSerializer.new(filtered_works_page, each_serializer: WorkSerializer),
-      work_count: filtered_works.count,
       per_page: Work.default_per_page
     }
   end
