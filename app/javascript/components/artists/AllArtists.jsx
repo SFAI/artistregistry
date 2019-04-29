@@ -120,17 +120,17 @@ class AllArtists extends React.Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected + 1;
+    let selected = data.selected;
     if (this.state.filtering) {
       this.getFilteredArtists(selected)
     } else {
-      const artists_route = APIRoutes.artists.index(selected)
+      const artists_route = APIRoutes.artists.index(selected + 1)
       Requester.get(
         artists_route).then(
           response => {
             this.setState({
               artists: response.artists,
-              currentPage: data.selected
+              currentPage: selected
             });
           },
         response => {

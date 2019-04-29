@@ -16,26 +16,27 @@ class Api::ArtistsController < ApplicationController
 
   def index
     artists = current_admin ? 
-    Artist.page(params[:page]) : 
-    Artist.joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false").page(params[:page])
+      Artist.all : 
+      Artist.joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false")
+    artists_page = artists.page(params[:page])
+    artist_count = artists.length
     render json: {
-      artists: ActiveModel::Serializer::CollectionSerializer.new(artists, each_serializer: ArtistSerializer),
-      artist_count: Artist.count,
+      artists: ActiveModel::Serializer::CollectionSerializer.new(artists_page, each_serializer: ArtistSerializer),
+      artist_count: artists.length,
       per_page: Artist.default_per_page
     }
   end
 
   def filtered_artists
     parsed_query = CGI.parse(params[:search_params])
-    filtered_artists = Artist.where(parsed_query)
-    if !current_admin
-      filtered_artists = filtered_artists.joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false")
-    end
-    filtered_artists_page = params[:search_params] == "" ?  Artist.all.page(params[:page]) : filtered_artists.page(params[:page])
-    artist_count = params[:search_params] == "" ?  Artist.count : filtered_artists.count
+    filtered_artists = current_admin ? 
+      Artist.where(parsed_query) : 
+      Artist.where(parsed_query).joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false")
+    filtered_artists_page = filtered_artists.page(params[:page])
+    artist_count = filtered_artists.length
     render json: {
       artists: ActiveModel::Serializer::CollectionSerializer.new(filtered_artists_page, each_serializer: ArtistSerializer),
-      artist_count: filtered_artists.length,
+      artist_count: artist_count,
       per_page: Artist.default_per_page
     }
   end
