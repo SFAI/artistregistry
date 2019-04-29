@@ -4,7 +4,7 @@ import classNames from "classnames";
 import CommissionsForm from "../commissions/CommissionsForm";
 import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEyeSlash, faEye, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 import { convertSnakeCase, splitCommaSeparatedArray } from "../../utils/strings";
 import LoadingOverlay from "../helpers/LoadingOverlay";
@@ -272,6 +272,46 @@ class ArtistProfile extends React.Component {
     });
   }
 
+  renderFilteredWorks = () => {
+    const { works, activeFilter, canEditProfile } = this.state;
+    const filteredWorks = works.filter(work => this.getAvailability(activeFilter).includes(work.availability));
+    if (filteredWorks.length === 0) {
+      return (
+        <div>
+          <p className="tc">
+            No works matching the selected filters.
+          </p>
+        </div>
+      );
+    }
+    return (
+      <div className="col-list-4">
+        {filteredWorks.map(work => {
+          return (
+            <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
+              {canEditProfile &&
+                <div className="work-action-wrapper mb2">
+                  <Button type="hover-button" className="mr2" onClick={() => this.updateWork(work.id)}>
+                    <FontAwesomeIcon className="white" icon={faEdit} />
+                    <h4 className="ml2 white">Edit</h4>
+                  </Button>
+                </div>
+              }
+              {this.props.userType == "admin" &&
+                <div className="work-action-wrapper mb2">
+                  <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
+                    <FontAwesomeIcon className="white" icon={work.hidden ? faEye : faEyeSlash} />
+                    <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
+                  </Button>
+                </div>
+              }
+            </WorkColumnPanel>
+          );
+        })}
+      </div>
+    );
+  }
+
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
     const { name, program, degree, media, description } = artist;
@@ -296,24 +336,24 @@ class ArtistProfile extends React.Component {
         </div>
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
-            <div className="h4 w4 br-100 mb4 bg-gray self-center">
-              <img className="br-100 avatar-img" src={artist.avatar.url} />
-            </div>
+            {artist.avatar.url
+              ? <img className="br-100 h4 w4 mb4 self-center" src={artist.avatar.url} />
+              : <FontAwesomeIcon icon={faUserCircle} size="8x" className="gray mb4 self-center"/>
+            }
             <div className="info pr3 artist-profile-scroll overflow-y-auto">
+              <h5 className="ttu">Program</h5>
+              <p className="ttc"> {this.reformatPrograms(program)} </p>
+              <h5 className="ttu">Media</h5>
+              <p> {media} </p>
               <h5 className="ttu">Degree</h5>
               <p className="ttu"> {degree} </p>
-              <h5 className="ttu mt2">Program</h5>
-              <p className="ttc"> {this.reformatPrograms(program)} </p>
-              <h5 className="ttu mt2">Media</h5>
-              <p> {media} </p>
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
             <img className="fit-cover h-100" src={featured_work ? featured_work.featured_image.url : sfai_wallpaper} />
           </div>
           <div className="w-30-l mw-400 pa3 bg-white relative">
-            {
-              canEditProfile &&
+            {canEditProfile &&
               <Button type="hover-button" className="ma2 absolute top-0 right-0" color="denim" onClick={this.navigateToEdit}>
                 <FontAwesomeIcon className="white" icon={faEdit} />
                 <h4 className="ml2 white">Edit</h4>
@@ -353,30 +393,7 @@ class ArtistProfile extends React.Component {
           }
         </div>
         <div className="flex flex-wrap mb5">
-          <div className="col-list-4">
-            {works.map(work => {
-              if (this.getAvailability(activeFilter).includes(work.availability)) {
-              return (
-                <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
-                  {(userType == "admin" || canEditProfile) &&
-                    <div className="work-action-wrapper mb2">
-                      {canEditProfile &&
-                        <Button type="hover-button"  className="mr2" onClick={() => this.updateWork(work.id)}>
-                          <FontAwesomeIcon className="white" icon={faEdit} />
-                          <h4 className="ml2 white">Edit</h4>
-                        </Button>
-                      }
-                      <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
-                        <FontAwesomeIcon className="white" icon={work.hidden ? faEye : faEyeSlash} />
-                        <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
-                      </Button>
-                    </div>
-                  }
-              </WorkColumnPanel>
-              )
-            }
-            })}
-          </div>
+          {this.renderFilteredWorks()}
         </div>
         {
           !canEditProfile && !this.props.blocked && 

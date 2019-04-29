@@ -5,6 +5,7 @@ import Button from "../helpers/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Touchable from 'rc-touchable';
+import classNames from "classnames";
 
 class StyledModal extends React.Component {
   constructor(props) {
@@ -32,10 +33,12 @@ class StyledModal extends React.Component {
           ariaHideApp={false}
           overlayClassName="overlay-class"
         >
-          <div className="modal-head bg-white pl3 pr3">
-            <h3>{this.props.title}</h3>
+          <div className={classNames("modal-head pl3 pr3", {
+            [`bg-${this.props.color}`]: this.props.color
+          })}>
+            <h3 className="white">{this.props.title}</h3>
             <Touchable onPress={this.hideModal}>
-              <FontAwesomeIcon className="gray pointer" icon={faTimes} />
+              <FontAwesomeIcon className="white pointer" icon={faTimes} />
             </Touchable>
           </div>
           <div className="modal-content pa4">

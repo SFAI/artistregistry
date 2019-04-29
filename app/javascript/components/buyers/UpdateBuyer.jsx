@@ -48,10 +48,6 @@ class UpdateBuyer extends React.Component {
     this.setState({ avatar: files[0] });
   }
 
-  selectFile = () => {
-    this.avatar.click();
-  }
-
   checkErrors = () => {
     let errors = {
       name: "",
@@ -155,37 +151,26 @@ class UpdateBuyer extends React.Component {
           />
           <FormError error={this.state.errors.phone_number}/>
           <h5>Profile Photo</h5>
-          <div className="avatar-sel">
-            <input
-              name="avatar"
-              id="avatar"
-              type="file"
-              ref={(node) => this.avatar = node}
-              onChange={this.setFile}
-            />
-            <Button
-              onClick={this.selectFile}
-              className="w4"
-              type="button-secondary"
-              color="moss"
-            >
-              Select File
-            </Button>
-            <h5 className="ml2">
-              {
-                this.state.avatar ? (
-                  this.state.avatar.name
-                ) : (
-                  this.state.buyer.avatar &&
-                  this.state.buyer.avatar.name
-                )
-              }
-            </h5>
+          <div className="flex items-center mv2">
+            <label className="w4 moss b--moss button-secondary tc" htmlFor="avatar">
+              Choose File
+              <input
+                name="avatar"
+                id="avatar"
+                type="file"
+                ref={(node) => this.avatar = node}
+                onChange={this.setFile}/>
+            </label>
+            <p className="ml2 truncate">
+              {this.state.avatar
+                ? this.state.avatar.name
+                : this.state.buyer.avatar && this.state.buyer.avatar.name}
+            </p>
           </div>
           <div className="submit-container mt3 mb3">
             <Button
               onClick={() => {window.location = `/buyers/${this.state.buyer.id}`}}
-              type="button-secondary"
+              type="button-tertiary"
               color="moss"
               className="w4"
             >

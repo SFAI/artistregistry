@@ -20,8 +20,9 @@
       cursor: pointer;
     }
 
-    &.hidden {
-      display: none;
-    }
+    // &.hidden {
+    //   display: none;
+    // }
+    // Commented out to persist the << and >> labels
   }
 }
