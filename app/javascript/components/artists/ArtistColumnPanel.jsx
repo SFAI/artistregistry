@@ -59,16 +59,19 @@ class ArtistColumnPanel extends React.Component {
           </Touchable>
         }
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-          <div className="flex items-center pointer">
+          <div className="flex items-center">
             {artist.avatar.url
-              ? <img className="h2 w2 br-100 mr2" src={artist.avatar.url} alt={artist.name}/>
-              : <FontAwesomeIcon className="mr2 gray" icon={faUserCircle} size="2x"/>
+              ? <img className="h2 w2 br-100 mr2 pointer" src={artist.avatar.url} alt={artist.name}/>
+              : <FontAwesomeIcon className="mr2 gray pointer" icon={faUserCircle} size="2x"/>
             }
             <div>
-              <p className="b denim">{artist.name}</p>
+              <p className="b denim pointer">{artist.name}</p>
               <p className="ttc">
-              {this.reformatPrograms(artist.program)} {(this.reformatPrograms(artist.program).length > 0) && artist.year && "—"} {artist.year}
+                {artist.degree && artist.degree.toUpperCase()} {this.reformatPrograms(artist.program)}
               </p>
+              {artist.year &&
+                <p className="i">Class of {artist.year}</p>
+              }
             </div>
           </div>
         </Touchable>
