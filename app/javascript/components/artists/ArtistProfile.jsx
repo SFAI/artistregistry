@@ -6,8 +6,9 @@ import WorkColumnPanel from "../works/WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
+import { convertSnakeCase, splitCommaSeparatedArray } from "../../utils/strings";
 import LoadingOverlay from "../helpers/LoadingOverlay";
-import { convertSnakeCase } from "../../utils/strings";
+import Unauthorized from "../helpers/Unauthorized";
 var sfai_wallpaper = require('../../../assets/images/sfai_wallpaper.png');
 /**
 * @prop user: user currently logged in
@@ -46,6 +47,7 @@ class ArtistProfile extends React.Component {
         } else {
           works_response_filtered = works_response.filter(work => work.hidden == false)
         }
+      artist_response['program'] = splitCommaSeparatedArray(artist_response['program']).sort();
       this.setState({
         works: works_response_filtered,
         artist: artist_response,
@@ -53,6 +55,14 @@ class ArtistProfile extends React.Component {
         componentDidMount: true
       });
     });
+  }
+
+  reformatPrograms = (p) => {
+    var programs = p;
+    for (var i = 0; i < programs.length; i++) {
+      programs[i] = convertSnakeCase(programs[i]);
+    }
+    return programs.join(", ")
   }
 
   getAvailability = (activeFilter) => {
@@ -259,10 +269,13 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
-    const { name, program, media, description } = artist;
-    const { user, userType } = this.props;
-
-
+    const { name, program, degree, media, description } = artist;
+    const { artist: artist_prop, user, userType } = this.props;
+    if (artist.hidden && (user == null || (user.account_id != artist_prop.account_id && userType != "admin"))) {
+      return (
+        <Unauthorized/>
+      )
+    }
     if (!componentDidMount) {
       return (
         <LoadingOverlay fullPage={true} itemType="Artist"></LoadingOverlay>
@@ -281,9 +294,11 @@ class ArtistProfile extends React.Component {
             <div className="h4 w4 br-100 mb4 bg-gray self-center">
               <img className="br-100 avatar-img" src={artist.avatar.url} />
             </div>
-            <div className="info">
-              <h5 className="ttu">Program</h5>
-              <p className="ttc"> {convertSnakeCase(program)} </p>
+            <div className="info pr3 artist-profile-scroll overflow-y-auto">
+              <h5 className="ttu">Degree</h5>
+              <p className="ttu"> {degree} </p>
+              <h5 className="ttu mt2">Program</h5>
+              <p className="ttc"> {this.reformatPrograms(program)} </p>
               <h5 className="ttu mt2">Media</h5>
               <p> {media} </p>
             </div>
@@ -300,7 +315,7 @@ class ArtistProfile extends React.Component {
               </Button>
             }
             <h2>About the artist</h2>
-            <div className="artist-description pr3 overflow-y-auto">
+            <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
               <p> {description}</p>
             </div>
           </div>
@@ -359,8 +374,8 @@ class ArtistProfile extends React.Component {
           </div>
         </div>
         {
-          !canEditProfile &&
-          <div className="flex flex-row items-stretch mb4 mt4">
+          !canEditProfile && !this.props.blocked && 
+          <div className="flex flex-row items-stretch mb4">
             <div className="w-50 pr2 dib flex flex-row items-stretch">
               <div className="bg-charcoal pa3">
                 <h2 className="white">Guidelines for contacting artists</h2>

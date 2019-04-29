@@ -5,10 +5,25 @@ class ArtistsController < ApplicationController
 
   def show
     @artist = Artist.find(params[:id])
+
+    if @current_user
+      artist_account_id = @artist.account.id
+      user_account_id = @current_user.account.id
+
+      @blocked = (
+        Block.where(
+          blocker_id: artist_account_id,
+          blocked_id: user_account_id).exists? ||
+        Block.where(
+          blocked_id: user_account_id,
+          blocker_id: artist_account_id).exists?
+        )
+    end
   end
 
   def update
     @artist_id = params[:id]
+    @artist_account_id = Artist.find(params[:id]).account_id
   end
 
   def generate_new_password_email

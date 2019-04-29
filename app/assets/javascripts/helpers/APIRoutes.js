@@ -10,6 +10,7 @@ class ApiRoutes {
       categories: `/works/categories`,
       thumbnail: (id) => `api/works/thumbnail/${id}`,
       filtered_artist_hidden: (page) => `/api/works/filtered/artist_hidden/${page}`,
+      flag: (id) => `/api/works/flag/${id}`,
     }
   }
 
@@ -34,6 +35,8 @@ class ApiRoutes {
       show        : (id) => `/api/buyers/${id}`,
       update      : (id) => `/api/buyers/${id}`,
       requests    : (id) => `/api/buyers/requests/${id}`,
+      lock_user : (id) => `/api/buyers/lock_user/${id}`,
+      unlock_user : (id) => `/api/buyers/unlock_user/${id}`,
     };
   }
 
@@ -63,6 +66,14 @@ class ApiRoutes {
       update: (id) => `/api/receipts/${id}`,
       types: `/receipts/types`,
       artist: (id) => `/api/receipts/artist/${id}`
+    }
+  }
+
+  get blocks() {
+    return {
+      block_user: `/api/blocks/block_user`,
+      unblock_user: `/api/blocks/unblock_user`,
+      is_blocking: (search_params) => `/api/blocks/is_blocking/${search_params}`
     }
   }
 

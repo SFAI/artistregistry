@@ -1,10 +1,18 @@
 <div class="loginPage">
+  <% if current_buyer || current_artist %>
+    <div class="center mw6">
+      <h1>Page not available</h1>
+      <div class="mv4 bg-white pa4">
+        <h2>User logged in</h2>
+        <p>You are already logged in as a user. Please log out first to switch to an Admin account.</p>
+      </div>
+    </div>  <% else %>
   <div class="container">
     <h1>Welcome back</h1>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
         <% flash.each do |key, value| %>
-           <div class="flash <%= key %>"><%= value %></div>
+          <div class="flash <%= key %>"><%= value %></div>
         <% end %>
 
       <div class="mb3">
@@ -25,7 +33,8 @@
       <% end -%>
 
       <div class="flex justify-between">
-        <%= f.submit "Log in", class: "button-primary bg-mustard w4" %>
+        <%= f.submit "Log in", class: "button-primary bg-moss w4" %>
       </div>
+    <% end %>
     <% end %>
 </div>
