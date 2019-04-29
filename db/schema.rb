@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_24_090607) do
+ActiveRecord::Schema.define(version: 2019_04_28_225203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,8 +68,6 @@ ActiveRecord::Schema.define(version: 2019_04_24_090607) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "program", default: [], array: true
-    t.integer "degree", default: 0
     t.string "name"
     t.boolean "open_to_commissions"
     t.string "confirmation_token"
@@ -83,6 +81,8 @@ ActiveRecord::Schema.define(version: 2019_04_24_090607) do
     t.bigint "account_id"
     t.datetime "locked_at"
     t.boolean "hidden"
+    t.integer "degree", default: 0
+    t.string "program", default: [], array: true
     t.index ["account_id"], name: "index_artists_on_account_id"
     t.index ["confirmation_token"], name: "index_artists_on_confirmation_token", unique: true
     t.index ["email"], name: "index_artists_on_email", unique: true
@@ -170,8 +170,8 @@ ActiveRecord::Schema.define(version: 2019_04_24_090607) do
     t.bigint "artist_id", null: false
     t.string "description"
     t.integer "featured_image_id"
-    t.string "links"
     t.boolean "hidden"
+    t.string "links"
     t.index ["artist_id"], name: "index_works_on_artist_id"
   end
 
