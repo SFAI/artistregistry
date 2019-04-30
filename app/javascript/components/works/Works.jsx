@@ -68,7 +68,7 @@ class Works extends React.Component {
             works: works,
             isLoading: false,
             pageCount: Math.ceil(response.work_count / response.per_page),
-            currentPage: 0,
+            currentPage: page - 1,
             filtering: searchParams.length ? true : false
           });
         },
@@ -179,7 +179,7 @@ class Works extends React.Component {
   };
 
   render() {
-    const { isLoading, pageCount, filters, works } = this.state;
+    const { isLoading, pageCount, filters, works, currentPage } = this.state;
     return (
       <div className="pt4">
         {isLoading ? <LoadingOverlay itemType="artwork" fullPage={true} /> : null}
@@ -189,7 +189,7 @@ class Works extends React.Component {
             filters={filters}
             color="berry"
           />
-          <button onClick={this.getFilteredWorks} className="button-primary bg-berry w-100"> Apply </button>
+          <button onClick={() => this.getFilteredWorks(1)} className="button-primary bg-berry w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
           <div className="flex justify-between items-baseline">
@@ -206,7 +206,7 @@ class Works extends React.Component {
               onPageChange={this.handlePageClick}
               activeClassName={'active'}
               disabledClassName={'hidden'}
-              forcePage={this.state.currentPage}
+              forcePage={currentPage}
               />
             </nav>
           </div>
