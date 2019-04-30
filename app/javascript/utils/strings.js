@@ -18,7 +18,7 @@ export const pluralize = (arr, noun) => {
 // splits the string into multiple elements.
 export const splitCommaSeparatedArray = (arr) => {
     if (typeof arr !== 'object') return [];
-    else if (arr.length > 1) return arr;
+    else if (arr.length != 1) return arr;
     return arr[0].split(",");
 }
 
