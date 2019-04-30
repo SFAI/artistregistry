@@ -49,23 +49,15 @@ class Works extends React.Component {
     // Possible fix by editing routes.fb, but not sure how -B.Y.
     const searchParams = this.filters.getQuery();
     this.setState({ isLoading: true });
-
-    let works_route
-    if (searchParams.length) {
-      works_route = APIRoutes.works.filtered_works(searchParams, page)
-    } else {
-        works_route = APIRoutes.works.index(1)
-    }
+    const works_route = searchParams.length ?
+      APIRoutes.works.filtered_works(searchParams, page) :
+      APIRoutes.works.index(1)
 
     Requester.get(
       works_route).then(
         response => {
-          let works = response.works
-          if (this.props.userType != "admin") {
-            works = response.works.filter(work => work.hidden == false)
-          }
           this.setState({
-            works: works,
+            works: response.works,
             isLoading: false,
             pageCount: Math.ceil(response.work_count / response.per_page),
             currentPage: page - 1,
