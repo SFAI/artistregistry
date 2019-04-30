@@ -19,7 +19,6 @@ class Request extends React.Component {
         start_date: '',
         end_date: '',
         purchase_date: '',
-        price: '',
         comment: '',
         request_id: this.props.request.id
       }
@@ -169,8 +168,8 @@ class Request extends React.Component {
   renderDropdown(id) {
     const { receipt, request, isBlocking } = this.state;
     return (
-      <div className="relative mh3">
-        <button className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0"/>
+      <div className="mh3">
+        <button className="request-ellipsis ml3 br-100 pa0 pointer bn outline-0"/>
         <ul className="request-dropdown ml3 absolute nowrap z-3">
           {this.props.artist &&
             <li onClick={() => this.closeRequest(id)}>Archive</li>
@@ -180,6 +179,7 @@ class Request extends React.Component {
               <StyledModal
                 title="Complete"
                 buttonType=""
+                color="moss"
               >
                 <TransactionForm
                   artist={this.props.artist}
@@ -210,28 +210,18 @@ class Request extends React.Component {
           (<BuyerSnapshot buyer={buyer} color="moss"/>) : 
           (<ArtistSnapshot artist={artist} color="moss"/>)
       );
-    const price = isBlocking ? (<div className="pa3"></div>) :
-      (
-        <div className="pa3">
-          <h5>Price</h5>
-          <p>{"$" + convertToCurrency(work.price)}</p>
-        </div>
-      );
 
     return (
       <div key={id} className="bg-white mb3">
         <div className="flex justify-between w-100 items-center bb b--light-gray bt-0 bl-0 br-0">
           { requesterInfo }
-          <div className="pa3 flex-grow-1">
+          <div className="ml-auto flex items-center">
+            <div className="pa3">
+              <h5>Date Requested</h5>
+              <p>{new Date(created_at).toLocaleDateString()}</p>
+            </div>
+            {this.renderDropdown(id)}
           </div>
-          <div className="pa3 flex-grow-1">
-          </div>
-          { price }
-          <div className="pa3">
-            <h5>Date Placed</h5>
-            <p>{new Date(created_at).toLocaleDateString()}</p>
-          </div>
-          {this.renderDropdown(id)}
         </div>
 
         { !isBlocking && (

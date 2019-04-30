@@ -4,7 +4,7 @@ import Filters from "./Filters";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import WorkColumnPanel from "./WorkColumnPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 
 /**
@@ -147,6 +147,16 @@ class Works extends React.Component {
       console.error(data);
     });
   }
+
+  toggleHideWork = (work) => {
+    if (work.hidden) {
+      this.unHideWork(work.id);
+    }
+    else {
+      this.hideWork(work.id);
+    }
+  }
+
   handlePageClick = data => {
     let selected = data.selected + 1;
     if (this.state.filtering) {
@@ -203,20 +213,14 @@ class Works extends React.Component {
           <div className="col-list-3">
             {works.map((work, i) => {
               return (
-                  <WorkColumnPanel key={i} work={work}>
-                      {work.hidden == false && this.props.userType == "admin" &&
-                      <Button type="hover-button" onClick={() => this.hideWork(work.id)}>
-                        <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Hide</h4>
-                      </Button>
-                      }
-                      {work.hidden == true && this.props.userType == "admin" &&
-                      <Button type="hover-button" onClick={() => this.unHideWork(work.id)}>
-                        <FontAwesomeIcon className="white" icon={faTrash} />
-                        <h4 className="ml2 white">Unhide</h4>
-                      </Button>
-                      }
-                  </WorkColumnPanel>
+                <WorkColumnPanel key={i} work={work}>
+                  {this.props.userType == "admin" &&
+                    <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
+                      <FontAwesomeIcon className="white" icon={work.hidden ? faEye : faEyeSlash} />
+                      <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
+                    </Button>
+                  }
+                </WorkColumnPanel>
               );
             })}
           </div>

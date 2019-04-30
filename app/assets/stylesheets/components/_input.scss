@@ -26,6 +26,11 @@ input[type="checkbox"] {
   }
 }
 
+input[type="file"] {
+  cursor: inherit;
+  display: block;
+  opacity: 0;
+}
 .checkbox-item {
   display: flex;
   align-items: center;

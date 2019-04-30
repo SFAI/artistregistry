@@ -1,7 +1,9 @@
 import PropTypes from "prop-types"
 import React from 'react';
 import Touchable from 'rc-touchable';
-import { convertSnakeCase, splitCommaSeparatedArray, pluralize } from "../../utils/strings";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { pluralize, reformatPrograms } from "../../utils/strings";
 import classNames from "classnames";
 
 /**
@@ -23,15 +25,6 @@ class ArtistColumnPanel extends React.Component {
     window.location = `/artists/${id}`;
   }
 
-  reformatPrograms = (p) => {
-    var programs = p;
-    programs = splitCommaSeparatedArray(p).sort();
-    for (var i = 0; i < programs.length; i++) {
-      programs[i] = convertSnakeCase(programs[i]);
-    }
-    return programs.join(", ")
-  }
-
   render() {
     const { userType, artist } = this.props;
     // let artist = this.props.artist;
@@ -40,33 +33,43 @@ class ArtistColumnPanel extends React.Component {
     const hidden_works = artist.works.filter(work => work.hidden === true);
     return (
       <div
-        className={
-          classNames("mb3 pa3 w-100 col-item bg-white relative", {
-            "overlay-hidden-artist": artist.hidden
-          })}
+      className={classNames("mb3 pa3 w-100 col-item bg-white relative", {
+        "overlay-hidden-artist": artist.hidden
+      })}
         key={artist.id}
       >
         <div className="item-overlay">
           {this.props.children}
         </div>
-        <div>
-          {featured_work &&
-            <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-              {<img src={featured_work.featured_image.url} className="mb3 pointer" />}
-            </Touchable>
-          }
-        </div>
+        {featured_work &&
+          <Touchable onPress={() => this.navigateToArtist(artist.id)}>
+            {<img src={featured_work.featured_image.url} className="mb3 pointer" />}
+          </Touchable>
+        }
         <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-          <h3 className="denim pointer">{artist.name}</h3>
+          <div className="flex items-center">
+            {artist.avatar.url
+              ? <img className="h2 w2 br-100 mr2 pointer" src={artist.avatar.url} alt={artist.name}/>
+              : <FontAwesomeIcon className="mr2 gray pointer" icon={faUserCircle} size="2x"/>
+            }
+            <div>
+              <p className="b denim pointer">{artist.name}</p>
+              <p className="ttc">
+                {artist.degree && artist.degree.toUpperCase()} {reformatPrograms(artist.program)}
+              </p>
+              {artist.year &&
+                <p className="i">Class of {artist.year}</p>
+              }
+            </div>
+          </div>
         </Touchable>
-        <h6 className="ttc">{this.reformatPrograms(artist.program)} {(artist.program.length > 0) && "—"} {artist.year}</h6>
-        <h6 className="i">
-          {`${pluralize(non_hidden_works, 'work')} available`}
-        </h6>
+        <p className="i mv2">
+          {pluralize(non_hidden_works, 'work')} available
+        </p>
         {userType == "admin" && hidden_works.length > 0 &&
-          <h6 className="i">
+          <p className="i mb2">
             {pluralize(hidden_works, 'work')} hidden
-          </h6>
+          </p>
         }
       </div>
     );

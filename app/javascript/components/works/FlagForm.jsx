@@ -6,7 +6,7 @@ import Button from "../helpers/Button";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 
 /**
-* @prop artist: artist to flag
+* @prop artist_prop: artist to flag
 * @prop user: buyer associated with flag
 * @prop work: work to flag
 */
