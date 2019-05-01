@@ -109,6 +109,7 @@ class WorkForm extends React.Component {
     let errors = {
       title: "",
       material: "",
+      dimensions: "",
       description: "",
       images: "",
       featuredImage: ""
@@ -118,6 +119,9 @@ class WorkForm extends React.Component {
     }
     if (!this.state.work.material) {
       errors["material"] = "This field cannot be empty.";
+    }
+    if (!this.state.work.dimensions) {
+      errors["dimensions"] = "This field cannot be empty.";
     }
     if (!this.state.work.description) {
       errors["description"] = "This field cannot be empty.";
@@ -285,6 +289,15 @@ class WorkForm extends React.Component {
           className="textinput"
         />
         <FormError error={this.state.errors["material"]} />
+        <h5>Dimensions</h5>
+        <input
+          value={this.state.work.dimensions}
+          onChange={this.handleChange}
+          name="dimensions"
+          type="text"
+          className="textinput"
+        />
+        <FormError error={this.state.errors["dimensions"]} />
         <h5>Media</h5>
         <select
           onChange={this.handleChange}
