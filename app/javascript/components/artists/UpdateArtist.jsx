@@ -218,7 +218,7 @@ class UpdateArtist extends React.Component {
               </div>
             ))}
           </div>
-          <h5>Year</h5>
+          <h5>Graduation Year</h5>
           <input
             value={this.state.artist.year}
             onChange={this.handleChange}

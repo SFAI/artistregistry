@@ -348,7 +348,7 @@ class ArtistProfile extends React.Component {
               <h5 className="ttu">Media</h5>
               <p> {media} </p>
               <h5 className="ttu">Degree</h5>
-              <p className="ttu"> {degree} </p>
+              <p className="ttu"> {degree} {year}</p>
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
