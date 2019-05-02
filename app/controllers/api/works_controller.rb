@@ -165,6 +165,8 @@ class Api::WorksController < ApplicationController
     params.require(:work).permit(:title,
                                  :material,
                                  :media,
+                                 :dimensions,
+                                 :year,
                                  :status,
                                  :availability,
                                  :links,

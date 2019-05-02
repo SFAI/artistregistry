@@ -123,6 +123,9 @@ class WorkForm extends React.Component {
     if (!this.state.work.dimensions) {
       errors["dimensions"] = "This field cannot be empty.";
     }
+    if (!this.state.work.year) {
+      errors["year"] = "This field cannot be empty.";
+    }
     if (!this.state.work.description) {
       errors["description"] = "This field cannot be empty.";
     }
@@ -153,7 +156,7 @@ class WorkForm extends React.Component {
     } else {
       this.setState({ updatingWork: true });
       let formData = new FormData();
-      const formKeys = ['artist_id', 'title', 'material', 'media', 'links', 'availability', 'hidden', 'description', 'featured_image'];
+      const formKeys = ['artist_id', 'title', 'material', 'dimensions', 'year', 'media', 'links', 'availability', 'hidden', 'description', 'featured_image'];
       formKeys.forEach(key => {
         formData.append(`work[${key}]`, this.state.work[key]);
       });
@@ -298,6 +301,15 @@ class WorkForm extends React.Component {
           className="textinput"
         />
         <FormError error={this.state.errors["dimensions"]} />
+        <h5>Year Completed</h5>
+        <input
+          value={this.state.work.year}
+          onChange={this.handleChange}
+          name="year"
+          type="number"
+          className="textinput"
+        />
+        <FormError error={this.state.errors["year"]} />
         <h5>Media</h5>
         <select
           onChange={this.handleChange}
