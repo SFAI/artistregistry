@@ -21,7 +21,8 @@ class UpdateArtist extends React.Component {
         name: "",
         media: "",
         description: "",
-        featured_work: ""
+        featured_work: "",
+        year: ""
       }
     }
   }
@@ -97,6 +98,9 @@ class UpdateArtist extends React.Component {
     if (!artist.description) {
       errors.description = "This field cannot be empty."
     }
+    if (!artist.year) {
+      errors.year = "This field cannot be empty."
+    }
     return errors;
   }
 
@@ -117,7 +121,7 @@ class UpdateArtist extends React.Component {
       this.setState({ updatingArtist: true })
       event.preventDefault();
       let formData = new FormData();
-      const formKeys = ['name', 'degree', 'media', 'description', 'featured_work_id'];
+      const formKeys = ['name', 'degree', 'year', 'media', 'description', 'featured_work_id'];
       formKeys.forEach(key => {
         formData.append(`artist[${key}]`, this.state.artist[key]);
       });
@@ -214,6 +218,16 @@ class UpdateArtist extends React.Component {
               </div>
             ))}
           </div>
+          <h5>Year</h5>
+          <input
+            value={this.state.artist.year}
+            onChange={this.handleChange}
+            name="year"
+            type="number"
+            className="textinput"
+            required
+          />
+          <FormError error={this.state.errors.year}/>
           <h5>Media</h5>
           <input
             value={this.state.artist.media}

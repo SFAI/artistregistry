@@ -89,6 +89,7 @@ class Api::ArtistsController < ApplicationController
   def artist_params
     params.require(:artist).permit(:name,
                                  :degree,
+                                 :year,
                                  :media,
                                  :description,
                                  :avatar,
