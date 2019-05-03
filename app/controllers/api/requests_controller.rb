@@ -44,6 +44,7 @@ class Api::RequestsController < ApplicationController
 
   def request_exist
     parsed_query = CGI.parse(params[:search_params])
+    parsed_query[:deleted] = [false, nil]
     exist = Request.where(parsed_query)
     render json: exist
   end
