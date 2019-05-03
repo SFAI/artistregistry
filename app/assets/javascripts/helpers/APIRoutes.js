@@ -1,15 +1,14 @@
 class ApiRoutes {
   get works() {
     return {
-      index: `/api/works`,
+      index: (page) => `/api/works/page/${page}`,
       create: `/api/works`,
       show: (id) => `/api/works/${id}`,
       update: (id) => `/api/works/${id}`,
       delete: (id) => `/api/works/${id}`,
-      filtered_works: (search_params) => `/api/works/filtered_works/${search_params}`,
+      filtered_works: (search_params, page) => `/api/works/filtered_works/${search_params}/${page}`,
       categories: `/works/categories`,
       thumbnail: (id) => `api/works/thumbnail/${id}`,
-      filtered_artist_hidden: `/api/works/filtered/artist_hidden`,
       flag: (id) => `/api/works/flag/${id}`,
     }
   }
