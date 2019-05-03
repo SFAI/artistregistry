@@ -91,7 +91,7 @@ class Inquiry extends React.Component {
         <div className="flex justify-between items-center">
           <BuyerSnapshot buyer={commission.buyer} color="moss" />
         </div>
-        <div className="pa3 flex-grow-1 gray">{commission.comment}</div>
+        <div className="pa3 flex-grow-1 gray pre">{commission.comment}</div>
       </div>
       );
 
