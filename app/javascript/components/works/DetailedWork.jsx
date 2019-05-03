@@ -42,7 +42,7 @@ class DetailedWork extends React.Component {
   }
 
   render() {
-    const { artist_prop, work, user, user_type } = this.props
+    const { artist_prop, buyer, blocked, work, user, user_type } = this.props;
     if ((artist_prop.hidden || work.hidden) && (user == null || (user.account_id != artist_prop.account_id && user_type != "admin"))) {
       return (
         <Unauthorized/>
@@ -89,15 +89,15 @@ class DetailedWork extends React.Component {
               <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
             </div>
           </div>
-          {!this.props.blocked &&
+          {!blocked && user_type !== "artist" &&
             <RequestForm
-              buyer={this.props.buyer}
-              artist_id={artist_id}
-              work_id={id}
-              work_status={availability}
+              buyer={buyer}
+              artistId={artist_id}
+              workId={id}
+              workStatus={availability}
             />
           }
-          {(this.props.user !== null) && 
+          {(user !== null) && 
           <div className="flex mt3 items-center justify-between">
             <p className="pl3 gray">Violating our Terms of Use?</p>
             <StyledModal
@@ -106,8 +106,8 @@ class DetailedWork extends React.Component {
               color="berry"
             >
               <FlagForm
-                artist={this.props.artist}
-                user={this.props.user}
+                artist={artist_prop}
+                user={user}
                 work={this.state.work}
               />
             </StyledModal>

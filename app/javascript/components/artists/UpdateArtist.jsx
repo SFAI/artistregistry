@@ -3,7 +3,7 @@ import React from 'react';
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
 import LoadingOverlay from "../helpers/LoadingOverlay";
-import { convertSnakeCase } from "../../utils/strings";
+import { convertSnakeCase, splitCommaSeparatedArray } from "../../utils/strings";
 import Unauthorized from "../helpers/Unauthorized";
 
 class UpdateArtist extends React.Component {
@@ -39,6 +39,7 @@ class UpdateArtist extends React.Component {
     ]).then(
       response => {
         const [artist_response, works_response, categories_response] = response;
+        artist_response['program'] = splitCommaSeparatedArray(artist_response['program']).sort();
         this.setState({
           artist: artist_response,
           works: works_response,
@@ -53,15 +54,27 @@ class UpdateArtist extends React.Component {
     );
   }
 
-  selectFile = () => {
-    this.avatar.click();
-  }
-
   handleChange = (event) => {
     const artist = this.state.artist;
     artist[event.target.name] = event.target.value;
     this.setState({ artist: artist });
   }
+
+  toggleCheckbox = (item) => {
+    const prevPrograms = this.state.artist.program;
+    let newPrograms;
+    if (prevPrograms && prevPrograms.includes(item)) {
+      newPrograms = prevPrograms.filter(value => value !== item);
+    } else {
+      newPrograms = prevPrograms ? [...prevPrograms, item] : [item];
+    }
+
+    const artist = this.state.artist;
+    artist['program'] = newPrograms;
+    this.setState({
+      artist: artist
+    });
+  };
 
   setFile = (e) => {
     const files = e.target.files;
@@ -104,11 +117,12 @@ class UpdateArtist extends React.Component {
       this.setState({ updatingArtist: true })
       event.preventDefault();
       let formData = new FormData();
-      const formKeys = ['name', 'program', 'media', 'description', 'featured_work_id'];
+      const formKeys = ['name', 'degree', 'media', 'description', 'featured_work_id'];
       formKeys.forEach(key => {
         formData.append(`artist[${key}]`, this.state.artist[key]);
       });
-
+      let filteredPrograms = this.state.artist['program'].filter(item => item != "");
+      formData.append(`artist[program][]`, filteredPrograms);
       const { avatar } = this.state;
       if (avatar) {
         formData.append('artist[avatar]', avatar, avatar.name);
@@ -164,20 +178,42 @@ class UpdateArtist extends React.Component {
             required
           />
           <FormError error={this.state.errors.name}/>
-          <h5>Program</h5>
+          <h5>Degree</h5>
           <select
-            value={this.state.artist.program}
+            value={this.state.artist.degree ? this.state.artist.degree : 0}
             onChange={this.handleChange}
-            name="program"
-            className="input-dropdown ttc"
+            name="degree"
+            className="input-dropdown ttu"
             required
           >
             {
-              Object.keys(this.state.categories.program).map((obj, i) => {
+              Object.keys(this.state.categories.degree).map((obj, i) => {
                 return <option key={i} value={obj}>{convertSnakeCase(obj)}</option>
               })
             }
           </select>
+          <h5>Program</h5>
+
+          <div className="checkbox-container">
+            {Object.keys(this.state.categories.program).map(item => (
+              <div className="mb2 checkbox-item" key={item}>
+                <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
+                  <input
+                    onChange={() => this.toggleCheckbox(item)}
+                    type="checkbox"
+                    className="checkbox-denim"
+                    value={convertSnakeCase(item)}
+                    id={`checkbox-${item}`}
+                    name="program"
+                    checked={(this.state.artist['program'].includes(item)) ? true : false}
+                  />
+                  <span>
+                    {convertSnakeCase(item)}
+                  </span>
+                </label>
+              </div>
+            ))}
+          </div>
           <h5>Media</h5>
           <input
             value={this.state.artist.media}
@@ -212,32 +248,21 @@ class UpdateArtist extends React.Component {
             }
           </select>
           <h5>Profile Photo</h5>
-          <div className="avatar-sel">
-            <input
-              name="avatar"
-              id="avatar"
-              type="file"
-              ref={(node) => this.avatar = node}
-              onChange={this.setFile}
-            />
-            <Button
-              onClick={this.selectFile}
-              className="w4"
-              type="button-secondary"
-              color="denim"
-            >
-              Select File
-            </Button>
-            <h5 className="ml2">
-              {
-                this.state.avatar ? (
-                  this.state.avatar.name
-                ) : (
-                  this.state.artist.avatar &&
-                  this.state.artist.avatar.name
-                )
-              }
-            </h5>
+          <div className="flex items-center mv2">
+            <label className="w4 denim b--denim button-secondary tc" htmlFor="avatar">
+              Choose File
+              <input
+                name="avatar"
+                id="avatar"
+                type="file"
+                ref={(node) => this.avatar = node}
+                onChange={this.setFile}/>
+            </label>
+            <p className="ml2 truncate">
+              {this.state.avatar
+                ? this.state.avatar.name
+                : this.state.artist.avatar && this.state.artist.avatar.name}
+            </p>
           </div>
           <div className="submit-container mt3">
             <Button

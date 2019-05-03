@@ -80,7 +80,7 @@ class Filters extends PureComponent {
                           className={`checkbox-${color}`}
                         />
                         <span className="filter-item">
-                          {convertSnakeCase(item)}
+                          {(type == "degree") ? item.toUpperCase() :convertSnakeCase(item) }
                         </span>
                       </label>
                     </div>

@@ -44,18 +44,19 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     get 'artists/categories' => 'artists#get_artist_category_enums'
-    resources :works, :only => [:index, :show, :create, :update, :destroy]
     resources :artists, :only => [:show, :create, :update, :destroy]
+    resources :works, :only => [:show, :create, :update, :destroy]
     resources :requests, :only => [:show, :create, :update]
     resources :commissions, :only => [:show, :create, :update, :destroy]
     resources :receipts, :only => [:show, :create, :update, :destroy]
     resources :buyers, :only => [:show, :update]
+    get 'works/page/:page' => 'works#index'
     get 'artists/works/:id' => 'artists#works'
     get 'artists/page/:page' => 'artists#index'
     get 'artists/requests/:id' => 'artists#requests'
     get 'buyers/requests/:id' => 'buyers#requests'
-    get 'works/filtered_works/:search_params' => 'works#filtered_works'
     get 'artists/filtered_artists/:search_params/:page' => 'artists#filtered_artists'
+    get 'works/filtered_works/:search_params/:page' => 'works#filtered_works'
     get 'works/thumbnail/:id' => 'works#thumbnail'
     get 'artists/commissions/:id' => 'artists#commissions'
     post 'blocks/block_user' => 'blocks#block_user', as: :block_user
@@ -65,7 +66,6 @@ Rails.application.routes.draw do
     put 'requests/delete/:id' => 'requests#delete'
     put 'artists/lock_user/:id' => 'artists#lock_user'
     put 'artists/unlock_user/:id' => 'artists#unlock_user'
-    get 'works/filtered/artist_hidden' => 'works#filtered_artist_hidden'
     put 'buyers/lock_user/:id' => 'buyers#lock_user'
     put 'buyers/unlock_user/:id' => 'buyers#unlock_user'
     put 'works/flag/:id' => 'works#flag'

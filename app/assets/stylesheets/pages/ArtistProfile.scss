@@ -23,31 +23,25 @@
     }
 }
 
-.avatar-img {
-  height: inherit;
-  width: inherit;
-  object-fit: cover;
-}
-
 .artist-description {
   max-height: 18rem;
 }
 
-.artist-description::-webkit-scrollbar-track {
+.artist-profile-scroll::-webkit-scrollbar-track {
   background: $snow; 
 }
 
-.artist-description::-webkit-scrollbar {
+.artist-profile-scroll::-webkit-scrollbar {
   width: 12px;
   height: 12px;
   }
   
-.artist-description::-webkit-scrollbar-thumb {
+.artist-profile-scroll::-webkit-scrollbar-thumb {
   background: $denim;  
   border-radius: 10px;
   }
   
-.artist-description::-webkit-scrollbar-thumb:hover {
+.artist-profile-scroll::-webkit-scrollbar-thumb:hover {
   background: darken($denim, 10%); 
 }
 

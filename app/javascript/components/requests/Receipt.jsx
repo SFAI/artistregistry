@@ -29,6 +29,7 @@ class Receipt extends React.Component {
           <StyledModal
             title="Edit receipt"
             buttonType=""
+            color="moss"
           >
             <TransactionForm
               artist={this.props.artist}
@@ -89,15 +90,15 @@ class Receipt extends React.Component {
             <p>{endDate}</p>
           </div>
           <div className="pa3">
-            <h5>Price</h5>
+            <h5 className="mv0">Price</h5>
             <p>{"$" + convertToCurrency(this.state.request.receipt.price)}</p>
           </div>
           <div className="pa3">
-            <h5>Date Placed</h5>
+            <h5 className="mv0">Date Requested</h5>
             <p>{new Date(this.state.request.created_at).toLocaleDateString()}</p>
           </div>
-          <div className="relative mh3">
-            <button className="request-ellipsis ml3 self-start br-100 pa0 pointer bn outline-0"/>
+          <div className="mh3">
+            <button className="request-ellipsis ml3 br-100 pa0 pointer bn outline-0"/>
             <ul className="request-dropdown ml3 absolute nowrap z-3">
               <li>{this.renderEditReceipt()}</li>
             </ul>

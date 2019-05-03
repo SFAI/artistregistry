@@ -97,22 +97,28 @@ class Api::WorksController < ApplicationController
   end
 
   def index
-    works = Work.all
-    render json: works,
-      each_serializer: WorkSerializer
+    works = current_admin ?
+      Work.all :
+      Work.joins(:artist).where("artists.hidden" => false, "works.hidden" => false)
+    works_page = works.page(params[:page])
+    render json: {
+      works: ActiveModel::Serializer::CollectionSerializer.new(works_page, each_serializer: WorkSerializer),
+      work_count: works.length,
+      per_page: Work.default_per_page
+    }
   end
 
   def filtered_works
     parsed_query = CGI.parse(params[:search_params])
-    filtered_works = params[:search_params] == "" ?  Work.all : Work.where(parsed_query)
-    render json: filtered_works,
-      each_serializer: WorkSerializer
-  end
-
-  def filtered_artist_hidden
-    filtered_works = Work.joins(:artist).where("artists.hidden=false").select{|work| work.hidden==false}
-    render json: filtered_works,
-      each_serializer: WorkSerializer
+    filtered_works = current_admin ? 
+      Work.where(parsed_query) : 
+      Work.where(parsed_query).joins(:artist).where("artists.hidden" => false, "works.hidden" => false)
+    filtered_works_page = filtered_works.page(params[:page])
+    render json: {
+      works: ActiveModel::Serializer::CollectionSerializer.new(filtered_works_page, each_serializer: WorkSerializer),
+      work_count: filtered_works.length,
+      per_page: Work.default_per_page
+    }
   end
 
   def thumbnail
@@ -172,6 +178,7 @@ class Api::WorksController < ApplicationController
                                  :featured_image,
                                  :description,
                                  :hidden,
+                                 :page,
                                  :attachments_attributes => [],
                                  :attachments_to_delete => [],
                                 )
