@@ -242,7 +242,7 @@ class Request extends React.Component {
                 </div>
               </Touchable>
               <div className="w-60 gray">
-                <p className="pre">{message}</p>
+                <p className="prewrap">{message}</p>
               </div>
             </div>
           </div>

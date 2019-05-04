@@ -363,7 +363,7 @@ class ArtistProfile extends React.Component {
             }
             <h2>About the artist</h2>
             <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
-              <p className="pre"> {description}</p>
+              <p className="prewrap"> {description}</p>
             </div>
           </div>
         </div>
