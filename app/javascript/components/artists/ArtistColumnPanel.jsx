@@ -1,6 +1,5 @@
 import PropTypes from "prop-types"
 import React from 'react';
-import Touchable from 'rc-touchable';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { pluralize, reformatPrograms } from "../../utils/strings";
@@ -21,10 +20,6 @@ class ArtistColumnPanel extends React.Component {
     artist: PropTypes.object.isRequired,
   }
 
-  navigateToArtist = (id) => {
-    window.location = `/artists/${id}`;
-  }
-
   render() {
     const { userType, artist } = this.props;
     // let artist = this.props.artist;
@@ -41,14 +36,12 @@ class ArtistColumnPanel extends React.Component {
         <div className="item-overlay">
           {this.props.children}
         </div>
-        {featured_work &&
-          <Touchable onPress={() => this.navigateToArtist(artist.id)}>
-            {<img src={featured_work.featured_image.url}
-                  className="mb3 pointer"
-                  alt={`${artist.name}'s featured work: ${featured_work.title}`}/>}
-          </Touchable>
-        }
-        <Touchable onPress={() => this.navigateToArtist(artist.id)}>
+        <a href={`/artists/${artist.id}`} className="color-inherit normal">
+          {featured_work &&
+              (<img src={featured_work.featured_image.url}
+                    className="pointer mb3"
+                    alt={`${artist.name}'s featured work: ${featured_work.title}`}/>)
+          }
           <div className="flex items-center">
             {artist.avatar.url
               ? <img className="h2 w2 br-100 mr2 pointer" src={artist.avatar.url} alt={artist.name}/>
@@ -64,7 +57,7 @@ class ArtistColumnPanel extends React.Component {
               }
             </div>
           </div>
-        </Touchable>
+        </a>
         <p className="i mv2">
           {pluralize(non_hidden_works, 'work')} available
         </p>

@@ -85,6 +85,13 @@ input[type="file"] {
   }
 }
 
+.button-div {
+  @extend .input-reset;
+  @extend .button-reset;
+  color: inherit;
+  font: inherit;
+  border: none;
+}
 
 .dropzone {
   height: 300px;
@@ -100,7 +107,6 @@ input[type="file"] {
   @extend .mt2;
   @extend .mb2;
   @extend .w-100;
-  outline: none;
 }
 
 .textinput {
@@ -137,7 +143,6 @@ input[type="file"] {
 }
 
 .hover-button {
-  outline: none;
   border: none;
   display: flex;
   flex-direction: row;

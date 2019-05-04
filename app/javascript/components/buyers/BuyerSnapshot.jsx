@@ -8,17 +8,13 @@ class BuyerSnapshot extends React.Component {
     this.state = {};
   }
 
-  navigateToBuyer = () => {
-    window.location = `/buyers/${this.props.buyer.id}`;
-  }
-
   render() {
     const { name, avatar, email } = this.props.buyer;
     return (
       <UserSnapshot
         name={name}
         avatarSrc={avatar.url || ""}
-        navigate={this.navigateToBuyer}
+        navigate={`/buyers/${this.props.buyer.id}`}
         email={email}
         color={this.props.color}
       >

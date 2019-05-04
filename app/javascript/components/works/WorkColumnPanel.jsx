@@ -1,20 +1,11 @@
 import PropTypes from "prop-types"
 import React from 'react';
-import Touchable from 'rc-touchable';
 import classNames from "classnames";
 
 class WorkColumnPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
-
-  navigateToWork = (id) => {
-    window.location = `/works/${id}`;
-  }
-
-  navigateToArtist = (artist_id) => {
-    window.location = `/artists/${artist_id}`;
   }
 
   render() {
@@ -30,7 +21,7 @@ class WorkColumnPanel extends React.Component {
         <div className="item-overlay">
           {this.props.children}
         </div>
-        <Touchable onPress={() => this.navigateToWork(work.id)}>
+        <a href={`/works/${work.id}`} className="color-inherit">
           <div
             className={classNames("relative flex items-center mb3", {
               [`overlay-${work.availability}`]:
@@ -40,14 +31,12 @@ class WorkColumnPanel extends React.Component {
               <img src={work.featured_image.url} className="pointer" alt={work.title}/>
             )}
           </div>
-        </Touchable>
-        <Touchable onPress={() => this.navigateToWork(work.id)}>
           <h3 className="pointer">{work.title}</h3>
-        </Touchable>
+        </a>
         {!this.props.hideArtistName &&
-          <Touchable onPress={() => this.navigateToArtist(work.artist_id)}>
-            <p className="pointer b berry">{work.artist_name}</p>
-          </Touchable>
+          <a href={`/artists/${work.artist.id}`}>
+            <p className="pointer b berry mb1">{work.artist_name}</p>
+          </a>
         }
         <h6>{work.material}</h6>
     </div>

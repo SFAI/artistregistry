@@ -1,4 +1,4 @@
-$(document).ready(function() {
+const setUpA11y = () => {
 	$("a.no-redirect").click(function(event) {
 		event.preventDefault();
 		return false;
@@ -13,4 +13,7 @@ $(document).ready(function() {
 			$(this).closest(".dropdown").removeClass("open");
 		}
 	})
-})
+}
+
+$(document).ready(setUpA11y);
+$(document).on('turbolinks:load', setUpA11y);
