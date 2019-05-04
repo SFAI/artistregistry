@@ -151,7 +151,11 @@ class WorkForm extends React.Component {
       let formData = new FormData();
       const formKeys = ['artist_id', 'title', 'material', 'dimensions', 'year', 'media', 'links', 'availability', 'hidden', 'description', 'featured_image'];
       formKeys.forEach(key => {
-        formData.append(`work[${key}]`, this.state.work[key]);
+        let value = this.state.work[key]
+        if (!value) {
+          value = ""
+        }
+        formData.append(`work[${key}]`, value);
       });
 
       this.state.attachmentsToDelete.forEach((attachment) => {
