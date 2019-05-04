@@ -30,16 +30,16 @@ class Api::ArtistsController < ApplicationController
 
   def filtered_artists
     parsed_query = CGI.parse(params[:search_params])
-    filtered_artists = current_admin ? 
-      Artist.where(parsed_query) : 
-      Artist.where(parsed_query).joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false")
-    filtered_artists_page = filtered_artists.page(params[:page])
-    artist_count = filtered_artists.length
-    render json: {
-      artists: ActiveModel::Serializer::CollectionSerializer.new(filtered_artists_page, each_serializer: ArtistSerializer),
-      artist_count: artist_count,
-      per_page: Artist.default_per_page
-    }
+    if "program".in?(parsed_query.keys)
+      filtered_artists = Artist.all.select{|artist| ((artist.program & parsed_query.values[0]).length > 0) }
+      if (parsed_query.keys.length > 1) && (("degree").in?(parsed_query.keys))
+        filtered_artists = filtered_artists.select{|artist| (artist.degree == parsed_query.values[1][0])}
+      end
+    else
+      filtered_artists = params[:search_params] == "" ?  Artist.all : Artist.where(parsed_query)
+    end
+    render json: filtered_artists,
+      each_serializer: ArtistSerializer
   end
 
   def update
