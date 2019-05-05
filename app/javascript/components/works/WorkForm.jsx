@@ -111,7 +111,8 @@ class WorkForm extends React.Component {
       material: "",
       description: "",
       images: "",
-      featuredImage: ""
+      featuredImage: "",
+      year: "",
     };
     if (!this.state.work.title) {
       errors["title"] = "This field cannot be empty.";
@@ -121,6 +122,9 @@ class WorkForm extends React.Component {
     }
     if (!this.state.work.description) {
       errors["description"] = "This field cannot be empty.";
+    }
+    if (this.state.work.year && this.state.work.year < 1900) {
+      errors["year"] = "Please enter the actual year of work completion.";
     }
     let numImages = this.allFileNames().length - 1;
     if (!numImages) {
@@ -304,7 +308,9 @@ class WorkForm extends React.Component {
           name="year"
           type="number"
           className="textinput"
+          min="1900"
         />
+        <FormError error={this.state.errors["year"]} />
         <h5>Media</h5>
         <select
           onChange={this.handleChange}
