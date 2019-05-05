@@ -42,7 +42,7 @@ class UpdateWork extends React.Component {
         <h1>Update Work</h1>
         <WorkForm
           work={this.state.work}
-          route={APIRoutes.works.update(this.props.work_id)}
+          route={APIRoutes.works.update(work_id)}
           method="PUT" />
       </div>
     )

@@ -17,10 +17,17 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
-      visibility: hidden;
 
       .icon {
         cursor: pointer;
+
+        button {
+          opacity: 0;
+
+          &:focus {
+            opacity: 1;
+          }
+        }
       }
     }
 
@@ -43,8 +50,8 @@
     &:hover {
       background-color: $pale-gray;
 
-      .thumb-head {
-        visibility: visible;
+      .icon button {
+        opacity: 1;
       }
     }
   }

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Touchable from 'rc-touchable';
 import { reformatPrograms } from "../../utils/strings";
 
 class UserSnapshot extends React.Component {
@@ -13,17 +12,15 @@ class UserSnapshot extends React.Component {
     const { avatarSrc, color, name, program, degree, email } = this.props;
     return (
       <div className="bg-white snapshot pa3">
-        <Touchable onPress={() => this.props.navigate()}>
-          <div className="h2 w2 mr3 br-100 bg-gray self-center snapshot-nav">
+        <a href={this.props.navigate}>
+          <div className="h2 w2 br-100 bg-gray self-center snapshot-nav">
             {avatarSrc !== "" &&
-              <img className="h2 w2 br-100" src={avatarSrc} />
+              <img className="h2 w2 br-100" src={avatarSrc} alt={name} />
             }
           </div>
-        </Touchable>
-        <div className="snapshot-content">
-          <Touchable onPress={() => this.props.navigate()}>
-          <a className={`snapshot-nav ${color}`}>{name}</a>
-          </Touchable>
+        </a>
+        <div className="snapshot-content ml3">
+          <a className={`snapshot-nav ${color}`} href={this.props.navigate}>{name}</a>
           {program &&
             <h6 className="ttc mb0">
               {`${degree && degree.toUpperCase()} ${reformatPrograms(program)}`}

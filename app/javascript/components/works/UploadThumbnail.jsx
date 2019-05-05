@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import Touchable from 'rc-touchable';
 
 class UploadThumbnail extends React.Component {
   constructor(props) {
@@ -16,9 +15,11 @@ class UploadThumbnail extends React.Component {
         <div className="upload-thumbnail">
           <div className="thumb-head">
             <div className="icon pt1 pb1">
-              <Touchable onPress={() => this.props.delete()}>
+              <button
+                onClick={() => this.props.delete()}
+                className="button-div bg-transparent pa0 pointer">
                 <FontAwesomeIcon className="gray" icon={faTimes}/>
-              </Touchable>
+              </button>
             </div>
           </div>
           <img
