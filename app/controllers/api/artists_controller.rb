@@ -110,7 +110,7 @@ class Api::ArtistsController < ApplicationController
                                  :avatar,
                                  :featured_work_id,
                                  :hidden,
-                                 :page
+                                 :page,
                                  :program => []
                                 )
   end
