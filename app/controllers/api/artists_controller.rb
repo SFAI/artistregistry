@@ -30,18 +30,27 @@ class Api::ArtistsController < ApplicationController
 
   def filtered_artists
     parsed_query = CGI.parse(params[:search_params])
-    if "program".in?(parsed_query.keys)
-      filtered_artists = Artist.all.select{|artist| ((artist.program & parsed_query.values[0]).length > 0) }
-      if (parsed_query.keys.length > 1)
-        for key in parsed_query.keys
-          if key != "program"
-            filtered_artists = filtered_artists.select{|artist| (artist[key] == parsed_query[key][0])}
-          end
-        end
-      end
-    filtered_artists = current_admin ? 
-      Artist.where(parsed_query) : 
-      Artist.where(parsed_query).joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false")
+    all_artists = Artist.all
+    query_programs = parsed_query["program"]
+    filtered_artists = Artist.where(["program @> ?", "{#{query_programs[0]}}"])
+    for programs in parsed_query["program"][1..query_programs.length]
+      @programs = programs
+      filtered_artists = filtered_artists.or(all_artists.where(["program @> ?", "{#{@programs}}"]))
+    end
+
+    # if "program".in?(parsed_query.keys)
+    #   filtered_artists = Artist.all.select{|artist| ((artist.program & parsed_query.values[0]).length > 0) }
+    #   if (parsed_query.keys.length > 1)
+    #     for key in parsed_query.keys
+    #       if key != "program"
+    #         filtered_artists = filtered_artists.select{|artist| (artist[key] == parsed_query[key][0])}
+    #       end
+    #     end
+    #   end
+    # end
+    # filtered_artists = current_admin ? 
+    #   Artist.where(parsed_query) : 
+    #   Artist.where(parsed_query).joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false")
     filtered_artists_page = filtered_artists.page(params[:page])
     artist_count = filtered_artists.length
     render json: {
