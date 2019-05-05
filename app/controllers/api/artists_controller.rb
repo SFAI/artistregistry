@@ -39,12 +39,6 @@ class Api::ArtistsController < ApplicationController
           end
         end
       end
-    else
-      filtered_artists = params[:search_params] == "" ?  Artist.all : Artist.where(parsed_query)
-    end
-    render json: filtered_artists,
-      each_serializer: ArtistSerializer
-
     filtered_artists = current_admin ? 
       Artist.where(parsed_query) : 
       Artist.where(parsed_query).joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false")
