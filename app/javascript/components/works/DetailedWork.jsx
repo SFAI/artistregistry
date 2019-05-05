@@ -100,7 +100,7 @@ class DetailedWork extends React.Component {
             }
             <h4>Description</h4>
             <div className="pr2 artwork-description overflow-y-auto">
-              <p className="mb2"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
+              <p className="mb2 prewrap"><Linkify properties={{target: '_blank', rel: "nofollow   noopener"}}> {description} </Linkify></p>
             </div>
           </div>
           {!blocked && user_type !== "artist" &&

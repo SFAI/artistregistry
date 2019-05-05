@@ -47,7 +47,7 @@ class ArtistProfile extends React.Component {
         } else {
           works_response_filtered = works_response.filter(work => work.hidden == false)
         }
-      if (artist_response['program'].length > 0) {
+      if (artist_response['program'] && artist_response['program'].length > 0) {
         let programs = splitCommaSeparatedArray(artist_response['program']).sort();
         programs = programs.filter(item => item != "");
         artist_response['program'] = programs;
@@ -363,7 +363,7 @@ class ArtistProfile extends React.Component {
             }
             <h2>About the artist</h2>
             <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
-              <p> {description}</p>
+              <p className="prewrap"> {description}</p>
             </div>
           </div>
         </div>
