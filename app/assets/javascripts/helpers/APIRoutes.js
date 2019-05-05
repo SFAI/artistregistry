@@ -15,14 +15,14 @@ class ApiRoutes {
 
   get artists() {
     return {
-      index       : `/api/artists`,
+      index       : (page) => `/api/artists/page/${page}`,
       show        : (id) => `/api/artists/${id}`,
       update      : (id) => `/api/artists/${id}`,
       delete      : (id) => `/api/artists/destroy/${id}`,
       works       : (id) => `/api/artists/works/${id}`,
       requests    : (id) => `/api/artists/requests/${id}`,
       commissions : (id) => `/api/artists/commissions/${id}`,
-      filtered_artists: (search_params) => `/api/artists/filtered_artists/${search_params}`,
+      filtered_artists: (search_params, page) => `/api/artists/filtered_artists/${search_params}/${page}`,
       categories  : `/api/artists/categories`,
       lock_user : (id) => `/api/artists/lock_user/${id}`,
       unlock_user : (id) => `/api/artists/unlock_user/${id}`,

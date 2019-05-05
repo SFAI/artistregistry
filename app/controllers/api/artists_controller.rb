@@ -16,15 +16,30 @@ class Api::ArtistsController < ApplicationController
   end
 
   def index
-    artists = Artist.all
-    render json: artists
+    artists = current_admin ? 
+      Artist.all : 
+      Artist.joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false")
+    artists_page = artists.page(params[:page])
+    artist_count = artists.length
+    render json: {
+      artists: ActiveModel::Serializer::CollectionSerializer.new(artists_page, each_serializer: ArtistSerializer),
+      artist_count: artists.length,
+      per_page: Artist.default_per_page
+    }
   end
 
   def filtered_artists
     parsed_query = CGI.parse(params[:search_params])
-    filtered_artists = params[:search_params] == "" ?  Artist.all : Artist.where(parsed_query)
-    render json: filtered_artists,
-      each_serializer: ArtistSerializer
+    filtered_artists = current_admin ? 
+      Artist.where(parsed_query) : 
+      Artist.where(parsed_query).joins(:works).group('artists.id, works.hidden').where("works.hidden=false").where("artists.hidden=false")
+    filtered_artists_page = filtered_artists.page(params[:page])
+    artist_count = filtered_artists.length
+    render json: {
+      artists: ActiveModel::Serializer::CollectionSerializer.new(filtered_artists_page, each_serializer: ArtistSerializer),
+      artist_count: artist_count,
+      per_page: Artist.default_per_page
+    }
   end
 
   def update
@@ -95,6 +110,7 @@ class Api::ArtistsController < ApplicationController
                                  :avatar,
                                  :featured_work_id,
                                  :hidden,
+                                 :page,
                                  :program => []
                                 )
   end
