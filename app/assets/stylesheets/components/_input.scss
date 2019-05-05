@@ -1,7 +1,6 @@
 input[type="checkbox"] {
   cursor: pointer;
   font-size: 17px;
-  visibility: hidden;
   width: 20px;
   height: 20px;
   margin-right: 8px;
@@ -23,6 +22,10 @@ input[type="checkbox"] {
     height: 20px;
     padding: -5px;
     background-color: $charcoal;
+  }
+
+  &:focus:after {
+    outline: -webkit-focus-ring-color auto 5px;
   }
 }
 
@@ -55,10 +58,6 @@ input[type="file"] {
   cursor: pointer;
   box-sizing: border-box;
   height: 44px;
-
-  &:focus {
-    outline: none;
-  }
 }
 
 .button-primary {
@@ -86,6 +85,13 @@ input[type="file"] {
   }
 }
 
+.button-div {
+  @extend .input-reset;
+  @extend .button-reset;
+  color: inherit;
+  font: inherit;
+  border: none;
+}
 
 .dropzone {
   height: 300px;
@@ -101,7 +107,6 @@ input[type="file"] {
   @extend .mt2;
   @extend .mb2;
   @extend .w-100;
-  outline: none;
 }
 
 .textinput {
@@ -138,7 +143,6 @@ input[type="file"] {
 }
 
 .hover-button {
-  outline: none;
   border: none;
   display: flex;
   flex-direction: row;

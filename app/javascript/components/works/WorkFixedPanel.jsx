@@ -1,6 +1,5 @@
 import PropTypes from "prop-types"
 import React from 'react';
-import Touchable from 'rc-touchable';
 
 class WorkFixedPanel extends React.Component {
   constructor(props) {
@@ -17,12 +16,10 @@ class WorkFixedPanel extends React.Component {
     return (
       <div className="artwork w-100 h-100">
         <div className="pa3">
-          <Touchable onPress={() => this.navigateToWork(work.id)}>
+          <a href={`works/${work.id}`} className="color-inherit normal">
             <img className="work-image fit-cover w-100 mb2 pointer" src={work.featured_image.url} />
-          </Touchable>
-          <Touchable onPress={() => this.navigateToWork(work.id)}>
             <p className="mb1 b pointer">{work.title}</p>
-          </Touchable>
+          </a>
           <p className="mb1">{work.media}</p>
           <p className="i">{work.material}</p>
         </div>

@@ -6,7 +6,6 @@ import BuyerSnapshot from "../buyers/BuyerSnapshot";
 import ArtistSnapshot from "../artists/ArtistSnapshot";
 import { convertToCurrency } from "../../utils/currency";
 import classNames from 'classnames/bind';
-import Touchable from 'rc-touchable';
 
 class Request extends React.Component {
   constructor(props) {
@@ -142,10 +141,6 @@ class Request extends React.Component {
     }
   }
 
-  navigateToWork = (id) => {
-    window.location = `works/${id}`;
-  }
-
   renderStatus() {
     const { open, receipt, updated_at, types } = this.state.request;
     if (!open) {
@@ -168,17 +163,24 @@ class Request extends React.Component {
   renderDropdown(id) {
     const { receipt, request, isBlocking } = this.state;
     return (
-      <div className="mh3">
-        <button className="request-ellipsis ml3 br-100 pa0 pointer bn outline-0"/>
+      <div className="mh3 ellipsis-dropdown">
+        <button className="request-ellipsis ml3 br-100 pa0 pointer bn"/>
         <ul className="request-dropdown ml3 absolute nowrap z-3">
           {this.props.artist &&
-            <li onClick={() => this.closeRequest(id)}>Archive</li>
+            (<li>
+              <button
+                onClick={() => this.closeRequest(id)}
+                className="tl pa0 button-div bg-inherit">
+                Archive
+              </button>
+            </li>)
           }
           {this.props.artist &&
             <li>
               <StyledModal
                 title="Complete"
                 buttonType=""
+                buttonClasses="tl pa0"
                 color="moss"
               >
                 <TransactionForm
@@ -192,10 +194,19 @@ class Request extends React.Component {
               </StyledModal>
             </li>
           }
-          <li onClick={() => this.deleteRequest(id)}>Delete</li>
-          <li
-            onClick={isBlocking ? this.unblockUser : this.blockUser}>
-            {isBlocking ? "Unblock user" : "Block user"}
+          <li>
+            <button 
+              onClick={() => this.deleteRequest(id)}
+              className="tl pa0 button-div bg-inherit">
+              Delete
+            </button>
+          </li>
+          <li>
+            <button 
+              onClick={isBlocking ? this.unblockUser : this.blockUser}
+              className="tl pa0 button-div bg-inherit">
+              {isBlocking ? "Unblock user" : "Block user"}
+            </button>
           </li>
         </ul>
       </div>);
@@ -230,7 +241,7 @@ class Request extends React.Component {
               {this.renderStatus()}
             </div>
             <div className="flex justify-between items-start pr5 pa3">
-              <Touchable onPress={() => this.navigateToWork(work.id)}>
+              <a href={`works/${work.id}`} className="color-inherit normal">
                 <div className="flex pointer">
                   <div className="w4 pb6 relative mr3">
                     <img className="work-image fit-cover w-100 h-100 absolute" src={work.featured_image.url} />
@@ -240,7 +251,7 @@ class Request extends React.Component {
                     <p>{work.media}</p>
                   </div>
                 </div>
-              </Touchable>
+              </a>
               <div className="w-60 gray">
                 <p className="prewrap">{message}</p>
               </div>

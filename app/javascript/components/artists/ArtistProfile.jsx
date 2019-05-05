@@ -339,8 +339,8 @@ class ArtistProfile extends React.Component {
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
             {artist.avatar.url
-              ? <img className="br-100 h4 w4 mb4 self-center" src={artist.avatar.url} />
-              : <FontAwesomeIcon icon={faUserCircle} size="8x" className="gray mb4 self-center"/>
+              ? <img className="br-100 h4 w4 mb4 self-center" src={artist.avatar.url} alt={name}/>
+              : <FontAwesomeIcon icon={faUserCircle} size="8x" className="gray mb4 self-center" alt={name}/>
             }
             <div className="info pr3 artist-profile-scroll overflow-y-auto">
               <h5 className="ttu">Program</h5>
@@ -352,7 +352,9 @@ class ArtistProfile extends React.Component {
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
-            <img className="fit-cover h-100" src={featured_work ? featured_work.featured_image.url : sfai_wallpaper} />
+            <img className="fit-cover h-100"
+              src={featured_work ? featured_work.featured_image.url : sfai_wallpaper}
+              alt={featured_work ? featured_work.title : ""}/>
           </div>
           <div className="w-30-l mw-400 pa3 bg-white relative">
             {canEditProfile &&

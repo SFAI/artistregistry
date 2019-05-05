@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Touchable from "rc-touchable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronRight,
@@ -74,11 +73,13 @@ class WorkToggle extends React.Component {
         <div className="flex mt3">
           {work.attached_images_urls.map((image, index) => {
             return (
-              <Touchable
-                onPress={() => this.setState({ activeImageIndex: index })}
+              <button
+                className="button-div pa0 mr2"
+                disabled={this.state.activeImageIndex == index}
+                onClick={() => this.setState({ activeImageIndex: index })}
                 key={index}
               >
-                <div className="relative mr2 pointer">
+                <div className="relative pointer">
                   <img
                     className={classNames("fit-cover h3 w3", {
                       "o-50": index !== activeImageIndex
@@ -86,7 +87,7 @@ class WorkToggle extends React.Component {
                     src={image.url}
                   />
                 </div>
-              </Touchable>
+              </button>
             );
           })}
         </div>

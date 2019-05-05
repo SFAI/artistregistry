@@ -6,7 +6,6 @@ import StyledModal from "../helpers/StyledModal";
 import TransactionForm from "../receipts/TransactionForm";
 import { convertToCurrency } from "../../utils/currency";
 import classNames from 'classnames/bind';
-import Touchable from 'rc-touchable';
 
 class Receipt extends React.Component {
   constructor(props) {
@@ -17,10 +16,6 @@ class Receipt extends React.Component {
     };
   }
 
-  navigateToWork = (id) => {
-    window.location = `works/${id}`;
-  }
-
   renderEditReceipt() {
     const request = this.state.request;
     const id = request.id;
@@ -29,6 +24,7 @@ class Receipt extends React.Component {
           <StyledModal
             title="Edit receipt"
             buttonType=""
+            buttonClasses="tl pa0"
             color="moss"
           >
             <TransactionForm
@@ -98,7 +94,7 @@ class Receipt extends React.Component {
             <p>{new Date(this.state.request.created_at).toLocaleDateString()}</p>
           </div>
           <div className="mh3">
-            <button className="request-ellipsis ml3 br-100 pa0 pointer bn outline-0"/>
+            <button className="request-ellipsis ml3 br-100 pa0 pointer bn"/>
             <ul className="request-dropdown ml3 absolute nowrap z-3">
               <li>{this.renderEditReceipt()}</li>
             </ul>
@@ -109,7 +105,7 @@ class Receipt extends React.Component {
           { this.renderStatus() }
         </div>
         <div className="flex justify-between items-start pr5 pa3">
-          <Touchable onPress={() => this.navigateToWork(this.state.request.work.id)}>
+          <a href={`works/${this.state.request.work.id}`} className="color-inherit normal">
             <div className="flex pointer">
                 <div className="w4 pb6 relative mr3">
                   <img className="work-image fit-cover w-100 h-100 pointer absolute" src={this.state.request.work.featured_image.url} />
@@ -119,7 +115,7 @@ class Receipt extends React.Component {
                 <p>{this.state.request.work.media}</p>
               </div>
             </div>
-          </Touchable>
+          </a>
           <div className="w-60 gray self-stretch">
             <p className="prewrap">{this.state.request.message}</p>
             {this.state.request.receipt.comment ? (<p className="i mt3 pre">Receipt notes: {this.state.request.receipt.comment}</p>) : null}
