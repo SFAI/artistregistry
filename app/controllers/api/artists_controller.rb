@@ -24,8 +24,13 @@ class Api::ArtistsController < ApplicationController
     parsed_query = CGI.parse(params[:search_params])
     if "program".in?(parsed_query.keys)
       filtered_artists = Artist.all.select{|artist| ((artist.program & parsed_query.values[0]).length > 0) }
-      if (parsed_query.keys.length > 1) && (("degree").in?(parsed_query.keys))
-        filtered_artists = filtered_artists.select{|artist| (artist.degree == parsed_query.values[1][0])}
+      if (parsed_query.keys.length > 1)
+        for key in parsed_query.keys
+          if key != "program"
+            puts "----", parsed_query[key]
+            filtered_artists = filtered_artists.select{|artist| (artist[key] == parsed_query[key])}
+          end
+        end
       end
     else
       filtered_artists = params[:search_params] == "" ?  Artist.all : Artist.where(parsed_query)
