@@ -44,11 +44,10 @@ class Api::ArtistsController < ApplicationController
         end
       else
         filters = parsed_query[category]
-        filtered_artists = filtered_artists.where(["#{category}=?", "#{filters[0]}"])
+        filtered_artists = filtered_artists.where(["#{category}=?", Artist.degrees[filters[0]]])
         for filter in filters[1..filters.length]
           @filter = filter
-          filtered_artists = filtered_artists.or(all_artists.where(["#{category}=?", @filter]))
-          p filtered_artists
+          filtered_artists = filtered_artists.or(all_artists.where(["#{category}=?", Artist.degrees[@filter]]))
         end
       end
     end
