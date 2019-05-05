@@ -39,6 +39,18 @@ class Filters extends PureComponent {
     return stringified;
   }
 
+  toggleCheckboxEnter = (filter_name, item, e) => {
+    if (e.key === 'Enter') {
+      console.log(this);
+      if (e.currentTarget.checked) {
+        e.currentTarget.checked = false;
+      } else {
+        e.currentTarget.checked = true;
+      }
+      this.toggleCheckbox(filter_name, item);
+    }
+  };
+
   toggleCheckbox = (filter_name, item) => {
     const prevSearchParams = this.state.searchParams[filter_name];
 
@@ -73,6 +85,7 @@ class Filters extends PureComponent {
                       <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
                         <input
                           onClick={() => this.toggleCheckbox(type, item)}
+                          onKeyDown={(e) => this.toggleCheckboxEnter(type, item, e)}
                           type="checkbox"
                           className="checkbox"
                           value={item}

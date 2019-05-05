@@ -7,11 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
 
-/** @prop userType: { "artist", "buyer", "admin" }
+/**
+ * @prop userType: { "artist", "buyer", "admin"}
+ * @prop work_count: total number of works from response
+ * @prpo per_page: number of works to display on each page
 */
 import ReactPaginate from 'react-paginate'
-
-const perPage = 6
 
 class Works extends React.Component {
   constructor(props) {
@@ -21,15 +22,13 @@ class Works extends React.Component {
       filters: {},
       isLoading: true,
       pageCount: 0,
-      workStartIndex: 0,
-      workEndIndex: 0
+      currentPage: 0,
+      filtering: false
     };
   }
 
   componentDidMount = () => {
-    const works_route = this.props.userType == "admin"
-      ? APIRoutes.works.index
-      : APIRoutes.works.filtered_artist_hidden
+    const works_route = APIRoutes.works.index(1)
     const categories_route = APIRoutes.works.categories;
     Promise.all([
       Requester.get(works_route),
@@ -37,38 +36,32 @@ class Works extends React.Component {
     ]).then(response => {
       const [works_response, filters_response] = response;
       this.setState({
-        works: works_response,
+        works: works_response.works,
         filters: filters_response,
         isLoading: false,
-        pageCount: Math.ceil(works_response.length / perPage),
-        workStartIndex: 0,
-        workEndIndex: perPage
+        pageCount: Math.ceil(works_response.work_count / works_response.per_page)
       });
     });
   };
 
-  getFilteredWorks = () => {
+  getFilteredWorks = (page) => {
     // NOTE: Can't pass empty searchParams string to filtered_works
     // Possible fix by editing routes.fb, but not sure how -B.Y.
     const searchParams = this.filters.getQuery();
     this.setState({ isLoading: true });
+    const works_route = searchParams.length ?
+      APIRoutes.works.filtered_works(searchParams, page) :
+      APIRoutes.works.index(1)
 
-    const works_route = searchParams.length
-      ? APIRoutes.works.filtered_works(searchParams)
-      : APIRoutes.works.index;
     Requester.get(
       works_route).then(
         response => {
-          let works
-          if (this.props.userType == "admin") {
-            works = response
-          } else {
-            works = response.filter(work => work.hidden == false)
-          }
           this.setState({
-            works: works,
+            works: response.works,
             isLoading: false,
-            pageCount: Math.ceil(works.length / perPage)
+            pageCount: Math.ceil(response.work_count / response.per_page),
+            currentPage: page - 1,
+            filtering: searchParams.length ? true : false
           });
         },
         response => {
@@ -157,25 +150,38 @@ class Works extends React.Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    this.setState({
-      workStartIndex: selected * perPage,
-      workEndIndex: (selected+1) * perPage
-    })
+    let selected = data.selected + 1;
+    if (this.state.filtering) {
+      this.getFilteredWorks(selected)
+    } else {
+        const works_route = APIRoutes.works.index(selected)
+      Requester.get(
+        works_route).then(
+          response => {
+            this.setState({
+              works: response.works,
+              currentPage: data.selected
+            });
+          },
+        response => {
+          console.error(response);
+        }
+        );
+    }
   };
 
   render() {
-    const { isLoading, pageCount, filters, works, workStartIndex, workEndIndex } = this.state;
+    const { isLoading, pageCount, filters, works, currentPage } = this.state;
     return (
       <div className="pt4">
         {isLoading ? <LoadingOverlay itemType="artwork" fullPage={true} /> : null}
-        <div className="fl w-20 pa3 mt5">
+        <div className="fl w-20 pa3 mt5" role="search">
           <Filters
             ref={(node) => { this.filters = node }}
             filters={filters}
             color="berry"
           />
-          <button onClick={this.getFilteredWorks} className="button-primary bg-berry w-100"> Apply </button>
+          <button onClick={() => this.getFilteredWorks(1)} className="button-primary bg-berry w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
           <div className="flex justify-between items-baseline">
@@ -192,11 +198,12 @@ class Works extends React.Component {
               onPageChange={this.handlePageClick}
               activeClassName={'active'}
               disabledClassName={'hidden'}
+              forcePage={currentPage}
               />
             </nav>
           </div>
           <div className="col-list-3">
-            {works.slice(workStartIndex, workEndIndex).map((work, i) => {
+            {works.map((work, i) => {
               return (
                 <WorkColumnPanel key={i} work={work}>
                   {this.props.userType == "admin" &&

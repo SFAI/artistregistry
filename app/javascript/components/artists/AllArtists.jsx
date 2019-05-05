@@ -23,16 +23,13 @@ class AllArtists extends React.Component {
       componentDidMount: false,
       isLoading: true,
       pageCount: 0,
-      artistStartIndex: 0,
-      artistEndIndex: 0
+      currentPage: 0,
+      filtering: false
     };
   }
 
   componentDidMount() {
-    const unhiddenParams = `hidden=false`
-    const artist_route = this.props.userType == "admin"
-      ? APIRoutes.artists.index
-      : APIRoutes.artists.filtered_artists(unhiddenParams)
+    const artist_route = APIRoutes.artists.index(1)
     const categories_route = APIRoutes.artists.categories;
     Promise.all([
       Requester.get(artist_route),
@@ -40,18 +37,13 @@ class AllArtists extends React.Component {
     ]).then(
       response => {
         const [artists_response, filters_response] = response;
-        let artists_response_filtered = artists_response
-        if (this.props.userType != "admin") {
-          artists_response_filtered = artists_response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0)
-        }
+        let artists_response_filtered = artists_response.artists
         this.setState({
           artists: artists_response_filtered,
           filters: filters_response,
           componentDidMount: true,
           isLoading: false,
-          pageCount: Math.ceil(artists_response_filtered.length / perPage),
-          artistStartIndex: 0,
-          artistEndIndex: perPage
+          pageCount: Math.ceil(artists_response.artist_count / artists_response.per_page)
         });
       },
       error => {
@@ -60,29 +52,22 @@ class AllArtists extends React.Component {
     );
   }
 
-  getFilteredArtists = () => {
+  getFilteredArtists = (page) => {
     // NOTE: Can't pass empty searchParams string to filtered_artists
     // Possible fix by editing routes.fb, but not sure how -B.Y.
     const searchParams = this.filters.getQuery();
     this.setState({ isLoading: true });
-
-    const artists_route = searchParams.length
-      ? APIRoutes.artists.filtered_artists(searchParams)
-      : APIRoutes.artists.index;
-
+    const artists_route = searchParams.length ? APIRoutes.artists.filtered_artists(searchParams, page) : APIRoutes.artists.index(1)
     Requester.get(
       artists_route).then(
         response => {
-          let artists
-          if (this.props.userType == "admin") {
-            artists = response
-          } else {
-            artists = response.filter(artist => artist.works.filter(work => work.hidden === false).length > 0).filter(artist => artist.hidden == false)
-          }
+          const artists = response.artists
           this.setState({
             artists: artists,
             isLoading: false,
-            pageCount: Math.ceil(artists.filter.length / perPage)
+            pageCount: Math.ceil(response.artist_count / response.per_page),
+            currentPage: page - 1,
+            filtering: searchParams.length ? true : false
           });
         },
         response => {
@@ -135,12 +120,25 @@ class AllArtists extends React.Component {
   }
 
   handlePageClick = data => {
-    let selected = data.selected;
-    this.setState({
-      artistStartIndex: selected * perPage,
-      artistEndIndex: (selected+1) * perPage
-    })
-  };
+    let selected = data.selected + 1;
+    if (this.state.filtering) {
+      this.getFilteredArtists(selected)
+    } else {
+      const artists_route = APIRoutes.artists.index(selected)
+      Requester.get(
+        artists_route).then(
+          response => {
+            this.setState({
+              artists: response.artists,
+              currentPage: selected - 1
+            });
+          },
+        response => {
+          console.error(response);
+        }
+        );
+      }
+    };
 
   render() {
     if (!this.state.componentDidMount) {
@@ -149,19 +147,19 @@ class AllArtists extends React.Component {
       );
     }
 
-    const { isLoading, filters, artists, pageCount, artistStartIndex, artistEndIndex } = this.state;
+    const { isLoading, filters, artists, pageCount } = this.state;
     const { userType } = this.props;
-    
+
     return (
       <div className="pt4">
         {isLoading ? <LoadingOverlay itemType="artists" fullPage={true} /> : null}
-        <div className="fl w-20 pa3 mt5">
+        <div className="fl w-20 pa3 mt5" role="search">
           <Filters
             ref={(node) => { this.filters = node }}
             filters={filters}
             color="denim"
           />
-          <button onClick={this.getFilteredArtists} className="button-primary bg-denim w-100"> Apply </button>
+          <button onClick={() => this.getFilteredArtists(1)} className="button-primary bg-denim w-100"> Apply </button>
         </div>
         <div className="fl w-80 pb5">
           <div className="flex justify-between items-baseline">
@@ -178,11 +176,12 @@ class AllArtists extends React.Component {
               onPageChange={this.handlePageClick}
               activeClassName={'active'}
               disabledClassName={'hidden'}
+              forcePage={this.state.currentPage}
               />
             </nav>
             </div>
             <div className="col-list-3">
-              {artists.slice(artistStartIndex, artistEndIndex).map((artist, i) => {
+              {artists.map((artist, i) => {
                 return (
                   <ArtistColumnPanel key={i} artist={artist} userType={userType}>
                     {userType == "admin" &&

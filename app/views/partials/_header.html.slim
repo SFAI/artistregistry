@@ -1,12 +1,12 @@
-nav.header
+nav.header role="banner"
   .container
     div.flex-start
       a href="/"
         div.flex
-          = image_tag "sfai_logo_vertical.svg", class: "header-logo"
+          = image_tag "sfai_logo_vertical.svg", class: "header-logo", alt: "SFAI Artist Registry - home"
           div.header-title Artist Registry
     div.flex-end
-      ul.header-links
+      ul.header-links aria-label="primary" role="navigation"
         li.header-item#artwork
           = link_to works_path
             div.header-bar.bg-berry
@@ -20,25 +20,26 @@ nav.header
             div.header-bar.bg-gold
             h4.header-link-item About
         - if not current_artist and not current_buyer and not current_admin
-          div.dropdown
-            li.header-item#login
-              div.header-bar.bg-moss
-              h4.header-link-item Login
+          li.dropdown
+            a href="#" class="no-redirect"
+              div.header-item#login    
+                div.header-bar.bg-moss
+                h4.header-link-item Login
             div.dropdown-container
-              ul.dropdown-content
+              ul.dropdown-content aria-haspopup="true" aria-expanded="false"
                 li.dropdown-link-item
                   = link_to "Artists", new_artist_session_path
                 li.dropdown-link-item
                   = link_to "Patrons", new_buyer_session_path
         - else
           - if current_artist
-              div.dropdown
-                li.header-item#login
-                  = link_to artistid_path(current_artist.id)
+              li.dropdown
+                = link_to artistid_path(current_artist.id)
+                  div.header-item#login    
                     div.header-bar.bg-moss
                     h4.header-link-item #{current_artist.name}
                 div.dropdown-container
-                  ul.dropdown-content
+                  ul.dropdown-content aria-haspopup="true" aria-expanded="false"
                     li.dropdown-link-item
                       = link_to "Requests", requests_path
                     li.dropdown-link-item
@@ -48,13 +49,13 @@ nav.header
                     li.dropdown-link-item
                       = link_to "Log Out", destroy_artist_session_path, method: :delete
           - if current_buyer
-              div.dropdown
-                li.header-item#login
-                  = link_to buyerid_path(current_buyer.id)
+              li.dropdown
+                = link_to buyerid_path(current_buyer.id)
+                  div.header-item#login    
                     div.header-bar.bg-moss
                     h4.header-link-item #{current_buyer.name}
                 div.dropdown-container
-                  ul.dropdown-content
+                  ul.dropdown-content aria-haspopup="true" aria-expanded="false"
                     li.dropdown-link-item
                       = link_to "Requests", requests_path
                     li.dropdown-link-item
@@ -63,13 +64,14 @@ nav.header
                       = link_to "Log Out", destroy_buyer_session_path, method: :delete
 
           - if current_admin
-              div.dropdown
-                li.header-item#login
+              li.dropdown
+                a href="#" class="no-redirect"
+                  div.header-item#login    
                     div.header-bar.bg-moss
                     h4.header-link-item #{current_admin.email}
                 div.dropdown-container
                   div.subnav-header-bar.bg-moss
-                  ul.dropdown-content
+                  ul.dropdown-content aria-haspopup="true" aria-expanded="false"
 
                     li.dropdown-link-item
                       = link_to "Log Out", destroy_admin_session_path, method: :delete

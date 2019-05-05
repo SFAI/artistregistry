@@ -4,7 +4,6 @@ import ReactModal from "react-modal";
 import Button from "../helpers/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import Touchable from 'rc-touchable';
 import classNames from "classnames";
 
 class StyledModal extends React.Component {
@@ -37,18 +36,15 @@ class StyledModal extends React.Component {
             [`bg-${this.props.color}`]: this.props.color
           })}>
             <h3 className="white">{this.props.title}</h3>
-            <Touchable onPress={this.hideModal}>
+            <button onClick={this.hideModal} className="button-div bg-transparent">
               <FontAwesomeIcon className="white pointer" icon={faTimes} />
-            </Touchable>
+            </button>
           </div>
           <div className="modal-content pa4">
             {this.props.children}
           </div>
-          <button className="cancel-button" onClick={this.hideModal}>
-            Cancel
-          </button>
         </ReactModal>
-        <Button className="w4" type={this.props.buttonType} color={this.props.color} onClick={this.showModal}>
+        <Button className={classNames("w4 ", this.props.buttonClasses)} type={this.props.buttonType} color={this.props.color} onClick={this.showModal}>
           {this.props.title}
         </Button>
       </div>

@@ -47,7 +47,7 @@ class ArtistProfile extends React.Component {
         } else {
           works_response_filtered = works_response.filter(work => work.hidden == false)
         }
-      if (artist_response['program'].length > 0) {
+      if (artist_response['program'] && artist_response['program'].length > 0) {
         let programs = splitCommaSeparatedArray(artist_response['program']).sort();
         programs = programs.filter(item => item != "");
         artist_response['program'] = programs;
@@ -316,7 +316,7 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
-    const { name, program, degree, media, description } = artist;
+    const { name, program, degree, year, media, description } = artist;
     const { artist: artist_prop, user, userType } = this.props;
     if (artist.hidden && (user == null || (user.account_id != artist_prop.account_id && userType != "admin"))) {
       return (
@@ -339,8 +339,8 @@ class ArtistProfile extends React.Component {
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
             {artist.avatar.url
-              ? <img className="br-100 h4 w4 mb4 self-center" src={artist.avatar.url} />
-              : <FontAwesomeIcon icon={faUserCircle} size="8x" className="gray mb4 self-center"/>
+              ? <img className="br-100 h4 w4 mb4 self-center" src={artist.avatar.url} alt={name}/>
+              : <FontAwesomeIcon icon={faUserCircle} size="8x" className="gray mb4 self-center" alt={name}/>
             }
             <div className="info pr3 artist-profile-scroll overflow-y-auto">
               <h5 className="ttu">Program</h5>
@@ -348,11 +348,13 @@ class ArtistProfile extends React.Component {
               <h5 className="ttu">Media</h5>
               <p> {media} </p>
               <h5 className="ttu">Degree</h5>
-              <p className="ttu"> {degree} </p>
+              <p className="ttu"> {degree} {year}</p>
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
-            <img className="fit-cover h-100" src={featured_work ? featured_work.featured_image.url : sfai_wallpaper} />
+            <img className="fit-cover h-100"
+              src={featured_work ? featured_work.featured_image.url : sfai_wallpaper}
+              alt={featured_work ? featured_work.title : ""}/>
           </div>
           <div className="w-30-l mw-400 pa3 bg-white relative">
             {canEditProfile &&
@@ -363,7 +365,7 @@ class ArtistProfile extends React.Component {
             }
             <h2>About the artist</h2>
             <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
-              <p> {description}</p>
+              <p className="prewrap"> {description}</p>
             </div>
           </div>
         </div>
