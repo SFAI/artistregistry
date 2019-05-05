@@ -54,7 +54,7 @@ class DetailedWork extends React.Component {
       );
     }
 
-    const { artist, artist_id, id, availability, links, title, media, material, description } = this.state.work
+    const { artist, artist_id, id, availability, links, year, dimensions, title, media, material, description } = this.state.work
     return (
       <div className="pt4">
         <div className="fl w-70">
@@ -73,10 +73,24 @@ class DetailedWork extends React.Component {
                 <h4 className="ml2 white">Edit</h4>
               </Button>
             }
+            {
+              year &&
+              <div>
+                <h4>Year</h4>
+                <p className="mb2">{year}</p>
+              </div>
+            }
             <h4>Media</h4>
             <p className="mb2">{media}</p>
             <h4>Material</h4>
             <p className="mb2">{material}</p>
+            {
+              dimensions &&
+              <div>
+                <h4>Dimensions</h4>
+                <p className="mb2">{dimensions}</p>
+              </div>
+            }
             {
               links &&
               <div>

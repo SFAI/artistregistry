@@ -316,7 +316,7 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
-    const { name, program, degree, media, description } = artist;
+    const { name, program, degree, year, media, description } = artist;
     const { artist: artist_prop, user, userType } = this.props;
     if (artist.hidden && (user == null || (user.account_id != artist_prop.account_id && userType != "admin"))) {
       return (
@@ -348,7 +348,7 @@ class ArtistProfile extends React.Component {
               <h5 className="ttu">Media</h5>
               <p> {media} </p>
               <h5 className="ttu">Degree</h5>
-              <p className="ttu"> {degree} </p>
+              <p className="ttu"> {degree} {year}</p>
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
