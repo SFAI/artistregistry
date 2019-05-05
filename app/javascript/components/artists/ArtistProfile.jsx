@@ -47,9 +47,11 @@ class ArtistProfile extends React.Component {
         } else {
           works_response_filtered = works_response.filter(work => work.hidden == false)
         }
-      let programs = programs ? splitCommaSeparatedArray(artist_response['program']).sort() : [];
-      programs = programs.filter(item => item != "");
-      artist_response['program'] = programs;
+      if (artist_response['program'] && artist_response['program'].length > 0) {
+        let programs = splitCommaSeparatedArray(artist_response['program']).sort();
+        programs = programs.filter(item => item != "");
+        artist_response['program'] = programs;
+      }
       this.setState({
         works: works_response_filtered,
         artist: artist_response,
@@ -314,7 +316,7 @@ class ArtistProfile extends React.Component {
 
   render() {
     const { componentDidMount, activeFilter, artist, works, canEditProfile } = this.state;
-    const { name, program, degree, media, description } = artist;
+    const { name, program, degree, year, media, description } = artist;
     const { artist: artist_prop, user, userType } = this.props;
     if (artist.hidden && (user == null || (user.account_id != artist_prop.account_id && userType != "admin"))) {
       return (
@@ -346,7 +348,7 @@ class ArtistProfile extends React.Component {
               <h5 className="ttu">Media</h5>
               <p> {media} </p>
               <h5 className="ttu">Degree</h5>
-              <p className="ttu"> {degree} </p>
+              <p className="ttu"> {degree} {year}</p>
             </div>
           </div>
           <div className="w-50-l mw-400 flex relative mh3">
@@ -363,7 +365,7 @@ class ArtistProfile extends React.Component {
             }
             <h2>About the artist</h2>
             <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
-              <p> {description}</p>
+              <p className="prewrap"> {description}</p>
             </div>
           </div>
         </div>

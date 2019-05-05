@@ -1,6 +1,6 @@
 class WorkSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :description, :title, :material, :media, :availability, :links, :price, :artist_id, :artist_name, :thumbnail, :attached_images_urls, :featured_image, :hidden
+  attributes :id, :description, :title, :material, :media, :availability, :links, :price, :artist_id, :artist_name, :thumbnail, :attached_images_urls, :featured_image, :hidden, :dimensions, :year
 
   belongs_to :artist
 

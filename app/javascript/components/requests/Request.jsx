@@ -253,7 +253,7 @@ class Request extends React.Component {
                 </div>
               </a>
               <div className="w-60 gray">
-                <p>{message}</p>
+                <p className="prewrap">{message}</p>
               </div>
             </div>
           </div>

@@ -117,8 +117,8 @@ class Receipt extends React.Component {
             </div>
           </a>
           <div className="w-60 gray self-stretch">
-            <p>{this.state.request.message}</p>
-            {this.state.request.receipt.comment ? (<p className="i mt3">Receipt notes: {this.state.request.receipt.comment}</p>) : null}
+            <p className="prewrap">{this.state.request.message}</p>
+            {this.state.request.receipt.comment ? (<p className="i mt3 pre">Receipt notes: {this.state.request.receipt.comment}</p>) : null}
           </div>
         </div>
       </div>
