@@ -31,11 +31,26 @@ class Api::ArtistsController < ApplicationController
   def filtered_artists
     parsed_query = CGI.parse(params[:search_params])
     all_artists = Artist.all
-    query_programs = parsed_query["program"]
-    filtered_artists = Artist.where(["program @> ?", "{#{query_programs[0]}}"])
-    for programs in parsed_query["program"][1..query_programs.length]
-      @programs = programs
-      filtered_artists = filtered_artists.or(all_artists.where(["program @> ?", "{#{@programs}}"]))
+    filtered_artists = Artist.all
+
+    filter_categories = parsed_query.keys
+    for category in filter_categories
+      if category == "program"
+        query_programs = parsed_query["program"]
+        filtered_artists = Artist.where(["program @> ?", "{#{query_programs[0]}}"])
+        for programs in parsed_query["program"][1..query_programs.length]
+          @programs = programs
+          filtered_artists = filtered_artists.or(all_artists.where(["program @> ?", "{#{@programs}}"]))
+        end
+      else
+        filters = parsed_query[category]
+        filtered_artists = filtered_artists.where(["#{category}=?", "#{filters[0]}"])
+        for filter in filters[1..filters.length]
+          @filter = filter
+          filtered_artists = filtered_artists.or(all_artists.where(["#{category}=?", @filter]))
+          p filtered_artists
+        end
+      end
     end
 
     # if "program".in?(parsed_query.keys)
