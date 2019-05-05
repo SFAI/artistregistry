@@ -27,8 +27,7 @@ class Api::ArtistsController < ApplicationController
       if (parsed_query.keys.length > 1)
         for key in parsed_query.keys
           if key != "program"
-            puts "----", parsed_query[key]
-            filtered_artists = filtered_artists.select{|artist| (artist[key] == parsed_query[key])}
+            filtered_artists = filtered_artists.select{|artist| (artist[key] == parsed_query[key][0])}
           end
         end
       end
