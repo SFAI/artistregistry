@@ -13,7 +13,7 @@ export default function ConfirmEmail(props) {
       </div>
       <a className="moss mb1" href={`sign_in`}>
         Log in »
-      </a> 
+      </a>
       <a className="moss" href={`confirmation/new`}>
         Didn’t receive email?
       </a>

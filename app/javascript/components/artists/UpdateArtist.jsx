@@ -1,9 +1,12 @@
-import PropTypes from "prop-types"
-import React from 'react';
+import PropTypes from "prop-types";
+import React from "react";
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
 import LoadingOverlay from "../helpers/LoadingOverlay";
-import { convertSnakeCase, splitCommaSeparatedArray } from "../../utils/strings";
+import {
+  convertSnakeCase,
+  splitCommaSeparatedArray,
+} from "../../utils/strings";
 import Unauthorized from "../helpers/Unauthorized";
 
 class UpdateArtist extends React.Component {
@@ -22,12 +25,14 @@ class UpdateArtist extends React.Component {
         media: "",
         description: "",
         featured_work: "",
-        year: ""
-      }
-    }
+        year: "",
+      },
+    };
   }
 
-  componentDidMount = () => { this.fetchData(); }
+  componentDidMount = () => {
+    this.fetchData();
+  };
 
   fetchData = () => {
     const artist_route = APIRoutes.artists.show(this.props.artist_id);
@@ -36,32 +41,34 @@ class UpdateArtist extends React.Component {
     Promise.all([
       Requester.get(artist_route),
       Requester.get(works_route),
-      Requester.get(categories_route)
+      Requester.get(categories_route),
     ]).then(
       response => {
         const [artist_response, works_response, categories_response] = response;
-        artist_response['program'] = splitCommaSeparatedArray(artist_response['program']).sort();
+        artist_response["program"] = splitCommaSeparatedArray(
+          artist_response["program"]
+        ).sort();
         this.setState({
           artist: artist_response,
           works: works_response,
           categories: categories_response,
-          componentDidMount: true
+          componentDidMount: true,
         });
       },
       error => {
         console.error(error);
-        this.setState({ apiFetchError: true })
+        this.setState({ apiFetchError: true });
       }
     );
-  }
+  };
 
-  handleChange = (event) => {
+  handleChange = event => {
     const artist = this.state.artist;
     artist[event.target.name] = event.target.value;
     this.setState({ artist: artist });
-  }
+  };
 
-  toggleCheckbox = (item) => {
+  toggleCheckbox = item => {
     const prevPrograms = this.state.artist.program;
     let newPrograms;
     if (prevPrograms && prevPrograms.includes(item)) {
@@ -71,45 +78,44 @@ class UpdateArtist extends React.Component {
     }
 
     const artist = this.state.artist;
-    artist['program'] = newPrograms;
+    artist["program"] = newPrograms;
     this.setState({
-      artist: artist
+      artist: artist,
     });
   };
 
-  setFile = (e) => {
+  setFile = e => {
     const files = e.target.files;
     if (!files || !files[0]) {
       return;
     }
 
     this.setState({ avatar: files[0] });
-  }
+  };
 
   checkErrors() {
     const { artist } = this.state;
     let errors = {};
     if (!artist.name) {
-      errors.name = "This field cannot be empty."
+      errors.name = "This field cannot be empty.";
     }
     if (!artist.media) {
-      errors.media = "This field cannot be empty."
+      errors.media = "This field cannot be empty.";
     }
     if (!artist.description) {
-      errors.description = "This field cannot be empty."
+      errors.description = "This field cannot be empty.";
     }
     if (!artist.year) {
-      errors.year = "This field cannot be empty."
+      errors.year = "This field cannot be empty.";
     }
     return errors;
   }
 
-  handleSubmit = (event) => {
-
+  handleSubmit = event => {
     let errors = this.checkErrors();
 
     let hasErrors = false;
-    Object.keys(errors).forEach((key) => {
+    Object.keys(errors).forEach(key => {
       if (errors[key]) {
         hasErrors = true;
       }
@@ -118,41 +124,50 @@ class UpdateArtist extends React.Component {
     if (hasErrors) {
       this.setState({ errors: errors });
     } else {
-      this.setState({ updatingArtist: true })
+      this.setState({ updatingArtist: true });
       event.preventDefault();
       let formData = new FormData();
-      const formKeys = ['name', 'degree', 'year', 'media', 'description', 'featured_work_id'];
+      const formKeys = [
+        "name",
+        "degree",
+        "year",
+        "media",
+        "description",
+        "featured_work_id",
+      ];
       formKeys.forEach(key => {
         formData.append(`artist[${key}]`, this.state.artist[key]);
       });
-      let filteredPrograms = this.state.artist['program'].filter(item => item != "");
+      let filteredPrograms = this.state.artist["program"].filter(
+        item => item != ""
+      );
       formData.append(`artist[program][]`, filteredPrograms);
       const { avatar } = this.state;
       if (avatar) {
-        formData.append('artist[avatar]', avatar, avatar.name);
+        formData.append("artist[avatar]", avatar, avatar.name);
       }
 
       fetch(APIRoutes.artists.update(this.state.artist.id), {
-        method: 'PUT',
+        method: "PUT",
         body: formData,
-        credentials: 'same-origin',
+        credentials: "same-origin",
         headers: {
-          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-        }
-      }).then((data) => {
-        window.location = `/artists/` + this.state.artist.id;
-      }).catch((data) => {
-        console.error(data);
-      });
+          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content,
+        },
+      })
+        .then(data => {
+          window.location = `/artists/` + this.state.artist.id;
+        })
+        .catch(data => {
+          console.error(data);
+        });
     }
-  }
+  };
 
   render() {
-    const { artist_account_id, current_user } = this.props
+    const { artist_account_id, current_user } = this.props;
     if (!current_user || current_user.account_id != artist_account_id) {
-      return (
-        <Unauthorized/>
-      )
+      return <Unauthorized />;
     }
     if (this.state.apiFetchError) {
       return (
@@ -160,13 +175,15 @@ class UpdateArtist extends React.Component {
           <h2>Unable to load page.</h2>
           <button onClick={this.fetchData}>Try again</button>
         </div>
-      )
+      );
     }
     if (!this.state.componentDidMount) {
       return <LoadingOverlay itemType="information" fullPage={true} />;
     }
 
-    let formLoadingOverlay = this.state.updatingArtist ? <LoadingOverlay /> : null;
+    let formLoadingOverlay = this.state.updatingArtist ? (
+      <LoadingOverlay />
+    ) : null;
     return (
       <div className="mw6 center">
         <h1>UPDATE ARTIST</h1>
@@ -181,7 +198,7 @@ class UpdateArtist extends React.Component {
             className="textinput"
             required
           />
-          <FormError error={this.state.errors.name}/>
+          <FormError error={this.state.errors.name} />
           <h5>Degree</h5>
           <select
             value={this.state.artist.degree ? this.state.artist.degree : 0}
@@ -190,11 +207,13 @@ class UpdateArtist extends React.Component {
             className="input-dropdown ttu"
             required
           >
-            {
-              Object.keys(this.state.categories.degree).map((obj, i) => {
-                return <option key={i} value={obj}>{convertSnakeCase(obj)}</option>
-              })
-            }
+            {Object.keys(this.state.categories.degree).map((obj, i) => {
+              return (
+                <option key={i} value={obj}>
+                  {convertSnakeCase(obj)}
+                </option>
+              );
+            })}
           </select>
           <h5>Program</h5>
 
@@ -209,11 +228,11 @@ class UpdateArtist extends React.Component {
                     value={convertSnakeCase(item)}
                     id={`checkbox-${item}`}
                     name="program"
-                    checked={(this.state.artist['program'].includes(item)) ? true : false}
+                    checked={
+                      this.state.artist["program"].includes(item) ? true : false
+                    }
                   />
-                  <span>
-                    {convertSnakeCase(item)}
-                  </span>
+                  <span>{convertSnakeCase(item)}</span>
                 </label>
               </div>
             ))}
@@ -227,7 +246,7 @@ class UpdateArtist extends React.Component {
             className="textinput"
             required
           />
-          <FormError error={this.state.errors.year}/>
+          <FormError error={this.state.errors.year} />
           <h5>Media</h5>
           <input
             value={this.state.artist.media}
@@ -237,7 +256,7 @@ class UpdateArtist extends React.Component {
             className="textinput"
             required
           />
-          <FormError error={this.state.errors.media}/>
+          <FormError error={this.state.errors.media} />
           <h5>Description</h5>
           <textarea
             value={this.state.artist.description}
@@ -248,29 +267,36 @@ class UpdateArtist extends React.Component {
             className="textarea"
             required
           />
-          <FormError error={this.state.errors.description}/>
+          <FormError error={this.state.errors.description} />
           <h5>Featured Work</h5>
           <select
             onChange={this.handleChange}
             value={this.state.artist.featured_work_id}
             name="featured_work_id"
-            className="input-dropdown">
-            {
-              this.state.works.map(work => {
-                return <option key={work.id} value={work.id}>{work.title}</option>
-              })
-            }
+            className="input-dropdown"
+          >
+            {this.state.works.map(work => {
+              return (
+                <option key={work.id} value={work.id}>
+                  {work.title}
+                </option>
+              );
+            })}
           </select>
           <h5>Profile Photo</h5>
           <div className="flex items-center mv2">
-            <label className="w4 denim b--denim button-secondary tc" htmlFor="avatar">
+            <label
+              className="w4 denim b--denim button-secondary tc"
+              htmlFor="avatar"
+            >
               Choose File
               <input
                 name="avatar"
                 id="avatar"
                 type="file"
-                ref={(node) => this.avatar = node}
-                onChange={this.setFile}/>
+                ref={node => (this.avatar = node)}
+                onChange={this.setFile}
+              />
             </label>
             <p className="ml2 truncate">
               {this.state.avatar
@@ -280,7 +306,9 @@ class UpdateArtist extends React.Component {
           </div>
           <div className="submit-container mt3">
             <Button
-              onClick={() => { window.location = `/artists/${this.state.artist.id}` }}
+              onClick={() => {
+                window.location = `/artists/${this.state.artist.id}`;
+              }}
               className="w4"
               type="button-secondary"
               color="denim"
@@ -298,7 +326,7 @@ class UpdateArtist extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

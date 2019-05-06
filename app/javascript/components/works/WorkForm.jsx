@@ -1,10 +1,10 @@
-import PropTypes from "prop-types"
-import React from 'react';
+import PropTypes from "prop-types";
+import React from "react";
 import Dropzone from "react-dropzone";
 import UploadThumbnail from "./UploadThumbnail";
-import update from 'immutability-helper';
-import FormError from '../helpers/FormError';
-import LoadingOverlay from '../helpers/LoadingOverlay';
+import update from "immutability-helper";
+import FormError from "../helpers/FormError";
+import LoadingOverlay from "../helpers/LoadingOverlay";
 import { convertSnakeCase } from "../../utils/strings";
 
 class WorkForm extends React.Component {
@@ -24,9 +24,9 @@ class WorkForm extends React.Component {
         material: "",
         description: "",
         images: "",
-        featuredImage: ""
-      }
-    }
+        featuredImage: "",
+      },
+    };
   }
 
   componentDidMount = () => {
@@ -35,75 +35,75 @@ class WorkForm extends React.Component {
       response => {
         this.setState({
           categories: response,
-          componentDidMount: true
+          componentDidMount: true,
         });
       },
       error => {
         console.error(error);
       }
     );
-  }
+  };
 
   updateFeatured = () => {
-      const works_route = APIRoutes.artists.works(this.props.work.artist_id);
-      Requester.get(works_route).then(
-        response => {
-          if (response.length == 1) {
-            let work_id = response[0].id
-            let formData = new FormData();
-            formData.append(`artist[featured_work_id]`, work_id);
-            fetch(APIRoutes.artists.update(this.state.work.artist_id), {
-              method: 'PUT',
-              body: formData,
-              credentials: 'same-origin',
-              headers: {
-                "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-              }
-            }).catch(
-              (data) => {
-                console.error(data);
-              })
-          }
-        },
-        error => {
-          console.error(error);
+    const works_route = APIRoutes.artists.works(this.props.work.artist_id);
+    Requester.get(works_route).then(
+      response => {
+        if (response.length == 1) {
+          let work_id = response[0].id;
+          let formData = new FormData();
+          formData.append(`artist[featured_work_id]`, work_id);
+          fetch(APIRoutes.artists.update(this.state.work.artist_id), {
+            method: "PUT",
+            body: formData,
+            credentials: "same-origin",
+            headers: {
+              "X_CSRF-Token": document.getElementsByName("csrf-token")[0]
+                .content,
+            },
+          }).catch(data => {
+            console.error(data);
+          });
         }
-      );
-    }
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  };
 
-  onDrop = (images) => {
+  onDrop = images => {
     let uploads = this.state.uploads.slice();
-    images.forEach((image) => {
+    images.forEach(image => {
       let upload = {
         img: image,
-        preview: URL.createObjectURL(image)
+        preview: URL.createObjectURL(image),
       };
       uploads.push(upload);
     });
     this.setState({ uploads: uploads });
-  }
+  };
 
-  cleanFileName = (str) => {
-    return str.substring(str.lastIndexOf("/") + 1)
-  }
+  cleanFileName = str => {
+    return str.substring(str.lastIndexOf("/") + 1);
+  };
 
   allFileNames = () => {
-    let filenames = []
+    let filenames = [];
     filenames.push("");
-    this.state.work.attached_images_urls.forEach((attachment) => {
+    this.state.work.attached_images_urls.forEach(attachment => {
       filenames.push(this.cleanFileName(attachment.url));
-    })
-    this.state.uploads.forEach((upload) => {
+    });
+    this.state.uploads.forEach(upload => {
       filenames.push(upload.img.name);
-    })
+    });
     return filenames;
-  }
+  };
 
-  handleChange = (event) => {
+  handleChange = event => {
     const work = this.state.work;
     work[event.target.name] = event.target.value;
     this.setState({ work: work });
-  }
+  };
 
   checkErrors() {
     let errors = {
@@ -142,7 +142,7 @@ class WorkForm extends React.Component {
   handleSubmit = () => {
     let errors = this.checkErrors();
     let hasErrors = false;
-    Object.keys(errors).forEach((key) => {
+    Object.keys(errors).forEach(key => {
       if (errors[key]) {
         hasErrors = true;
       }
@@ -153,125 +153,138 @@ class WorkForm extends React.Component {
     } else {
       this.setState({ updatingWork: true });
       let formData = new FormData();
-      const formKeys = ['artist_id', 'title', 'material', 'dimensions', 'year', 'media', 'links', 'availability', 'hidden', 'description', 'featured_image'];
+      const formKeys = [
+        "artist_id",
+        "title",
+        "material",
+        "dimensions",
+        "year",
+        "media",
+        "links",
+        "availability",
+        "hidden",
+        "description",
+        "featured_image",
+      ];
       formKeys.forEach(key => {
-        let value = this.state.work[key]
+        let value = this.state.work[key];
         if (!value) {
-          value = ""
+          value = "";
         }
         formData.append(`work[${key}]`, value);
       });
 
-      this.state.attachmentsToDelete.forEach((attachment) => {
-        formData.append('work[attachments_to_delete][]', attachment);
+      this.state.attachmentsToDelete.forEach(attachment => {
+        formData.append("work[attachments_to_delete][]", attachment);
       });
 
-      this.state.uploads.forEach((upload) => {
-        formData.append('work[attachments_attributes][]', upload.img);
+      this.state.uploads.forEach(upload => {
+        formData.append("work[attachments_attributes][]", upload.img);
       });
 
       fetch(this.state.route, {
         method: this.state.method,
         body: formData,
-        credentials: 'same-origin',
+        credentials: "same-origin",
         headers: {
-          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-        }
-      }).then((data) => {
-        if (typeof this.state.work.id == 'number') {
-          window.location = `/works/` + this.state.work.id;
-        } else {
-          this.updateFeatured()
-          window.location = `/artists/` + this.state.work.artist_id;
-        }
-      }).catch((data) => {
-        console.error(data);
-      });
+          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content,
+        },
+      })
+        .then(data => {
+          if (typeof this.state.work.id == "number") {
+            window.location = `/works/` + this.state.work.id;
+          } else {
+            this.updateFeatured();
+            window.location = `/artists/` + this.state.work.artist_id;
+          }
+        })
+        .catch(data => {
+          console.error(data);
+        });
     }
-  }
+  };
 
-  deletePosted = (id) => {
+  deletePosted = id => {
     let attachmentsToDelete = this.state.attachmentsToDelete.slice();
     attachmentsToDelete.push(id);
 
     const newWork = update(this.state.work, {
-      attached_images_urls: uploads => uploads.filter(upload => upload["id"] != id)
+      attached_images_urls: uploads =>
+        uploads.filter(upload => upload["id"] != id),
     });
 
     this.setState({ attachmentsToDelete: attachmentsToDelete, work: newWork });
-  }
+  };
 
-  deleteImage = (i) => {
+  deleteImage = i => {
     let uploads = this.state.uploads;
     delete uploads[i];
     this.setState({ uploads: uploads });
-  }
+  };
 
   renderThumbnails = () => {
     return (
       <div className="cards">
-        {
-          this.state.work.attached_images_urls.map((attachment) => {
-            return (
-              <UploadThumbnail
-                filename={this.cleanFileName(attachment.url)}
-                key={attachment.id}
-                src={attachment.url}
-                delete={() => this.deletePosted(attachment.id)}
-              />
-            )
-          })
-        }
-        {
-          this.state.uploads.map((upload, i) => {
-            return (
-              <UploadThumbnail
-                filename={upload.img.name}
-                key={i}
-                src={upload.preview}
-                delete={() => this.deleteImage(i)}
-              />
-            )
-          })
-        }
+        {this.state.work.attached_images_urls.map(attachment => {
+          return (
+            <UploadThumbnail
+              filename={this.cleanFileName(attachment.url)}
+              key={attachment.id}
+              src={attachment.url}
+              delete={() => this.deletePosted(attachment.id)}
+            />
+          );
+        })}
+        {this.state.uploads.map((upload, i) => {
+          return (
+            <UploadThumbnail
+              filename={upload.img.name}
+              key={i}
+              src={upload.preview}
+              delete={() => this.deleteImage(i)}
+            />
+          );
+        })}
       </div>
     );
-  }
+  };
 
   deleteWork = () => {
-    let work_id = this.state.work.id
+    let work_id = this.state.work.id;
     fetch(APIRoutes.works.delete(work_id), {
-      method: 'DELETE',
-      credentials: 'same-origin',
+      method: "DELETE",
+      credentials: "same-origin",
       headers: {
-        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-      }
-    }).then((data) => {
-      if (work_id == this.state.work.artist.featured_work_id) {
-        this.updateFeatured(work_id)
-        window.location = `/artists/` + this.state.work.artist_id;
-      } else {
-        window.location = `/artists/` + this.state.work.artist_id;
-      }
-    }).catch((data) => {
-      console.error(data);
-    });
-  }
-    
-  toggleHidden = (event) => {
-    let new_work = this.state.work
-    new_work.hidden = event.target.checked
-    this.setState({ work: new_work })
-  }
+        "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content,
+      },
+    })
+      .then(data => {
+        if (work_id == this.state.work.artist.featured_work_id) {
+          this.updateFeatured(work_id);
+          window.location = `/artists/` + this.state.work.artist_id;
+        } else {
+          window.location = `/artists/` + this.state.work.artist_id;
+        }
+      })
+      .catch(data => {
+        console.error(data);
+      });
+  };
+
+  toggleHidden = event => {
+    let new_work = this.state.work;
+    new_work.hidden = event.target.checked;
+    this.setState({ work: new_work });
+  };
 
   render() {
     if (!this.state.componentDidMount) {
-      return (
-        <LoadingOverlay itemType="form" fullPage={true} />
-      )
+      return <LoadingOverlay itemType="form" fullPage={true} />;
     }
 
-    let formLoadingOverlay = (this.state.updatingWork ? <LoadingOverlay /> : null);
+    let formLoadingOverlay = this.state.updatingWork ? (
+      <LoadingOverlay />
+    ) : null;
     return (
       <div className="bg-white pa3 relative">
         {formLoadingOverlay}
@@ -316,24 +329,22 @@ class WorkForm extends React.Component {
           onChange={this.handleChange}
           value={this.state.work.media}
           name="media"
-          className="input-dropdown ttc">
-          {
-            Object.keys(this.state.categories.media).map((obj, i) => {
-              return <option key={i}>{convertSnakeCase(obj)}</option>
-            })
-          }
+          className="input-dropdown ttc"
+        >
+          {Object.keys(this.state.categories.media).map((obj, i) => {
+            return <option key={i}>{convertSnakeCase(obj)}</option>;
+          })}
         </select>
         <h5>Availability</h5>
         <select
           onChange={this.handleChange}
           value={this.state.work.availability}
           name="availability"
-          className="input-dropdown ttc">
-          {
-            Object.keys(this.state.categories.availability).map((obj, i) => {
-              return <option key={i}>{obj}</option>
-            })
-          }
+          className="input-dropdown ttc"
+        >
+          {Object.keys(this.state.categories.availability).map((obj, i) => {
+            return <option key={i}>{obj}</option>;
+          })}
         </select>
         <div className="flex items-center mv2">
           <h5 className="mr2 mb0">Hidden</h5>
@@ -377,26 +388,25 @@ class WorkForm extends React.Component {
             <h2 className="gray">Drop images here to upload.</h2>
           </Dropzone>
         </div>
-        <div className="mb2 mt2 w-100">
-          {this.renderThumbnails()}
-        </div>
+        <div className="mb2 mt2 w-100">{this.renderThumbnails()}</div>
         <FormError error={this.state.errors["images"]} />
         <h5>Featured Image</h5>
         <select
           onChange={this.handleChange}
           value={this.state.work.featured_image}
           name="featured_image"
-          className="input-dropdown">
-          {
-            this.allFileNames().map((filename, i) => {
-              return <option key={i}>{filename}</option>
-            })
-          }
+          className="input-dropdown"
+        >
+          {this.allFileNames().map((filename, i) => {
+            return <option key={i}>{filename}</option>;
+          })}
         </select>
         <FormError error={this.state.errors["featuredImage"]} />
         <div className="submit-container mt3 mb3">
           <button
-            onClick={() => { window.location = `/artists/` + this.state.work.artist_id }}
+            onClick={() => {
+              window.location = `/artists/` + this.state.work.artist_id;
+            }}
             className="button-tertiary berry w4"
           >
             Cancel
@@ -408,19 +418,24 @@ class WorkForm extends React.Component {
             Save
           </button>
         </div>
-        {this.state.work.id && 
+        {this.state.work.id && (
           <div className="mv2">
             <h5> Remove this work permanently? </h5>
             <button
-              onClick={() => {if (window.confirm('Are you sure you wish to delete this work?')) this.deleteWork() } }
+              onClick={() => {
+                if (
+                  window.confirm("Are you sure you wish to delete this work?")
+                )
+                  this.deleteWork();
+              }}
               className="button-secondary berry b--berry w4 mv2"
             >
               Delete
             </button>
           </div>
-        }
+        )}
       </div>
-    )
+    );
   }
 }
 

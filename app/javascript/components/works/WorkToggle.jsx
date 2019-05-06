@@ -3,7 +3,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronRight,
-  faChevronLeft
+  faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 
@@ -11,7 +11,7 @@ class WorkToggle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeImageIndex: 0
+      activeImageIndex: 0,
     };
   }
 
@@ -20,24 +20,24 @@ class WorkToggle extends React.Component {
     const { activeImageIndex } = this.state;
     const canMove = {
       left: activeImageIndex > 0,
-      right: activeImageIndex < work.attached_images_urls.length - 1
+      right: activeImageIndex < work.attached_images_urls.length - 1,
     }[direction];
 
     const moveAction = {
       left: () => this.setState({ activeImageIndex: activeImageIndex - 1 }),
-      right: () => this.setState({ activeImageIndex: activeImageIndex + 1 })
+      right: () => this.setState({ activeImageIndex: activeImageIndex + 1 }),
     }[direction];
 
     const faChevron = {
       left: faChevronLeft,
-      right: faChevronRight
+      right: faChevronRight,
     }[direction];
 
     return (
       <button
         disabled={!canMove}
         className={classNames("input-reset b--none", {
-          pointer: canMove
+          pointer: canMove,
         })}
         onClick={() => {
           if (canMove) moveAction();
@@ -48,7 +48,7 @@ class WorkToggle extends React.Component {
           icon={faChevron}
           className={classNames("pa3", {
             "pale-gray hover-snow": canMove,
-            snow: !canMove
+            snow: !canMove,
           })}
         />
       </button>
@@ -82,7 +82,7 @@ class WorkToggle extends React.Component {
                 <div className="relative pointer">
                   <img
                     className={classNames("fit-cover h3 w3", {
-                      "o-50": index !== activeImageIndex
+                      "o-50": index !== activeImageIndex,
                     })}
                     src={image.url}
                   />

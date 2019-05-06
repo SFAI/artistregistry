@@ -16,14 +16,12 @@ class None extends React.Component {
     if (this.props.itemType) {
       return (
         <div className="w-100 bg-snow pa2 pt3 pb3 error-container">
-          <FontAwesomeIcon className="gray" icon={faExclamationCircle}/>
+          <FontAwesomeIcon className="gray" icon={faExclamationCircle} />
           <p className="error ml2 gray">No {this.props.itemType} to show.</p>
         </div>
       );
     }
-    return (
-      <div />
-    );
+    return <div />;
   }
 }
 

@@ -15,8 +15,8 @@ class UserRequests extends React.Component {
       state: 0,
       componentDidMount: false,
     };
-    this.toggleState = this.props.artist 
-      ? ["All Requests", "Pending", "Complete", "Archive"] 
+    this.toggleState = this.props.artist
+      ? ["All Requests", "Pending", "Complete", "Archive"]
       : ["All Requests", "Pending", "Complete"];
   }
 
@@ -24,11 +24,16 @@ class UserRequests extends React.Component {
     return this.toggleState.map((state, i) => {
       let active = i === this.state.state;
       return (
-        <button key={i}
-             onClick={() => this.display(i)}
-             className={classNames("button-div bw0 w-100 mb2 toggle", (active ? "bg-moss" : "bg-inherit toggle-hover"))}
-             tabIndex="0">
-          <p className={classNames("strong", { "white": active })}>{state} »</p>
+        <button
+          key={i}
+          onClick={() => this.display(i)}
+          className={classNames(
+            "button-div bw0 w-100 mb2 toggle",
+            active ? "bg-moss" : "bg-inherit toggle-hover"
+          )}
+          tabIndex="0"
+        >
+          <p className={classNames("strong", { white: active })}>{state} »</p>
         </button>
       );
     });
@@ -38,8 +43,8 @@ class UserRequests extends React.Component {
     return !request.open && request.receipt;
   }
 
-  display = (i) => {
-    let display = []
+  display = i => {
+    let display = [];
     switch (this.toggleState[parseInt(i)]) {
       case "All Requests":
         this.state.inbox.map((request, i) => {
@@ -69,7 +74,7 @@ class UserRequests extends React.Component {
         break;
     }
     this.setState({ state: i, display: display });
-  }
+  };
 
   componentDidMount = () => {
     this.fetchInboxData();
@@ -78,7 +83,7 @@ class UserRequests extends React.Component {
 
   fetchInboxData = () => {
     this.setState({ inbox: [], display: [] }, () => {
-      let requests_route = '';
+      let requests_route = "";
       if (this.props.artist) {
         const artist_id = this.props.artist.id;
         requests_route = APIRoutes.artists.requests(artist_id);
@@ -90,14 +95,17 @@ class UserRequests extends React.Component {
       Requester.get(requests_route).then(
         response => {
           response = response.filter(request => !request.deleted);
-          this.setState({ inbox: response, display: [...Array(response.length).keys()] });
+          this.setState({
+            inbox: response,
+            display: [...Array(response.length).keys()],
+          });
         },
         error => {
           console.error(error);
         }
       );
     });
-  }
+  };
 
   renderRequests() {
     if (!this.state.display.length) {
@@ -105,9 +113,9 @@ class UserRequests extends React.Component {
         <div className="bg-white pa2">
           <None itemType="requests" />
         </div>
-      )
+      );
     }
-    return this.state.display.map((i) => {
+    return this.state.display.map(i => {
       if (this.isReceipt(this.state.inbox[i])) {
         return (
           <Receipt
@@ -117,7 +125,7 @@ class UserRequests extends React.Component {
             onChange={() => this.fetchInboxData()}
             key={i}
           />
-        )
+        );
       }
       return (
         <Request
@@ -137,9 +145,7 @@ class UserRequests extends React.Component {
     }
     return (
       <div className="mw8 center">
-        <div className="w-20 fl pr4 mt6">
-          {this.renderToggle()}
-        </div>
+        <div className="w-20 fl pr4 mt6">{this.renderToggle()}</div>
         <div className="w-80 fl mt2">
           <h1>Requests</h1>
           {this.renderRequests()}
