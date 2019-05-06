@@ -148,7 +148,7 @@ class ArtistProfile extends React.Component {
       "Description": Boolean(artist.description),
       "Featured work": Boolean(artist.featured_work_id),
       "Media": Boolean(artist.media),
-      "Program": Boolean(artist.program),
+      "Program": Boolean(artist.program.length > 0),
       "Year": Boolean(artist.year)
     }
 
