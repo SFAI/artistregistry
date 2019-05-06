@@ -106,14 +106,22 @@ class Inquiry extends React.Component {
   	            {commission.types.charAt(0).toUpperCase() + commission.types.slice(1)}
               </div>
   	        </div>
-            <div className="pt2 relative">
-  		        <button className="request-ellipsis ml3 br-100 pa0 pointer bn outline-0"/>
+            <div className="pt2 relative ellipsis-dropdown">
+  		        <button className="request-ellipsis ml3 br-100 pa0 pointer bn"/>
   		        <ul className="request-dropdown ml3 absolute nowrap z-3">
-                <li onClick={() => this.deleteInquiry(commission.id)}>
-                  Delete inquiry
+                <li>
+                  <button 
+                    onClick={() => this.deleteInquiry(commission.id)}
+                    className="tl pa0 button-div bg-inherit">
+                    Delete inquiry
+                  </button>
                 </li>
-                <li onClick={isBlocking ? this.unblockUser : this.blockUser}>
-                  {isBlocking ? "Unblock user" : "Block user"}
+                <li>
+                  <button
+                    onClick={isBlocking ? this.unblockUser : this.blockUser}
+                    className="tl pa0 button-div bg-inherit">
+                    {isBlocking ? "Unblock user" : "Block user"}
+                  </button>
                 </li>
   			  		</ul>
             </div>
