@@ -46,31 +46,26 @@ class TransactionForm extends React.Component {
       end_date: "",
       price: "",
     };
-    if (
-      !this.state.receipt.purchase_date &&
-      this.state.receipt.transaction_type === "purchase"
-    ) {
+    const {
+      purchase_date,
+      transaction_type,
+      start_date,
+      end_date,
+      price,
+    } = this.state.receipt;
+    if (!purchase_date && transaction_type === "purchase") {
       errors["purchase_date"] = "Please choose a purchase date.";
     }
-    if (
-      !this.state.receipt.start_date &&
-      this.state.receipt.transaction_type === "rental"
-    ) {
+    if (!start_date && transaction_type === "rental") {
       errors["start_date"] = "Please choose a start date for the rental.";
     }
-    if (
-      !this.state.receipt.end_date &&
-      this.state.receipt.transaction_type === "rental"
-    ) {
+    if (!end_date && transaction_type === "rental") {
       errors["end_date"] = "Please choose an end date for the rental.";
     }
-    if (
-      this.state.receipt.end_date &&
-      this.state.receipt.end_date < this.state.receipt.start_date
-    ) {
+    if (end_date && end_date < start_date) {
       errors["end_date"] = "End date must occur after start date.";
     }
-    if (!this.state.receipt.price || this.state.receipt.price < 0) {
+    if (!price || price < 0) {
       errors["price"] = "Please enter a valid price.";
     }
     return errors;

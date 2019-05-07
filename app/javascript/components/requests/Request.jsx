@@ -36,16 +36,11 @@ class Request extends React.Component {
   };
 
   blockUser = () => {
-    const { artist, buyer } = this.state.request;
+    const { account_id: artistId } = this.state.request.artist;
+    const { account_id: buyerId } = this.state.request.buyer;
     const payload = this.props.artist
-      ? {
-          blocker_id: artist.account_id,
-          blocked_id: buyer.account_id,
-        }
-      : {
-          blocker_id: buyer.account_id,
-          blocked_id: artist.account_id,
-        };
+      ? { blocker_id: artistId, blocked_id: buyerId }
+      : { blocker_id: buyerId, blocked_id: artistId };
     const block_route = APIRoutes.blocks.block_user;
 
     Requester.post(block_route, payload).then(
@@ -59,16 +54,11 @@ class Request extends React.Component {
   };
 
   unblockUser = () => {
-    const { artist, buyer } = this.state.request;
+    const { account_id: artistId } = this.state.request.artist;
+    const { account_id: buyerId } = this.state.request.buyer;
     const payload = this.props.artist
-      ? {
-          blocker_id: artist.account_id,
-          blocked_id: buyer.account_id,
-        }
-      : {
-          blocker_id: buyer.account_id,
-          blocked_id: artist.account_id,
-        };
+      ? { blocker_id: artistId, blocked_id: buyerId }
+      : { blocker_id: buyerId, blocked_id: artistId };
     const unblock_route = APIRoutes.blocks.unblock_user;
 
     Requester.post(unblock_route, payload).then(
@@ -92,38 +82,6 @@ class Request extends React.Component {
 
     Requester.get(isblocking_route).then(response => {
       this.setState({ isBlocking: response });
-    });
-  };
-
-  getRequestStatus = request => {
-    if (request.open) {
-      return "Pending";
-    } else {
-      if (request.receipt) {
-        return "Complete";
-      }
-      return "Closed";
-    }
-  };
-
-  getAttr = request => {
-    let attr = {
-      Placed: new Date(request.updated_at).toLocaleDateString(),
-      "Request Type": request.types,
-      Message: request.message,
-    };
-
-    return Object.keys(attr).map((key, i) => {
-      return (
-        <div className="attr" key={i}>
-          <div className="key mr3">
-            <h5>{key}</h5>
-          </div>
-          <div className="value">
-            <h6 key={i}>{attr[key]}</h6>
-          </div>
-        </div>
-      );
     });
   };
 

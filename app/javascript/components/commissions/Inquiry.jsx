@@ -15,13 +15,6 @@ class Inquiry extends React.Component {
     this.isBlocking();
   };
 
-  closeRequest = id => {
-    const update_request_route = APIRoutes.requests.update(id);
-    Requester.update(update_request_route, { open: false }).then(response => {
-      this.props.onChange();
-    });
-  };
-
   blockUser = () => {
     const payload = {
       blocker_id: this.props.commission.artist.account_id,

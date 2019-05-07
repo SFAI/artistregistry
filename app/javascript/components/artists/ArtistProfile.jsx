@@ -328,6 +328,106 @@ class ArtistProfile extends React.Component {
       });
   };
 
+  renderAvatar = avatar => {
+    return avatar.url ? (
+      <img
+        className="br-100 h4 w4 mb4 self-center"
+        src={avatar.url}
+        alt={name}
+      />
+    ) : (
+      <FontAwesomeIcon
+        icon={faUserCircle}
+        size="8x"
+        className="gray mb4 self-center"
+        alt={name}
+      />
+    );
+  };
+
+  renderHideButton = work => (
+    <div className="work-action-wrapper mb2">
+      <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
+        <FontAwesomeIcon
+          className="white"
+          icon={work.hidden ? faEye : faEyeSlash}
+        />
+        <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
+      </Button>
+    </div>
+  );
+
+  renderEditWorkButton = work => (
+    <div className="work-action-wrapper mb2">
+      <Button
+        type="hover-button"
+        className="mr2"
+        onClick={() => this.updateWork(work.id)}
+      >
+        <FontAwesomeIcon className="white" icon={faEdit} />
+        <h4 className="ml2 white">Edit</h4>
+      </Button>
+    </div>
+  );
+
+  renderLockButton = locked_at => (
+    <Button
+      type="button-primary"
+      className="w4"
+      color="denim"
+      onClick={locked_at ? this.unlockArtist : this.lockArtist}
+    >
+      {locked_at ? "UNLOCK" : "LOCK"}
+    </Button>
+  );
+
+  renderEditProfileButton = () => (
+    <Button
+      type="hover-button"
+      className="ma2 absolute top-0 right-0"
+      color="denim"
+      onClick={this.navigateToEdit}
+    >
+      <FontAwesomeIcon className="white" icon={faEdit} />
+      <h4 className="ml2 white">Edit</h4>
+    </Button>
+  );
+
+  renderNewWorkButton = () => (
+    <Button
+      type="button-primary"
+      className="w4"
+      color="denim"
+      onClick={this.createNewWork}
+    >
+      New Work
+    </Button>
+  );
+
+  renderGuidelines = () => (
+    <div className="bg-charcoal pa3">
+      <h2 className="white">Guidelines for contacting artists</h2>
+      <p className="white">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet
+        consectetur adipiscing elit duis tristique.
+        <br />
+        <br />
+        Tortor dignissim convallis aenean et tortor at risus viverra adipiscing.
+        Est ante in nibh mauris cursus mattis molestie a. Sed enim ut sem
+        viverra aliquet eget. Id semper risus in hendrerit gravida rutrum
+        quisque non tellus.
+        <br />
+        <br />
+        Elit pellentesque habitant morbi tristique senectus et netus et
+        malesuada. Commodo elit at imperdiet dui accumsan sit amet. Tellus
+        elementum sagittis vitae et leo duis ut diam. Eget arcu dictum varius
+        duis at. Donec massa sapien faucibus et molestie ac feugiat sed lectus.
+        Risus pretium quam vulputate dignissim suspendisse in est ante.
+      </p>
+    </div>
+  );
+
   renderFilteredWorks = () => {
     const { works, activeFilter, canEditProfile } = this.state;
     const filteredWorks = works.filter(work =>
@@ -345,34 +445,8 @@ class ArtistProfile extends React.Component {
         {filteredWorks.map(work => {
           return (
             <WorkColumnPanel work={work} key={work.id} hideArtistName={true}>
-              {canEditProfile && (
-                <div className="work-action-wrapper mb2">
-                  <Button
-                    type="hover-button"
-                    className="mr2"
-                    onClick={() => this.updateWork(work.id)}
-                  >
-                    <FontAwesomeIcon className="white" icon={faEdit} />
-                    <h4 className="ml2 white">Edit</h4>
-                  </Button>
-                </div>
-              )}
-              {this.props.userType == "admin" && (
-                <div className="work-action-wrapper mb2">
-                  <Button
-                    type="hover-button"
-                    onClick={() => this.toggleHideWork(work)}
-                  >
-                    <FontAwesomeIcon
-                      className="white"
-                      icon={work.hidden ? faEye : faEyeSlash}
-                    />
-                    <h4 className="ml2 white">
-                      {work.hidden ? "Unhide" : "Hide"}
-                    </h4>
-                  </Button>
-                </div>
-              )}
+              {canEditProfile && this.renderEditWorkButton(work)}
+              {this.props.userType == "admin" && this.renderHideButton(work)}
             </WorkColumnPanel>
           );
         })}
@@ -381,14 +455,8 @@ class ArtistProfile extends React.Component {
   };
 
   render() {
-    const {
-      componentDidMount,
-      activeFilter,
-      artist,
-      works,
-      canEditProfile,
-    } = this.state;
-    const { name, program, degree, year, media, description } = artist;
+    const { activeFilter, artist, works, canEditProfile } = this.state;
+    const { name, program, degree, year, media, description, avatar } = artist;
     const { artist: artist_prop, user, userType } = this.props;
     if (
       artist.hidden &&
@@ -397,7 +465,7 @@ class ArtistProfile extends React.Component {
     ) {
       return <Unauthorized />;
     }
-    if (!componentDidMount) {
+    if (!this.state.componentDidMount) {
       return <LoadingOverlay fullPage={true} itemType="Artist" />;
     }
 
@@ -414,20 +482,7 @@ class ArtistProfile extends React.Component {
         </div>
         <div className="row-bio flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
-            {artist.avatar.url ? (
-              <img
-                className="br-100 h4 w4 mb4 self-center"
-                src={artist.avatar.url}
-                alt={name}
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faUserCircle}
-                size="8x"
-                className="gray mb4 self-center"
-                alt={name}
-              />
-            )}
+            {this.renderAvatar(avatar)}
             <div className="info pr3 artist-profile-scroll overflow-y-auto">
               <h5 className="ttu">Program</h5>
               <p className="ttc"> {this.reformatPrograms(program)} </p>
@@ -451,17 +506,7 @@ class ArtistProfile extends React.Component {
             />
           </div>
           <div className="w-30-l mw-400 pa3 bg-white relative">
-            {canEditProfile && (
-              <Button
-                type="hover-button"
-                className="ma2 absolute top-0 right-0"
-                color="denim"
-                onClick={this.navigateToEdit}
-              >
-                <FontAwesomeIcon className="white" icon={faEdit} />
-                <h4 className="ml2 white">Edit</h4>
-              </Button>
-            )}
+            {canEditProfile && this.renderEditProfileButton()}
             <h2>About the artist</h2>
             <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
               <p className="prewrap"> {description}</p>
@@ -483,54 +528,14 @@ class ArtistProfile extends React.Component {
               </button>
             ))}
           </div>
-          {userType == "admin" && (
-            <Button
-              type="button-primary"
-              className="w4"
-              color="denim"
-              onClick={artist.locked_at ? this.unlockArtist : this.lockArtist}
-            >
-              {artist.locked_at ? "UNLOCK" : "LOCK"}
-            </Button>
-          )}
-          {canEditProfile && (
-            <Button
-              type="button-primary"
-              className="w4"
-              color="denim"
-              onClick={this.createNewWork}
-            >
-              New Work
-            </Button>
-          )}
+          {userType == "admin" && this.renderLockButton(artist.locked_at)}
+          {canEditProfile && this.renderNewWorkButton()}
         </div>
         <div className="flex flex-wrap mb5">{this.renderFilteredWorks()}</div>
         {!canEditProfile && !this.props.blocked && (
           <div className="flex flex-row items-stretch mb4">
             <div className="w-50 pr2 dib flex flex-row items-stretch">
-              <div className="bg-charcoal pa3">
-                <h2 className="white">Guidelines for contacting artists</h2>
-                <p className="white">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ipsum dolor sit amet consectetur adipiscing elit duis
-                  tristique.
-                  <br />
-                  <br />
-                  Tortor dignissim convallis aenean et tortor at risus viverra
-                  adipiscing. Est ante in nibh mauris cursus mattis molestie a.
-                  Sed enim ut sem viverra aliquet eget. Id semper risus in
-                  hendrerit gravida rutrum quisque non tellus.
-                  <br />
-                  <br />
-                  Elit pellentesque habitant morbi tristique senectus et netus
-                  et malesuada. Commodo elit at imperdiet dui accumsan sit amet.
-                  Tellus elementum sagittis vitae et leo duis ut diam. Eget arcu
-                  dictum varius duis at. Donec massa sapien faucibus et molestie
-                  ac feugiat sed lectus. Risus pretium quam vulputate dignissim
-                  suspendisse in est ante.
-                </p>
-              </div>
+              {this.renderGuidelines()}
             </div>
             <div className="w-50 pl2 dib flex flex-row items-stretch">
               <CommissionsForm

@@ -12,8 +12,6 @@ import Button from "../helpers/Button";
  * @prop userType: { "artist", "buyer", "admin" }
  */
 
-const perPage = 6;
-
 class AllArtists extends React.Component {
   constructor(props) {
     super(props);

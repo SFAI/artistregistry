@@ -8,67 +8,56 @@ class Button extends React.Component {
   }
 
   render() {
-    switch (this.props.type) {
+    const { type, className, color, onClick, children } = this.props;
+    switch (type) {
       case "button-primary":
         return (
           <button
-            className={
-              this.props.className +
-              " button-primary font bg-" +
-              this.props.color
-            }
-            onClick={this.props.onClick}
+            className={className + " button-primary font bg-" + color}
+            onClick={onClick}
             tabIndex="0"
           >
-            {this.props.children}
+            {children}
           </button>
         );
       case "button-secondary":
         return (
           <button
-            className={
-              this.props.className +
-              " button-secondary font b--" +
-              this.props.color
-            }
-            onClick={this.props.onClick}
+            className={className + " button-secondary font b--" + color}
+            onClick={onClick}
             tabIndex="0"
           >
-            {this.props.children}
+            {children}
           </button>
         );
       case "button-tertiary":
         return (
           <button
-            className={
-              this.props.className + " button-tertiary " + this.props.color
-            }
-            onClick={this.props.onClick}
+            className={className + " button-tertiary " + color}
+            onClick={onClick}
             tabIndex="0"
           >
-            {this.props.children}
+            {children}
           </button>
         );
       case "hover-button":
         return (
           <button
-            className={
-              this.props.className + " hover-button pa2 white font pointer"
-            }
-            onClick={this.props.onClick}
+            className={className + " hover-button pa2 white font pointer"}
+            onClick={onClick}
             tabIndex="0"
           >
-            {this.props.children}
+            {children}
           </button>
         );
       default:
         return (
           <button
-            className={this.props.className + " button-div bg-inherit"}
-            onClick={this.props.onClick}
+            className={className + " button-div bg-inherit"}
+            onClick={onClick}
             tabIndex="0"
           >
-            {this.props.children}
+            {children}
           </button>
         );
     }

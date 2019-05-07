@@ -41,50 +41,55 @@ class Receipt extends React.Component {
   }
 
   renderStatus() {
-    if (!this.state.request.open) {
-      if (this.state.request.receipt) {
-        const purchaseType =
-          this.state.request.receipt.transaction_type == "purchase"
-            ? "sale"
-            : "rental";
-        return (
-          <p className="dark-green">
-            Confirmed {purchaseType} on
-            {new Date(
-              this.state.request.receipt.purchase_date
-            ).toLocaleDateString()}
-          </p>
-        );
-      } else {
-        return (
-          <p className="gray">
-            Closed on
-            {new Date(this.state.request.updated_at).toLocaleDateString()}
-          </p>
-        );
-      }
+    const { open, receipt, updated_at, types } = this.state.request;
+    if (open) {
+      return <p className="dark-gray">Pending {types}</p>;
+    }
+    if (receipt) {
+      const purchaseType =
+        receipt.transaction_type == "purchase" ? "sale" : "rental";
+      return (
+        <p className="dark-green">
+          Confirmed {purchaseType} on{" "}
+          {new Date(receipt.purchase_date).toLocaleDateString()}
+        </p>
+      );
     } else {
-      return <p className="dark-gray">Pending {this.state.request.types}</p>;
+      return (
+        <p className="gray">
+          Closed on {new Date(updated_at).toLocaleDateString()}
+        </p>
+      );
     }
   }
 
   render() {
-    const isRental = this.state.request.receipt.transaction_type == "rental";
+    const {
+      receipt,
+      id,
+      buyer,
+      artist,
+      created_at,
+      work,
+      message,
+    } = this.state.request;
+
+    const isRental = receipt.transaction_type == "rental";
 
     const startDate = isRental
-      ? new Date(this.state.request.receipt.start_date).toLocaleDateString()
+      ? new Date(receipt.start_date).toLocaleDateString()
       : "";
     const endDate = isRental
-      ? new Date(this.state.request.receipt.end_date).toLocaleDateString()
+      ? new Date(receipt.end_date).toLocaleDateString()
       : "";
 
     return (
-      <div key={this.state.request.id} className="bg-white mb3">
+      <div key={id} className="bg-white mb3">
         <div className="flex justify-between w-100 items-center bb b--light-gray bt-0 bl-0 br-0">
           {this.props.artist ? (
-            <BuyerSnapshot buyer={this.state.request.buyer} color="moss" />
+            <BuyerSnapshot buyer={buyer} color="moss" />
           ) : (
-            <ArtistSnapshot artist={this.state.request.artist} color="moss" />
+            <ArtistSnapshot artist={artist} color="moss" />
           )}
           <div className="pa3 flex-grow-1">
             <h5>{isRental ? "Rental Start" : ""}</h5>
@@ -96,13 +101,11 @@ class Receipt extends React.Component {
           </div>
           <div className="pa3">
             <h5 className="mv0">Price</h5>
-            <p>{"$" + convertToCurrency(this.state.request.receipt.price)}</p>
+            <p>{"$" + convertToCurrency(receipt.price)}</p>
           </div>
           <div className="pa3">
             <h5 className="mv0">Date Requested</h5>
-            <p>
-              {new Date(this.state.request.created_at).toLocaleDateString()}
-            </p>
+            <p>{new Date(created_at).toLocaleDateString()}</p>
           </div>
           <div className="mh3">
             <button className="request-ellipsis ml3 br-100 pa0 pointer bn" />
@@ -114,29 +117,24 @@ class Receipt extends React.Component {
 
         <div className="ttu b mt3 ml3 f6">{this.renderStatus()}</div>
         <div className="flex justify-between items-start pr5 pa3">
-          <a
-            href={`works/${this.state.request.work.id}`}
-            className="color-inherit normal"
-          >
+          <a href={`works/${work.id}`} className="color-inherit normal">
             <div className="flex pointer">
               <div className="w4 pb6 relative mr3">
                 <img
                   className="work-image fit-cover w-100 h-100 pointer absolute"
-                  src={this.state.request.work.featured_image.url}
+                  src={work.featured_image.url}
                 />
               </div>
               <div>
-                <h5>{this.state.request.work.title}</h5>
-                <p>{this.state.request.work.media}</p>
+                <h5>{work.title}</h5>
+                <p>{work.media}</p>
               </div>
             </div>
           </a>
           <div className="w-60 gray self-stretch">
-            <p className="prewrap">{this.state.request.message}</p>
-            {this.state.request.receipt.comment ? (
-              <p className="i mt3 pre">
-                Receipt notes: {this.state.request.receipt.comment}
-              </p>
+            <p className="prewrap">{message}</p>
+            {receipt.comment ? (
+              <p className="i mt3 pre">Receipt notes: {receipt.comment}</p>
             ) : null}
           </div>
         </div>

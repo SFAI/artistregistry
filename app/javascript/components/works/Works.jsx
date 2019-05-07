@@ -178,6 +178,16 @@ class Works extends React.Component {
     }
   };
 
+  renderHideButton = work => (
+    <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
+      <FontAwesomeIcon
+        className="white"
+        icon={work.hidden ? faEye : faEyeSlash}
+      />
+      <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
+    </Button>
+  );
+
   render() {
     const { isLoading, pageCount, filters, works, currentPage } = this.state;
     return (
@@ -227,20 +237,8 @@ class Works extends React.Component {
             {works.map((work, i) => {
               return (
                 <WorkColumnPanel key={i} work={work}>
-                  {this.props.userType == "admin" && (
-                    <Button
-                      type="hover-button"
-                      onClick={() => this.toggleHideWork(work)}
-                    >
-                      <FontAwesomeIcon
-                        className="white"
-                        icon={work.hidden ? faEye : faEyeSlash}
-                      />
-                      <h4 className="ml2 white">
-                        {work.hidden ? "Unhide" : "Hide"}
-                      </h4>
-                    </Button>
-                  )}
+                  {this.props.userType == "admin" &&
+                    this.renderHideButton(work)}
                 </WorkColumnPanel>
               );
             })}
