@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { reformatPrograms } from "../../utils/strings";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 class UserSnapshot extends React.Component {
   constructor(props) {
@@ -11,16 +13,22 @@ class UserSnapshot extends React.Component {
   render() {
     const { avatarSrc, color, name, program, degree, email } = this.props;
     return (
-      <div className="bg-white snapshot pa3">
+      <div className="bg-white flex items-center pa3">
         <a href={this.props.navigate}>
-          <div className="h2 w2 br-100 bg-gray self-center snapshot-nav">
-            {avatarSrc !== "" && (
+          <div className="h2 w2 br-100 self-center">
+            {avatarSrc ? (
               <img className="h2 w2 br-100" src={avatarSrc} alt={name} />
+            ) : (
+              <FontAwesomeIcon
+                className="mr2 gray pointer"
+                icon={faUserCircle}
+                size="2x"
+              />
             )}
           </div>
         </a>
-        <div className="snapshot-content ml3">
-          <a className={`snapshot-nav ${color}`} href={this.props.navigate}>
+        <div className="ml3">
+          <a className={`${color} pointer`} href={this.props.navigate}>
             {name}
           </a>
           {program && (
