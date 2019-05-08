@@ -1,5 +1,5 @@
-import PropTypes from "prop-types"
-import React from 'react';
+import PropTypes from "prop-types";
+import React from "react";
 import Button from "../helpers/Button";
 import FormError from "../helpers/FormError";
 import LoadingOverlay from "../helpers/LoadingOverlay";
@@ -14,11 +14,11 @@ class UpdateBuyer extends React.Component {
       avatar: null,
       componentDidMount: false,
       updatingBuyer: false,
-      errors : {
+      errors: {
         name: "",
-        phone_number: ""
-      }
-    }
+        phone_number: "",
+      },
+    };
   }
 
   componentDidMount() {
@@ -30,29 +30,29 @@ class UpdateBuyer extends React.Component {
       error => {
         console.error(error);
       }
-    )
+    );
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     const buyer = this.state.buyer;
     buyer[event.target.name] = event.target.value;
     this.setState({ buyer: buyer });
-  }
+  };
 
-  setFile = (e) => {
+  setFile = e => {
     const files = e.target.files;
     if (!files || !files[0]) {
       return;
     }
 
     this.setState({ avatar: files[0] });
-  }
+  };
 
   checkErrors = () => {
     let errors = {
       name: "",
-      phone_number: ""
-    }
+      phone_number: "",
+    };
 
     const phoneRegEx = /^[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
     const { buyer } = this.state;
@@ -65,14 +65,13 @@ class UpdateBuyer extends React.Component {
     }
 
     return errors;
-  }
+  };
 
-  handleSubmit = (event) => {
-
+  handleSubmit = event => {
     let errors = this.checkErrors();
 
     let hasErrors = false;
-    Object.keys(errors).forEach((key) => {
+    Object.keys(errors).forEach(key => {
       if (errors[key]) {
         hasErrors = true;
       }
@@ -84,47 +83,43 @@ class UpdateBuyer extends React.Component {
       event.preventDefault();
       this.setState({ updatingBuyer: true });
       let formData = new FormData();
-      formData.append('buyer[name]', this.state.buyer.name);
-      formData.append('buyer[phone_number]', this.state.buyer.phone_number);
+      formData.append("buyer[name]", this.state.buyer.name);
+      formData.append("buyer[phone_number]", this.state.buyer.phone_number);
 
       let { avatar } = this.state;
-      if ( avatar ) {
-        formData.append(
-          'buyer[avatar]',
-          avatar,
-          avatar.name
-        );
+      if (avatar) {
+        formData.append("buyer[avatar]", avatar, avatar.name);
       }
 
       fetch(APIRoutes.buyers.update(this.state.buyer.id), {
-        method: 'PUT',
+        method: "PUT",
         body: formData,
-        credentials: 'same-origin',
+        credentials: "same-origin",
         headers: {
-          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content
-        }
-      }).then((data) => {
-        window.location = `/buyers/` + this.state.buyer.id;
-      }).catch((data) => {
-        console.error(data);
-      });
+          "X_CSRF-Token": document.getElementsByName("csrf-token")[0].content,
+        },
+      })
+        .then(data => {
+          window.location = `/buyers/` + this.state.buyer.id;
+        })
+        .catch(data => {
+          console.error(data);
+        });
     }
-  }
+  };
 
   render() {
-    const {buyer_id, buyer_account_id, current_user} = this.props
+    const { buyer_id, buyer_account_id, current_user } = this.props;
     if (!current_user || current_user.account_id != buyer_account_id) {
-      return (
-        <Unauthorized/>
-      )
+      return <Unauthorized />;
     }
     if (!this.state.componentDidMount) {
-      return (
-        <LoadingOverlay itemType="information" fullPage={true} />
-      );
+      return <LoadingOverlay itemType="information" fullPage={true} />;
     }
 
-    let formLoadingOverlay = this.state.updatingBuyer ? <LoadingOverlay /> : null;
+    let formLoadingOverlay = this.state.updatingBuyer ? (
+      <LoadingOverlay />
+    ) : null;
     return (
       <div className="mw6 center">
         <h1>UPDATE BUYER</h1>
@@ -139,7 +134,7 @@ class UpdateBuyer extends React.Component {
             className="textinput"
             required
           />
-          <FormError error={this.state.errors.name}/>
+          <FormError error={this.state.errors.name} />
           <h5>Phone Number</h5>
           <input
             value={this.state.buyer.phone_number}
@@ -149,17 +144,21 @@ class UpdateBuyer extends React.Component {
             className="textinput"
             placeholder="123-456-7890"
           />
-          <FormError error={this.state.errors.phone_number}/>
+          <FormError error={this.state.errors.phone_number} />
           <h5>Profile Photo</h5>
           <div className="flex items-center mv2">
-            <label className="w4 moss b--moss button-secondary tc" htmlFor="avatar">
+            <label
+              className="w4 moss b--moss button-secondary tc"
+              htmlFor="avatar"
+            >
               Choose File
               <input
                 name="avatar"
                 id="avatar"
                 type="file"
-                ref={(node) => this.avatar = node}
-                onChange={this.setFile}/>
+                ref={node => (this.avatar = node)}
+                onChange={this.setFile}
+              />
             </label>
             <p className="ml2 truncate">
               {this.state.avatar
@@ -169,7 +168,9 @@ class UpdateBuyer extends React.Component {
           </div>
           <div className="submit-container mt3 mb3">
             <Button
-              onClick={() => {window.location = `/buyers/${this.state.buyer.id}`}}
+              onClick={() => {
+                window.location = `/buyers/${this.state.buyer.id}`;
+              }}
               type="button-tertiary"
               color="moss"
               className="w4"
@@ -187,7 +188,7 @@ class UpdateBuyer extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

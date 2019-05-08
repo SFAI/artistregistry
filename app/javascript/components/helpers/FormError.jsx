@@ -13,14 +13,12 @@ class FormError extends React.Component {
     if (this.props.error) {
       return (
         <div className="w-100 bg-snow pa2 mt2 mb2 error-container">
-          <FontAwesomeIcon className="gray" icon={faExclamationCircle}/>
+          <FontAwesomeIcon className="gray" icon={faExclamationCircle} />
           <p className="error ml2 gray">{this.props.error}</p>
         </div>
       );
     }
-    return (
-      <div />
-    );
+    return <div />;
   }
 }
 

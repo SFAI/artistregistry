@@ -1,6 +1,6 @@
-import PropTypes from "prop-types"
-import React from 'react';
-import WorkForm from './WorkForm.jsx';
+import PropTypes from "prop-types";
+import React from "react";
+import WorkForm from "./WorkForm.jsx";
 
 class CreateWork extends React.Component {
   constructor(props) {
@@ -8,20 +8,20 @@ class CreateWork extends React.Component {
 
     this.state = {
       work: {
-        title: '',
-        material: '',
+        title: "",
+        material: "",
         media: "painting",
         availability: "active",
         hidden: false,
         attached_images_urls: [],
-        description: '',
-        links: '',
-        featured_image: '',
-        artist_id: this.props.artist.id
+        description: "",
+        links: "",
+        featured_image: "",
+        artist_id: this.props.artist.id,
       },
       route: APIRoutes.works.create,
-      method: 'POST',
-    }
+      method: "POST",
+    };
   }
 
   render() {
@@ -31,9 +31,10 @@ class CreateWork extends React.Component {
         <WorkForm
           work={this.state.work}
           route={this.state.route}
-          method={this.state.method} />
+          method={this.state.method}
+        />
       </div>
-    )
+    );
   }
 }
 

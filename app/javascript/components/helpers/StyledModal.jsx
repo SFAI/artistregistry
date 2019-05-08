@@ -10,8 +10,8 @@ class StyledModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false
-    }
+      show: false,
+    };
   }
 
   showModal = () => {
@@ -32,19 +32,27 @@ class StyledModal extends React.Component {
           ariaHideApp={false}
           overlayClassName="overlay-class"
         >
-          <div className={classNames("modal-head pl3 pr3", {
-            [`bg-${this.props.color}`]: this.props.color
-          })}>
+          <div
+            className={classNames("modal-head pl3 pr3", {
+              [`bg-${this.props.color}`]: this.props.color,
+            })}
+          >
             <h3 className="white">{this.props.title}</h3>
-            <button onClick={this.hideModal} className="button-div bg-transparent">
+            <button
+              onClick={this.hideModal}
+              className="button-div bg-transparent"
+            >
               <FontAwesomeIcon className="white pointer" icon={faTimes} />
             </button>
           </div>
-          <div className="modal-content pa4">
-            {this.props.children}
-          </div>
+          <div className="modal-content pa4">{this.props.children}</div>
         </ReactModal>
-        <Button className={classNames("w4 ", this.props.buttonClasses)} type={this.props.buttonType} color={this.props.color} onClick={this.showModal}>
+        <Button
+          className={classNames("w4 ", this.props.buttonClasses)}
+          type={this.props.buttonType}
+          color={this.props.color}
+          onClick={this.showModal}
+        >
           {this.props.title}
         </Button>
       </div>

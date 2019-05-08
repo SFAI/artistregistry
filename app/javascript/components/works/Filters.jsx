@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { convertSnakeCase } from "../../utils/strings";
 
 /**
-* @prop filters: sub/categories based on Work enums
-*/
+ * @prop filters: sub/categories based on Work enums
+ */
 
 class Filters extends PureComponent {
   constructor(props) {
@@ -21,26 +21,27 @@ class Filters extends PureComponent {
 
   getQuery = () => {
     const params = this.state.searchParams;
-    const filteredParams = Object.keys(params).filter(
-      filter_name => params[filter_name].length
-    ).reduce((nonEmptyParams, filter_name) => {
-      nonEmptyParams[filter_name] = params[filter_name];
-      return nonEmptyParams;
-    }, {})
+    const filteredParams = Object.keys(params)
+      .filter(filter_name => params[filter_name].length)
+      .reduce((nonEmptyParams, filter_name) => {
+        nonEmptyParams[filter_name] = params[filter_name];
+        return nonEmptyParams;
+      }, {});
     const stringified = Object.keys(filteredParams)
-      .map(
-        filter_name => {
-          if (filteredParams[filter_name].length) {
-            return `${filter_name}=` + filteredParams[filter_name].join(`&${filter_name}=`)
-          }
+      .map(filter_name => {
+        if (filteredParams[filter_name].length) {
+          return (
+            `${filter_name}=` +
+            filteredParams[filter_name].join(`&${filter_name}=`)
+          );
         }
-      )
+      })
       .join("&");
     return stringified;
-  }
+  };
 
   toggleCheckboxEnter = (filter_name, item, e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       console.log(this);
       if (e.currentTarget.checked) {
         e.currentTarget.checked = false;
@@ -64,8 +65,8 @@ class Filters extends PureComponent {
     this.setState({
       searchParams: {
         ...this.state.searchParams,
-        [filter_name]: newFilterParams // is this overwriting [filtername] ???
-      }
+        [filter_name]: newFilterParams, // is this overwriting [filtername] ???
+      },
     });
   };
 
@@ -82,10 +83,15 @@ class Filters extends PureComponent {
                 <div className="checkbox-container">
                   {Object.keys(filters[type]).map(item => (
                     <div className="mb2 checkbox-item" key={item}>
-                      <label className="ttc dib flex" htmlFor={`checkbox-${item}`}>
+                      <label
+                        className="ttc dib flex"
+                        htmlFor={`checkbox-${item}`}
+                      >
                         <input
                           onClick={() => this.toggleCheckbox(type, item)}
-                          onKeyDown={(e) => this.toggleCheckboxEnter(type, item, e)}
+                          onKeyDown={e =>
+                            this.toggleCheckboxEnter(type, item, e)
+                          }
                           type="checkbox"
                           className="checkbox"
                           value={item}
@@ -93,24 +99,25 @@ class Filters extends PureComponent {
                           className={`checkbox-${color}`}
                         />
                         <span className="filter-item">
-                          {(type == "degree") ? item.toUpperCase() :convertSnakeCase(item) }
+                          {type == "degree"
+                            ? item.toUpperCase()
+                            : convertSnakeCase(item)}
                         </span>
                       </label>
                     </div>
                   ))}
                 </div>
               </div>
-            )
+            );
           })}
         </div>
-      )
-    }
-    else {
+      );
+    } else {
       return (
         <div className="flex flex-column mr2 ba pa2 w-20">
           <p> Loading </p>
         </div>
-      )
+      );
     }
   }
 }

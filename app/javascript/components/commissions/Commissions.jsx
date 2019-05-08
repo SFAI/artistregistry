@@ -9,10 +9,10 @@ class Commissions extends React.Component {
     super(props);
     this.state = {
       commissions: [],
-      componentDidMount: false
+      componentDidMount: false,
     };
   }
-  
+
   componentDidMount() {
     this.fetchCommissions();
     this.setState({ componentDidMount: true });
@@ -30,7 +30,7 @@ class Commissions extends React.Component {
       }
     );
   }
-  
+
   render() {
     if (!this.state.componentDidMount) {
       return <LoadingOverlay fullPage={true} />;
@@ -43,22 +43,22 @@ class Commissions extends React.Component {
             <None itemType="inquiries" />
           </div>
         </div>
-      )
+      );
     }
     return (
       <div className="mw7 center">
         <h1>Inquiries</h1>
-        {
-          this.state.commissions.map((commission, i) => {
-            return <Inquiry
+        {this.state.commissions.map((commission, i) => {
+          return (
+            <Inquiry
               commission={commission}
               key={i}
               onChange={() => this.fetchCommissions()}
             />
-          })
-        }
+          );
+        })}
       </div>
-    )
+    );
   }
 }
 

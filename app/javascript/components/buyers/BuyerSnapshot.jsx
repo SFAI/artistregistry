@@ -17,8 +17,7 @@ class BuyerSnapshot extends React.Component {
         navigate={`/buyers/${this.props.buyer.id}`}
         email={email}
         color={this.props.color}
-      >
-      </UserSnapshot>
+      />
     );
   }
 }

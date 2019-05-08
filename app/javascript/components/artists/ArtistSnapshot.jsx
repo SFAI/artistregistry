@@ -19,8 +19,7 @@ class ArtistSnapshot extends React.Component {
         program={program}
         degree={degree}
         color={this.props.color}
-      >
-      </UserSnapshot>
+      />
     );
   }
 }

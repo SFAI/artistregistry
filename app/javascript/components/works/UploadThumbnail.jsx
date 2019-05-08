@@ -17,19 +17,17 @@ class UploadThumbnail extends React.Component {
             <div className="icon pt1 pb1">
               <button
                 onClick={() => this.props.delete()}
-                className="button-div bg-transparent pa0 pointer">
-                <FontAwesomeIcon className="gray" icon={faTimes}/>
+                className="button-div bg-transparent pa0 pointer"
+              >
+                <FontAwesomeIcon className="gray" icon={faTimes} />
               </button>
             </div>
           </div>
-          <img
-            src={this.props.src}
-            className="thumb"
-          />
+          <img src={this.props.src} className="thumb" />
           <h4 className="thumb-head-text mt3">{this.props.filename}</h4>
         </div>
       </div>
-    )
+    );
   }
 }
 

@@ -10,6 +10,7 @@
     "caniuse-lite": "^1.0.30000899",
     "classnames": "^2.2.6",
     "immutability-helper": "^2.8.1",
+    "prettier": "1.17.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
