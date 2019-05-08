@@ -181,7 +181,7 @@ class RequestForm extends React.Component {
             name="types"
             value={this.state.request.types}
             onChange={this.handleChange}
-            className="input-dropdown ttc"
+            className="h2 mv2 w-100 ttc"
           >
             {Object.keys(this.state.request_types).map((obj, i) => {
               return <option key={i}>{obj}</option>;
@@ -194,7 +194,7 @@ class RequestForm extends React.Component {
             value={this.state.request.comment}
             onChange={this.handleChange}
             rows={4}
-            className="textarea"
+            className="mv2 w-100 pa2"
           />
           <FormError error={this.state.errors["message"]} />
           <FormError error={this.state.errors["exist"]} />

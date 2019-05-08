@@ -93,7 +93,7 @@ class FlagForm extends React.Component {
             rows={4}
             value={this.state.text}
             onChange={this.handleChange}
-            className="textarea"
+            className="mv2 w-100 pa2"
           />
           <FormError error={this.state.errors["text"]} />
           <p className="gray mb4">

@@ -133,7 +133,7 @@ class CommissionsForm extends React.Component {
           value={this.state.commission.comment}
           onChange={this.handleChange}
           rows={4}
-          className="w-100 mt2 textarea"
+          className="w-100 mv2 pa2"
         />
         <button
           onClick={this.handleSubmit}

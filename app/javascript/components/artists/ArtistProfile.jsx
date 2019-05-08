@@ -347,7 +347,7 @@ class ArtistProfile extends React.Component {
   };
 
   renderHideButton = work => (
-    <div className="work-action-wrapper mb2">
+    <div className="flex mb2">
       <IconButton
         onClick={() => this.toggleHideWork(work)}
         isActiveIcon={work.hidden}
@@ -359,7 +359,7 @@ class ArtistProfile extends React.Component {
   );
 
   renderEditWorkButton = work => (
-    <div className="work-action-wrapper mb2">
+    <div className="flex mb2">
       <IconButton
         className="mr2"
         onClick={() => this.updateWork(work.id)}

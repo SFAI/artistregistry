@@ -188,7 +188,7 @@ class TransactionForm extends React.Component {
         </div>
         <div className="fl w-70 pl3">
           <h5>Price</h5>
-          <div className="price">
+          <div className="flex items-center">
             <h5 className="mr2">$</h5>
             <input
               type="TEXT"
@@ -204,7 +204,7 @@ class TransactionForm extends React.Component {
             name="transaction_type"
             value={this.state.receipt.transaction_type}
             onChange={this.handleChange}
-            className="input-dropdown ttc"
+            className="h2 w-100 mv2 ttc"
           >
             {Object.keys(this.state.types).map((obj, i) => {
               return <option key={i}>{obj}</option>;
@@ -229,7 +229,7 @@ class TransactionForm extends React.Component {
             rows={4}
             value={this.state.receipt.comment}
             onChange={this.handleChange}
-            className="textarea"
+            className="mv2 w-100 pa2"
           />
           <Button
             type="button-primary"

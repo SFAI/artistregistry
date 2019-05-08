@@ -14,11 +14,11 @@ class Panel extends React.Component {
 
   render() {
     return (
-      <div className="panel">
-        <div className={"header-bar pl3 pr3 pt2 pb2 bg-" + this.props.color}>
+      <div className="flex flex-column flex-grow-1">
+        <div className={"w-100 pv2 ph3 bg-" + this.props.color}>
           <h5 className="white mb0">{this.props.title}</h5>
         </div>
-        <div className="panel-container pa3 bg-white relative">
+        <div className="flex-grow-1 pa3 bg-white relative">
           {this.props.children}
         </div>
       </div>

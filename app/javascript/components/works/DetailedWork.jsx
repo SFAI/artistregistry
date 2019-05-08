@@ -68,14 +68,14 @@ class DetailedWork extends React.Component {
     </div>
   );
 
-  renderFlagButton = (artist_prop, user) => {
+  renderFlagButton = (artist_prop, user) => (
     <div className="flex mt3 items-center justify-between">
       <p className="pl3 gray">Violating our Terms of Use?</p>
       <StyledModal title="Flag" buttonType="button-tertiary" color="berry">
         <FlagForm artist={artist_prop} user={user} work={this.state.work} />
       </StyledModal>
-    </div>;
-  };
+    </div>
+  );
 
   render() {
     const { artist_prop, buyer, blocked, work, user, user_type } = this.props;

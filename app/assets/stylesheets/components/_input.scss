@@ -34,6 +34,12 @@ input[type="file"] {
   display: block;
   opacity: 0;
 }
+
+select,
+textarea {
+  font-family: $font;
+}
+
 .checkbox-item {
   display: flex;
   align-items: center;
@@ -102,16 +108,11 @@ input[type="file"] {
   cursor: pointer;
 }
 
-.row-input {
-  font-family: $font;
-  @extend .mt2;
-  @extend .mb2;
-  @extend .w-100;
-}
-
 .textinput {
   @extend .pl2;
-  @extend .row-input;
+  @extend .mv2;
+  @extend .w-100;
+  font-family: $font;
   box-sizing: border-box;
   height: 2.5rem;
 }
@@ -123,16 +124,6 @@ input[type="file"] {
 
 .texthelp.error {
   color: $light-red;
-}
-
-.input-dropdown {
-  @extend .row-input;
-  height: 2rem;
-}
-
-.textarea {
-  @extend .row-input;
-  @extend .pa2;
 }
 
 .pointer {
@@ -154,16 +145,4 @@ input[type="file"] {
   &:hover {
     background-color: rgba($charcoal, 0.8);
   }
-}
-
-.price {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.work-action-wrapper {
-  display: flex;
-  flex-direction: row;
 }
