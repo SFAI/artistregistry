@@ -17,6 +17,7 @@ import {
 } from "../../utils/strings";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import Unauthorized from "../helpers/Unauthorized";
+import IconButton from "../helpers/IconButton";
 var sfai_wallpaper = require("../../../assets/images/sfai_wallpaper.png");
 /**
  * @prop user: user currently logged in
@@ -347,26 +348,24 @@ class ArtistProfile extends React.Component {
 
   renderHideButton = work => (
     <div className="work-action-wrapper mb2">
-      <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
-        <FontAwesomeIcon
-          className="white"
-          icon={work.hidden ? faEye : faEyeSlash}
-        />
-        <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
-      </Button>
+      <IconButton
+        onClick={() => this.toggleHideWork(work)}
+        isActiveIcon={work.hidden}
+        activeIcon={faEye}
+        inactiveIcon={faEyeSlash}
+        text={work.hidden ? "Unhide" : "Hide"}
+      />
     </div>
   );
 
   renderEditWorkButton = work => (
     <div className="work-action-wrapper mb2">
-      <Button
-        type="hover-button"
+      <IconButton
         className="mr2"
         onClick={() => this.updateWork(work.id)}
-      >
-        <FontAwesomeIcon className="white" icon={faEdit} />
-        <h4 className="ml2 white">Edit</h4>
-      </Button>
+        activeIcon={faEdit}
+        text="Edit"
+      />
     </div>
   );
 
@@ -382,15 +381,12 @@ class ArtistProfile extends React.Component {
   );
 
   renderEditProfileButton = () => (
-    <Button
-      type="hover-button"
+    <IconButton
       className="ma2 absolute top-0 right-0"
-      color="denim"
       onClick={this.navigateToEdit}
-    >
-      <FontAwesomeIcon className="white" icon={faEdit} />
-      <h4 className="ml2 white">Edit</h4>
-    </Button>
+      activeIcon={faEdit}
+      text="Edit"
+    />
   );
 
   renderNewWorkButton = () => (

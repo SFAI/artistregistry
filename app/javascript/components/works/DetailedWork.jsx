@@ -10,6 +10,7 @@ import Button from "../helpers/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Unauthorized from "../helpers/Unauthorized";
 import { faEdit, faFlag } from "@fortawesome/free-solid-svg-icons";
+import IconButton from "../helpers/IconButton";
 
 class DetailedWork extends React.Component {
   constructor(props) {
@@ -41,16 +42,14 @@ class DetailedWork extends React.Component {
   }
 
   renderEditWorkButton = id => (
-    <Button
+    <IconButton
       className="ma2 absolute top-0 right-0"
-      type="hover-button"
       onClick={() => {
         window.location = `/works/${id}/edit`;
       }}
-    >
-      <FontAwesomeIcon className="white" icon={faEdit} />
-      <h4 className="ml2 white">Edit</h4>
-    </Button>
+      activeIcon={faEdit}
+      text="Edit"
+    />
   );
 
   renderLinks = links => (
