@@ -23,7 +23,7 @@ class WorkFixedPanel extends React.Component {
             />
             <p className="mb1 b pointer">{work.title}</p>
           </a>
-          <p className="mb1">{work.media}</p>
+          <p className="mb1 ttc">{work.media}</p>
           <p className="i">{work.material}</p>
         </div>
       </div>

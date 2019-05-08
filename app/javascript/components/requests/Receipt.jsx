@@ -127,14 +127,14 @@ class Receipt extends React.Component {
               </div>
               <div>
                 <h5>{work.title}</h5>
-                <p>{work.media}</p>
+                <p className="ttc">{work.media}</p>
               </div>
             </div>
           </a>
           <div className="w-60 gray self-stretch">
             <p className="prewrap">{message}</p>
             {receipt.comment ? (
-              <p className="i mt3 pre">Receipt notes: {receipt.comment}</p>
+              <p className="i mt3 prewrap">Receipt notes: {receipt.comment}</p>
             ) : null}
           </div>
         </div>

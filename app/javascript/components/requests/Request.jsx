@@ -207,7 +207,7 @@ class Request extends React.Component {
                   </div>
                   <div>
                     <h5>{work.title}</h5>
-                    <p>{work.media}</p>
+                    <p className="ttc">{work.media}</p>
                   </div>
                 </div>
               </a>

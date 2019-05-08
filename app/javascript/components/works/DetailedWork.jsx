@@ -122,9 +122,9 @@ class DetailedWork extends React.Component {
               </div>
             )}
             <h4>Media</h4>
-            <p className="mb2">{media}</p>
+            <p className="mb2 ttc">{media}</p>
             <h4>Material</h4>
-            <p className="mb2">{material}</p>
+            <p className="mb2 ttc">{material}</p>
             {dimensions && (
               <div>
                 <h4>Dimensions</h4>
