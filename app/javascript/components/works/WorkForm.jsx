@@ -168,7 +168,7 @@ class WorkForm extends React.Component {
       ];
       formKeys.forEach(key => {
         let value = this.state.work[key];
-        if (!value) {
+        if (!value && key != 'hidden') {
           value = "";
         }
         formData.append(`work[${key}]`, value);

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_01_230251) do
+ActiveRecord::Schema.define(version: 2019_05_08_070200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2019_05_01_230251) do
     t.boolean "terms_and_conditions"
     t.bigint "account_id"
     t.datetime "locked_at"
-    t.boolean "hidden"
+    t.boolean "hidden", default: false
     t.integer "degree", default: 0
     t.string "program", default: [], array: true
     t.index ["account_id"], name: "index_artists_on_account_id"
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(version: 2019_05_01_230251) do
     t.bigint "artist_id", null: false
     t.string "description"
     t.integer "featured_image_id"
-    t.boolean "hidden"
+    t.boolean "hidden", default: false
     t.string "links"
     t.integer "year"
     t.string "dimensions"
