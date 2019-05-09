@@ -473,13 +473,13 @@ class ArtistProfile extends React.Component {
         {canEditProfile &&
           this.state.showIncompleteBanner &&
           this.renderIncompleteProfileBanner()}
-        <div className="row-head flex">
+        <div className="flex justify-between items-center">
           <h1> {name} </h1>
         </div>
-        <div className="row-bio flex">
+        <div className="h7 flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
             {this.renderAvatar(avatar)}
-            <div className="info pr3 artist-profile-scroll overflow-y-auto">
+            <div className="info pr3 scroll-denim overflow-y-auto">
               <h5 className="ttu">Program</h5>
               <p className="ttc"> {this.reformatPrograms(program)} </p>
               <h5 className="ttu">Media</h5>
@@ -504,12 +504,12 @@ class ArtistProfile extends React.Component {
           <div className="w-30-l mw-400 pa3 bg-white relative">
             {canEditProfile && this.renderEditProfileButton()}
             <h2>About the artist</h2>
-            <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
+            <div className="scroll h6 pr3 overflow-y-auto">
               <p className="prewrap"> {description}</p>
             </div>
           </div>
         </div>
-        <div className="mt5 mb3 row-head">
+        <div className="mt5 mb3 flex justify-between items-center">
           <div>
             {["All works", "Available", "Sold/Rented"].map(filter => (
               <button

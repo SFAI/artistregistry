@@ -201,7 +201,7 @@ class Request extends React.Component {
                 <div className="flex pointer">
                   <div className="w4 pb6 relative mr3">
                     <img
-                      className="work-image fit-cover w-100 h-100 absolute"
+                      className="h4 fit-cover w-100 h-100 absolute"
                       src={work.featured_image.url}
                     />
                   </div>

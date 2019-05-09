@@ -89,4 +89,14 @@ $custom-colors: (
       background-color: $hex;
     }
   }
+
+  .scroll-#{$name} {
+    @extend .scroll;
+    &::-webkit-scrollbar-thumb {
+      background: $hex;
+      &:hover {
+        background: darken($hex, 10%);
+      }
+    }
+  }
 }

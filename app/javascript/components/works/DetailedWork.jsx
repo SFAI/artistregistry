@@ -132,7 +132,7 @@ class DetailedWork extends React.Component {
             )}
             {links && this.renderLinks(links)}
             <h4>Description</h4>
-            <div className="pr2 artwork-description overflow-y-auto">
+            <div className="pr2 scroll-berry max-h6 overflow-y-auto">
               <p className="mb2 prewrap">
                 <Linkify
                   properties={{ target: "_blank", rel: "nofollow noopener" }}

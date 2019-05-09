@@ -13,36 +13,36 @@
  *= require toastr
  */
 
- @import "partials/reset";
- @import "partials/colors";
- @import "partials/fonts";
+@import "partials/reset";
+@import "partials/colors";
+@import "partials/fonts";
 
- @import "tachyons-sass/tachyons.scss";
+@import "tachyons-sass/tachyons.scss";
 
- @import "pages/*";
- @import "components/*";
- @import "*";
+@import "pages/*";
+@import "components/*";
+@import "*";
 
- body {
-    background-color: $snow;
-    min-width: 1200px;
- }
+body {
+  background-color: $snow;
+  min-width: 1200px;
+}
 
- .dashboard-container {
-     max-width: 1200px;
-     margin: 0px auto;
- }
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0px auto;
+}
 
 .mt-auto {
-    margin-top: auto; // aligns button to bottom of div
+  margin-top: auto; // aligns button to bottom of div
 }
 
 .fit-cover {
-    object-fit: cover; // https://www.w3schools.com/css/css3_object-fit.asp
+  object-fit: cover; // https://www.w3schools.com/css/css3_object-fit.asp
 }
 
 .mw-400 {
-    min-width: 400px;
+  min-width: 400px;
 }
 
 .col-list-2 {
@@ -50,32 +50,47 @@
 }
 
 .col-list-3 {
-    column-count: 3;
+  column-count: 3;
 }
-  
+
 .col-list-4 {
-    column-count: 4;
+  column-count: 4;
 }
 
 .col-item {
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  
-    .item-overlay {
-      position: absolute;
-      visibility: hidden;
-      height: 48px;
-      z-index: 5;
-    }
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
 
-    &:hover {
-      .item-overlay {
-        visibility: visible;
-      }
+  .item-overlay {
+    position: absolute;
+    visibility: hidden;
+    height: 48px;
+    z-index: 5;
+  }
+
+  &:hover {
+    .item-overlay {
+      visibility: visible;
     }
+  }
 }
 
 .prewrap {
   white-space: pre-wrap;
+}
+
+.scroll {
+  &::-webkit-scrollbar-track {
+    background: $snow;
+  }
+
+  &::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+  }
 }

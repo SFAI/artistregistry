@@ -14,18 +14,16 @@ class WorkFixedPanel extends React.Component {
   render() {
     let work = this.props.work;
     return (
-      <div className="artwork w-100 h-100">
-        <div className="pa3">
-          <a href={`works/${work.id}`} className="color-inherit normal">
-            <img
-              className="work-image fit-cover w-100 mb2 pointer"
-              src={work.featured_image.url}
-            />
-            <p className="mb1 b pointer">{work.title}</p>
-          </a>
+      <div className="hover-bg-snow w-100 h-100 pa3">
+        <a href={`works/${work.id}`} className="color-inherit normal">
+          <img
+            className="h4 fit-cover w-100 mb2 pointer"
+            src={work.featured_image.url}
+          />
+          <p className="mb1 b">{work.title}</p>
           <p className="mb1 ttc">{work.media}</p>
           <p className="i">{work.material}</p>
-        </div>
+        </a>
       </div>
     );
   }
