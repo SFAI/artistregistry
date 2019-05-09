@@ -166,7 +166,7 @@ class UpdateBuyer extends React.Component {
                 : this.state.buyer.avatar && this.state.buyer.avatar.name}
             </p>
           </div>
-          <div className="submit-container mt3 mb3">
+          <div className="flex justify-end mv3">
             <Button
               onClick={() => {
                 window.location = `/buyers/${this.state.buyer.id}`;

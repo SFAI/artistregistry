@@ -28,8 +28,8 @@ class UserRequests extends React.Component {
           key={i}
           onClick={() => this.display(i)}
           className={classNames(
-            "button-div bw0 w-100 mb2 toggle",
-            active ? "bg-moss" : "bg-inherit toggle-hover"
+            "button-div w-100 flex item-center pointer ph2 pv3 mb2",
+            active ? "bg-moss" : "bg-inherit hover-bg-black-10"
           )}
           tabIndex="0"
         >

@@ -402,7 +402,7 @@ class WorkForm extends React.Component {
           })}
         </select>
         <FormError error={this.state.errors["featuredImage"]} />
-        <div className="submit-container mt3 mb3">
+        <div className="flex justify-end mv3">
           <button
             onClick={() => {
               window.location = `/artists/` + this.state.work.artist_id;

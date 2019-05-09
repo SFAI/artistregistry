@@ -304,7 +304,7 @@ class UpdateArtist extends React.Component {
                 : this.state.artist.avatar && this.state.artist.avatar.name}
             </p>
           </div>
-          <div className="submit-container mt3">
+          <div className="flex justify-end mt3">
             <Button
               onClick={() => {
                 window.location = `/artists/${this.state.artist.id}`;
