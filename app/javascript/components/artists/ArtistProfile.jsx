@@ -504,7 +504,7 @@ class ArtistProfile extends React.Component {
           <div className="w-30-l mw-400 pa3 bg-white relative">
             {canEditProfile && this.renderEditProfileButton()}
             <h2>About the artist</h2>
-            <div className="scroll h6 pr3 overflow-y-auto">
+            <div className="scroll-denim h6 pr3 overflow-y-auto">
               <p className="prewrap"> {description}</p>
             </div>
           </div>
