@@ -10,6 +10,7 @@ import Button from "../helpers/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Unauthorized from "../helpers/Unauthorized";
 import { faEdit, faFlag } from "@fortawesome/free-solid-svg-icons";
+import IconButton from "../helpers/IconButton";
 
 class DetailedWork extends React.Component {
   constructor(props) {
@@ -41,16 +42,14 @@ class DetailedWork extends React.Component {
   }
 
   renderEditWorkButton = id => (
-    <Button
+    <IconButton
       className="ma2 absolute top-0 right-0"
-      type="hover-button"
       onClick={() => {
         window.location = `/works/${id}/edit`;
       }}
-    >
-      <FontAwesomeIcon className="white" icon={faEdit} />
-      <h4 className="ml2 white">Edit</h4>
-    </Button>
+      activeIcon={faEdit}
+      text="Edit"
+    />
   );
 
   renderLinks = links => (
@@ -69,14 +68,14 @@ class DetailedWork extends React.Component {
     </div>
   );
 
-  renderFlagButton = (artist_prop, user) => {
+  renderFlagButton = (artist_prop, user) => (
     <div className="flex mt3 items-center justify-between">
       <p className="pl3 gray">Violating our Terms of Use?</p>
       <StyledModal title="Flag" buttonType="button-tertiary" color="berry">
         <FlagForm artist={artist_prop} user={user} work={this.state.work} />
       </StyledModal>
-    </div>;
-  };
+    </div>
+  );
 
   render() {
     const { artist_prop, buyer, blocked, work, user, user_type } = this.props;
@@ -133,7 +132,7 @@ class DetailedWork extends React.Component {
             )}
             {links && this.renderLinks(links)}
             <h4>Description</h4>
-            <div className="pr2 artwork-description overflow-y-auto">
+            <div className="pr2 scroll-berry max-h6 overflow-y-auto">
               <p className="mb2 prewrap">
                 <Linkify
                   properties={{ target: "_blank", rel: "nofollow noopener" }}

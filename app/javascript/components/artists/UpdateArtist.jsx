@@ -204,7 +204,7 @@ class UpdateArtist extends React.Component {
             value={this.state.artist.degree ? this.state.artist.degree : 0}
             onChange={this.handleChange}
             name="degree"
-            className="input-dropdown ttu"
+            className="h2 mv2 w-100 ttu"
             required
           >
             {Object.keys(this.state.categories.degree).map((obj, i) => {
@@ -264,7 +264,7 @@ class UpdateArtist extends React.Component {
             rows={4}
             name="description"
             type="text"
-            className="textarea"
+            className="mv2 w-100 pa2"
             required
           />
           <FormError error={this.state.errors.description} />
@@ -273,7 +273,7 @@ class UpdateArtist extends React.Component {
             onChange={this.handleChange}
             value={this.state.artist.featured_work_id}
             name="featured_work_id"
-            className="input-dropdown"
+            className="h2 mv2 w-100"
           >
             {this.state.works.map(work => {
               return (
@@ -304,7 +304,7 @@ class UpdateArtist extends React.Component {
                 : this.state.artist.avatar && this.state.artist.avatar.name}
             </p>
           </div>
-          <div className="submit-container mt3">
+          <div className="flex justify-end mt3">
             <Button
               onClick={() => {
                 window.location = `/artists/${this.state.artist.id}`;

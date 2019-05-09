@@ -107,12 +107,14 @@ class Receipt extends React.Component {
             <h5 className="mv0">Date Requested</h5>
             <p>{new Date(created_at).toLocaleDateString()}</p>
           </div>
-          <div className="mh3">
-            <button className="request-ellipsis ml3 br-100 pa0 pointer bn" />
-            <ul className="request-dropdown ml3 absolute nowrap z-3">
-              <li>{this.renderEditReceipt()}</li>
-            </ul>
-          </div>
+          {this.props.artist && (
+            <div className="mh3">
+              <button className="request-ellipsis ml3 br-100 pa0 pointer bn" />
+              <ul className="request-dropdown ml3 absolute nowrap z-3">
+                <li>{this.renderEditReceipt()}</li>
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className="ttu b mt3 ml3 f6">{this.renderStatus()}</div>
@@ -121,7 +123,7 @@ class Receipt extends React.Component {
             <div className="flex pointer">
               <div className="w4 pb6 relative mr3">
                 <img
-                  className="work-image fit-cover w-100 h-100 pointer absolute"
+                  className="h4 fit-cover w-100 h-100 pointer absolute"
                   src={work.featured_image.url}
                 />
               </div>

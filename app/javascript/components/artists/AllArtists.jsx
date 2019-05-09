@@ -7,6 +7,7 @@ import ReactPaginate from "react-paginate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../helpers/Button";
+import IconButton from "../helpers/IconButton";
 
 /**
  * @prop userType: { "artist", "buyer", "admin" }
@@ -203,18 +204,13 @@ class AllArtists extends React.Component {
               return (
                 <ArtistColumnPanel key={i} artist={artist} userType={userType}>
                   {userType == "admin" && (
-                    <Button
-                      type="hover-button"
+                    <IconButton
                       onClick={() => this.toggleHideArtist(artist)}
-                    >
-                      <FontAwesomeIcon
-                        className="white"
-                        icon={artist.hidden ? faEye : faEyeSlash}
-                      />
-                      <h4 className="ml2 white">
-                        {artist.hidden ? "Unhide" : "Hide"}
-                      </h4>
-                    </Button>
+                      isActiveIcon={artist.hidden}
+                      activeIcon={faEye}
+                      inactiveIcon={faEyeSlash}
+                      text={artist.hidden ? "Unhide" : "Hide"}
+                    />
                   )}
                 </ArtistColumnPanel>
               );

@@ -13,6 +13,7 @@ import Button from "../helpers/Button";
  * @prpo per_page: number of works to display on each page
  */
 import ReactPaginate from "react-paginate";
+import IconButton from "../helpers/IconButton";
 
 class Works extends React.Component {
   constructor(props) {
@@ -179,13 +180,13 @@ class Works extends React.Component {
   };
 
   renderHideButton = work => (
-    <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
-      <FontAwesomeIcon
-        className="white"
-        icon={work.hidden ? faEye : faEyeSlash}
-      />
-      <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
-    </Button>
+    <IconButton
+      onClick={() => this.toggleHideWork(work)}
+      isActiveIcon={work.hidden}
+      activeIcon={faEye}
+      inactiveIcon={faEyeSlash}
+      text={work.hidden ? "Unhide" : "Hide"}
+    />
   );
 
   render() {

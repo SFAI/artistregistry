@@ -168,7 +168,7 @@ class WorkForm extends React.Component {
       ];
       formKeys.forEach(key => {
         let value = this.state.work[key];
-        if (!value && key != 'hidden') {
+        if (!value && key != "hidden") {
           value = "";
         }
         formData.append(`work[${key}]`, value);
@@ -329,7 +329,7 @@ class WorkForm extends React.Component {
           onChange={this.handleChange}
           value={this.state.work.media}
           name="media"
-          className="input-dropdown ttc"
+          className="h2 mv2 w-100 ttc"
         >
           {Object.keys(this.state.categories.media).map((obj, i) => {
             return <option key={i}>{convertSnakeCase(obj)}</option>;
@@ -340,7 +340,7 @@ class WorkForm extends React.Component {
           onChange={this.handleChange}
           value={this.state.work.availability}
           name="availability"
-          className="input-dropdown ttc"
+          className="h2 mv2 w-100 ttc"
         >
           {Object.keys(this.state.categories.availability).map((obj, i) => {
             return <option key={i}>{obj}</option>;
@@ -364,7 +364,7 @@ class WorkForm extends React.Component {
           name="links"
           onChange={this.handleChange}
           type="TEXT"
-          className="textarea"
+          className="mv2 w-100 pa2"
           value={this.state.work.links}
         />
         <h5>Description</h5>
@@ -373,7 +373,7 @@ class WorkForm extends React.Component {
           name="description"
           onChange={this.handleChange}
           type="TEXT"
-          className="textarea"
+          className="mv2 w-100 pa2"
           value={this.state.work.description}
         />
         <FormError error={this.state.errors["description"]} />
@@ -395,14 +395,14 @@ class WorkForm extends React.Component {
           onChange={this.handleChange}
           value={this.state.work.featured_image}
           name="featured_image"
-          className="input-dropdown"
+          className="h2 mv2 w-100"
         >
           {this.allFileNames().map((filename, i) => {
             return <option key={i}>{filename}</option>;
           })}
         </select>
         <FormError error={this.state.errors["featuredImage"]} />
-        <div className="submit-container mt3 mb3">
+        <div className="flex justify-end mv3">
           <button
             onClick={() => {
               window.location = `/artists/` + this.state.work.artist_id;

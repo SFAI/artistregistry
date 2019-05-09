@@ -15,9 +15,9 @@ class None extends React.Component {
   render() {
     if (this.props.itemType) {
       return (
-        <div className="w-100 bg-snow pa2 pt3 pb3 error-container">
+        <div className="w-100 bg-snow ph2 pv3 flex justify-center">
           <FontAwesomeIcon className="gray" icon={faExclamationCircle} />
-          <p className="error ml2 gray">No {this.props.itemType} to show.</p>
+          <p className="i f6 ml2 gray">No {this.props.itemType} to show.</p>
         </div>
       );
     }

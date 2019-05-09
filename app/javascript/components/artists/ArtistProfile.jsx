@@ -17,6 +17,7 @@ import {
 } from "../../utils/strings";
 import LoadingOverlay from "../helpers/LoadingOverlay";
 import Unauthorized from "../helpers/Unauthorized";
+import IconButton from "../helpers/IconButton";
 var sfai_wallpaper = require("../../../assets/images/sfai_wallpaper.png");
 /**
  * @prop user: user currently logged in
@@ -346,27 +347,25 @@ class ArtistProfile extends React.Component {
   };
 
   renderHideButton = work => (
-    <div className="work-action-wrapper mb2">
-      <Button type="hover-button" onClick={() => this.toggleHideWork(work)}>
-        <FontAwesomeIcon
-          className="white"
-          icon={work.hidden ? faEye : faEyeSlash}
-        />
-        <h4 className="ml2 white">{work.hidden ? "Unhide" : "Hide"}</h4>
-      </Button>
+    <div className="flex mb2">
+      <IconButton
+        onClick={() => this.toggleHideWork(work)}
+        isActiveIcon={work.hidden}
+        activeIcon={faEye}
+        inactiveIcon={faEyeSlash}
+        text={work.hidden ? "Unhide" : "Hide"}
+      />
     </div>
   );
 
   renderEditWorkButton = work => (
-    <div className="work-action-wrapper mb2">
-      <Button
-        type="hover-button"
+    <div className="flex mb2">
+      <IconButton
         className="mr2"
         onClick={() => this.updateWork(work.id)}
-      >
-        <FontAwesomeIcon className="white" icon={faEdit} />
-        <h4 className="ml2 white">Edit</h4>
-      </Button>
+        activeIcon={faEdit}
+        text="Edit"
+      />
     </div>
   );
 
@@ -382,15 +381,12 @@ class ArtistProfile extends React.Component {
   );
 
   renderEditProfileButton = () => (
-    <Button
-      type="hover-button"
+    <IconButton
       className="ma2 absolute top-0 right-0"
-      color="denim"
       onClick={this.navigateToEdit}
-    >
-      <FontAwesomeIcon className="white" icon={faEdit} />
-      <h4 className="ml2 white">Edit</h4>
-    </Button>
+      activeIcon={faEdit}
+      text="Edit"
+    />
   );
 
   renderNewWorkButton = () => (
@@ -477,13 +473,13 @@ class ArtistProfile extends React.Component {
         {canEditProfile &&
           this.state.showIncompleteBanner &&
           this.renderIncompleteProfileBanner()}
-        <div className="row-head flex">
+        <div className="flex justify-between items-center">
           <h1> {name} </h1>
         </div>
-        <div className="row-bio flex">
+        <div className="h7 flex">
           <div className="w-20-l flex flex-column pa3 w5 bg-white">
             {this.renderAvatar(avatar)}
-            <div className="info pr3 artist-profile-scroll overflow-y-auto">
+            <div className="info pr3 scroll-denim overflow-y-auto">
               <h5 className="ttu">Program</h5>
               <p className="ttc"> {this.reformatPrograms(program)} </p>
               <h5 className="ttu">Media</h5>
@@ -508,12 +504,12 @@ class ArtistProfile extends React.Component {
           <div className="w-30-l mw-400 pa3 bg-white relative">
             {canEditProfile && this.renderEditProfileButton()}
             <h2>About the artist</h2>
-            <div className="artist-profile-scroll artist-description pr3 overflow-y-auto">
+            <div className="scroll-denim h6 pr3 overflow-y-auto">
               <p className="prewrap"> {description}</p>
             </div>
           </div>
         </div>
-        <div className="mt5 mb3 row-head">
+        <div className="mt5 mb3 flex justify-between items-center">
           <div>
             {["All works", "Available", "Sold/Rented"].map(filter => (
               <button

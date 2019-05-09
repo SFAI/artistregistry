@@ -1,4 +1,4 @@
-.pagination{
+.pagination {
   ul {
     display: flex;
     margin: 8px 0;
@@ -19,10 +19,5 @@
     &:hover {
       cursor: pointer;
     }
-
-    // &.hidden {
-    //   display: none;
-    // }
-    // Commented out to persist the << and >> labels
   }
 }

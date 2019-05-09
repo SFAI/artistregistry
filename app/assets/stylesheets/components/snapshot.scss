@@ -1,9 +1,0 @@
-.snapshot {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  .snapshot-nav:hover {
-    @extend .pointer;
-  }
-}
