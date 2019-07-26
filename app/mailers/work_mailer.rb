@@ -11,6 +11,6 @@ class WorkMailer < ApplicationMailer
     @user = params[:user]
     @work = params[:work]
     @text = params[:text]
-    mail(to: "sfai-noreply@calblueprint.org", subject: 'Work Flagged')
+    mail(to: "gcrawford@sfai.edu", subject: 'Work Flagged')
   end
 end
