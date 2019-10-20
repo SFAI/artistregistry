@@ -331,11 +331,9 @@ class ArtistProfile extends React.Component {
 
   renderAvatar = avatar => {
     return avatar.url ? (
-      <img
-        className="br-100 h4 w4 mb4 self-center"
-        src={avatar.url}
-        alt={name}
-      />
+      <div className="h4 w4 br-100 overflow-hidden self-center mb4">
+        <img style={{"objectFit":"cover"}} src={avatar.url} alt={name} />
+      </div>
     ) : (
       <FontAwesomeIcon
         icon={faUserCircle}
@@ -403,24 +401,14 @@ class ArtistProfile extends React.Component {
   renderGuidelines = () => (
     <div className="bg-charcoal pa3">
       <h2 className="white">Guidelines for contacting artists</h2>
-      <p className="white">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ipsum dolor sit amet
-        consectetur adipiscing elit duis tristique.
-        <br />
-        <br />
-        Tortor dignissim convallis aenean et tortor at risus viverra adipiscing.
-        Est ante in nibh mauris cursus mattis molestie a. Sed enim ut sem
-        viverra aliquet eget. Id semper risus in hendrerit gravida rutrum
-        quisque non tellus.
-        <br />
-        <br />
-        Elit pellentesque habitant morbi tristique senectus et netus et
-        malesuada. Commodo elit at imperdiet dui accumsan sit amet. Tellus
-        elementum sagittis vitae et leo duis ut diam. Eget arcu dictum varius
-        duis at. Donec massa sapien faucibus et molestie ac feugiat sed lectus.
-        Risus pretium quam vulputate dignissim suspendisse in est ante.
-      </p>
+      <ul className="white pl3" style={{"listStyleType":"disc"}}>
+        <li>Be very clear about what it is you want.</li>
+        <li>Be polite and courteous.</li>
+        <li>Have a price-point in mind, and be up front about what you can afford.</li>
+        <li>Don't offer "exposure" as payment.</li>
+        <li>Don't be surprised if a contract comes into play for commissions, or if insurance is discussed for installation and exhibition.</li>
+        <li>Once an agreement has been made, do what you say you are going to do.</li>
+      </ul>
     </div>
   );
 
