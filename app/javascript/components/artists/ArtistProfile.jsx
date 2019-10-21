@@ -331,9 +331,7 @@ class ArtistProfile extends React.Component {
 
   renderAvatar = avatar => {
     return avatar.url ? (
-      <div className="h4 w4 br-100 overflow-hidden self-center mb4">
-        <img style={{"objectFit":"cover"}} src={avatar.url} alt={name} />
-      </div>
+      <img className="h4 w4 br-100 overflow-hidden self-center mb4" style={{"objectFit":"cover"}} src={avatar.url} alt={name} />
     ) : (
       <FontAwesomeIcon
         icon={faUserCircle}
