@@ -10,7 +10,7 @@ class WorkSerializer < ActiveModel::Serializer
 
   def thumbnail
     if object.images[0]
-      variant = object.images[0].variant(resize: "100x100")
+      variant = object.images[0].variant(resize: "100x100", auto_orient: true)
       return rails_representation_url(variant, only_path: true)
     else
       return ''
@@ -21,7 +21,7 @@ class WorkSerializer < ActiveModel::Serializer
     result = []
     object.images.each do |image|
       payload = {
-        url: rails_blob_path(image, only_path: true),
+        url: rails_representation_url(image.variant(auto_orient: true), only_path: true),
         id: image.id
       }
       result.push(payload)
@@ -34,7 +34,7 @@ class WorkSerializer < ActiveModel::Serializer
       img = object.images.find(object.featured_image_id)
       payload = {
         name: img.filename,
-        url: rails_blob_path(img, only_path: true),
+        url: rails_representation_url(img.variant(auto_orient: true), only_path: true),
         id: object.featured_image_id
       }
       return payload
