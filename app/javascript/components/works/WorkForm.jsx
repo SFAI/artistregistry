@@ -83,15 +83,11 @@ class WorkForm extends React.Component {
     this.setState({ uploads: uploads });
   };
 
-  cleanFileName = str => {
-    return str.substring(str.lastIndexOf("/") + 1);
-  };
-
   allFileNames = () => {
     let filenames = [];
     filenames.push("");
     this.state.work.attached_images_urls.forEach(attachment => {
-      filenames.push(this.cleanFileName(attachment.url));
+      filenames.push(attachment.name);
     });
     this.state.uploads.forEach(upload => {
       filenames.push(upload.img.name);
@@ -214,7 +210,7 @@ class WorkForm extends React.Component {
     });
 
     this.state.work.attached_images_urls.forEach(attachment => {
-      if (this.cleanFileName(attachment.url) == this.state.work.featured_image) {
+      if (attachment.id === id && attachment.name === this.state.work.featured_image) {
         newWork.featured_image = "";
       }
     });
@@ -244,7 +240,7 @@ class WorkForm extends React.Component {
         {this.state.work.attached_images_urls.map(attachment => {
           return (
             <UploadThumbnail
-              filename={this.cleanFileName(attachment.url)}
+              filename={attachment.name}
               key={attachment.id}
               src={attachment.url}
               delete={() => this.deletePosted(attachment.id)}

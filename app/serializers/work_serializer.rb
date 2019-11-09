@@ -21,6 +21,7 @@ class WorkSerializer < ActiveModel::Serializer
     result = []
     object.images.each do |image|
       payload = {
+        name: image.filename,
         url: rails_representation_url(image.variant(auto_orient: true), only_path: true),
         id: image.id
       }
