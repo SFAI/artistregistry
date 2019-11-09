@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import classNames from "classnames";
+import ImageDisplayError from "../helpers/ImageDisplayError";
 
 class WorkColumnPanel extends React.Component {
   constructor(props) {
@@ -25,12 +26,14 @@ class WorkColumnPanel extends React.Component {
                 work.availability == "sold" || work.availability == "rented",
             })}
           >
-            {work.featured_image && (
+            {work.featured_image ? (
               <img
                 src={work.featured_image.url}
                 className="pointer"
                 alt={work.title}
               />
+            ) : (
+              <ImageDisplayError error="Image does not exist"/>
             )}
           </div>
           <h3 className="pointer">{work.title}</h3>

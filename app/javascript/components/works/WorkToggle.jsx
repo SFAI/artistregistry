@@ -6,6 +6,7 @@ import {
   faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
+import ImageDisplayError from "../helpers/ImageDisplayError";
 
 class WorkToggle extends React.Component {
   constructor(props) {
@@ -63,10 +64,12 @@ class WorkToggle extends React.Component {
         <div className="w-100 flex items-center justify-between">
           {this.renderButton("left")}
           <div className="work-toggle-container">
-            <img
-              src={work.attached_images_urls[activeImageIndex].url}
-              className="full-image"
-            />
+            {work.attached_images_urls && activeImageIndex < work.attached_images_urls.length ? (
+              <img
+                src={work.attached_images_urls[activeImageIndex].url}
+                className="full-image"
+              />) : <ImageDisplayError error="Image does not exist!" />
+            }
           </div>
           {this.renderButton("right")}
         </div>

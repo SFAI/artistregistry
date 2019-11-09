@@ -13,7 +13,7 @@ class WorkSerializer < ActiveModel::Serializer
       variant = object.images[0].variant(resize: "100x100", auto_orient: true)
       return rails_representation_url(variant, only_path: true)
     else
-      return ''
+      return nil
     end
   end
 
@@ -30,7 +30,7 @@ class WorkSerializer < ActiveModel::Serializer
   end
 
   def featured_image
-    if object.featured_image_id
+    if object.featured_image_id && object.images.exists?(object.featured_image_id)
       img = object.images.find(object.featured_image_id)
       payload = {
         name: img.filename,
