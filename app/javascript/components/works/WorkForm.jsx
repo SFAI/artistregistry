@@ -208,9 +208,15 @@ class WorkForm extends React.Component {
     let attachmentsToDelete = this.state.attachmentsToDelete.slice();
     attachmentsToDelete.push(id);
 
-    const newWork = update(this.state.work, {
+    let newWork = update(this.state.work, {
       attached_images_urls: uploads =>
         uploads.filter(upload => upload["id"] != id),
+    });
+
+    this.state.work.attached_images_urls.forEach(attachment => {
+      if (this.cleanFileName(attachment.url) == this.state.work.featured_image) {
+        newWork.featured_image = "";
+      }
     });
 
     this.setState({ attachmentsToDelete: attachmentsToDelete, work: newWork });
