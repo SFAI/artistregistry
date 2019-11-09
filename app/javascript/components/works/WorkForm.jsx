@@ -224,8 +224,18 @@ class WorkForm extends React.Component {
 
   deleteImage = i => {
     let uploads = this.state.uploads;
+    const imgName = uploads[i].img.name;
     delete uploads[i];
-    this.setState({ uploads: uploads });
+    if (imgName === this.state.work.featured_image) {
+      let newWork = update(this.state.work, {
+        featured_image: {
+          $set: ""
+        }
+      });
+      this.setState({ work: newWork, uploads: uploads });
+    } else {
+      this.setState({ uploads: uploads });
+    }
   };
 
   renderThumbnails = () => {
