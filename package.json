@@ -17,7 +17,7 @@
     "lodash.mergewith": "^4.6.2",
     "lodash.template": "^4.5.0",
     "mixin-deep": "^2.0.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "prettier": "1.17.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
