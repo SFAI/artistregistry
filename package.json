@@ -27,7 +27,7 @@
     "react-modal": "^3.6.1",
     "react-paginate": "^6.3.0",
     "react_ujs": "^2.4.4",
-    "set-value": "^3.0.1",
+    "set-value": "^3.0.3",
     "tachyons-sass": "^4.9.3"
   },
   "devDependencies": {
